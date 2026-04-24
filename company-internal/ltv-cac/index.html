@@ -365,24 +365,24 @@
     <div class="strip" id="strip">
       <div class="mo close" data-month="dec">
         <div class="mo-label">Dec 2025</div>
-        <div class="mo-ratio">1.02</div>
-        <div class="mo-bar"><div class="mo-fill" style="width:34%"></div></div>
+        <div class="mo-ratio">1.11</div>
+        <div class="mo-bar"><div class="mo-fill" style="width:37%"></div></div>
       </div>
       <div class="mo close" data-month="jan">
         <div class="mo-label">Jan 2026</div>
-        <div class="mo-ratio">1.06</div>
-        <div class="mo-bar"><div class="mo-fill" style="width:35%"></div></div>
+        <div class="mo-ratio">1.16</div>
+        <div class="mo-bar"><div class="mo-fill" style="width:39%"></div></div>
       </div>
       <div class="mo close" data-month="feb">
         <div class="mo-label">Feb 2026</div>
-        <div class="mo-ratio">0.71</div>
-        <div class="mo-bar"><div class="mo-fill" style="width:24%"></div></div>
+        <div class="mo-ratio">0.78</div>
+        <div class="mo-bar"><div class="mo-fill" style="width:26%"></div></div>
       </div>
       <div class="mo close current" data-month="mar">
         <div class="mo-tag">current</div>
         <div class="mo-label">Mar 2026</div>
-        <div class="mo-ratio">1.39</div>
-        <div class="mo-bar"><div class="mo-fill" style="width:46%"></div></div>
+        <div class="mo-ratio">1.53</div>
+        <div class="mo-bar"><div class="mo-fill" style="width:51%"></div></div>
       </div>
     </div>
   </div>
@@ -391,8 +391,8 @@
   <div class="headline">
     <div class="headline-left">
       <div class="h-label">Lifetime Value ÷ Acquisition Cost</div>
-      <div class="h-ratio" id="h-ratio">1.39</div>
-      <div class="h-target">Target: <strong>3.0</strong> · every $1 spent returns $<span id="h-return">1.39</span></div>
+      <div class="h-ratio" id="h-ratio">1.53</div>
+      <div class="h-target">Target: <strong>3.0</strong> · every $1 spent returns $<span id="h-return">1.53</span></div>
       <div class="trend-badge" id="trend-badge">↗ +96% vs Feb · best month on record</div>
     </div>
     <div class="headline-right">
@@ -407,7 +407,7 @@
       </div>
       <div class="h-box ltv ltv-total">
         <div class="bl">LTV · Solo</div>
-        <div class="bv" id="h-ltv-solo">$34</div>
+        <div class="bv" id="h-ltv-solo">$44</div>
       </div>
     </div>
   </div>
@@ -501,9 +501,9 @@
         <div class="ic wash-close">⏱</div>
         <div>
           <div class="metric-name">Lifetime (Solo · Team)</div>
-          <div class="metric-val"><span class="v close">7.3 · 12 mo</span><span class="goal">goal: 12 · 36 mo</span></div>
+          <div class="metric-val"><span class="v close">9.3 · 12 mo</span><span class="goal">goal: 12 · 36 mo · <a href="../subscriber-retention/" style="color:var(--terracotta);text-decoration:none;">details</a></span></div>
         </div>
-        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill close" style="width:61%"></div></div></div>
+        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill close" style="width:78%"></div></div></div>
       </div>
 
       <div class="row">
@@ -547,7 +547,7 @@
       <li><strong>Team book is the locked-in lever</strong> — 3 active Team customers (HSTA, Safer Pharmacy, Ahava Medical) contribute the majority of forward LTV at $4K/mo average.</li>
     </ul>
     <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 0.78em; color: var(--faint);">
-      <strong style="color: var(--muted);">Methodology note.</strong> Onboarded = Mixpanel <code style="background:transparent; padding:0;">call_forwarding_verification_success</code> · Subs = RevenueCat <code style="background:transparent; padding:0;">rc_initial_purchase_event</code> · Team% held steady at 1% (B2C2B steady-state expectation) · Solo lifetime 7.3mo, Team 12mo carried from Dec baseline. Dec 2025 ratio (1.02) differs from earlier snapshot (0.77) due to consistent Mixpanel-sourced sub rate across months.
+      <strong style="color: var(--muted);">Methodology note.</strong> Onboarded = Mixpanel <code style="background:transparent; padding:0;">call_forwarding_verification_success</code> · Subs = RevenueCat <code style="background:transparent; padding:0;">rc_initial_purchase_event</code> · Solo lifetime <strong>9.3mo</strong> from <a href="../subscriber-retention/" style="color:var(--terracotta);text-decoration:none;">subscriber-retention dashboard</a> (Kaplan–Meier, weighted ARPU $31.73) · Team lifetime 12mo baseline · Mix shown as % of active subs incl. 3 Teams · Team% in LTV formula held at 1% (B2C2B forward steady-state) — intentionally conservative vs actual stock of 3%. Ad cost/click is Google Ads only (Apple/Meta excluded).
     </div>
   </div>
 
@@ -564,54 +564,54 @@
 const DATA = {
   dec: {
     label: "December 2025",
-    ratio: "1.02", return_: "1.02", trend: "Dec 2025 · tracking begins", trendClass: "",
-    cac: "$85", ltvSolo: "$28", ltvTeam: "$59",
+    ratio: "1.11", return_: "1.11", trend: "Dec 2025 · tracking begins", trendClass: "",
+    cac: "$85", ltvSolo: "$35", ltvTeam: "$59",
     spend: "$22,797", spendBreakdown: "Google £17.6K × 1.27 + Apple $500",
     onbd: "268",
     act: "33%", actStatus: "off", actBar: 47,
     opens: "807",
     cpc: "£4.21", cpcStatus: "off", cpcBar: 100,
     subr: "12%", subrStatus: "good", subrBar: 100,
-    mix: "97 · 3 · 0", mixStatus: "close", mixBar: 70,
+    mix: "93 · 4 · 3", mixStatus: "close", mixBar: 75,
     upfSolo: "0%", upfStatus: "off", upfBar: 0,
   },
   jan: {
     label: "January 2026",
-    ratio: "1.06", return_: "1.06", trend: "↗ +4% vs Dec", trendClass: "",
-    cac: "$126", ltvSolo: "$45", ltvTeam: "$87",
+    ratio: "1.16", return_: "1.16", trend: "↗ +5% vs Dec", trendClass: "",
+    cac: "$126", ltvSolo: "$58", ltvTeam: "$87",
     spend: "$25,494", spendBreakdown: "Google £18.5K × 1.35 + Apple $500",
     onbd: "203",
     act: "26%", actStatus: "off", actBar: 37,
     opens: "771",
     cpc: "£2.77", cpcStatus: "close", cpcBar: 72,
     subr: "18%", subrStatus: "good", subrBar: 100,
-    mix: "86 · 14 · 0", mixStatus: "close", mixBar: 60,
+    mix: "91 · 7 · 3", mixStatus: "good", mixBar: 90,
     upfSolo: "5%", upfStatus: "off", upfBar: 17,
   },
   feb: {
     label: "February 2026",
-    ratio: "0.71", return_: "0.71", trend: "↘ -33% vs Jan", trendClass: "down",
-    cac: "$227", ltvSolo: "$56", ltvTeam: "$105",
+    ratio: "0.78", return_: "0.78", trend: "↘ -33% vs Jan", trendClass: "down",
+    cac: "$227", ltvSolo: "$72", ltvTeam: "$105",
     spend: "$22,907", spendBreakdown: "Google £16.7K × 1.34 + Apple $500",
     onbd: "101",
     act: "29%", actStatus: "off", actBar: 41,
     opens: "351",
     cpc: "£2.62", cpcStatus: "close", cpcBar: 76,
     subr: "22%", subrStatus: "good", subrBar: 100,
-    mix: "82 · 18 · 0", mixStatus: "close", mixBar: 55,
+    mix: "88 · 9 · 3", mixStatus: "good", mixBar: 95,
     upfSolo: "5%", upfStatus: "off", upfBar: 17,
   },
   mar: {
     label: "March 2026",
-    ratio: "1.39", return_: "1.39", trend: "↗ +96% vs Feb · best month on record", trendClass: "",
-    cac: "$70", ltvSolo: "$34", ltvTeam: "$63",
+    ratio: "1.53", return_: "1.53", trend: "↗ +96% vs Feb · best month on record", trendClass: "",
+    cac: "$70", ltvSolo: "$44", ltvTeam: "$63",
     spend: "$8,489", spendBreakdown: "Google £6.0K × 1.33 + Apple $500",
     onbd: "121",
     act: "33%", actStatus: "off", actBar: 47,
     opens: "369",
     cpc: "£2.43", cpcStatus: "close", cpcBar: 82,
     subr: "13%", subrStatus: "good", subrBar: 100,
-    mix: "81 · 19 · 0", mixStatus: "close", mixBar: 55,
+    mix: "87 · 11 · 3", mixStatus: "good", mixBar: 95,
     upfSolo: "0%", upfStatus: "off", upfBar: 0,
   },
 };
