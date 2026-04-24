@@ -2,384 +2,604 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Company Strategy — YouSquared</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Inter', sans-serif; color: #2D2A26; line-height: 1.65; background: #FFFFFF; }
-  .page { max-width: 900px; margin: 0 auto; padding: 60px 40px; }
-  h1, h2, h3, h4 { font-family: 'Lora', serif; }
-  a { color: #C75B39; text-decoration: none; }
-  a:hover { text-decoration: underline; }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #2D2A26;
+    background: #FFFFFF;
+    line-height: 1.6;
+    font-size: 16px;
+  }
+  a { color: #E07A5F; }
 
-  /* Hero */
+  /* HERO */
   .hero {
     background: linear-gradient(145deg, #2D2A26 0%, #433F3A 55%, #3A3632 100%);
-    color: white;
-    padding: 100px 40px 120px;
+    color: #fff;
+    padding: 88px 48px 96px;
     position: relative;
     overflow: hidden;
   }
-  .hero::before, .hero::after {
+  .hero::before {
     content: '';
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.25;
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 88% 25%, rgba(224, 122, 95, 0.25), transparent 55%);
     pointer-events: none;
   }
-  .hero::before { background: #FF8370; top: -200px; right: -150px; }
-  .hero::after  { background: #E07A5F; bottom: -250px; left: -200px; }
-  .hero-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
-  .eyebrow { font-size: 0.78em; letter-spacing: 0.2em; text-transform: uppercase; color: #FF8370; font-weight: 600; margin-bottom: 24px; }
-  .hero h1 { font-size: 3.4em; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 28px; }
-  .hero h1 em { font-style: italic; color: #FF8370; font-weight: 600; }
-  .hero .sub { font-size: 1.1em; color: rgba(255,255,255,0.72); max-width: 640px; }
-
-  /* Sections */
-  section { padding: 80px 40px; }
-  section.alt { background: #F5F2EF; }
-  section h2 {
-    font-size: 2em;
-    font-weight: 700;
-    margin-bottom: 16px;
-    letter-spacing: -0.01em;
-  }
-  section .lede { font-size: 1.1em; color: #6B6560; max-width: 680px; margin-bottom: 48px; }
-  section .inner { max-width: 900px; margin: 0 auto; }
-
-  /* Vision card */
-  .vision-card {
-    background: #FFFFFF;
-    border-left: 5px solid #E07A5F;
-    border-radius: 0 14px 14px 0;
-    padding: 40px 48px;
-    margin-top: 24px;
-    box-shadow: 0 4px 24px rgba(45, 42, 38, 0.06);
-  }
-  .vision-card .quote {
-    font-family: 'Lora', serif;
-    font-size: 1.55em;
-    font-weight: 400;
-    line-height: 1.45;
-    color: #2D2A26;
-  }
-  .vision-card .quote strong { color: #C75B39; font-weight: 600; }
-
-  /* Three convictions */
-  .conv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 16px; }
-  .conv-card { background: #FFFFFF; border-radius: 14px; padding: 32px 28px; box-shadow: 0 2px 12px rgba(45,42,38,0.06); }
-  .conv-num {
-    font-family: 'Lora', serif;
-    font-size: 2.5em;
-    font-weight: 700;
+  .hero-inner { max-width: 900px; margin: 0 auto; position: relative; }
+  .hero-eyebrow {
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 3.5px;
     color: #E07A5F;
-    line-height: 1;
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-family: 'Lora', serif;
+    font-size: 3.6em;
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    line-height: 1.05;
+    margin-bottom: 22px;
+  }
+  .hero-sub {
+    font-size: 1.2em;
+    color: rgba(255, 255, 255, 0.82);
+    font-weight: 300;
+    max-width: 680px;
+    letter-spacing: 0.1px;
+  }
+  .hero-sub em {
+    color: #F5B8A7;
+    font-style: normal;
+    font-weight: 500;
+  }
+  .crumb {
+    position: absolute;
+    top: 24px; left: 48px;
+    font-size: 0.82em;
+    color: rgba(255,255,255,0.5);
+    z-index: 2;
+  }
+  .crumb a { color: rgba(255,255,255,0.75); text-decoration: none; }
+  .crumb a:hover { color: #E07A5F; }
+
+  /* SECTIONS */
+  section {
+    padding: 80px 48px;
+  }
+  section.alt { background: #F5F2EF; }
+  .section-inner { max-width: 900px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #9E9893;
+    font-weight: 700;
     margin-bottom: 14px;
   }
-  .conv-card h3 { font-size: 1.15em; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.01em; }
-  .conv-card p { color: #6B6560; font-size: 0.95em; }
-
-  /* Journey */
-  .stage {
-    background: #FFFFFF;
-    border-radius: 16px;
-    padding: 32px 36px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 12px rgba(45,42,38,0.06);
-    display: grid;
-    grid-template-columns: 84px 1fr;
-    gap: 28px;
-    align-items: start;
-  }
-  .stage-num {
-    font-family: 'Lora', serif;
-    font-size: 3em;
+  .section-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 2em;
     font-weight: 700;
-    color: #E07A5F;
-    line-height: 1;
-  }
-  .stage-content h3 { font-size: 1.3em; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.01em; }
-  .stage-content .blurb { color: #4A4540; margin-bottom: 20px; }
-
-  .metric-row { display: grid; grid-template-columns: 110px 1fr; gap: 14px; margin-bottom: 10px; font-size: 0.92em; align-items: baseline; }
-  .metric-row .k { color: #9E9893; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.08em; font-weight: 600; padding-top: 3px; }
-  .metric-row .v { color: #2D2A26; }
-  .metric-row .v .target { color: #6B6560; }
-  .metric-row .v .actual { font-weight: 600; color: #2D2A26; }
-
-  .badge {
-    display: inline-block;
-    font-size: 0.72em;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 999px;
-    margin-left: 8px;
-    vertical-align: middle;
-    letter-spacing: 0.02em;
-  }
-  .badge.ok { background: #E6F4E8; color: #2E7D32; }
-  .badge.progress { background: #FFF1DB; color: #B87D1E; }
-  .badge.unknown { background: #EEE9E3; color: #8A817B; }
-
-  .stage-status {
-    display: inline-block;
-    font-size: 0.72em;
-    font-weight: 600;
-    padding: 4px 12px;
-    border-radius: 999px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-left: 10px;
-    vertical-align: middle;
-  }
-  .stage-status.now   { background: #FFEAE0; color: #C75B39; }
-  .stage-status.next  { background: #F5F2EF; color: #6B6560; }
-  .stage-status.done  { background: #E6F4E8; color: #2E7D32; }
-
-  /* Q&A */
-  .qa { margin-top: 16px; }
-  .qa-item {
-    padding: 28px 0;
-    border-bottom: 1px solid rgba(45,42,38,0.08);
-  }
-  .qa-item:last-child { border-bottom: none; }
-  .qa-q {
-    font-family: 'Lora', serif;
-    font-size: 1.2em;
-    font-weight: 600;
+    letter-spacing: -0.5px;
     color: #2D2A26;
     margin-bottom: 12px;
-    letter-spacing: -0.01em;
+    line-height: 1.2;
   }
-  .qa-q::before {
-    content: 'Q.';
-    color: #E07A5F;
+  .section-lead {
+    font-size: 1.05em;
+    color: #6B6560;
+    margin-bottom: 36px;
+    max-width: 680px;
+  }
+
+  /* CARD — conviction / target */
+  .card {
+    background: #fff;
+    border: 1px solid #EDE8E3;
+    border-radius: 14px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  section.alt .card { background: #FFFFFF; }
+  .card:hover { border-color: #D8D1CA; }
+  .card[open] {
+    border-color: #E07A5F;
+    box-shadow: 0 2px 20px rgba(224, 122, 95, 0.1);
+  }
+
+  .card summary {
+    cursor: pointer;
+    padding: 24px 28px;
+    list-style: none;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .card summary::-webkit-details-marker { display: none; }
+
+  .card-index {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #F5F2EF;
+    color: #6B6560;
+    font-family: 'Lora', serif;
+    font-size: 0.88em;
     font-weight: 700;
-    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+    transition: background 0.2s ease, color 0.2s ease;
   }
-  .qa-a { color: #4A4540; font-size: 1em; }
-  .qa-a em { color: #C75B39; font-style: normal; font-weight: 600; }
+  .card[open] .card-index { background: #E07A5F; color: #fff; }
 
-  /* Focus line */
-  .focus-block { display: grid; gap: 8px; }
+  .card-title {
+    flex: 1;
+    font-size: 1.12em;
+    font-weight: 600;
+    color: #2D2A26;
+    line-height: 1.45;
+  }
+  .card-title .vs {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.82em;
+    font-weight: 400;
+    color: #9E9893;
+  }
+  .card-title .vs strong { color: #E07A5F; font-weight: 600; }
 
-  /* Footer */
-  footer { padding: 48px 40px; background: #2D2A26; color: rgba(255,255,255,0.72); text-align: center; font-size: 0.9em; }
-  footer a { color: #FF8370; }
-  footer .meta { margin-top: 8px; color: rgba(255,255,255,0.4); font-size: 0.85em; }
+  .chev {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-top: 6px;
+    color: #9E9893;
+    transition: transform 0.25s ease, color 0.2s ease;
+  }
+  .card[open] .chev { transform: rotate(90deg); color: #E07A5F; }
 
-  @media (max-width: 720px) {
-    .hero { padding: 70px 28px 90px; }
-    .hero h1 { font-size: 2.3em; }
+  .card-body {
+    padding: 4px 28px 28px 74px;
+    color: #3A3632;
+    font-size: 0.96em;
+  }
+  .card-body > p { margin-bottom: 12px; }
+  .card-body > p:last-child { margin-bottom: 0; }
+
+  /* Nested <details> (chevron-in-chevron) */
+  details.nest { margin: 10px 0; }
+  details.nest > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 8px 0;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-weight: 500;
+    color: #2D2A26;
+  }
+  details.nest > summary::-webkit-details-marker { display: none; }
+  details.nest > summary::before {
+    content: '';
+    display: inline-block;
+    width: 0; height: 0;
+    border-left: 5px solid #9E9893;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    flex-shrink: 0;
+  }
+  details.nest[open] > summary::before {
+    transform: rotate(90deg);
+    border-left-color: #E07A5F;
+  }
+  details.nest > div.nest-body {
+    padding: 6px 0 6px 18px;
+    margin-left: 2px;
+    border-left: 2px solid #F5F2EF;
+  }
+  details.nest details.nest > div.nest-body {
+    border-left-color: #EDE8E3;
+  }
+
+  /* Bullet lists */
+  ul.bullets { list-style: none; padding: 0; }
+  ul.bullets li {
+    padding: 6px 0;
+    padding-left: 18px;
+    position: relative;
+    color: #3A3632;
+  }
+  ul.bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 14px;
+    width: 6px; height: 6px;
+    background: #E07A5F;
+    border-radius: 50%;
+  }
+  ul.bullets li .role {
+    color: #6B6560;
+    font-size: 0.88em;
+    margin-left: 6px;
+  }
+  ul.bullets li strong { color: #2D2A26; }
+
+  /* 2D Communication table */
+  .channel-table {
+    display: grid;
+    grid-template-columns: 110px 1fr 1fr;
+    gap: 1px;
+    background: #EDE8E3;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 14px 0;
+    font-size: 0.92em;
+    max-width: 460px;
+  }
+  .channel-table .cell { background: #fff; padding: 10px 14px; }
+  .channel-table .head {
+    background: #F5F2EF;
+    font-weight: 600;
+    font-size: 0.78em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6B6560;
+    text-align: center;
+  }
+  .channel-table .row-label {
+    background: #FAF8F5;
+    font-weight: 500;
+    color: #2D2A26;
+  }
+  .channel-table .check { color: #5A9A6F; text-align: center; font-weight: 600; }
+  .channel-table .dash  { color: #C9C3BD; text-align: center; }
+
+  /* "Where we are" — split */
+  .stance-quote {
+    font-family: 'Lora', serif;
+    font-size: 1.75em;
+    font-weight: 600;
+    color: #2D2A26;
+    line-height: 1.3;
+    max-width: 740px;
+    margin-bottom: 4px;
+  }
+  .stance-quote .em { color: #E07A5F; }
+
+  .stance {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 36px;
+  }
+  .stance > div {
+    background: #fff;
+    border: 1px solid #EDE8E3;
+    border-radius: 14px;
+    padding: 28px 30px;
+  }
+  .stance .label {
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .stance .proven .label { color: #5A9A6F; }
+  .stance .testing .label { color: #D49A2E; }
+  .stance .body {
+    font-size: 1.02em;
+    color: #2D2A26;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+  .stance .body .num {
+    font-family: 'Lora', serif;
+    font-size: 1.7em;
+    font-weight: 700;
+    color: #E07A5F;
+    display: block;
+    margin-top: 12px;
+    line-height: 1;
+  }
+  .stance .body .tag {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #F5F2EF;
+    border-radius: 6px;
+    font-size: 0.82em;
+    color: #6B6560;
+    margin: 3px 6px 3px 0;
+    font-weight: 500;
+  }
+  .stance a {
+    font-size: 0.88em;
+    color: #E07A5F;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .stance a:hover { text-decoration: underline; }
+
+  /* Retention customer list */
+  .customer {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px dashed #EDE8E3;
+  }
+  .customer:last-child { border-bottom: none; }
+  .customer .name { font-weight: 600; color: #2D2A26; }
+  .customer .note { color: #6B6560; font-size: 0.9em; }
+  .customer.churn .name { color: #C75B39; }
+  .customer.churn .note { color: #B66846; }
+
+  @media (max-width: 760px) {
+    .hero { padding: 72px 28px 80px; }
+    .hero h1 { font-size: 2.4em; }
+    .hero-sub { font-size: 1.05em; }
+    .crumb { left: 28px; }
     section { padding: 56px 28px; }
-    .conv-grid { grid-template-columns: 1fr; }
-    .stage { grid-template-columns: 1fr; gap: 14px; }
-    .stage-num { font-size: 2.2em; }
-    .metric-row { grid-template-columns: 1fr; gap: 2px; }
+    .card summary { padding: 20px 20px; gap: 14px; }
+    .card-body { padding: 4px 20px 24px 20px; }
+    .stance { grid-template-columns: 1fr; }
+    .stance-quote { font-size: 1.35em; }
+    .channel-table { grid-template-columns: 80px 1fr 1fr; font-size: 0.82em; }
   }
 </style>
 </head>
 <body>
 
 <div class="hero">
+  <div class="crumb"><a href="../">← Company Internal</a></div>
   <div class="hero-inner">
-    <div class="eyebrow">Strange Attractor · Company Strategy</div>
-    <h1>An economy where people don't just <em>use</em> AI,<br>they <em>own</em> AI.</h1>
-    <p class="sub">Turning expertise into income-generating AI agents — one continually-learning AI inbox at a time.</p>
+    <div class="hero-eyebrow">YouSquared · Company Strategy</div>
+    <h1>We're building the<br>AI Creator Economy</h1>
+    <p class="hero-sub">Where people don't just <em>use</em> AI — they <em>customize</em> and <em>monetize</em> their AI.</p>
   </div>
 </div>
 
-<!-- Three Convictions -->
+<!-- SECTION 1: THE THESIS -->
 <section>
-  <div class="inner">
-    <h2>Three convictions</h2>
-    <p class="lede">Why this bet, why now.</p>
+  <div class="section-inner">
+    <div class="section-label">The Thesis</div>
+    <h2 class="section-title">From expert to vertical</h2>
+    <p class="section-lead">Three convictions turn one domain expert's AI into a tool the entire vertical can run.</p>
 
-    <div class="conv-grid">
-      <div class="conv-card">
-        <div class="conv-num">1</div>
-        <h3>Personal AI lacks context, workflow, memory.</h3>
-        <p>Tired of copy-pasting between Email, Calendar, Drive and ChatGPT? We're giving users one AI inbox for all communication — and on-the-job learning from managerial voice feedback, the way humans learn.</p>
+    <details class="card" open>
+      <summary>
+        <div class="card-index">a</div>
+        <div class="card-title">Every vertical has experts who want AI — and have the network to spread it.</div>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="card-body">
+        <p>Operators already leaning in:</p>
+        <ul class="bullets">
+          <li><strong>Dr Jamil Asselah</strong><span class="role">oncology</span></li>
+          <li><strong>Dr Yaakov Mavashev</strong><span class="role">pharmacy · GLP1s</span></li>
+          <li><strong>Mark Groves</strong><span class="role">real estate</span></li>
+          <li><strong>Enrique Ochoa</strong><span class="role">equipment rental</span></li>
+        </ul>
       </div>
+    </details>
 
-      <div class="conv-card">
-        <div class="conv-num">2</div>
-        <h3>AGI can be democratized — without prompt engineering.</h3>
-        <p>Everyone can talk about what they want from their AI. We convert that into reliable custom prompts that self-evaluate and self-improve. YouTube let anyone run a channel; we envision a world where anyone can run their own AI, teaching it their skills, to work 10 jobs for them.</p>
+    <details class="card">
+      <summary>
+        <div class="card-index">b</div>
+        <div class="card-title">Their AI must learn every client task, automatically, as they work.</div>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="card-body">
+        <details class="nest" open>
+          <summary>All their tasks</summary>
+          <div class="nest-body">
+            <details class="nest" open>
+              <summary>Communication</summary>
+              <div class="nest-body">
+                <div class="channel-table">
+                  <div class="cell head"></div>
+                  <div class="cell head">Inbound</div>
+                  <div class="cell head">Outbound</div>
+                  <div class="cell row-label">Calls</div><div class="cell check">✓</div><div class="cell check">✓</div>
+                  <div class="cell row-label">Texts</div><div class="cell check">✓</div><div class="cell check">✓</div>
+                  <div class="cell row-label">Email</div><div class="cell check">✓</div><div class="cell check">✓</div>
+                  <div class="cell row-label">Events</div><div class="cell check">✓</div><div class="cell check">✓</div>
+                  <div class="cell row-label">Web Chat</div><div class="cell check">✓</div><div class="cell dash">—</div>
+                </div>
+              </div>
+            </details>
+          </div>
+        </details>
+        <details class="nest">
+          <summary>Continually learned</summary>
+          <div class="nest-body">
+            <p>The AI updates itself on every interaction — no manual prompt engineering, no training day, no configuration page.</p>
+          </div>
+        </details>
       </div>
+    </details>
 
-      <div class="conv-card">
-        <div class="conv-num">3</div>
-        <h3>GenAI can reduce medical mistakes — and save lives.</h3>
-        <p>Healthcare is understaffed: patients lack rapid affordable access, clinicians are burned out. Imagine if patients could talk to their doctor's AI.</p>
+    <details class="card">
+      <summary>
+        <div class="card-index">c</div>
+        <div class="card-title">One expert trains it. The whole vertical inherits it.</div>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="card-body">
+        <p>Customization is not per-user — it's per-vertical. One operator's tuned AI becomes the default every peer starts from.</p>
+        <ul class="bullets">
+          <li><strong>Enrique's AI</strong><span class="role">fits every construction equipment rental seller</span></li>
+          <li><strong>Mark's AI</strong><span class="role">fits every real estate agent</span></li>
+          <li><strong>Dr Mavashev's AI</strong><span class="role">fits every GLP1 pharmacy</span></li>
+          <li><strong>Dr Asselah's AI</strong><span class="role">fits every oncology clinic</span></li>
+        </ul>
       </div>
-    </div>
+    </details>
   </div>
 </section>
 
-<!-- Journey -->
+<!-- SECTION 2: WHERE WE ARE -->
 <section class="alt">
-  <div class="inner">
-    <h2>How we get there</h2>
-    <p class="lede">Five stages from seed to AI agent creator economy.</p>
+  <div class="section-inner">
+    <div class="section-label">Where We Are</div>
+    <p class="stance-quote">AI voicemail is the <span class="em">wedge</span>. Need to go <span class="em">end-to-end</span> on key segments.</p>
 
-    <div class="stage">
-      <div class="stage-num">0</div>
-      <div class="stage-content">
-        <h3>Raise $5M <span class="stage-status done">funded</span></h3>
-        <p class="blurb">Capital to build the AI Secretary and nurture the early B2B flywheel.</p>
-      </div>
-    </div>
-
-    <div class="stage">
-      <div class="stage-num">1</div>
-      <div class="stage-content">
-        <h3>Build an AI Secretary that continually learns <span class="stage-status now">now</span></h3>
-        <p class="blurb">AI handles calls, adapts to each user's custom needs, becomes a friend.</p>
-        <div class="focus-block">
-          <div class="metric-row">
-            <div class="k">Focus</div>
-            <div class="v">iOS · USA · voicemail replacement · healthcare emphasis</div>
-          </div>
-          <div class="metric-row">
-            <div class="k">Retention</div>
-            <div class="v"><span class="target">target &gt;25%</span> · <span class="actual">40% so far</span><span class="badge ok">beating</span></div>
-          </div>
-          <div class="metric-row">
-            <div class="k">App rating</div>
-            <div class="v"><span class="target">target &gt;4.5 unbiased</span> · <span class="actual">4.5 biased</span><span class="badge progress">needs unbiased sample</span></div>
-          </div>
-          <div class="metric-row">
-            <div class="k">Virality</div>
-            <div class="v"><span class="target">target +10% users/wk</span> · <span class="actual">unknown</span><span class="badge unknown">to measure</span></div>
-          </div>
+    <div class="stance">
+      <div class="proven">
+        <div class="label">What works</div>
+        <div class="body">
+          AI voicemail app
+          <span class="num">LTV:CAC = 0.77</span>
+          <div style="margin-top:10px; font-size:0.88em; color:#6B6560; font-weight:400;">Dec 2025 · <a href="../ltv-cac/">see the dashboard →</a></div>
         </div>
       </div>
-    </div>
-
-    <div class="stage">
-      <div class="stage-num">2</div>
-      <div class="stage-content">
-        <h3>App nurtures ripe B2B leads <span class="stage-status now">now</span></h3>
-        <p class="blurb">App spreads among colleagues; AI introduces user to Sales when ready to buy; adapts to company's custom needs.</p>
-        <div class="focus-block">
-          <div class="metric-row">
-            <div class="k">Focus</div>
-            <div class="v">iOS + browser · USA · call handling · healthcare emphasis · standard API connectors</div>
-          </div>
-          <div class="metric-row">
-            <div class="k">WAU → 5-fig ARR</div>
-            <div class="v"><span class="target">target &gt;2% in 90d</span> · <span class="actual">0.7% so far</span><span class="badge progress">closing gap</span></div>
-          </div>
-          <div class="metric-row">
-            <div class="k">ARR</div>
-            <div class="v"><span class="target">target $1M</span> · <span class="actual">$150k so far</span><span class="badge progress">15%</span></div>
-          </div>
-          <div class="metric-row">
-            <div class="k">LTV:CAC</div>
-            <div class="v"><span class="target">target ≥3</span> · <span class="actual">≥3 (if ≥1 Growth signing/wk)</span><span class="badge ok">on track</span></div>
+      <div class="testing">
+        <div class="label">What we're testing</div>
+        <div class="body">
+          End-to-end communication AI
+          <div style="margin-top:14px;">
+            <span class="tag">GLP1 pharmacies</span>
+            <span class="tag">oncology</span>
+            <span class="tag">real estate</span>
           </div>
         </div>
-      </div>
-    </div>
-
-    <div class="stage">
-      <div class="stage-num">3</div>
-      <div class="stage-content">
-        <h3>AI Secretary handles all communication <span class="stage-status next">next</span></h3>
-        <p class="blurb">Calls, schedule, texts, emails, web chat — one AI inbox.</p>
-      </div>
-    </div>
-
-    <div class="stage">
-      <div class="stage-num">4</div>
-      <div class="stage-content">
-        <h3>AI agent creator economy <span class="stage-status next">horizon</span></h3>
-        <p class="blurb">Users share their AIs' accomplishments in the YouSquared news feed. The community can hire them. AIs are ranked competitively — grandmasters in cancer-care patient communication, others in construction-equipment rental. We integrate healthcare; partners integrate us everywhere else.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Alignment Q&A -->
+<!-- SECTION 3: THE PATH -->
 <section>
-  <div class="inner">
-    <h2>Alignment Q&amp;A</h2>
-    <p class="lede">The questions the team and investors keep asking. <em style="color:#9E9893">Draft, open for debate.</em></p>
+  <div class="section-inner">
+    <div class="section-label">The Path</div>
+    <h2 class="section-title">Three operating targets to LTV:CAC ≥ 3</h2>
+    <p class="section-lead">Each target is a discrete bet with its own distribution mix. Click to expand the playbook.</p>
 
-    <div class="qa">
-
-      <div class="qa-item">
-        <div class="qa-q">What do we do? What's our focus?</div>
-        <div class="qa-a">Our AIs give people <em>instant 1-shot access</em> to services that currently take hours or days to find. Book in one go: an optometrist, a contract lawyer, a boom lift, a ride. This helps professionals book more qualified leads and fill their capacity.</div>
-      </div>
-
-      <div class="qa-item">
-        <div class="qa-q">Should we focus exclusively on healthcare?</div>
-        <div class="qa-a">Healthcare is our favorite vertical — most meaningful impact — but it's not our only vertical. Too risky, slow-moving, AI-cautious. And needlessly limiting: healthcare features carry over to other verticals. <em>Being horizontal means we can be viral.</em></div>
-      </div>
-
-      <div class="qa-item">
-        <div class="qa-q">Should we focus exclusively on solopreneurs?</div>
-        <div class="qa-a">No. The lack of team potential makes the unit economics unattractive. Our LTV:CAC sweet spot is <em>20–1,000 person companies</em>. Also: solopreneur-only would bar us from &gt;99% of healthcare. Ever consulted a doctor who had zero staff?</div>
-      </div>
-
-      <div class="qa-item">
-        <div class="qa-q">What's our vision?</div>
-        <div class="qa-a">AI agent creator economy: top users specialize their AI characters to their profession and distribute them to others in their field. Already happening: Jamil → Amanda → oncology; Enrique → Thomas → equipment rental; Carlos → Sarah → transportation.</div>
-      </div>
-
-      <div class="qa-item">
-        <div class="qa-q">If we're vertical- and size-agnostic, will we lose to specialized competitors?</div>
-        <div class="qa-a">We prioritize vertical software integrations in our top 3 verticals: <em>Construction, Healthcare, Real Estate</em>. Mid-term we cover many verticals by letting our AI-creator users do the specialization &amp; distribution via user-generated industry templates — they have more domain expertise and connections than we do.</div>
-      </div>
-
-      <div class="qa-item">
-        <div class="qa-q">What do we <em>not</em> do?</div>
-        <div class="qa-a">
-          We are not offering the product outside the US (until we reach US commercial leadership).<br>
-          We are not building an Android version (until we expand to an Android-dominant geo).<br>
-          We are not offering medical-advice AI — we help healthcare professionals book qualified patients &amp; fill available capacity.
+    <details class="card">
+      <summary>
+        <div class="card-index">a</div>
+        <div class="card-title">
+          +5% / week new users through organic virality
+          <span class="vs">vs <strong>not yet tracked weekly</strong> · Dec 2025 organic share of downloads: 13%</span>
         </div>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="card-body">
+        <details class="nest" open>
+          <summary>PLG base layer — product spreads user to user</summary>
+          <div class="nest-body">
+            <details class="nest">
+              <summary>User → contacts</summary>
+              <div class="nest-body">
+                <ul class="bullets"><li>AI praise calls</li><li>Referrals</li></ul>
+              </div>
+            </details>
+            <details class="nest">
+              <summary>User → colleagues</summary>
+              <div class="nest-body">
+                <ul class="bullets"><li>Shared inbox</li><li>To-Dos</li></ul>
+              </div>
+            </details>
+            <details class="nest">
+              <summary>User → social</summary>
+              <div class="nest-body">
+                <ul class="bullets"><li>Founder social</li><li>Referrals</li></ul>
+              </div>
+            </details>
+          </div>
+        </details>
+        <details class="nest">
+          <summary>Paid ads</summary>
+          <div class="nest-body">
+            <ul class="bullets"><li>Google Search ads</li><li>Meta ads</li><li>LinkedIn ads</li></ul>
+          </div>
+        </details>
       </div>
+    </details>
 
-      <div class="qa-item">
-        <div class="qa-q">Isn't viral consumer tech more exciting than B2B CRM software?</div>
-        <div class="qa-a">We're a hybrid. <em>Consumer side:</em> humanized AIs with empathy, social sharing loops, gamified AI specialization &amp; distribution, YouSquared best-practice news feed &amp; forum. <em>B2B side:</em> CRM lead capture, tracking, 3rd-party integrations.</div>
+    <details class="card">
+      <summary>
+        <div class="card-index">b</div>
+        <div class="card-title">
+          4% upgrade to ≥ $2k/mo Team plan
+          <span class="vs">vs <strong>1% today</strong> · Team mix Dec 2025</span>
+        </div>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="card-body">
+        <details class="nest" open>
+          <summary>Product-led sales — users intro 5 decision-makers / week</summary>
+          <div class="nest-body">
+            <ul class="bullets">
+              <li>Identify qualified leads within the user base</li>
+              <li>Get users to intro their leadership</li>
+            </ul>
+            <details class="nest">
+              <summary>White-glove playbook</summary>
+              <div class="nest-body">
+                <p>See <a href="../../customer-facing/white-glove-playbooks/seller-playbook/">proactive support seller playbook →</a></p>
+              </div>
+            </details>
+          </div>
+        </details>
+        <details class="nest">
+          <summary>Outbound layer — 5 decision-makers / week from cold</summary>
+          <div class="nest-body">
+            <ul class="bullets">
+              <li>Paid ads</li>
+              <li>Partnerships <span class="role">(Verizon)</span></li>
+            </ul>
+            <details class="nest">
+              <summary>Cold outreach</summary>
+              <div class="nest-body">
+                <ul class="bullets">
+                  <li>LinkedIn invites + weekly posts</li>
+                  <li>Cold emails inviting the decision-maker to call our demo number</li>
+                </ul>
+              </div>
+            </details>
+            <ul class="bullets"><li>Events</li></ul>
+          </div>
+        </details>
       </div>
+    </details>
 
-      <div class="qa-item">
-        <div class="qa-q">Are we building a browser version?</div>
-        <div class="qa-a">Yes. Every popular app has one — typing on a desktop keyboard is more productive. AI medical scribes are predominantly desktop. Even Breezy (solopreneur-focused) offers a browser version.</div>
+    <details class="card">
+      <summary>
+        <div class="card-index">c</div>
+        <div class="card-title">
+          ≥ 12 months subscriber retention
+          <span class="vs">vs <strong>7.3 mo today</strong> · Solo lifetime Dec 2025</span>
+        </div>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="card-body">
+        <p style="color:#6B6560;">The Team customers carrying the retention bet today:</p>
+        <div class="customer"><span class="name">Hiller &amp; Shunnarah</span><span class="note">$50k/yr · 7-figure potential</span></div>
+        <div class="customer"><span class="name">McGill University Health Center</span></div>
+        <div class="customer"><span class="name">Safer Pharmacy</span></div>
+        <div class="customer"><span class="name">Ahava Medical</span></div>
+        <div class="customer churn"><span class="name">All Access Services</span><span class="note">$20k/yr churned — lessons learned</span></div>
       </div>
-
-      <div class="qa-item">
-        <div class="qa-q">What do we expand to next?</div>
-        <div class="qa-a"><em>Calls → Calendar → Texts → Email → Note-taking → Web Chat.</em> Some people prefer to call, others text, email, chat. <strong>Email will be game-changing</strong>: 70–90% of leads in almost every vertical (incl. healthcare). We already lose healthcare leads to Breezy, who cover all communication channels with a similar-sized dev team.</div>
-      </div>
-
-      <div class="qa-item">
-        <div class="qa-q">How does the Verizon partnership fit in?</div>
-        <div class="qa-a">The most strategic possible partnership for us. <em>⅓ of all voicemails in America are triggered by Verizon.</em> Verizon is best positioned to upgrade the American phone-call economy — defaulting to voice AI rather than voicemail when a human is unavailable. They can distribute and integrate us so businesses and phone-driven professionals can activate YouSquared easily.</div>
-      </div>
-
-      <div class="qa-item">
-        <div class="qa-q">When do we come out of stealth?</div>
-        <div class="qa-a"><em>March–May 2026, with Verizon.</em></div>
-      </div>
-
-    </div>
+    </details>
   </div>
 </section>
-
-<footer>
-  <div>Source: <a href="https://docs.google.com/document/d/1ofCdwa48tkEQ2H-qTSdvsSc9_jDTIyDVU0321MozX0I/edit">Company Strategy — YouSquared by Strange Attractor</a></div>
-  <div class="meta">Living document · strange-attractor.com/presentations/company-internal/company-strategy/</div>
-</footer>
 
 </body>
 </html>
