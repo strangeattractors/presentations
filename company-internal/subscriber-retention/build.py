@@ -218,7 +218,7 @@ def render_chart(km: pd.DataFrame, months: np.ndarray, forecast: np.ndarray,
 
     for ax in (axL, axR):
         ax.plot(months, forecast, linestyle=(0, (6, 4)), color=BRAND["forecast"], linewidth=2.0,
-                label=f"Conservative Forecast (Lifetime: ~{lifetime_months:.1f} Mo, LTV: ${round(ltv):,})")
+                label=f"Conservative Forecast (Lifetime: ~{int(round(lifetime_months))} Mo, LTV: ${int(round(ltv)):,})")
         ax.step(km_months, km["S"], where="post", color=BRAND["km"], linewidth=2.4,
                 label="Observed Retention (KM model)")
         ax.fill_between(km_months, km["lo"], km["hi"], step="post", color=BRAND["km_fill"], alpha=0.55)

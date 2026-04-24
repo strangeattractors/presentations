@@ -249,8 +249,8 @@
       <div class="h-ltv-label">Blended Subscriber LTV</div>
       <div class="h-ltv-val">$295</div>
       <div class="h-ltv-sub">
-        <strong>9.3 month</strong> average lifetime · weighted ARPU <strong>$31.73</strong><br>
-        Aligns with LTV:CAC dashboard Solo LTV ($34 monthly ARPU × 7.3 mo = $248); our Kaplan–Meier model adds ~$47 from the stabilized tail.
+        <strong>9 month</strong> average lifetime · weighted ARPU <strong>$32</strong><br>
+        Aligns with LTV:CAC dashboard Solo LTV ($34 monthly ARPU × 7 mo ≈ $238); our Kaplan–Meier model adds ~$57 from the stabilized tail.
       </div>
     </div>
     <div class="h-right">
@@ -266,12 +266,12 @@
       </div>
       <div class="h-box">
         <div class="bl">Weighted ARPU</div>
-        <div class="bv">$31.73</div>
+        <div class="bv">$32</div>
         <div class="bn">active-user mix</div>
       </div>
       <div class="h-box">
         <div class="bl">Avg Lifetime</div>
-        <div class="bv">9.3 mo</div>
+        <div class="bv">9 mo</div>
         <div class="bn">forecast integral</div>
       </div>
     </div>
@@ -292,18 +292,18 @@
     <div class="anchors-grid">
       <div class="anc">
         <div class="lb">S · Month 2</div>
-        <div class="vl">45.6%</div>
+        <div class="vl">46%</div>
         <div class="nt">after bad-fit filter</div>
       </div>
       <div class="anc">
         <div class="lb">S · Month 8</div>
-        <div class="vl">38.8%</div>
+        <div class="vl">39%</div>
         <div class="nt">stabilized core</div>
       </div>
       <div class="anc drop">
         <div class="lb">Absolute Drop · Mo 2 → 8</div>
-        <div class="vl">6.8 pp</div>
-        <div class="nt">≈ 1.13 pp / month</div>
+        <div class="vl">7 pp</div>
+        <div class="nt">≈ 1 pp / month</div>
       </div>
       <div class="anc drop">
         <div class="lb">Forecast · zero month</div>
@@ -321,7 +321,7 @@
       <li><strong>Observed KM</strong> — standard step-down estimator with 95% Beta-distributed confidence intervals. Intervals enforced monotone non-increasing.</li>
       <li><strong>Stabilized-core forecast</strong> — months 0–8 follow the KM curve; from month 8 onward we step down by the <em>absolute</em> drop observed between months 2 and 8, every 6 months, until zero. This is materially more conservative than exponential decay but more realistic than flat survival for a cohort where bad-fit users filter out by month 2.</li>
       <li><strong>Weighted ARPU</strong> — per active user, take the revenue of their latest <code>rc_initial_purchase_event</code> or <code>rc_renewal_event</code>; annual plans divided by 12. Missing revenue is imputed from <code>product_id</code> (<em>elite</em> → $60, <em>pro</em> → $30, fallback $30). 16 of 112 active users fell through to fallback — all are <code>pro.montly</code> subscribers whose latest purchase/renewal event dropped its <code>product_id</code>; $30 is the correct price. <strong>No Team plans appear in this dataset</strong> (Team is custom-contract, tracked separately in the <a href="../ltv-cac/" style="color:var(--terracotta);text-decoration:none;">LTV:CAC dashboard</a>).</li>
-      <li><strong>LTV</strong> — area under the dense forecast curve (0.1-month steps) × weighted ARPU = 9.3 × $31.73 = $295.</li>
+      <li><strong>LTV</strong> — weighted ARPU × area under the dense forecast curve, rounded. All displayed metrics are rounded to whole units.</li>
     </ul>
   </div>
 
