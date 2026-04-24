@@ -63,8 +63,8 @@
   .strip-head .h { font-size: 0.78em; color: var(--faint); font-weight: 500; }
   .strip {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
   }
   .mo {
     background: var(--paper);
@@ -264,6 +264,31 @@
     margin-bottom: 10px;
   }
 
+  /* WARNING */
+  .warn {
+    background: var(--off-wash);
+    border: 1px solid var(--off-soft);
+    border-left: 4px solid var(--off);
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 20px;
+    font-size: 0.88em;
+    line-height: 1.55;
+    color: var(--charcoal);
+  }
+  .warn-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--off);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .warn strong { color: var(--charcoal); font-weight: 700; }
+
   /* NOTES */
   .notes {
     background: #fff;
@@ -323,14 +348,14 @@
   <div class="title-block">
     <div class="eyebrow">To Spend or Not to Spend</div>
     <h1>YouSquared · LTV : CAC</h1>
-    <div class="sub">March 2026 · tracking since Dec 2025</div>
+    <div class="sub">March 2026 · tracking since Dec 2025 · April outlook at-risk</div>
   </div>
 
   <!-- TIME-SERIES STRIP -->
   <div class="strip-wrap">
     <div class="strip-head">
       <div class="t">Monthly LTV : CAC</div>
-      <div class="h">Target 3.0 · Dec 2025 → Apr 2026</div>
+      <div class="h">Target 3.0 · Dec 2025 → Mar 2026</div>
     </div>
     <div class="strip">
       <div class="mo close">
@@ -353,12 +378,6 @@
         <div class="mo-label">Mar 2026</div>
         <div class="mo-ratio">1.39</div>
         <div class="mo-bar"><div class="mo-fill" style="width:46%"></div></div>
-      </div>
-      <div class="mo off">
-        <div class="mo-tag">MTD</div>
-        <div class="mo-label">Apr 2026</div>
-        <div class="mo-ratio">0.24</div>
-        <div class="mo-bar"><div class="mo-fill" style="width:8%"></div></div>
       </div>
     </div>
   </div>
@@ -483,12 +502,12 @@
       </div>
 
       <div class="row">
-        <div class="ic wash-close">🌱</div>
+        <div class="ic wash-good">🌱</div>
         <div>
           <div class="metric-name">Team count (active)</div>
-          <div class="metric-val"><span class="v close">1</span><span class="goal">Dec 2025 enterprise · $4K MRR</span></div>
+          <div class="metric-val"><span class="v good">3</span><span class="goal">HSTA · Safer Pharmacy · Ahava Medical</span></div>
         </div>
-        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill close" style="width:33%"></div></div></div>
+        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill good" style="width:75%"></div></div></div>
       </div>
 
     </div>
@@ -507,6 +526,12 @@
     </div>
   </div>
 
+  <!-- APRIL WARNING -->
+  <div class="warn">
+    <div class="warn-head">⚠ April outlook · challenging</div>
+    <strong>No Team plan signed this month.</strong> Pipeline is thin — we don't yet have a steady flow of decision-maker meetings. Every month without a Team signing leaves ~$48K of locked-in LTV on the table. Top April priority: rebuild the top-of-funnel DM meeting cadence.
+  </div>
+
   <!-- NOTES / INSIGHTS -->
   <div class="notes">
     <div class="notes-title">What this tells us</div>
@@ -514,11 +539,10 @@
       <li><strong>Mar rebound driven by ad-spend cuts</strong> — Google spend dropped £18K → £6K while onboarded held at 121. CAC fell from $227 → $70.</li>
       <li><strong>Activation still the biggest CAC lever</strong> — 33% vs 70% target. Every 10pp gain cuts CAC ~20%.</li>
       <li><strong>Elite mix climbing</strong> — 3% Dec → 19% Mar. More users choosing $60/mo unlimited plan.</li>
-      <li><strong>Apr MTD is noisy</strong> — £5K Meta test + partial-month ads against low onboarded count drives CAC to $388. Wait for full-month view.</li>
-      <li><strong>Team is the unrealised lever</strong> — 1 custom-enterprise Team customer accounts for 68% of LTV. No new Team signups since Dec.</li>
+      <li><strong>Team book is the locked-in lever</strong> — 3 active Team customers (HSTA, Safer Pharmacy, Ahava Medical) contribute the majority of forward LTV at $4K/mo average.</li>
     </ul>
     <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 0.78em; color: var(--faint);">
-      <strong style="color: var(--muted);">Methodology note.</strong> Onboarded = Mixpanel <code style="background:transparent; padding:0;">call_forwarding_verification_success</code> · Subs = RevenueCat <code style="background:transparent; padding:0;">rc_initial_purchase_event</code> · Team% held steady at 1% (B2C2B expectation) · Solo lifetime 7.3mo, Team 12mo carried from Dec baseline. Dec 2025 ratio (1.02) differs from earlier snapshot (0.77) due to consistent Mixpanel-sourced sub rate across months.
+      <strong style="color: var(--muted);">Methodology note.</strong> Onboarded = Mixpanel <code style="background:transparent; padding:0;">call_forwarding_verification_success</code> · Subs = RevenueCat <code style="background:transparent; padding:0;">rc_initial_purchase_event</code> · Team% held steady at 1% (B2C2B steady-state expectation) · Solo lifetime 7.3mo, Team 12mo carried from Dec baseline. Dec 2025 ratio (1.02) differs from earlier snapshot (0.77) due to consistent Mixpanel-sourced sub rate across months.
     </div>
   </div>
 
