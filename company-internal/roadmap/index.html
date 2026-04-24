@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roadmap — YouSquared</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #2D2A26;
+    background: #FFFFFF;
+    line-height: 1.6;
+    font-size: 16px;
+  }
+  a { color: #E07A5F; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(145deg, #2D2A26 0%, #433F3A 55%, #3A3632 100%);
+    color: #fff;
+    padding: 88px 48px 96px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 88% 25%, rgba(224, 122, 95, 0.25), transparent 55%);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 960px; margin: 0 auto; position: relative; }
+  .hero-eyebrow {
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 3.5px;
+    color: #E07A5F;
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-family: 'Lora', serif;
+    font-size: 3.6em;
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    line-height: 1.05;
+    margin-bottom: 22px;
+  }
+  .hero-sub {
+    font-size: 1.2em;
+    color: rgba(255, 255, 255, 0.82);
+    font-weight: 300;
+    max-width: 720px;
+    letter-spacing: 0.1px;
+  }
+  .hero-sub em {
+    color: #F5B8A7;
+    font-style: normal;
+    font-weight: 500;
+  }
+  .crumb {
+    position: absolute;
+    top: 24px; left: 48px;
+    font-size: 0.82em;
+    color: rgba(255,255,255,0.5);
+    z-index: 2;
+  }
+  .crumb a { color: rgba(255,255,255,0.75); text-decoration: none; }
+  .crumb a:hover { color: #E07A5F; }
+
+  .hero-source {
+    margin-top: 28px;
+    font-size: 0.88em;
+    color: rgba(255,255,255,0.6);
+  }
+  .hero-source a { color: rgba(255,255,255,0.88); text-decoration: underline; text-underline-offset: 3px; }
+  .hero-source a:hover { color: #E07A5F; }
+
+  /* SECTIONS */
+  section { padding: 80px 48px; }
+  section.alt { background: #F5F2EF; }
+  .section-inner { max-width: 960px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #9E9893;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 2em;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #2D2A26;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  .section-lead {
+    font-size: 1.05em;
+    color: #6B6560;
+    margin-bottom: 36px;
+    max-width: 720px;
+  }
+
+  /* AT-A-GLANCE TABLE */
+  .glance {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.94em;
+    background: #fff;
+    border: 1px solid #EDE8E3;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .glance th, .glance td {
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 1px solid #EDE8E3;
+    vertical-align: top;
+  }
+  .glance tr:last-child td { border-bottom: none; }
+  .glance th {
+    background: #F5F2EF;
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #6B6560;
+    font-weight: 700;
+  }
+  .glance td.num {
+    font-family: 'Lora', serif;
+    font-weight: 700;
+    color: #E07A5F;
+    width: 40px;
+  }
+  .glance td.feat a { color: #2D2A26; font-weight: 600; text-decoration: none; border-bottom: 1px solid transparent; }
+  .glance td.feat a:hover { border-bottom-color: #E07A5F; color: #E07A5F; }
+  .glance .person {
+    display: inline-block;
+    padding: 2px 8px;
+    background: #F5F2EF;
+    border-radius: 4px;
+    font-size: 0.88em;
+    color: #2D2A26;
+    font-weight: 500;
+  }
+  .glance .kpi { color: #6B6560; font-size: 0.92em; }
+  .glance .star { color: #D49A2E; font-weight: 700; }
+
+  .legend {
+    margin-top: 18px;
+    font-size: 0.88em;
+    color: #6B6560;
+  }
+  .legend .star { color: #D49A2E; font-weight: 700; }
+
+  /* FEATURE CARDS */
+  .card {
+    background: #fff;
+    border: 1px solid #EDE8E3;
+    border-radius: 14px;
+    margin-bottom: 14px;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  section.alt .card { background: #FFFFFF; }
+  .card:hover { border-color: #D8D1CA; }
+  .card[open] {
+    border-color: #E07A5F;
+    box-shadow: 0 2px 20px rgba(224, 122, 95, 0.1);
+  }
+
+  .card summary {
+    cursor: pointer;
+    padding: 22px 26px;
+    list-style: none;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .card summary::-webkit-details-marker { display: none; }
+
+  .card-index {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #F5F2EF;
+    color: #6B6560;
+    font-family: 'Lora', serif;
+    font-size: 0.95em;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .card[open] .card-index { background: #E07A5F; color: #fff; }
+
+  .card-heading {
+    flex: 1;
+    min-width: 0;
+  }
+  .card-title {
+    font-size: 1.12em;
+    font-weight: 600;
+    color: #2D2A26;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+  .card-title .star { color: #D49A2E; }
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    font-size: 0.86em;
+    color: #6B6560;
+  }
+  .card-meta .m-item { display: inline-flex; align-items: baseline; gap: 5px; }
+  .card-meta .m-label {
+    font-size: 0.78em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #9E9893;
+    font-weight: 700;
+  }
+  .card-meta .person {
+    display: inline-block;
+    padding: 2px 8px;
+    background: #F5F2EF;
+    border-radius: 4px;
+    color: #2D2A26;
+    font-weight: 500;
+  }
+  .card-meta .kpi-val { color: #2D2A26; font-weight: 500; }
+
+  .chev {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-top: 8px;
+    color: #9E9893;
+    transition: transform 0.25s ease, color 0.2s ease;
+  }
+  .card[open] .chev { transform: rotate(90deg); color: #E07A5F; }
+
+  .card-body {
+    padding: 4px 26px 26px 76px;
+    color: #3A3632;
+    font-size: 0.96em;
+  }
+  .card-body > p { margin-bottom: 12px; }
+  .card-body > p:last-child { margin-bottom: 0; }
+  .card-body h4 {
+    font-size: 0.76em;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    color: #9E9893;
+    font-weight: 700;
+    margin: 18px 0 10px;
+  }
+  .card-body h4:first-child { margin-top: 0; }
+
+  ul.bullets { list-style: none; padding: 0; }
+  ul.bullets li {
+    padding: 5px 0;
+    padding-left: 18px;
+    position: relative;
+    color: #3A3632;
+  }
+  ul.bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 13px;
+    width: 6px; height: 6px;
+    background: #E07A5F;
+    border-radius: 50%;
+  }
+  ul.bullets li strong { color: #2D2A26; }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid #EDE8E3;
+    background: #FAF8F5;
+    color: #2D2A26;
+    text-decoration: none;
+    font-size: 0.88em;
+    font-weight: 500;
+    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+  }
+  .pill:hover { border-color: #E07A5F; color: #E07A5F; background: #fff; }
+  .pill.primary {
+    background: #E07A5F;
+    color: #fff;
+    border-color: #E07A5F;
+  }
+  .pill.primary:hover { background: #D4523A; border-color: #D4523A; color: #fff; }
+  .pill svg { width: 14px; height: 14px; }
+
+  /* Mockup strips */
+  .mocks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+    max-width: 560px;
+  }
+  .mocks img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid #EDE8E3;
+    background: #F5F2EF;
+    display: block;
+  }
+
+  /* checklist */
+  .check-list {
+    list-style: none;
+    padding: 0;
+    margin: 6px 0 0;
+  }
+  .check-list li {
+    padding: 4px 0 4px 26px;
+    position: relative;
+    font-size: 0.95em;
+    color: #3A3632;
+  }
+  .check-list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px;
+    width: 14px; height: 14px;
+    border-radius: 4px;
+    border: 1.5px solid #C9C3BD;
+    background: #fff;
+  }
+  .check-list li.done::before {
+    background: #5A9A6F;
+    border-color: #5A9A6F;
+  }
+  .check-list li.done::after {
+    content: '';
+    position: absolute;
+    left: 3px; top: 11px;
+    width: 8px; height: 4px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg);
+  }
+
+  /* Scope rules */
+  .rules {
+    background: #fff;
+    border: 1px solid #EDE8E3;
+    border-radius: 14px;
+    padding: 28px 32px;
+  }
+  .rules h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.15em;
+    font-weight: 600;
+    color: #2D2A26;
+    margin-bottom: 12px;
+  }
+  .rules p { color: #3A3632; margin-bottom: 10px; }
+  .rules p:last-child { margin-bottom: 0; }
+
+  .runner-up {
+    margin-top: 24px;
+    padding: 18px 22px;
+    background: #FAF8F5;
+    border-radius: 10px;
+    border: 1px dashed #D8D1CA;
+    color: #6B6560;
+    font-size: 0.94em;
+  }
+  .runner-up strong { color: #2D2A26; }
+
+  @media (max-width: 860px) {
+    .hero { padding: 72px 28px 80px; }
+    .hero h1 { font-size: 2.4em; }
+    .hero-sub { font-size: 1.05em; }
+    .crumb { left: 28px; }
+    section { padding: 56px 24px; }
+    .card summary { padding: 18px 18px; gap: 14px; }
+    .card-body { padding: 4px 18px 22px 18px; }
+    .glance { font-size: 0.86em; }
+    .glance th, .glance td { padding: 10px 10px; }
+    .glance .hide-m { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="crumb"><a href="../">← Company Internal</a></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">YouSquared · Roadmap</div>
+    <h1>Ten features, shipping now</h1>
+    <p class="hero-sub">The top priority work driving <em>retention</em>, <em>revenue uplift</em>, and <em>Team plan sales</em> — plus the scope rules that keep it moving.</p>
+    <div class="hero-source">Source of truth: <a href="https://github.com/strangeattractors/u2-issues-request/issues/433" target="_blank">Roadmap · issue #433</a></div>
+  </div>
+</div>
+
+<!-- AT A GLANCE -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">At a Glance</div>
+    <h2 class="section-title">Top priority — ten features</h2>
+    <p class="section-lead">Each feature has a scoper, an implementer, and a single KPI. Click any row for detail.</p>
+
+    <table class="glance">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Feature</th>
+          <th class="hide-m">Scope</th>
+          <th class="hide-m">Implement</th>
+          <th>KPI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="num">1</td><td class="feat"><a href="#f1">Teams viral self-serve <span class="star">*</span></a></td><td class="hide-m"><span class="person">AdB</span></td><td class="hide-m"><span class="person">AdB</span></td><td class="kpi">Team plan purchases</td></tr>
+        <tr><td class="num">2</td><td class="feat"><a href="#f2">VIP transfer</a></td><td class="hide-m"><span class="person">AD</span></td><td class="hide-m"><span class="person">Anth</span></td><td class="kpi">% dissatisfied senior caller</td></tr>
+        <tr><td class="num">3</td><td class="feat"><a href="#f3">AI call monitoring &amp; improvement</a></td><td class="hide-m"><span class="person">AdB</span></td><td class="hide-m"><span class="person">AdB</span></td><td class="kpi">Retention</td></tr>
+        <tr><td class="num">4</td><td class="feat"><a href="#f4">Industry auto config</a></td><td class="hide-m"><span class="person">AD</span></td><td class="hide-m"><span class="person">Tomo</span></td><td class="kpi">Retention</td></tr>
+        <tr><td class="num">5</td><td class="feat"><a href="#f5">Scheduled outbound <span class="star">*</span></a></td><td class="hide-m"><span class="person">AD <span class="star">*</span></span></td><td class="hide-m"><span class="person">Anth</span></td><td class="kpi">Revenue uplift</td></tr>
+        <tr><td class="num">6</td><td class="feat"><a href="#f6">User Stats <span class="star">*</span></a></td><td class="hide-m"><span class="person">AD <span class="star">*</span></span></td><td class="hide-m"><span class="person">Joris <span class="star">*</span></span></td><td class="kpi">Revenue uplift</td></tr>
+        <tr><td class="num">7</td><td class="feat"><a href="#f7">Web app — self-serve &amp; parity</a></td><td class="hide-m"><span class="person">AD</span></td><td class="hide-m"><span class="person">Jake</span></td><td class="kpi">Team plan purchases</td></tr>
+        <tr><td class="num">8</td><td class="feat"><a href="#f8">To-Dos <span class="star">*</span></a></td><td class="hide-m"><span class="person">AD <span class="star">*</span></span></td><td class="hide-m"><span class="person">Anth</span></td><td class="kpi">Team plan purchases</td></tr>
+        <tr><td class="num">9</td><td class="feat"><a href="#f9">Prompt learning <span class="star">*</span></a></td><td class="hide-m"><span class="person">AD <span class="star">*</span></span></td><td class="hide-m"><span class="person">Tomo</span></td><td class="kpi">AI sub-task accuracy</td></tr>
+        <tr><td class="num">10</td><td class="feat"><a href="#f10">$0.04/min cost</a></td><td class="hide-m"><span class="person">AdB</span></td><td class="hide-m"><span class="person">Tomo</span></td><td class="kpi">$0.04/min cost</td></tr>
+      </tbody>
+    </table>
+    <div class="legend"><span class="star">*</span> pending AD–AdB alignment</div>
+  </div>
+</section>
+
+<!-- FEATURE DETAIL CARDS -->
+<section class="alt">
+  <div class="section-inner">
+    <div class="section-label">Feature Detail</div>
+    <h2 class="section-title">Scope, prototypes, shipping status</h2>
+    <p class="section-lead">Each feature below has a plain-English goal, the KPI it moves, and links to the issue and any interactive prototype.</p>
+
+    <!-- 1 Teams -->
+    <details class="card" id="f1">
+      <summary>
+        <div class="card-index">1</div>
+        <div class="card-heading">
+          <div class="card-title">Teams viral self-serve <span class="star">*</span></div>
+          <div class="card-meta">
+            <span class="m-item"><span class="m-label">Scope</span><span class="person">AdB</span></span>
+            <span class="m-item"><span class="m-label">Impl</span><span class="person">AdB</span></span>
+            <span class="m-item"><span class="m-label">KPI</span><span class="kpi-val">Team plan purchases</span></span>
+          </div>
+        </div>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="card-body">
+        <p>Shift to an <strong>assistant-centric architecture</strong> where every user belongs to a team — solo users get a team of one. Eliminates the solo-vs-team code branching and enables shared assistants, shared contacts, and shared inboxes out of the box.</p>
+        <h4>Data Model</h4>
+        <ul class="bullets">
+          <li><strong>Team</strong> owns usage, contacts, and assistants (all team-level, all visible to all members)</li>
+          <li><strong>User</strong> joins teams via <strong>TeamMembership</strong> with a role (owner / admin / member)</li>
+          <li><strong>Roles</strong>: owner/admin create &amp; configure assistants; members can view everything</li>
+        </ul>
+        <h4>Why this unlocks virality</h4>
+        <p>Once a user adds a colleague, that colleague instantly sees the shared inbox &amp; contacts — turning a personal AI into a team tool without migration.</p>
+        <div class="links">
+          <a class="pill primary" href="https://github.com/strangeattractors/u2-issues-request/issues/437" target="_blank">Issue #437<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></a>
+        </div>
+      </div>
+    </details>
+
+    <!-- 2 VIP transfer -->
+    <details class="card" id="f2">
+      <summary>
+        <div class="card-index">2</div>
+        <div class="card-heading">
+          <div class="card-title">VIP transfer</div>
+          <div class="card-meta">
+            <span class="m-item"><span class="m-label">Scope</span><span class="person">AD</span></span>
+            <span class="m-item"><span class="m-label">Impl</span><span class="person">Anth</span></span>
+            <span class="m-item"><span class="m-label">KPI</span><span class="kpi-val">% dissatisfied senior caller</span></span>
+          </div>
+        </div>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="card-body">
+        <p>Senior callers (boss, significant other, major client, major partner) feel insulted when the AI handles them, causing churn. Neutral fix: exclude them from AI. Better fix: <strong>upgrade</strong> the experience — AI formally greets VIP and immediately tries a warm transfer.</p>
+        <h4>Behaviour</h4>
+        <ul class="check-list">
+          <li class="done">AI greets formally &amp; immediately attempts warm transfer</li>
+          <li>Long VIP-unique urgent sound + Lock Screen Live Activity w/ caller info &amp; live transcript</li>
+          <li>User can join or re-schedule ASAP; AI keeps VIP engaged ~30s, otherwise re-schedules</li>
+          <li class="done">AI/UI advises user not to miss calls from VIPs</li>
+        </ul>
+        <p><strong>VIP defaults:</strong> Boss, Significant Other, Major Client, Major Partner.</p>
+        <div class="links">
+          <a class="pill primary" href="https://holdencaulfieldrye.github.io/vip-transfer-mockup/" target="_blank">Interactive mockup<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></a>
+          <a class="pill" href="https://github.com/strangeattractors/u2-issues-request/issues/434" target="_blank">Issue #434</a>
+        </div>
+        <div class="mocks">
+          <img src="https://github.com/user-attachments/assets/622b0ab2-4af3-4db5-aa09-077b74b0620a" alt="VIP incoming call">
+          <img src="https://github.com/user-attachments/assets/d81cf3ff-53b5-4465-9b07-0eb83a1bb0a3" alt="VIP warm transfer UI">
+          <img src="https://github.com/user-attachments/assets/27084ec6-96bb-4029-94cd-d1109dcbd687" alt="VIP live activity">
+          <img src="https://github.com/user-attachments/assets/a85a306f-9a97-42bc-8776-27f0411416c2" alt="VIP reschedule">
+        </div>
+      </div>
+    </details>
+
+    <!-- 3 AI monitoring -->
+    <details class="card" id="f3">
+      <summary>
+        <div class="card-index">3</div>
+        <div class="card-heading">
+          <div class="card-title">AI call monitoring &amp; improvement</div>
+          <div class="card-meta">
+            <span class="m-item"><span class="m-label">Scope</span><span class="person">AdB</span></span>
+            <span class="m-item"><span class="m-label">Impl</span><span class="person">AdB</span></span>
+            <span class="m-item"><span class="m-label">KPI</span><span class="kpi-val">Retention</span></span>
+          </div>
+        </div>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="card-body">
+        <p>Continuous observation of AI-handled calls to detect issues (dissatisfaction, mis-routing, prompt regressions) and drive prompt &amp; behaviour improvements that compound into retention gains.</p>
+        <p class="kpi"><em>Scope doc in progress — see roadmap comments for status.</em></p>
+      </div>
+    </details>
+
+    <!-- 4 Industry auto config -->
+    <details class="card" id="f4">
+      <summary>
+        <div class="card-index">4</div>
+        <div class="card-heading">
+          <div class="card-title">Industry auto config</div>
+          <div class="card-meta">
+            <span class="m-item"><span class="m-label">Scope</span><span class="person">AD</span></span>
+            <span class="m-item"><span class="m-label">Impl</span><span class="person">Tomo</span></span>
+            <span class="m-item"><span class="m-label">KPI</span><span class="kpi-val">Retention</span></span>
+          </div>
+        </div>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="card-body">
+        <p>Most users don't want or know how to customize their AI. Magical if it pre-fills based on their (sub) industry, with examples to follow or edit.</p>
+        <h4>What ships</h4>
+        <ul class="bullets">
+          <li>Select (sub) industry at onboarding → fields pre-filled</li>
+          <li>Add missing global fields: caller scenarios for new client / existing client / partner, products &amp; services, pricing, areas served, open hours</li>
+          <li>Industry-specific fields (e.g. accepted insurance for healthcare)</li>
+          <li>Simulation + prompt learning to ensure the values actually work</li>
+          <li>Expand from 3 sub-industries (pharmacy, equipment rental, real estate) to <strong>27</strong> (dental, chiropractic, pest control…)</li>
+        </ul>
+        <div class="links">
+          <a class="pill primary" href="https://github.com/strangeattractors/u2-issues-request/issues/428" target="_blank">Issue #428<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></a>
+          <a class="pill" href="https://docs.google.com/spreadsheets/d/1U9XlfPxOF9-S4srB_VwJOcv8yyN8i9laAvAJHQaZ0bs/edit?gid=0#gid=0" target="_blank">Sub-industry fields &amp; pre-fills</a>
+        </div>
+        <div class="mocks">
+          <img src="https://github.com/user-attachments/assets/c7cfa2ae-6a57-4fe7-92ef-8bc957138ecb" alt="Industry select">
+          <img src="https://github.com/user-attachments/assets/38005e24-9bf1-46d9-9488-77da730437c4" alt="Pre-filled fields">
+          <img src="https://github.com/user-attachments/assets/dd57e6a6-01e2-4f47-beca-2cb8cbab20a1" alt="Industry-specific">
+          <img src="https://github.com/user-attachments/assets/f97bae95-3f37-4ce9-933d-a4f813290943" alt="Edit pre-fills">
+        </div>
+      </div>
+    </details>
+
+    <!-- 5 Scheduled outbound -->
+    <details class="card" id="f5">
+      <summary>
+        <div class="card-index">5</div>
+        <div class="card-heading">
+          <div class="card-title">Scheduled outbound <span class="star">*</span></div>
+          <div class="card-meta">
+            <span class="m-item"><span class="m-label">Scope</span><span class="person">AD <span class="star">*</span></span></span>
+            <span class="m-item"><span class="m-label">Impl</span><span class="person">Anth</span></span>
+            <span class="m-item"><span class="m-label">KPI</span><span class="kpi-val">Revenue uplift</span></span>
+          </div>
+        </div>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="card-body">
+        <p>Scheduled outbound calls and texts that boost user revenue. Built on <strong>contact events</strong> — logging each time a service is rendered — plus <strong>caller ID</strong> so recipients recognise the sender.</p>
+        <h4>Three versions</h4>
+        <ul class="bullets">
+          <li><strong>v1 Renewal</strong> — "it's the end of your {service} soon, do you need a new one?" (e.g. pharmacy refill due, lift rental return date, real-estate homeiversary)</li>
+          <li><strong>v2 Check-in</strong> — "day 1 of your {service}, how's it going? need any help?"</li>
+          <li><strong>v3 Referral</strong> — "sounds like you need {partner_service}, would you like us to arrange it?" — builds the network flywheel</li>
+        </ul>
+        <p class="kpi"><em>HIPAA-aware: oncology SMS only invites a call-back; no PHI in text. Default send mode for oncology = call.</em></p>
+        <div class="links">
+          <a class="pill primary" href="https://strange-attractor.com/scheduled-outbound-prototype/" target="_blank">Interactive mockup<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></a>
+          <a class="pill" href="https://github.com/strangeattractors/u2-issues-request/issues/427" target="_blank">Issue #427</a>
+          <a class="pill" href="https://github.com/strangeattractors/u2-issues-request/issues/429" target="_blank">Contact events #429</a>
+          <a class="pill" href="https://github.com/strangeattractors/u2-issues-request/issues/444" target="_blank">Caller ID #444</a>
+        </div>
+        <div class="mocks">
+          <img src="https://github.com/user-attachments/assets/9d05306f-fea5-4c63-84f3-51477c3b1021" alt="Scheduled outbound 1">
+          <img src="https://github.com/user-attachments/assets/c0a39dee-e773-4770-9f46-54db27f9bad4" alt="Scheduled outbound 2">
+          <img src="https://github.com/user-attachments/assets/c5bcca11-de0d-4f07-858c-e1a8f9dcd2b2" alt="Scheduled outbound 3">
+          <img src="https://github.com/user-attachments/assets/bd7b2501-d4e1-42d0-b0c9-d9b7406f2251" alt="Scheduled outbound 4">
+        </div>
+      </div>
+    </details>
+
+    <!-- 6 User Stats -->
+    <details class="card" id="f6">
+      <summary>
+        <div class="card-index">6</div>
+        <div class="card-heading">
+          <div class="card-title">User Stats <span class="star">*</span></div>
+          <div class="card-meta">
+            <span class="m-item"><span class="m-label">Scope</span><span class="person">AD <span class="star">*</span></span></span>
+            <span class="m-item"><span class="m-label">Impl</span><span class="person">Joris <span class="star">*</span></span></span>
+            <span class="m-item"><span class="m-label">KPI</span><span class="kpi-val">Revenue uplift</span></span>
+          </div>
+        </div>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="card-body">
+        <p>Users aren't shown the revenue impact of YouSquared — this contributes to churn. Solution: a stats page that quantifies revenue uplift, shows how to grow it (more channels, more users), and is shareable.</p>
+        <h4>Features</h4>
+        <ul class="bullets">
+          <li>Calculate $ lead value handled (<strong>Price × ΔLTV × U2 attribution</strong>)</li>
+          <li>Recommend how to increase revenue uplift further</li>
+          <li>Highlight impressive calls to show off socially</li>
+        </ul>
+        <h4>Worked examples</h4>
+        <p><strong>Equipment rental —</strong> 86ft boom quote: price $5,775 · ΔLTV $11.5k · U2 attribution 85% → <strong>$10k</strong></p>
+        <p><strong>Pharmacy —</strong> GLP-1 refill: price $199/mo · ΔLTV $2.4k · U2 attribution 10% → <strong>$240</strong></p>
+        <p><strong>Real estate —</strong> angry $1M listing client: commission $22k · ΔLTV $12k · U2 30% → <strong>$3.6k</strong></p>
+        <div class="links">
+          <a class="pill primary" href="https://strange-attractor.com/user-analytics/" target="_blank">iOS prototype<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></a>
+          <a class="pill" href="https://strange-attractor.com/stats-web" target="_blank">Web prototype</a>
+          <a class="pill" href="https://github.com/strangeattractors/u2-issues-request/issues/435" target="_blank">Issue #435</a>
+        </div>
+        <div class="mocks">
+          <img src="https://github.com/user-attachments/assets/bc0a1e03-5894-4c0a-843b-7686478ab7f2" alt="User stats headline">
+          <img src="https://github.com/user-attachments/assets/0e3e8325-3894-4049-b78c-be65bd69382b" alt="User stats detail 1">
+          <img src="https://github.com/user-attachments/assets/5c70a171-7137-4718-b4d0-21d498294a80" alt="User stats detail 2">
+          <img src="https://github.com/user-attachments/assets/d9a2eb34-ba0f-4789-844f-be87fe261289" alt="User stats detail 3">
+        </div>
+      </div>
+    </details>
+
+    <!-- 7 Web app -->
+    <details class="card" id="f7">
+      <summary>
+        <div class="card-index">7</div>
+        <div class="card-heading">
+          <div class="card-title">Web app — self-serve &amp; parity</div>
+          <div class="card-meta">
+            <span class="m-item"><span class="m-label">Scope</span><span class="person">AD</span></span>
+            <span class="m-item"><span class="m-label">Impl</span><span class="person">Jake</span></span>
+            <span class="m-item"><span class="m-label">KPI</span><span class="kpi-val">Team plan purchases</span></span>
+          </div>
+        </div>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="card-body">
+        <p>Auth-gated Next.js console at <strong>app.yousquared.ai</strong>, hitting the same <code>api-service</code> backend as iOS. Unlocks self-serve sign-up and team admin flows that are awkward on mobile.</p>
+        <h4>Phase 1 — MVP</h4>
+        <ul class="bullets">
+          <li>Next.js in <code>clone-backend/web-app/</code> (monorepo), deployed on Vercel Pro</li>
+          <li><code>app.yousquared.ai</code> CNAME to Vercel, CORS allow-listed</li>
+          <li>Firebase Auth web SDK, ID-token validation server-side (same as iOS)</li>
+          <li>Marketing CTA on <code>www.yousquared.ai</code> → <code>app.yousquared.ai</code></li>
+        </ul>
+        <h4>Phase 2 — Development workflow</h4>
+        <p>Push-to-branch → password-protected Vercel preview (hits prod API, like TestFlight); merge to main → auto-deploy to prod. Mixpanel + Amplitude JS SDKs, Sentry TBD.</p>
+        <h4>Phase 3 — Long-term</h4>
+        <ul class="bullets">
+          <li>Proper staging environment (public api-service behind IAP / Cloud Armor)</li>
+          <li>GKE migration from Vercel (cost / operational consistency trigger)</li>
+          <li>Fold Webflow marketing site into Next.js (unlocks voice-onboarding landing page with auth context)</li>
+        </ul>
+        <div class="links">
+          <a class="pill primary" href="https://github.com/strangeattractors/u2-issues-request/issues/436" target="_blank">Issue #436<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></a>
+        </div>
+      </div>
+    </details>
+
+    <!-- 8 To-Dos -->
+    <details class="card" id="f8">
+      <summary>
+        <div class="card-index">8</div>
+        <div class="card-heading">
+          <div class="card-title">To-Dos <span class="star">*</span></div>
+          <div class="card-meta">
+            <span class="m-item"><span class="m-label">Scope</span><span class="person">AD <span class="star">*</span></span></span>
+            <span class="m-item"><span class="m-label">Impl</span><span class="person">Anth</span></span>
+            <span class="m-item"><span class="m-label">KPI</span><span class="kpi-val">Team plan purchases</span></span>
+          </div>
+        </div>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="card-body">
+        <p>AI predicts the next step after a call and makes it easy to act — re-engaging silent callers, pinning user follow-ups, and assigning work to colleagues (which is the viral path into Team plans).</p>
+        <h4>Three versions</h4>
+        <ul class="bullets">
+          <li><strong>v0 Re-engage</strong> — caller hung up without speaking → AI drafts/sends a personalized text-back to qualify &amp; re-engage. Basic users see the draft, upgrade to send.</li>
+          <li><strong>v1 To-do + follow-up</strong> — caller needed user action → AI pins the action, keeps thread top-of-inbox, loads a draft follow-up text when user marks done.</li>
+          <li><strong>v2 Assign</strong> — AI suggests action for AI / user / colleague, assigns it, reminds the assignee, informs caller once done. Colleague assignment adds a user to the Team (30 days free, then requires right-size Team plan).</li>
+        </ul>
+        <div class="links">
+          <a class="pill primary" href="https://claude.ai/artifacts/7c7eb0f9-6cc3-4177-a223-fa5d789c3b6c" target="_blank">v1 mockup<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></a>
+          <a class="pill" href="https://claude.ai/public/artifacts/8501112a-269c-48f0-afa5-2e4648557923" target="_blank">v0 mockup</a>
+          <a class="pill" href="https://snack.expo.dev/@adalyac/predict-next-step-v2-mockup" target="_blank">v2 mockup</a>
+          <a class="pill" href="https://github.com/strangeattractors/u2-issues-request/issues/370" target="_blank">Issue #370</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- 9 Prompt learning -->
+    <details class="card" id="f9">
+      <summary>
+        <div class="card-index">9</div>
+        <div class="card-heading">
+          <div class="card-title">Prompt learning <span class="star">*</span></div>
+          <div class="card-meta">
+            <span class="m-item"><span class="m-label">Scope</span><span class="person">AD <span class="star">*</span></span></span>
+            <span class="m-item"><span class="m-label">Impl</span><span class="person">Tomo</span></span>
+            <span class="m-item"><span class="m-label">KPI</span><span class="kpi-val">AI sub-task accuracy</span></span>
+          </div>
+        </div>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="card-body">
+        <p><strong>Autonomous Prompt Learning (APL)</strong> — a coding agent labels production data, flags ambiguous cases for human review, writes &amp; evaluates task prompts, and iteratively self-refines them in a single agentic loop.</p>
+        <h4>Production results</h4>
+        <ul class="bullets">
+          <li>B2C2B lead classification: <strong>95–97% F1</strong> (up from ~3–5% rule-based)</li>
+          <li>Post-call next-step prediction: near-zero false positives (down from ~16%)</li>
+          <li>Expert-advice drafts grounded in call content</li>
+        </ul>
+        <p>Each optimization cycle: <strong>15–60 min</strong>, production data, one human supervisor. No specialized infra (unlike DSPy, OPRO, TextGrad) — just a capable coding agent and an eval harness the agent builds itself.</p>
+        <h4>Next steps</h4>
+        <ul class="bullets">
+          <li>Formalize the methodology as a reproducible protocol</li>
+          <li>Controlled ablations (active vs random sampling, self-reflection vs single-shot, LLM vs human judge agreement)</li>
+          <li>Apply to 2–3 more downstream tasks; literature review; workshop paper</li>
+        </ul>
+        <div class="links">
+          <a class="pill primary" href="https://github.com/strangeattractors/u2-issues-request/issues/416" target="_blank">Issue #416<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></a>
+        </div>
+      </div>
+    </details>
+
+    <!-- 10 Cost -->
+    <details class="card" id="f10">
+      <summary>
+        <div class="card-index">10</div>
+        <div class="card-heading">
+          <div class="card-title">$0.04 / min cost</div>
+          <div class="card-meta">
+            <span class="m-item"><span class="m-label">Scope</span><span class="person">AdB</span></span>
+            <span class="m-item"><span class="m-label">Impl</span><span class="person">Tomo</span></span>
+            <span class="m-item"><span class="m-label">KPI</span><span class="kpi-val">$0.04/min cost</span></span>
+          </div>
+        </div>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="card-body">
+        <p>Drive per-minute AI call cost down to <strong>$0.04/min</strong> — the threshold at which aggressive pricing and higher-volume plans become sustainable.</p>
+      </div>
+    </details>
+
+  </div>
+</section>
+
+<!-- SECONDARY -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">Secondary Priority</div>
+    <h2 class="section-title">Next in the queue</h2>
+    <p class="section-lead">Picked up once top-priority slots free up.</p>
+
+    <details class="card">
+      <summary>
+        <div class="card-index">13</div>
+        <div class="card-heading">
+          <div class="card-title">CRM automation</div>
+          <div class="card-meta">
+            <span class="m-item"><span class="m-label">Scope</span><span class="person">AD</span></span>
+            <span class="m-item"><span class="m-label">Impl</span><span class="person">Joris</span></span>
+            <span class="m-item"><span class="m-label">KPI</span><span class="kpi-val">Team plans sold</span></span>
+          </div>
+        </div>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="card-body">
+        <p>Automate the CRM loop (HubSpot → outreach → opportunity tracking) so the sales motion for Team plans scales without additional headcount.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- SCOPE RULES -->
+<section class="alt">
+  <div class="section-inner">
+    <div class="section-label">How We Scope</div>
+    <h2 class="section-title">Rules of engagement</h2>
+    <p class="section-lead">Agreed in the roadmap thread — keeps decisions unblocked.</p>
+
+    <div class="rules">
+      <h3>Scoper rule</h3>
+      <p><strong>Either 1 person or 3, never 2</strong> — avoids deadlock. Scoper(s) can get input from others but make the final decision.</p>
+
+      <h3>Team test</h3>
+      <p>During the Team test, everyone testing is encouraged to share feedback — including on scope. Scoper(s) make the go-live decision.</p>
+
+      <h3>Asterisks</h3>
+      <p><span class="star">*</span> on a scope/impl/feature means it's <strong>pending AD–AdB alignment</strong> before kicking off.</p>
+    </div>
+
+    <div class="runner-up">
+      <strong>Runner up:</strong> record &amp; summarize user-handled calls, emails, openclaw
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
