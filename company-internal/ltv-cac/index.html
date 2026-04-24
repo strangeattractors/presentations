@@ -8,266 +8,310 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --terracotta: #E07A5F;
+    --terracotta-soft: #F5B8A7;
+    --terracotta-wash: #FBEAE3;
+    --charcoal: #2D2A26;
+    --charcoal-soft: #433F3A;
+    --cream: #F5F2EF;
+    --paper: #FBF9F6;
+    --border: #EDE8E3;
+    --muted: #6B6560;
+    --faint: #9E9893;
+    --good: #5A9A6F;
+    --good-soft: #D8E8DC;
+    --good-wash: #EEF5F0;
+    --close: #D49A2E;
+    --close-soft: #F3E3BF;
+    --close-wash: #FAF2DC;
+    --off: #C75B39;
+    --off-soft: #F5C2B2;
+    --off-wash: #FBE6DD;
+  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Inter', sans-serif; color: #2D2A26; background: #F5F2EF; line-height: 1.5; }
-  .page { max-width: 1080px; margin: 0 auto; background: #fff; }
+  body { font-family: 'Inter', sans-serif; color: var(--charcoal); background: var(--cream); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  .page { max-width: 1180px; margin: 0 auto; padding: 36px 28px 60px; }
 
-  /* HEADER */
-  .hero {
-    background: linear-gradient(145deg, #2D2A26 0%, #433F3A 55%, #3A3632 100%);
-    color: #fff;
-    padding: 48px 56px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 32px;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(circle at 85% 20%, rgba(224, 122, 95, 0.18), transparent 55%);
-    pointer-events: none;
-  }
-  .hero-title { font-family: 'Lora', serif; font-size: 2.4em; font-weight: 700; letter-spacing: -0.5px; }
-  .hero-sub { font-size: 1.05em; opacity: 0.78; margin-top: 6px; font-weight: 300; letter-spacing: 0.3px; }
-  .trend {
-    background: rgba(224, 122, 95, 0.18);
-    border: 1px solid rgba(224, 122, 95, 0.45);
-    color: #F5B8A7;
-    padding: 10px 18px;
-    border-radius: 24px;
-    font-size: 0.88em;
-    font-weight: 600;
-    white-space: nowrap;
-  }
-  .trend.down { color: #F5B8A7; }
-  .logo-strip { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; opacity: 0.92; }
-  .logo-strip img { height: 28px; }
-  .logo-strip span { font-size: 0.78em; text-transform: uppercase; letter-spacing: 2.5px; color: #E07A5F; font-weight: 600; }
-
-  /* MAIN RATIO */
-  .ratio {
-    padding: 64px 56px 48px;
-    text-align: center;
-    border-bottom: 1px solid #EDE8E3;
-  }
-  .ratio-label {
-    font-size: 0.82em;
+  /* TITLE */
+  .title-block { text-align: center; margin-bottom: 28px; }
+  .eyebrow {
+    font-size: 0.72em;
     text-transform: uppercase;
     letter-spacing: 3px;
-    color: #6B6560;
+    color: var(--muted);
     font-weight: 600;
-    margin-bottom: 24px;
+    margin-bottom: 10px;
   }
-  .ratio-value {
+  .title-block h1 {
     font-family: 'Lora', serif;
-    font-size: 8em;
+    font-size: 1.65em;
     font-weight: 700;
-    color: #E07A5F;
-    line-height: 1;
-    letter-spacing: -3px;
+    color: var(--charcoal);
+    letter-spacing: -0.3px;
   }
-  .ratio-target {
-    color: #6B6560;
-    font-size: 0.95em;
-    margin-top: 12px;
-    margin-bottom: 32px;
+  .title-block .sub {
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 0.92em;
   }
-  .ratio-target strong { color: #2D2A26; font-weight: 600; }
 
-  /* Progress bar */
-  .bar-wrap { max-width: 720px; margin: 0 auto 48px; }
-  .bar {
-    position: relative;
-    height: 14px;
-    background: #EDE8E3;
-    border-radius: 7px;
-    overflow: visible;
+  /* TIME-SERIES STRIP */
+  .strip-wrap { background: #fff; border-radius: 20px; padding: 22px 24px; box-shadow: 0 1px 2px rgba(45,42,38,0.04), 0 8px 22px rgba(45,42,38,0.05); margin-bottom: 22px; }
+  .strip-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; padding: 0 2px; }
+  .strip-head .t { font-size: 0.72em; text-transform: uppercase; letter-spacing: 2.5px; color: var(--muted); font-weight: 600; }
+  .strip-head .h { font-size: 0.78em; color: var(--faint); font-weight: 500; }
+  .strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
   }
-  .bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #E07A5F 0%, #D4523A 100%);
-    border-radius: 7px;
-    width: 25.7%; /* 0.77 / 3.0 */
-  }
-  .bar-target {
-    position: absolute;
-    top: -6px; bottom: -6px;
-    right: 0;
-    width: 2px;
-    background: #2D2A26;
-  }
-  .bar-labels {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-    font-size: 0.78em;
-    color: #6B6560;
-  }
-  .bar-labels .end { color: #2D2A26; font-weight: 600; }
-
-  /* Equation row */
-  .eq {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    flex-wrap: wrap;
-  }
-  .eq-box {
-    background: #F5F2EF;
-    border-radius: 12px;
-    padding: 20px 28px;
-    min-width: 120px;
+  .mo {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 14px 14px;
     text-align: center;
+    position: relative;
+    transition: transform 0.15s ease;
   }
-  .eq-box .n { font-family: 'Lora', serif; font-size: 1.8em; font-weight: 700; color: #2D2A26; }
-  .eq-box .l { font-size: 0.72em; text-transform: uppercase; letter-spacing: 1.5px; color: #6B6560; margin-top: 4px; font-weight: 600; }
-  .eq-box.result { background: #2D2A26; color: #fff; }
-  .eq-box.result .n { color: #E07A5F; }
-  .eq-box.result .l { color: #9E9893; }
-  .eq-op { font-family: 'Lora', serif; font-size: 2em; color: #9E9893; font-weight: 400; }
+  .mo .mo-label {
+    font-size: 0.68em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .mo .mo-ratio {
+    font-family: 'Lora', serif;
+    font-size: 2.2em;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 6px 0 4px;
+  }
+  .mo.good .mo-ratio { color: var(--good); }
+  .mo.close .mo-ratio { color: var(--close); }
+  .mo.off .mo-ratio { color: var(--off); }
+  .mo .mo-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 6px;
+  }
+  .mo .mo-fill { height: 100%; border-radius: 2px; }
+  .mo.good .mo-fill { background: var(--good); }
+  .mo.close .mo-fill { background: var(--close); }
+  .mo.off .mo-fill { background: var(--off); }
+  .mo .mo-tag {
+    position: absolute; top: 8px; right: 10px;
+    font-size: 0.6em;
+    color: var(--faint);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+  .mo.current { border-color: var(--terracotta); box-shadow: 0 0 0 3px var(--terracotta-wash); }
 
-  /* TWO-COL BREAKDOWN */
+  /* HEADLINE CARD */
+  .headline {
+    background: #fff;
+    border-radius: 20px;
+    padding: 32px 36px;
+    box-shadow: 0 1px 2px rgba(45,42,38,0.04), 0 8px 22px rgba(45,42,38,0.05);
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .headline-left .h-label {
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .headline-left .h-ratio {
+    font-family: 'Lora', serif;
+    font-size: 6.8em;
+    font-weight: 700;
+    color: var(--terracotta);
+    line-height: 0.95;
+    letter-spacing: -2px;
+    margin: 8px 0 6px;
+  }
+  .headline-left .h-target {
+    color: var(--muted);
+    font-size: 0.92em;
+  }
+  .headline-left .h-target strong { color: var(--good); font-weight: 600; }
+  .trend-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--good-wash);
+    color: var(--good);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.82em;
+    font-weight: 600;
+    margin-top: 14px;
+  }
+  .trend-badge.down { background: var(--off-wash); color: var(--off); }
+  .headline-right {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    position: relative;
+  }
+  .h-box {
+    border-radius: 18px;
+    padding: 18px 20px;
+  }
+  .h-box.cac { background: var(--off-wash); grid-row: span 2; display: flex; flex-direction: column; justify-content: center; }
+  .h-box.cac .bl { font-size: 0.75em; color: var(--off); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .h-box.cac .bv { font-family: 'Lora', serif; font-size: 3em; font-weight: 700; color: var(--off); line-height: 1; margin: 10px 0 6px; }
+  .h-box.cac .bn { font-size: 0.78em; color: var(--muted); }
+  .h-box.ltv { background: var(--good-wash); display: flex; justify-content: space-between; align-items: center; }
+  .h-box.ltv .bl { font-size: 0.7em; color: var(--good); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .h-box.ltv .bv { font-family: 'Lora', serif; font-size: 1.6em; font-weight: 700; color: var(--good); }
+  .h-box.ltv-top { background: var(--good-soft); }
+  .h-box.ltv-total { background: var(--good); color: #fff; }
+  .h-box.ltv-total .bl { color: rgba(255,255,255,0.85); }
+  .h-box.ltv-total .bv { color: #fff; }
+
+  /* COLUMNS */
   .cols {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: #EDE8E3;
-  }
-  .col {
-    background: #fff;
-    padding: 48px 48px;
-  }
-  .col-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    border-bottom: 2px solid #2D2A26;
-    padding-bottom: 16px;
-    margin-bottom: 28px;
-  }
-  .col-head .title { font-family: 'Lora', serif; font-size: 1.5em; font-weight: 700; }
-  .col-head .total { font-family: 'Lora', serif; font-size: 2.2em; font-weight: 700; color: #E07A5F; line-height: 1; }
-
-  .metric {
-    padding: 18px 0;
-    border-bottom: 1px solid #F0ECE7;
-  }
-  .metric:last-child { border-bottom: none; }
-  .metric-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-  }
-  .metric-label { font-weight: 500; font-size: 0.95em; color: #2D2A26; }
-  .metric-value {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: 'Lora', serif;
-    font-size: 1.35em;
-    font-weight: 700;
-    color: #2D2A26;
-  }
-  .metric-target {
-    font-size: 0.78em;
-    color: #6B6560;
-    margin-top: 4px;
-  }
-  .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .dot.good { background: #5A9A6F; }
-  .dot.close { background: #D49A2E; }
-  .dot.off { background: #C75B39; }
-  .metric-row.headline .metric-value { font-size: 1.55em; }
-
-  /* Segment boxes (Solo/Team) */
-  .segments {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 24px;
-  }
-  .seg {
-    background: #F5F2EF;
-    border-radius: 12px;
-    padding: 18px 20px;
-    text-align: center;
-  }
-  .seg.team { background: #2D2A26; color: #fff; }
-  .seg .l { font-size: 0.72em; text-transform: uppercase; letter-spacing: 1.5px; color: #6B6560; font-weight: 600; margin-bottom: 6px; }
-  .seg.team .l { color: #E07A5F; }
-  .seg .v { font-family: 'Lora', serif; font-size: 2em; font-weight: 700; color: #2D2A26; line-height: 1; }
-  .seg.team .v { color: #fff; }
-  .seg .pct { font-size: 0.85em; color: #6B6560; margin-top: 6px; font-weight: 500; }
-  .seg.team .pct { color: #9E9893; }
-
-  /* INSIGHTS */
-  .insights {
-    background: #F5F2EF;
-    padding: 48px 56px;
-  }
-  .insights-title {
-    font-family: 'Lora', serif;
-    font-size: 1.6em;
-    font-weight: 700;
-    margin-bottom: 28px;
-  }
-  .insights-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
     gap: 20px;
+    margin-bottom: 20px;
   }
-  .insight {
+  .panel {
     background: #fff;
-    border-left: 4px solid #E07A5F;
-    border-radius: 0 10px 10px 0;
-    padding: 20px 24px;
+    border-radius: 20px;
+    padding: 26px 28px;
+    box-shadow: 0 1px 2px rgba(45,42,38,0.04), 0 8px 22px rgba(45,42,38,0.05);
   }
-  .insight .head {
-    font-size: 0.74em;
+  .panel-head {
+    font-size: 0.72em;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #E07A5F;
-    font-weight: 700;
+    letter-spacing: 2.5px;
+    color: var(--muted);
+    font-weight: 600;
+    padding-bottom: 14px;
     margin-bottom: 8px;
+    border-bottom: 1px solid var(--border);
   }
-  .insight .body { font-size: 0.92em; color: #3A3632; line-height: 1.55; }
-  .insight .body strong { color: #2D2A26; font-weight: 700; }
+  .row {
+    display: grid;
+    grid-template-columns: 42px 1fr 160px;
+    gap: 14px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .row:last-child { border-bottom: none; }
+  .ic {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2em;
+  }
+  .ic.wash-good { background: var(--good-wash); }
+  .ic.wash-close { background: var(--close-wash); }
+  .ic.wash-off { background: var(--off-wash); }
+  .ic.wash-terracotta { background: var(--terracotta-wash); }
+  .metric-name { font-size: 0.95em; font-weight: 600; color: var(--charcoal); line-height: 1.25; }
+  .metric-val { display: flex; align-items: baseline; gap: 8px; margin-top: 3px; }
+  .metric-val .v {
+    font-family: 'Lora', serif;
+    font-size: 1.15em;
+    font-weight: 700;
+  }
+  .metric-val .v.good { color: var(--good); }
+  .metric-val .v.close { color: var(--close); }
+  .metric-val .v.off { color: var(--off); }
+  .metric-val .goal { font-size: 0.78em; color: var(--muted); font-weight: 500; }
+  .bar {
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .bar-fill { height: 100%; border-radius: 4px; }
+  .bar-fill.good { background: var(--good); }
+  .bar-fill.close { background: var(--close); }
+  .bar-fill.off { background: var(--off); }
+  .bar-wrap { display: flex; align-items: center; gap: 10px; }
+  .bar-wrap .pct { font-size: 0.72em; color: var(--faint); min-width: 34px; font-weight: 600; }
+
+  /* UPFRONT PAY */
+  .upfront {
+    background: #fff;
+    border-radius: 20px;
+    padding: 26px 28px;
+    box-shadow: 0 1px 2px rgba(45,42,38,0.04), 0 8px 22px rgba(45,42,38,0.05);
+    margin-bottom: 20px;
+  }
+  .upfront-head {
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  /* NOTES */
+  .notes {
+    background: #fff;
+    border-radius: 20px;
+    padding: 24px 28px;
+    box-shadow: 0 1px 2px rgba(45,42,38,0.04), 0 8px 22px rgba(45,42,38,0.05);
+    font-size: 0.85em;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+  .notes-title {
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .notes ul { list-style: none; }
+  .notes li { padding: 4px 0; }
+  .notes li::before { content: "— "; color: var(--terracotta); font-weight: 700; }
+  .notes strong { color: var(--charcoal); font-weight: 600; }
 
   /* FOOTER */
   .foot {
-    background: #2D2A26;
-    color: #9E9893;
-    padding: 28px 56px;
-    font-size: 0.82em;
-    display: flex;
-    justify-content: space-between;
-    gap: 24px;
-    flex-wrap: wrap;
+    margin-top: 24px;
+    font-size: 0.78em;
+    color: var(--faint);
+    text-align: center;
   }
   .foot code {
     font-family: 'Inter', sans-serif;
-    color: #F5B8A7;
     background: rgba(224, 122, 95, 0.08);
+    color: var(--terracotta);
     padding: 2px 8px;
     border-radius: 4px;
     font-weight: 500;
   }
 
-  @media (max-width: 780px) {
-    .hero, .ratio, .col, .insights, .foot { padding-left: 28px; padding-right: 28px; }
-    .ratio-value { font-size: 5.5em; }
-    .cols, .insights-grid { grid-template-columns: 1fr; }
-    .hero { flex-direction: column; align-items: flex-start; }
+  @media (max-width: 900px) {
+    .headline { grid-template-columns: 1fr; }
+    .cols { grid-template-columns: 1fr; }
+    .strip { grid-template-columns: repeat(5, minmax(0, 1fr)); font-size: 0.8em; }
+    .row { grid-template-columns: 40px 1fr 130px; }
+  }
+  @media (max-width: 640px) {
+    .strip { grid-template-columns: repeat(2, 1fr); }
+    .headline-left .h-ratio { font-size: 5em; }
   }
 </style>
 </head>
@@ -275,176 +319,214 @@
 
 <div class="page">
 
-  <!-- HEADER -->
-  <div class="hero">
-    <div>
-      <div class="logo-strip">
-        <img src="assets/logo_yousquared.png" alt="YouSquared">
-        <span>Growth Dashboard</span>
-      </div>
-      <div class="hero-title">LTV : CAC</div>
-      <div class="hero-sub">YouSquared · December 2025</div>
-    </div>
-    <div class="trend down">&#8600; 19% vs November</div>
+  <!-- TITLE -->
+  <div class="title-block">
+    <div class="eyebrow">To Spend or Not to Spend</div>
+    <h1>YouSquared · LTV : CAC</h1>
+    <div class="sub">March 2026 · tracking since Dec 2025</div>
   </div>
 
-  <!-- MAIN RATIO -->
-  <div class="ratio">
-    <div class="ratio-label">Lifetime Value to Customer Acquisition Cost</div>
-    <div class="ratio-value">0.77</div>
-    <div class="ratio-target"><strong>Target: 3.0</strong> &nbsp;·&nbsp; every $1 spent returns $3 in revenue</div>
-
-    <div class="bar-wrap">
-      <div class="bar">
-        <div class="bar-fill"></div>
-        <div class="bar-target"></div>
+  <!-- TIME-SERIES STRIP -->
+  <div class="strip-wrap">
+    <div class="strip-head">
+      <div class="t">Monthly LTV : CAC</div>
+      <div class="h">Target 3.0 · Dec 2025 → Apr 2026</div>
+    </div>
+    <div class="strip">
+      <div class="mo close">
+        <div class="mo-label">Dec 2025</div>
+        <div class="mo-ratio">1.02</div>
+        <div class="mo-bar"><div class="mo-fill" style="width:34%"></div></div>
       </div>
-      <div class="bar-labels">
-        <span>0</span>
-        <span>1.5 close</span>
-        <span>2.7 good</span>
-        <span class="end">3.0 target</span>
+      <div class="mo close">
+        <div class="mo-label">Jan 2026</div>
+        <div class="mo-ratio">1.06</div>
+        <div class="mo-bar"><div class="mo-fill" style="width:35%"></div></div>
+      </div>
+      <div class="mo close">
+        <div class="mo-label">Feb 2026</div>
+        <div class="mo-ratio">0.71</div>
+        <div class="mo-bar"><div class="mo-fill" style="width:24%"></div></div>
+      </div>
+      <div class="mo close current">
+        <div class="mo-tag">current</div>
+        <div class="mo-label">Mar 2026</div>
+        <div class="mo-ratio">1.39</div>
+        <div class="mo-bar"><div class="mo-fill" style="width:46%"></div></div>
+      </div>
+      <div class="mo off">
+        <div class="mo-tag">MTD</div>
+        <div class="mo-label">Apr 2026</div>
+        <div class="mo-ratio">0.24</div>
+        <div class="mo-bar"><div class="mo-fill" style="width:8%"></div></div>
       </div>
     </div>
+  </div>
 
-    <div class="eq">
-      <div class="eq-box"><div class="n">$63</div><div class="l">LTV</div></div>
-      <div class="eq-op">&divide;</div>
-      <div class="eq-box"><div class="n">$82</div><div class="l">CAC</div></div>
-      <div class="eq-op">=</div>
-      <div class="eq-box result"><div class="n">0.77</div><div class="l">Ratio</div></div>
+  <!-- HEADLINE -->
+  <div class="headline">
+    <div class="headline-left">
+      <div class="h-label">Lifetime Value ÷ Acquisition Cost</div>
+      <div class="h-ratio">1.39</div>
+      <div class="h-target">Target: <strong>3.0</strong> · every $1 spent returns $1.39</div>
+      <div class="trend-badge">↗ +96% vs Feb · best month on record</div>
+    </div>
+    <div class="headline-right">
+      <div class="h-box cac">
+        <div class="bl">CAC</div>
+        <div class="bv">$70</div>
+        <div class="bn">per onboarded user</div>
+      </div>
+      <div class="h-box ltv ltv-top">
+        <div class="bl">LTV · Team</div>
+        <div class="bv">$63</div>
+      </div>
+      <div class="h-box ltv ltv-total">
+        <div class="bl">LTV · Solo</div>
+        <div class="bv">$34</div>
+      </div>
     </div>
   </div>
 
   <!-- TWO-COL BREAKDOWN -->
   <div class="cols">
 
-    <!-- CAC -->
-    <div class="col">
-      <div class="col-head">
-        <div class="title">CAC Breakdown</div>
-        <div class="total">$82</div>
+    <!-- CAC COMPONENTS -->
+    <div class="panel">
+      <div class="panel-head">CAC components</div>
+
+      <div class="row">
+        <div class="ic wash-terracotta">💰</div>
+        <div>
+          <div class="metric-name">Ad spend</div>
+          <div class="metric-val"><span class="v">$8,489</span><span class="goal">Google £6.0K · Apple $500</span></div>
+        </div>
+        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill good" style="width:100%"></div></div></div>
       </div>
 
-      <div class="metric">
-        <div class="metric-row headline">
-          <div class="metric-label">Ad Spend</div>
-          <div class="metric-value">$24,954</div>
+      <div class="row">
+        <div class="ic wash-terracotta">👥</div>
+        <div>
+          <div class="metric-name">Onboarded users</div>
+          <div class="metric-val"><span class="v">121</span><span class="goal">completed CF setup</span></div>
         </div>
-        <div class="metric-target">Google Ads £17.6K &times; 1.31 + Apple Search Ads $846</div>
+        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill close" style="width:60%"></div></div></div>
       </div>
 
-      <div class="metric">
-        <div class="metric-row headline">
-          <div class="metric-label">Onboarded Users</div>
-          <div class="metric-value">304</div>
+      <div class="row">
+        <div class="ic wash-off">🎯</div>
+        <div>
+          <div class="metric-name">Activation rate</div>
+          <div class="metric-val"><span class="v off">33%</span><span class="goal">goal: 70% · 1st open → onboarded</span></div>
         </div>
-        <div class="metric-target">Completed call-forwarding setup</div>
+        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill off" style="width:47%"></div></div></div>
       </div>
 
-      <div class="metric">
-        <div class="metric-row">
-          <div class="metric-label">Download Rate</div>
-          <div class="metric-value"><span class="dot close"></span>11%</div>
+      <div class="row">
+        <div class="ic wash-close">📱</div>
+        <div>
+          <div class="metric-name">1st opens</div>
+          <div class="metric-val"><span class="v">369</span><span class="goal">App opens first-time</span></div>
         </div>
-        <div class="metric-target">Target: 15% &nbsp;·&nbsp; App Store impressions &rarr; installs</div>
+        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill close" style="width:55%"></div></div></div>
       </div>
 
-      <div class="metric">
-        <div class="metric-row">
-          <div class="metric-label">Activation Rate</div>
-          <div class="metric-value"><span class="dot off"></span>37%</div>
+      <div class="row">
+        <div class="ic wash-close">💵</div>
+        <div>
+          <div class="metric-name">Ad cost / click</div>
+          <div class="metric-val"><span class="v close">£2.43</span><span class="goal">goal: £2 · Google Ads</span></div>
         </div>
-        <div class="metric-target">Target: 70% &nbsp;·&nbsp; 1st open &rarr; onboarded</div>
+        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill close" style="width:82%"></div></div></div>
       </div>
 
-      <div class="metric">
-        <div class="metric-row">
-          <div class="metric-label">Organic %</div>
-          <div class="metric-value"><span class="dot off"></span>13%</div>
-        </div>
-        <div class="metric-target">Target: 30% &nbsp;·&nbsp; non-paid downloads</div>
-      </div>
     </div>
 
-    <!-- LTV -->
-    <div class="col">
-      <div class="col-head">
-        <div class="title">LTV Breakdown</div>
-        <div class="total">$63</div>
+    <!-- LTV COMPONENTS -->
+    <div class="panel">
+      <div class="panel-head">LTV components</div>
+
+      <div class="row">
+        <div class="ic wash-good">💳</div>
+        <div>
+          <div class="metric-name">Subscription rate</div>
+          <div class="metric-val"><span class="v good">13%</span><span class="goal">goal: 10% · onboarded → paying</span></div>
+        </div>
+        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill good" style="width:100%"></div></div></div>
       </div>
 
-      <div class="segments">
-        <div class="seg">
-          <div class="l">Solo</div>
-          <div class="v">$20</div>
-          <div class="pct">32% of LTV</div>
+      <div class="row">
+        <div class="ic wash-close">📊</div>
+        <div>
+          <div class="metric-name">Pro / Elite / Team mix</div>
+          <div class="metric-val"><span class="v close">81 · 19 · 1</span><span class="goal">goal: 94 / 4 / 2</span></div>
         </div>
-        <div class="seg team">
-          <div class="l">Team</div>
-          <div class="v">$43</div>
-          <div class="pct">68% of LTV</div>
-        </div>
+        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill close" style="width:55%"></div></div></div>
       </div>
 
-      <div class="metric">
-        <div class="metric-row">
-          <div class="metric-label">Subscription Rate</div>
-          <div class="metric-value"><span class="dot close"></span>9%</div>
+      <div class="row">
+        <div class="ic wash-good">🏷️</div>
+        <div>
+          <div class="metric-name">Price (Pro · Elite · Team)</div>
+          <div class="metric-val"><span class="v good">$30 · $60 · $4,000</span><span class="goal">on target ✓</span></div>
         </div>
-        <div class="metric-target">Target: 10% &nbsp;·&nbsp; onboarded &rarr; paying</div>
+        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill good" style="width:100%"></div></div></div>
       </div>
 
-      <div class="metric">
-        <div class="metric-row">
-          <div class="metric-label">Pro / Elite / Team Mix</div>
-          <div class="metric-value"><span class="dot off"></span>97 / 2 / 1</div>
+      <div class="row">
+        <div class="ic wash-close">⏱</div>
+        <div>
+          <div class="metric-name">Lifetime (Solo · Team)</div>
+          <div class="metric-val"><span class="v close">7.3 · 12 mo</span><span class="goal">goal: 12 · 36 mo</span></div>
         </div>
-        <div class="metric-target">Target: 94 / 4 / 2 &nbsp;·&nbsp; Team mix is the biggest LTV lever</div>
+        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill close" style="width:61%"></div></div></div>
       </div>
 
-      <div class="metric">
-        <div class="metric-row">
-          <div class="metric-label">Subscriber Lifetime</div>
-          <div class="metric-value"><span class="dot off"></span>7.3 / 12 mo</div>
+      <div class="row">
+        <div class="ic wash-close">🌱</div>
+        <div>
+          <div class="metric-name">Team count (active)</div>
+          <div class="metric-val"><span class="v close">1</span><span class="goal">Dec 2025 enterprise · $4K MRR</span></div>
         </div>
-        <div class="metric-target">Target: 12 mo &nbsp;·&nbsp; Solo / Team retention</div>
+        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill close" style="width:33%"></div></div></div>
       </div>
+
     </div>
-
   </div>
 
-  <!-- INSIGHTS -->
-  <div class="insights">
-    <div class="insights-title">What this tells us</div>
-    <div class="insights-grid">
-      <div class="insight">
-        <div class="head">Biggest lever &middot; Activation</div>
-        <div class="body">Activation at <strong>37% vs 70% target</strong>. Every 10pp improvement cuts CAC by ~20%.</div>
+  <!-- UPFRONT PAY -->
+  <div class="upfront">
+    <div class="upfront-head">Upfront pay · annual subscriptions</div>
+    <div class="row" style="border-bottom:none; padding: 6px 0;">
+      <div class="ic wash-off">💸</div>
+      <div>
+        <div class="metric-name">Upfront pay · Solo / Team</div>
+        <div class="metric-val"><span class="v off">0%</span><span class="v good" style="margin-left:-2px;">· 100%</span><span class="goal">goal: 30% · 50% · annual &gt; monthly</span></div>
       </div>
-      <div class="insight">
-        <div class="head">Team converts drive LTV</div>
-        <div class="body"><strong>1% of subscribers = 68% of LTV</strong>. Moving 1% &rarr; 2% Team mix nearly doubles LTV.</div>
-      </div>
-      <div class="insight">
-        <div class="head">Organic acquisition declining</div>
-        <div class="body">Organic share dropped from <strong>22% &rarr; 13%</strong>. Paid dependency is compounding CAC pressure.</div>
-      </div>
-      <div class="insight">
-        <div class="head">Solo retention weak</div>
-        <div class="body"><strong>7.3 mo vs 12 mo target</strong>. Signals PMF gaps vs competitors (M1, Beside).</div>
-      </div>
+      <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill off" style="width:0%"></div></div></div>
+    </div>
+  </div>
+
+  <!-- NOTES / INSIGHTS -->
+  <div class="notes">
+    <div class="notes-title">What this tells us</div>
+    <ul>
+      <li><strong>Mar rebound driven by ad-spend cuts</strong> — Google spend dropped £18K → £6K while onboarded held at 121. CAC fell from $227 → $70.</li>
+      <li><strong>Activation still the biggest CAC lever</strong> — 33% vs 70% target. Every 10pp gain cuts CAC ~20%.</li>
+      <li><strong>Elite mix climbing</strong> — 3% Dec → 19% Mar. More users choosing $60/mo unlimited plan.</li>
+      <li><strong>Apr MTD is noisy</strong> — £5K Meta test + partial-month ads against low onboarded count drives CAC to $388. Wait for full-month view.</li>
+      <li><strong>Team is the unrealised lever</strong> — 1 custom-enterprise Team customer accounts for 68% of LTV. No new Team signups since Dec.</li>
+    </ul>
+    <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 0.78em; color: var(--faint);">
+      <strong style="color: var(--muted);">Methodology note.</strong> Onboarded = Mixpanel <code style="background:transparent; padding:0;">call_forwarding_verification_success</code> · Subs = RevenueCat <code style="background:transparent; padding:0;">rc_initial_purchase_event</code> · Team% held steady at 1% (B2C2B expectation) · Solo lifetime 7.3mo, Team 12mo carried from Dec baseline. Dec 2025 ratio (1.02) differs from earlier snapshot (0.77) due to consistent Mixpanel-sourced sub rate across months.
     </div>
   </div>
 
   <!-- FOOTER -->
   <div class="foot">
-    <div>
-      <code>CAC = Ad Spend &divide; Onboarded Users</code>
-      &nbsp;&nbsp;
-      <code>LTV = Sub Rate &times; &Sigma;(Mix% &times; Price &times; Lifetime)</code>
-    </div>
-    <div>Last updated: December 2025</div>
+    <code>CAC = Ad Spend ÷ Onboarded Users</code> &nbsp;·&nbsp;
+    <code>LTV = Sub Rate × Σ(Mix% × Price × Lifetime)</code><br>
+    Last updated: April 24, 2026 · tracking since December 2025
   </div>
 
 </div>
