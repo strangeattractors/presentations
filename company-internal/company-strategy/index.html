@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Company Strategy — YouSquared</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; color: #2D2A26; line-height: 1.65; background: #FFFFFF; }
+  .page { max-width: 900px; margin: 0 auto; padding: 60px 40px; }
+  h1, h2, h3, h4 { font-family: 'Lora', serif; }
+  a { color: #C75B39; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(145deg, #2D2A26 0%, #433F3A 55%, #3A3632 100%);
+    color: white;
+    padding: 100px 40px 120px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before, .hero::after {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.25;
+    pointer-events: none;
+  }
+  .hero::before { background: #FF8370; top: -200px; right: -150px; }
+  .hero::after  { background: #E07A5F; bottom: -250px; left: -200px; }
+  .hero-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+  .eyebrow { font-size: 0.78em; letter-spacing: 0.2em; text-transform: uppercase; color: #FF8370; font-weight: 600; margin-bottom: 24px; }
+  .hero h1 { font-size: 3.4em; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 28px; }
+  .hero h1 em { font-style: italic; color: #FF8370; font-weight: 600; }
+  .hero .sub { font-size: 1.1em; color: rgba(255,255,255,0.72); max-width: 640px; }
+
+  /* Sections */
+  section { padding: 80px 40px; }
+  section.alt { background: #F5F2EF; }
+  section h2 {
+    font-size: 2em;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+  section .lede { font-size: 1.1em; color: #6B6560; max-width: 680px; margin-bottom: 48px; }
+  section .inner { max-width: 900px; margin: 0 auto; }
+
+  /* Vision card */
+  .vision-card {
+    background: #FFFFFF;
+    border-left: 5px solid #E07A5F;
+    border-radius: 0 14px 14px 0;
+    padding: 40px 48px;
+    margin-top: 24px;
+    box-shadow: 0 4px 24px rgba(45, 42, 38, 0.06);
+  }
+  .vision-card .quote {
+    font-family: 'Lora', serif;
+    font-size: 1.55em;
+    font-weight: 400;
+    line-height: 1.45;
+    color: #2D2A26;
+  }
+  .vision-card .quote strong { color: #C75B39; font-weight: 600; }
+
+  /* Three convictions */
+  .conv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 16px; }
+  .conv-card { background: #FFFFFF; border-radius: 14px; padding: 32px 28px; box-shadow: 0 2px 12px rgba(45,42,38,0.06); }
+  .conv-num {
+    font-family: 'Lora', serif;
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #E07A5F;
+    line-height: 1;
+    margin-bottom: 14px;
+  }
+  .conv-card h3 { font-size: 1.15em; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.01em; }
+  .conv-card p { color: #6B6560; font-size: 0.95em; }
+
+  /* Journey */
+  .stage {
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 32px 36px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(45,42,38,0.06);
+    display: grid;
+    grid-template-columns: 84px 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+  .stage-num {
+    font-family: 'Lora', serif;
+    font-size: 3em;
+    font-weight: 700;
+    color: #E07A5F;
+    line-height: 1;
+  }
+  .stage-content h3 { font-size: 1.3em; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.01em; }
+  .stage-content .blurb { color: #4A4540; margin-bottom: 20px; }
+
+  .metric-row { display: grid; grid-template-columns: 110px 1fr; gap: 14px; margin-bottom: 10px; font-size: 0.92em; align-items: baseline; }
+  .metric-row .k { color: #9E9893; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.08em; font-weight: 600; padding-top: 3px; }
+  .metric-row .v { color: #2D2A26; }
+  .metric-row .v .target { color: #6B6560; }
+  .metric-row .v .actual { font-weight: 600; color: #2D2A26; }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.72em;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-left: 8px;
+    vertical-align: middle;
+    letter-spacing: 0.02em;
+  }
+  .badge.ok { background: #E6F4E8; color: #2E7D32; }
+  .badge.progress { background: #FFF1DB; color: #B87D1E; }
+  .badge.unknown { background: #EEE9E3; color: #8A817B; }
+
+  .stage-status {
+    display: inline-block;
+    font-size: 0.72em;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 999px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+  .stage-status.now   { background: #FFEAE0; color: #C75B39; }
+  .stage-status.next  { background: #F5F2EF; color: #6B6560; }
+  .stage-status.done  { background: #E6F4E8; color: #2E7D32; }
+
+  /* Q&A */
+  .qa { margin-top: 16px; }
+  .qa-item {
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(45,42,38,0.08);
+  }
+  .qa-item:last-child { border-bottom: none; }
+  .qa-q {
+    font-family: 'Lora', serif;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #2D2A26;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  .qa-q::before {
+    content: 'Q.';
+    color: #E07A5F;
+    font-weight: 700;
+    margin-right: 10px;
+  }
+  .qa-a { color: #4A4540; font-size: 1em; }
+  .qa-a em { color: #C75B39; font-style: normal; font-weight: 600; }
+
+  /* Focus line */
+  .focus-block { display: grid; gap: 8px; }
+
+  /* Footer */
+  footer { padding: 48px 40px; background: #2D2A26; color: rgba(255,255,255,0.72); text-align: center; font-size: 0.9em; }
+  footer a { color: #FF8370; }
+  footer .meta { margin-top: 8px; color: rgba(255,255,255,0.4); font-size: 0.85em; }
+
+  @media (max-width: 720px) {
+    .hero { padding: 70px 28px 90px; }
+    .hero h1 { font-size: 2.3em; }
+    section { padding: 56px 28px; }
+    .conv-grid { grid-template-columns: 1fr; }
+    .stage { grid-template-columns: 1fr; gap: 14px; }
+    .stage-num { font-size: 2.2em; }
+    .metric-row { grid-template-columns: 1fr; gap: 2px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Strange Attractor · Company Strategy</div>
+    <h1>An economy where people don't just <em>use</em> AI,<br>they <em>own</em> AI.</h1>
+    <p class="sub">Turning expertise into income-generating AI agents — one continually-learning AI inbox at a time.</p>
+  </div>
+</div>
+
+<!-- Three Convictions -->
+<section>
+  <div class="inner">
+    <h2>Three convictions</h2>
+    <p class="lede">Why this bet, why now.</p>
+
+    <div class="conv-grid">
+      <div class="conv-card">
+        <div class="conv-num">1</div>
+        <h3>Personal AI lacks context, workflow, memory.</h3>
+        <p>Tired of copy-pasting between Email, Calendar, Drive and ChatGPT? We're giving users one AI inbox for all communication — and on-the-job learning from managerial voice feedback, the way humans learn.</p>
+      </div>
+
+      <div class="conv-card">
+        <div class="conv-num">2</div>
+        <h3>AGI can be democratized — without prompt engineering.</h3>
+        <p>Everyone can talk about what they want from their AI. We convert that into reliable custom prompts that self-evaluate and self-improve. YouTube let anyone run a channel; we envision a world where anyone can run their own AI, teaching it their skills, to work 10 jobs for them.</p>
+      </div>
+
+      <div class="conv-card">
+        <div class="conv-num">3</div>
+        <h3>GenAI can reduce medical mistakes — and save lives.</h3>
+        <p>Healthcare is understaffed: patients lack rapid affordable access, clinicians are burned out. Imagine if patients could talk to their doctor's AI.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Journey -->
+<section class="alt">
+  <div class="inner">
+    <h2>How we get there</h2>
+    <p class="lede">Five stages from seed to AI agent creator economy.</p>
+
+    <div class="stage">
+      <div class="stage-num">0</div>
+      <div class="stage-content">
+        <h3>Raise $5M <span class="stage-status done">funded</span></h3>
+        <p class="blurb">Capital to build the AI Secretary and nurture the early B2B flywheel.</p>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-num">1</div>
+      <div class="stage-content">
+        <h3>Build an AI Secretary that continually learns <span class="stage-status now">now</span></h3>
+        <p class="blurb">AI handles calls, adapts to each user's custom needs, becomes a friend.</p>
+        <div class="focus-block">
+          <div class="metric-row">
+            <div class="k">Focus</div>
+            <div class="v">iOS · USA · voicemail replacement · healthcare emphasis</div>
+          </div>
+          <div class="metric-row">
+            <div class="k">Retention</div>
+            <div class="v"><span class="target">target &gt;25%</span> · <span class="actual">40% so far</span><span class="badge ok">beating</span></div>
+          </div>
+          <div class="metric-row">
+            <div class="k">App rating</div>
+            <div class="v"><span class="target">target &gt;4.5 unbiased</span> · <span class="actual">4.5 biased</span><span class="badge progress">needs unbiased sample</span></div>
+          </div>
+          <div class="metric-row">
+            <div class="k">Virality</div>
+            <div class="v"><span class="target">target +10% users/wk</span> · <span class="actual">unknown</span><span class="badge unknown">to measure</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-num">2</div>
+      <div class="stage-content">
+        <h3>App nurtures ripe B2B leads <span class="stage-status now">now</span></h3>
+        <p class="blurb">App spreads among colleagues; AI introduces user to Sales when ready to buy; adapts to company's custom needs.</p>
+        <div class="focus-block">
+          <div class="metric-row">
+            <div class="k">Focus</div>
+            <div class="v">iOS + browser · USA · call handling · healthcare emphasis · standard API connectors</div>
+          </div>
+          <div class="metric-row">
+            <div class="k">WAU → 5-fig ARR</div>
+            <div class="v"><span class="target">target &gt;2% in 90d</span> · <span class="actual">0.7% so far</span><span class="badge progress">closing gap</span></div>
+          </div>
+          <div class="metric-row">
+            <div class="k">ARR</div>
+            <div class="v"><span class="target">target $1M</span> · <span class="actual">$150k so far</span><span class="badge progress">15%</span></div>
+          </div>
+          <div class="metric-row">
+            <div class="k">LTV:CAC</div>
+            <div class="v"><span class="target">target ≥3</span> · <span class="actual">≥3 (if ≥1 Growth signing/wk)</span><span class="badge ok">on track</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-num">3</div>
+      <div class="stage-content">
+        <h3>AI Secretary handles all communication <span class="stage-status next">next</span></h3>
+        <p class="blurb">Calls, schedule, texts, emails, web chat — one AI inbox.</p>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-num">4</div>
+      <div class="stage-content">
+        <h3>AI agent creator economy <span class="stage-status next">horizon</span></h3>
+        <p class="blurb">Users share their AIs' accomplishments in the YouSquared news feed. The community can hire them. AIs are ranked competitively — grandmasters in cancer-care patient communication, others in construction-equipment rental. We integrate healthcare; partners integrate us everywhere else.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Alignment Q&A -->
+<section>
+  <div class="inner">
+    <h2>Alignment Q&amp;A</h2>
+    <p class="lede">The questions the team and investors keep asking. <em style="color:#9E9893">Draft, open for debate.</em></p>
+
+    <div class="qa">
+
+      <div class="qa-item">
+        <div class="qa-q">What do we do? What's our focus?</div>
+        <div class="qa-a">Our AIs give people <em>instant 1-shot access</em> to services that currently take hours or days to find. Book in one go: an optometrist, a contract lawyer, a boom lift, a ride. This helps professionals book more qualified leads and fill their capacity.</div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q">Should we focus exclusively on healthcare?</div>
+        <div class="qa-a">Healthcare is our favorite vertical — most meaningful impact — but it's not our only vertical. Too risky, slow-moving, AI-cautious. And needlessly limiting: healthcare features carry over to other verticals. <em>Being horizontal means we can be viral.</em></div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q">Should we focus exclusively on solopreneurs?</div>
+        <div class="qa-a">No. The lack of team potential makes the unit economics unattractive. Our LTV:CAC sweet spot is <em>20–1,000 person companies</em>. Also: solopreneur-only would bar us from &gt;99% of healthcare. Ever consulted a doctor who had zero staff?</div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q">What's our vision?</div>
+        <div class="qa-a">AI agent creator economy: top users specialize their AI characters to their profession and distribute them to others in their field. Already happening: Jamil → Amanda → oncology; Enrique → Thomas → equipment rental; Carlos → Sarah → transportation.</div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q">If we're vertical- and size-agnostic, will we lose to specialized competitors?</div>
+        <div class="qa-a">We prioritize vertical software integrations in our top 3 verticals: <em>Construction, Healthcare, Real Estate</em>. Mid-term we cover many verticals by letting our AI-creator users do the specialization &amp; distribution via user-generated industry templates — they have more domain expertise and connections than we do.</div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q">What do we <em>not</em> do?</div>
+        <div class="qa-a">
+          We are not offering the product outside the US (until we reach US commercial leadership).<br>
+          We are not building an Android version (until we expand to an Android-dominant geo).<br>
+          We are not offering medical-advice AI — we help healthcare professionals book qualified patients &amp; fill available capacity.
+        </div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q">Isn't viral consumer tech more exciting than B2B CRM software?</div>
+        <div class="qa-a">We're a hybrid. <em>Consumer side:</em> humanized AIs with empathy, social sharing loops, gamified AI specialization &amp; distribution, YouSquared best-practice news feed &amp; forum. <em>B2B side:</em> CRM lead capture, tracking, 3rd-party integrations.</div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q">Are we building a browser version?</div>
+        <div class="qa-a">Yes. Every popular app has one — typing on a desktop keyboard is more productive. AI medical scribes are predominantly desktop. Even Breezy (solopreneur-focused) offers a browser version.</div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q">What do we expand to next?</div>
+        <div class="qa-a"><em>Calls → Calendar → Texts → Email → Note-taking → Web Chat.</em> Some people prefer to call, others text, email, chat. <strong>Email will be game-changing</strong>: 70–90% of leads in almost every vertical (incl. healthcare). We already lose healthcare leads to Breezy, who cover all communication channels with a similar-sized dev team.</div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q">How does the Verizon partnership fit in?</div>
+        <div class="qa-a">The most strategic possible partnership for us. <em>⅓ of all voicemails in America are triggered by Verizon.</em> Verizon is best positioned to upgrade the American phone-call economy — defaulting to voice AI rather than voicemail when a human is unavailable. They can distribute and integrate us so businesses and phone-driven professionals can activate YouSquared easily.</div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q">When do we come out of stealth?</div>
+        <div class="qa-a"><em>March–May 2026, with Verizon.</em></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>Source: <a href="https://docs.google.com/document/d/1ofCdwa48tkEQ2H-qTSdvsSc9_jDTIyDVU0321MozX0I/edit">Company Strategy — YouSquared by Strange Attractor</a></div>
+  <div class="meta">Living document · strange-attractor.com/presentations/company-internal/company-strategy/</div>
+</footer>
+
+</body>
+</html>
