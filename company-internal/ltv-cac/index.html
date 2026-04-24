@@ -73,8 +73,13 @@
     padding: 16px 14px 14px;
     text-align: center;
     position: relative;
-    transition: transform 0.15s ease;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   }
+  .mo:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(45,42,38,0.08); }
+  .mo:hover.good { border-color: var(--good); }
+  .mo:hover.close { border-color: var(--close); }
+  .mo:hover.off { border-color: var(--off); }
   .mo .mo-label {
     font-size: 0.68em;
     text-transform: uppercase;
@@ -348,7 +353,7 @@
   <div class="title-block">
     <div class="eyebrow">To Spend or Not to Spend</div>
     <h1>YouSquared · LTV : CAC</h1>
-    <div class="sub">March 2026 · tracking since Dec 2025 · April outlook at-risk</div>
+    <div class="sub"><span id="sub-month">March 2026</span> · tracking since Dec 2025 · April outlook at-risk</div>
   </div>
 
   <!-- TIME-SERIES STRIP -->
@@ -357,23 +362,23 @@
       <div class="t">Monthly LTV : CAC</div>
       <div class="h">Target 3.0 · Dec 2025 → Mar 2026</div>
     </div>
-    <div class="strip">
-      <div class="mo close">
+    <div class="strip" id="strip">
+      <div class="mo close" data-month="dec">
         <div class="mo-label">Dec 2025</div>
         <div class="mo-ratio">1.02</div>
         <div class="mo-bar"><div class="mo-fill" style="width:34%"></div></div>
       </div>
-      <div class="mo close">
+      <div class="mo close" data-month="jan">
         <div class="mo-label">Jan 2026</div>
         <div class="mo-ratio">1.06</div>
         <div class="mo-bar"><div class="mo-fill" style="width:35%"></div></div>
       </div>
-      <div class="mo close">
+      <div class="mo close" data-month="feb">
         <div class="mo-label">Feb 2026</div>
         <div class="mo-ratio">0.71</div>
         <div class="mo-bar"><div class="mo-fill" style="width:24%"></div></div>
       </div>
-      <div class="mo close current">
+      <div class="mo close current" data-month="mar">
         <div class="mo-tag">current</div>
         <div class="mo-label">Mar 2026</div>
         <div class="mo-ratio">1.39</div>
@@ -386,23 +391,23 @@
   <div class="headline">
     <div class="headline-left">
       <div class="h-label">Lifetime Value ÷ Acquisition Cost</div>
-      <div class="h-ratio">1.39</div>
-      <div class="h-target">Target: <strong>3.0</strong> · every $1 spent returns $1.39</div>
-      <div class="trend-badge">↗ +96% vs Feb · best month on record</div>
+      <div class="h-ratio" id="h-ratio">1.39</div>
+      <div class="h-target">Target: <strong>3.0</strong> · every $1 spent returns $<span id="h-return">1.39</span></div>
+      <div class="trend-badge" id="trend-badge">↗ +96% vs Feb · best month on record</div>
     </div>
     <div class="headline-right">
       <div class="h-box cac">
         <div class="bl">CAC</div>
-        <div class="bv">$70</div>
+        <div class="bv" id="h-cac">$70</div>
         <div class="bn">per onboarded user</div>
       </div>
       <div class="h-box ltv ltv-top">
         <div class="bl">LTV · Team</div>
-        <div class="bv">$63</div>
+        <div class="bv" id="h-ltv-team">$63</div>
       </div>
       <div class="h-box ltv ltv-total">
         <div class="bl">LTV · Solo</div>
-        <div class="bv">$34</div>
+        <div class="bv" id="h-ltv-solo">$34</div>
       </div>
     </div>
   </div>
@@ -418,7 +423,7 @@
         <div class="ic wash-terracotta">💰</div>
         <div>
           <div class="metric-name">Ad spend</div>
-          <div class="metric-val"><span class="v">$8,489</span><span class="goal">Google £6.0K · Apple $500</span></div>
+          <div class="metric-val"><span class="v" id="m-spend">$8,489</span><span class="goal" id="m-spend-breakdown">Google £6.0K · Apple $500</span></div>
         </div>
         <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill good" style="width:100%"></div></div></div>
       </div>
@@ -427,36 +432,36 @@
         <div class="ic wash-terracotta">👥</div>
         <div>
           <div class="metric-name">Onboarded users</div>
-          <div class="metric-val"><span class="v">121</span><span class="goal">completed CF setup</span></div>
+          <div class="metric-val"><span class="v" id="m-onbd">121</span><span class="goal">completed CF setup</span></div>
         </div>
         <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill close" style="width:60%"></div></div></div>
       </div>
 
       <div class="row">
-        <div class="ic wash-off">🎯</div>
+        <div class="ic" id="m-act-ic">🎯</div>
         <div>
           <div class="metric-name">Activation rate</div>
-          <div class="metric-val"><span class="v off">33%</span><span class="goal">goal: 70% · 1st open → onboarded</span></div>
+          <div class="metric-val"><span class="v" id="m-act">33%</span><span class="goal">goal: 70% · 1st open → onboarded</span></div>
         </div>
-        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill off" style="width:47%"></div></div></div>
+        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill" id="m-act-bar" style="width:47%"></div></div></div>
       </div>
 
       <div class="row">
         <div class="ic wash-close">📱</div>
         <div>
           <div class="metric-name">1st opens</div>
-          <div class="metric-val"><span class="v">369</span><span class="goal">App opens first-time</span></div>
+          <div class="metric-val"><span class="v" id="m-opens">369</span><span class="goal">App opens first-time</span></div>
         </div>
         <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill close" style="width:55%"></div></div></div>
       </div>
 
       <div class="row">
-        <div class="ic wash-close">💵</div>
+        <div class="ic" id="m-cpc-ic">💵</div>
         <div>
           <div class="metric-name">Ad cost / click</div>
-          <div class="metric-val"><span class="v close">£2.43</span><span class="goal">goal: £2 · Google Ads</span></div>
+          <div class="metric-val"><span class="v" id="m-cpc">£2.43</span><span class="goal">goal: £2 · Google Ads</span></div>
         </div>
-        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill close" style="width:82%"></div></div></div>
+        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill" id="m-cpc-bar" style="width:82%"></div></div></div>
       </div>
 
     </div>
@@ -466,21 +471,21 @@
       <div class="panel-head">LTV components</div>
 
       <div class="row">
-        <div class="ic wash-good">💳</div>
+        <div class="ic" id="m-subr-ic">💳</div>
         <div>
           <div class="metric-name">Subscription rate</div>
-          <div class="metric-val"><span class="v good">13%</span><span class="goal">goal: 10% · onboarded → paying</span></div>
+          <div class="metric-val"><span class="v" id="m-subr">13%</span><span class="goal">goal: 10% · onboarded → paying</span></div>
         </div>
-        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill good" style="width:100%"></div></div></div>
+        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill" id="m-subr-bar" style="width:100%"></div></div></div>
       </div>
 
       <div class="row">
-        <div class="ic wash-close">📊</div>
+        <div class="ic" id="m-mix-ic">📊</div>
         <div>
           <div class="metric-name">Pro / Elite / Team mix</div>
-          <div class="metric-val"><span class="v close">81 · 19 · 1</span><span class="goal">goal: 94 / 4 / 2</span></div>
+          <div class="metric-val"><span class="v" id="m-mix">81 · 19 · 0</span><span class="goal">goal: 94 / 4 / 2</span></div>
         </div>
-        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill close" style="width:55%"></div></div></div>
+        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill" id="m-mix-bar" style="width:55%"></div></div></div>
       </div>
 
       <div class="row">
@@ -517,12 +522,12 @@
   <div class="upfront">
     <div class="upfront-head">Upfront pay · annual subscriptions</div>
     <div class="row" style="border-bottom:none; padding: 6px 0;">
-      <div class="ic wash-off">💸</div>
+      <div class="ic" id="m-upf-ic">💸</div>
       <div>
         <div class="metric-name">Upfront pay · Solo / Team</div>
-        <div class="metric-val"><span class="v off">0%</span><span class="v good" style="margin-left:-2px;">· 100%</span><span class="goal">goal: 30% · 50% · annual &gt; monthly</span></div>
+        <div class="metric-val"><span class="v" id="m-upf-solo">0%</span><span class="v good" style="margin-left:-2px;">· 100%</span><span class="goal">goal: 30% · 50% · annual &gt; monthly</span></div>
       </div>
-      <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill off" style="width:0%"></div></div></div>
+      <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill" id="m-upf-bar" style="width:0%"></div></div></div>
     </div>
   </div>
 
@@ -554,6 +559,131 @@
   </div>
 
 </div>
+
+<script>
+const DATA = {
+  dec: {
+    label: "December 2025",
+    ratio: "1.02", return_: "1.02", trend: "Dec 2025 · tracking begins", trendClass: "",
+    cac: "$85", ltvSolo: "$28", ltvTeam: "$59",
+    spend: "$22,797", spendBreakdown: "Google £17.6K × 1.27 + Apple $500",
+    onbd: "268",
+    act: "33%", actStatus: "off", actBar: 47,
+    opens: "807",
+    cpc: "£4.21", cpcStatus: "off", cpcBar: 100,
+    subr: "12%", subrStatus: "good", subrBar: 100,
+    mix: "97 · 3 · 0", mixStatus: "close", mixBar: 70,
+    upfSolo: "0%", upfStatus: "off", upfBar: 0,
+  },
+  jan: {
+    label: "January 2026",
+    ratio: "1.06", return_: "1.06", trend: "↗ +4% vs Dec", trendClass: "",
+    cac: "$126", ltvSolo: "$45", ltvTeam: "$87",
+    spend: "$25,494", spendBreakdown: "Google £18.5K × 1.35 + Apple $500",
+    onbd: "203",
+    act: "26%", actStatus: "off", actBar: 37,
+    opens: "771",
+    cpc: "£2.77", cpcStatus: "close", cpcBar: 72,
+    subr: "18%", subrStatus: "good", subrBar: 100,
+    mix: "86 · 14 · 0", mixStatus: "close", mixBar: 60,
+    upfSolo: "5%", upfStatus: "off", upfBar: 17,
+  },
+  feb: {
+    label: "February 2026",
+    ratio: "0.71", return_: "0.71", trend: "↘ -33% vs Jan", trendClass: "down",
+    cac: "$227", ltvSolo: "$56", ltvTeam: "$105",
+    spend: "$22,907", spendBreakdown: "Google £16.7K × 1.34 + Apple $500",
+    onbd: "101",
+    act: "29%", actStatus: "off", actBar: 41,
+    opens: "351",
+    cpc: "£2.62", cpcStatus: "close", cpcBar: 76,
+    subr: "22%", subrStatus: "good", subrBar: 100,
+    mix: "82 · 18 · 0", mixStatus: "close", mixBar: 55,
+    upfSolo: "5%", upfStatus: "off", upfBar: 17,
+  },
+  mar: {
+    label: "March 2026",
+    ratio: "1.39", return_: "1.39", trend: "↗ +96% vs Feb · best month on record", trendClass: "",
+    cac: "$70", ltvSolo: "$34", ltvTeam: "$63",
+    spend: "$8,489", spendBreakdown: "Google £6.0K × 1.33 + Apple $500",
+    onbd: "121",
+    act: "33%", actStatus: "off", actBar: 47,
+    opens: "369",
+    cpc: "£2.43", cpcStatus: "close", cpcBar: 82,
+    subr: "13%", subrStatus: "good", subrBar: 100,
+    mix: "81 · 19 · 0", mixStatus: "close", mixBar: 55,
+    upfSolo: "0%", upfStatus: "off", upfBar: 0,
+  },
+};
+
+const ICON_WASH = { good: "ic wash-good", close: "ic wash-close", off: "ic wash-off" };
+const BAR_CLASS = { good: "bar-fill good", close: "bar-fill close", off: "bar-fill off" };
+const VALUE_CLASS = { good: "v good", close: "v close", off: "v off" };
+
+function select(month) {
+  const d = DATA[month];
+  if (!d) return;
+
+  document.getElementById("sub-month").textContent = d.label;
+  document.getElementById("h-ratio").textContent = d.ratio;
+  document.getElementById("h-return").textContent = d.return_;
+  document.getElementById("h-cac").textContent = d.cac;
+  document.getElementById("h-ltv-team").textContent = d.ltvTeam;
+  document.getElementById("h-ltv-solo").textContent = d.ltvSolo;
+
+  const trend = document.getElementById("trend-badge");
+  trend.textContent = d.trend;
+  trend.className = "trend-badge" + (d.trendClass ? " " + d.trendClass : "");
+
+  document.getElementById("m-spend").textContent = d.spend;
+  document.getElementById("m-spend-breakdown").textContent = d.spendBreakdown;
+  document.getElementById("m-onbd").textContent = d.onbd;
+  document.getElementById("m-opens").textContent = d.opens;
+
+  const setStatus = (valId, barId, icId, value, status, barPct) => {
+    const v = document.getElementById(valId);
+    v.textContent = value;
+    v.className = VALUE_CLASS[status];
+    const bar = document.getElementById(barId);
+    bar.className = BAR_CLASS[status];
+    bar.style.width = barPct + "%";
+    if (icId) document.getElementById(icId).className = ICON_WASH[status];
+  };
+
+  setStatus("m-act", "m-act-bar", "m-act-ic", d.act, d.actStatus, d.actBar);
+  setStatus("m-cpc", "m-cpc-bar", "m-cpc-ic", d.cpc, d.cpcStatus, d.cpcBar);
+  setStatus("m-subr", "m-subr-bar", "m-subr-ic", d.subr, d.subrStatus, d.subrBar);
+  setStatus("m-mix", "m-mix-bar", "m-mix-ic", d.mix, d.mixStatus, d.mixBar);
+
+  const upfV = document.getElementById("m-upf-solo");
+  upfV.textContent = d.upfSolo;
+  upfV.className = VALUE_CLASS[d.upfStatus];
+  document.getElementById("m-upf-ic").className = ICON_WASH[d.upfStatus];
+  const upfBar = document.getElementById("m-upf-bar");
+  upfBar.className = BAR_CLASS[d.upfStatus];
+  upfBar.style.width = d.upfBar + "%";
+
+  document.querySelectorAll("#strip .mo").forEach(el => {
+    el.classList.remove("current");
+    const tag = el.querySelector(".mo-tag");
+    if (tag) tag.remove();
+  });
+  const picked = document.querySelector(`#strip .mo[data-month="${month}"]`);
+  picked.classList.add("current");
+  if (!picked.querySelector(".mo-tag")) {
+    const tag = document.createElement("div");
+    tag.className = "mo-tag";
+    tag.textContent = "selected";
+    picked.insertBefore(tag, picked.firstChild);
+  }
+}
+
+document.querySelectorAll("#strip .mo").forEach(el => {
+  el.addEventListener("click", () => select(el.dataset.month));
+});
+
+select("mar");
+</script>
 
 </body>
 </html>
