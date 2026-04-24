@@ -1,9 +1,335 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8">
-<title>Subscriber Retention — coming soon</title>
-<style>body{font-family:-apple-system,sans-serif;max-width:500px;margin:80px auto;padding:0 24px;color:#444;line-height:1.5}a{color:#2a6b4f}</style>
-</head><body>
-<h1>Subscriber Retention</h1>
-<p>Coming soon. Will live at this path.</p>
-<p><a href="../">&larr; Company Internal</a></p>
-</body></html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Subscriber Retention — YouSquared</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --terracotta: #E07A5F;
+    --terracotta-wash: #FBEAE3;
+    --charcoal: #2D2A26;
+    --cream: #F5F2EF;
+    --paper: #FBF9F6;
+    --border: #EDE8E3;
+    --muted: #6B6560;
+    --faint: #9E9893;
+    --good: #5A9A6F;
+    --good-wash: #EEF5F0;
+    --blue: #4A7BA6;
+    --blue-wash: #E8F0F7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--charcoal);
+    background: var(--cream);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 1180px; margin: 0 auto; padding: 36px 28px 60px; }
+
+  /* TITLE */
+  .title-block { text-align: center; margin-bottom: 28px; }
+  .eyebrow {
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .title-block h1 {
+    font-family: 'Lora', serif;
+    font-size: 1.65em;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  .title-block .sub { margin-top: 6px; color: var(--muted); font-size: 0.92em; }
+
+  /* HEADLINE */
+  .headline {
+    background: #fff;
+    border-radius: 20px;
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 28px;
+    box-shadow: 0 1px 2px rgba(45,42,38,0.04), 0 8px 22px rgba(45,42,38,0.05);
+    margin-bottom: 22px;
+    align-items: center;
+  }
+  .h-ltv-label {
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .h-ltv-val {
+    font-family: 'Lora', serif;
+    font-size: 4.6em;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--terracotta);
+    letter-spacing: -2px;
+  }
+  .h-ltv-sub {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 0.95em;
+  }
+  .h-ltv-sub strong { color: var(--charcoal); font-weight: 600; }
+
+  .h-right { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .h-box {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 14px;
+    text-align: center;
+  }
+  .h-box .bl {
+    font-size: 0.66em;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .h-box .bv {
+    font-family: 'Lora', serif;
+    font-size: 1.8em;
+    font-weight: 700;
+    margin-top: 4px;
+  }
+  .h-box .bn { font-size: 0.78em; color: var(--faint); margin-top: 2px; }
+
+  /* CHART CARD */
+  .chart-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 22px 22px 14px;
+    box-shadow: 0 1px 2px rgba(45,42,38,0.04), 0 8px 22px rgba(45,42,38,0.05);
+    margin-bottom: 22px;
+  }
+  .chart-card .chart-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0 6px 4px;
+    margin-bottom: 6px;
+  }
+  .chart-card .chart-head .t {
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .chart-card .chart-head .h {
+    font-size: 0.78em;
+    color: var(--faint);
+  }
+  .chart-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* ANCHORS STRIP */
+  .anchors {
+    background: #fff;
+    border-radius: 20px;
+    padding: 22px 24px;
+    box-shadow: 0 1px 2px rgba(45,42,38,0.04), 0 8px 22px rgba(45,42,38,0.05);
+    margin-bottom: 22px;
+  }
+  .anchors-head {
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .anchors-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .anc {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 14px;
+    text-align: center;
+  }
+  .anc .lb {
+    font-size: 0.66em;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .anc .vl {
+    font-family: 'Lora', serif;
+    font-size: 1.65em;
+    font-weight: 700;
+    margin-top: 4px;
+    color: var(--blue);
+  }
+  .anc .nt { font-size: 0.78em; color: var(--faint); margin-top: 2px; }
+  .anc.drop .vl { color: var(--terracotta); }
+
+  /* NOTES */
+  .notes {
+    background: #fff;
+    border-radius: 20px;
+    padding: 26px 30px;
+    box-shadow: 0 1px 2px rgba(45,42,38,0.04), 0 8px 22px rgba(45,42,38,0.05);
+    margin-bottom: 22px;
+    font-size: 0.95em;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+  .notes-title {
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .notes ul { list-style: none; }
+  .notes li { padding: 4px 0; }
+  .notes li::before { content: "— "; color: var(--terracotta); font-weight: 700; }
+  .notes strong { color: var(--charcoal); font-weight: 600; }
+
+  /* FOOTER */
+  .foot {
+    margin-top: 28px;
+    font-size: 0.78em;
+    color: var(--faint);
+    text-align: center;
+  }
+  .foot a { color: var(--terracotta); text-decoration: none; }
+  .foot a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .foot code {
+    font-family: 'Inter', sans-serif;
+    background: rgba(224, 122, 95, 0.08);
+    color: var(--terracotta);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  @media (max-width: 900px) {
+    .headline { grid-template-columns: 1fr; }
+    .anchors-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="title-block">
+    <div class="eyebrow">Near-Zero Churn After Month 3</div>
+    <h1>YouSquared · Subscriber Retention</h1>
+    <div class="sub">Self-serve Pro / Elite subscribers · Kaplan–Meier + stabilized-core forecast · as of 2026-01-26</div>
+  </div>
+
+  <!-- HEADLINE -->
+  <div class="headline">
+    <div>
+      <div class="h-ltv-label">Blended Subscriber LTV</div>
+      <div class="h-ltv-val">$295</div>
+      <div class="h-ltv-sub">
+        <strong>9.3 month</strong> average lifetime · weighted ARPU <strong>$31.73</strong><br>
+        Aligns with LTV:CAC dashboard Solo LTV ($34 monthly ARPU × 7.3 mo = $248); our Kaplan–Meier model adds ~$47 from the stabilized tail.
+      </div>
+    </div>
+    <div class="h-right">
+      <div class="h-box">
+        <div class="bl">Subscribers</div>
+        <div class="bv">180</div>
+        <div class="bn">all-time paying</div>
+      </div>
+      <div class="h-box">
+        <div class="bl">Active today</div>
+        <div class="bv">112</div>
+        <div class="bn">paying this month</div>
+      </div>
+      <div class="h-box">
+        <div class="bl">Weighted ARPU</div>
+        <div class="bv">$31.73</div>
+        <div class="bn">active-user mix</div>
+      </div>
+      <div class="h-box">
+        <div class="bl">Avg Lifetime</div>
+        <div class="bv">9.3 mo</div>
+        <div class="bn">forecast integral</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHART -->
+  <div class="chart-card">
+    <div class="chart-head">
+      <div class="t">Retention curve · observed + forecast</div>
+      <div class="h">180 subscribers · 86 churned · 94 censored</div>
+    </div>
+    <img src="assets/retention-chart.svg" alt="YouSquared subscriber retention — Kaplan–Meier curve with stabilized-core forecast">
+  </div>
+
+  <!-- ANCHORS -->
+  <div class="anchors">
+    <div class="anchors-head">Stabilized-core anchors</div>
+    <div class="anchors-grid">
+      <div class="anc">
+        <div class="lb">S · Month 2</div>
+        <div class="vl">45.6%</div>
+        <div class="nt">after bad-fit filter</div>
+      </div>
+      <div class="anc">
+        <div class="lb">S · Month 8</div>
+        <div class="vl">38.8%</div>
+        <div class="nt">stabilized core</div>
+      </div>
+      <div class="anc drop">
+        <div class="lb">Absolute Drop · Mo 2 → 8</div>
+        <div class="vl">6.8 pp</div>
+        <div class="nt">≈ 1.13 pp / month</div>
+      </div>
+      <div class="anc drop">
+        <div class="lb">Forecast · zero month</div>
+        <div class="vl">Mo 38</div>
+        <div class="nt">extrapolated cutoff</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTES -->
+  <div class="notes">
+    <div class="notes-title">Method &amp; caveats</div>
+    <ul>
+      <li><strong>Cohort</strong> — every user with an <code>rc_initial_purchase_event</code>. Start = first initial-purchase timestamp; cancel = first <code>rc_cancellation_event</code>; active users are right-censored at the latest event in the dataset.</li>
+      <li><strong>Observed KM</strong> — standard step-down estimator with 95% Beta-distributed confidence intervals. Intervals enforced monotone non-increasing.</li>
+      <li><strong>Stabilized-core forecast</strong> — months 0–8 follow the KM curve; from month 8 onward we step down by the <em>absolute</em> drop observed between months 2 and 8, every 6 months, until zero. This is materially more conservative than exponential decay but more realistic than flat survival for a cohort where bad-fit users filter out by month 2.</li>
+      <li><strong>Weighted ARPU</strong> — per active user, take the revenue of their latest <code>rc_initial_purchase_event</code> or <code>rc_renewal_event</code>; annual plans divided by 12. Missing revenue is imputed from <code>product_id</code> (<em>elite</em> → $60, <em>pro</em> → $30, fallback $30). 16 of 112 active users fell through to fallback — all are <code>pro.montly</code> subscribers whose latest purchase/renewal event dropped its <code>product_id</code>; $30 is the correct price. <strong>No Team plans appear in this dataset</strong> (Team is custom-contract, tracked separately in the <a href="../ltv-cac/" style="color:var(--terracotta);text-decoration:none;">LTV:CAC dashboard</a>).</li>
+      <li><strong>LTV</strong> — area under the dense forecast curve (0.1-month steps) × weighted ARPU = 9.3 × $31.73 = $295.</li>
+    </ul>
+  </div>
+
+  <div class="foot">
+    Spec: <code>yousquared_retention_spec.md</code> · rebuild: <code>python build.py</code> · <a href="../">← Company Internal</a>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "as_of": "2026-01-26",
+  "total_subscribers": 180,
+  "total_churned": 86,
+  "active_subscribers": 112,
+  "weighted_arpu_usd": 31.73,
+  "lifetime_months": 9.3,
+  "ltv_usd": 295,
+  "s_month2": 0.4561,
+  "s_month8": 0.3882,
+  "abs_drop_pp": 6.79,
+  "monthly_drop_post_stabilization_pp": 1.132,
+  "zero_month": 38.0,
+  "fallback_count": 16
+}

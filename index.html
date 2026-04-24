@@ -136,6 +136,19 @@
   }
   .flat li:last-child { border-bottom: none; }
 
+  /* Nested child under a flat parent */
+  .flat .children {
+    list-style: none;
+    padding: 8px 0 0 22px;
+    margin: 4px 0 0;
+    border-left: 2px solid #F5F2EF;
+  }
+  .flat .children li {
+    padding: 7px 0 7px 12px;
+    border-bottom: none;
+    font-size: 0.95em;
+  }
+
   @media (max-width: 720px) {
     .hero { padding: 56px 28px 48px; }
     .hero h1 { font-size: 2.4em; }
@@ -189,9 +202,13 @@
     <ul class="flat">
       <li><a class="item" href="company-internal/company-strategy/">YouSquared Company Strategy</a><span class="desc">vision, journey, alignment Q&amp;A</span></li>
       <li><a class="item" href="company-internal/dev-velocity/">YouSquared Dev Velocity</a><span class="desc">PR merge rate &amp; review times</span></li>
-      <li><a class="item" href="company-internal/ltv-cac/">YouSquared LTV:CAC</a><span class="desc">monthly growth dashboard</span></li>
+      <li>
+        <a class="item" href="company-internal/ltv-cac/">YouSquared LTV:CAC</a><span class="desc">monthly growth dashboard</span>
+        <ul class="children">
+          <li><a class="item" href="company-internal/subscriber-retention/">Subscriber Retention</a><span class="desc">KM curve, stabilized-core LTV</span></li>
+        </ul>
+      </li>
       <li><a class="item" href="company-internal/roadmap/">YouSquared Roadmap</a><span class="desc">top priority features &amp; scope</span></li>
-      <li><a class="item" href="company-internal/subscriber-retention/">YouSquared Subscriber Retention</a><span class="desc coming">coming soon</span></li>
       <li><a class="item" href="company-internal/who-gets-value/">YouSquared Who Gets Value</a><span class="desc">value report</span></li>
     </ul>
   </section>
