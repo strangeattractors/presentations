@@ -1,0 +1,362 @@
+[
+  {
+    "id": 609767,
+    "date": "2026-04-10",
+    "subtype": "adjuster",
+    "user_role": "P.A. | P.A. | V.A. ",
+    "report": "- Regarding the B.S. claim at [address], S.R., MN.\n- The carrier approved replacing the siding, but not the roof metal panels.\n- He wants a call back today to discuss this.",
+    "verdict": "clear_fit",
+    "why": "The caller is a homeowner whose carrier approved replacing siding but not roof metal panels, indicating a dispute over the scope of damage."
+  },
+  {
+    "id": 525668,
+    "date": "2026-03-12",
+    "subtype": "roofer",
+    "user_role": "H.S. | S.M. | R.R.",
+    "report": "- Her roof claim was applied to the wrong claim number.\n- The correct claim number is [phone].\n- She asked for a call back at your earliest convenience.",
+    "verdict": "clear_fit",
+    "why": "The caller is a homeowner whose roof claim was applied to the wrong claim number, indicating a dispute or error with their home-insurance carrier."
+  },
+  {
+    "id": 476541,
+    "date": "2026-02-25",
+    "subtype": "adjuster",
+    "user_role": "P.A. | P.A. | V.A. ",
+    "report": "- C.W. seeks advice for a stalled contents claim with S.F. after a total house fire last August.\n- S.F. has been 'investigating' for 3 months without providing a reason for the delay.\n- She will email you the last written communication from S.F..\n- A callback is fine at any time.",
+    "verdict": "clear_fit",
+    "why": "The caller is a homeowner with a stalled contents claim after a total house fire, and S.F. has been 'investigating' for 3 months without providing a reason for the delay, indicating a clear dispute with the carrier."
+  },
+  {
+    "id": 458837,
+    "date": "2026-02-19",
+    "subtype": "adjuster",
+    "user_role": "Insurance | P.A.  | O.A.",
+    "report": "- You have a new referral for an insurance issue.\n- A sink overflowed and damaged her wood floors.\n- She is having issues with her insurance company and wants to talk to you.",
+    "verdict": "clear_fit",
+    "why": "The caller is a homeowner with water damage to wood floors who is having issues with her insurance company and wants to talk to the public adjuster, indicating a dispute with the carrier."
+  },
+  {
+    "id": 419572,
+    "date": "2026-02-06",
+    "subtype": "adjuster",
+    "user_role": "Insurance | P.A.  | O.A.",
+    "report": "- L.G., who was referred by M.R. and G.H., has fired her public adjuster.\n- She wants to know if you are taking new clients and would be interested in her case.\n- She asked you to call her back at [phone].",
+    "verdict": "clear_fit",
+    "why": "The caller is a homeowner who has fired her public adjuster, indicating a dispute with her insurance claim, and is seeking new representation for her case."
+  },
+  {
+    "id": 404890,
+    "date": "2026-02-02",
+    "subtype": "construction_engineering",
+    "user_role": "Construction & Engineering | S.D.",
+    "report": "Erica from P.I. informed you that your claim from January 12th has been denied. For questions, you can call back at [phone].",
+    "verdict": "clear_fit",
+    "why": "The call report explicitly states that Erica from P.I. informed the user that their claim from January 12th has been denied, indicating a clear dispute with a home-insurance carrier."
+  },
+  {
+    "id": 337410,
+    "date": "2026-01-09",
+    "subtype": "roofer",
+    "user_role": "H.S. | B.B. and R.C. | G.R. and S.R.",
+    "report": "- Asks for an update on the Allstate claim for her roof.\n- Suggests it might be time to drop the claim as she feels it's not progressing.",
+    "verdict": "clear_fit",
+    "why": "The caller is a homeowner who is frustrated with the lack of progress on her Allstate roof claim and is considering dropping it, indicating a dispute with her home-insurance carrier."
+  },
+  {
+    "id": 279732,
+    "date": "2025-12-16",
+    "subtype": "adjuster",
+    "user_role": "P.A. | P.A. | V.A. ",
+    "report": "- Christopher from S.F. called regarding the Strunko claim (ending 04H).\n- He informed you that two managers have reviewed it and S.F. is standing by its decision.\n- The claim is now being closed.",
+    "verdict": "clear_fit",
+    "why": "The call report indicates that S.F. is closing the Strunko claim after two managers reviewed it and are standing by their decision, which signals a clear denial or underpayment dispute for a homeowner."
+  },
+  {
+    "id": 266062,
+    "date": "2025-12-11",
+    "subtype": "roofer",
+    "user_role": "H.S. | S.M. | R.R.",
+    "report": "- Received a letter from S.F. stating they cannot make the payment claim.\n- Wants to know what you think about it.\n- Please call him back before 8:00, as he won't have his phone after that time.",
+    "verdict": "clear_fit",
+    "why": "The caller is a homeowner who received a letter from S.F. stating they cannot make the payment claim, indicating a clear dispute with their home-insurance carrier."
+  },
+  {
+    "id": 246368,
+    "date": "2025-12-03",
+    "subtype": "adjuster",
+    "user_role": "P.A. | P.A. | V.A. ",
+    "report": "She has questions about a situation with an insurance company. They were expecting a final check for a contractor who is finishing a project. Please call her back at [phone].",
+    "verdict": "clear_fit",
+    "why": "The caller is a homeowner who is expecting a final check from their insurance company for a contractor, indicating a potential dispute or delay in payment from the carrier."
+  },
+  {
+    "id": 246116,
+    "date": "2025-12-03",
+    "subtype": "home_repair_remodel",
+    "user_role": "H.S. | ER Plumbing ",
+    "report": "He is calling about the hot water heater inspection report for C.W.. They denied the replacement based on a dent you reported, which he says is cosmetic. He's without hot water and needs you to call back within 30-45 minutes before his meeting.",
+    "verdict": "clear_fit",
+    "why": "The caller is a homeowner whose hot water heater replacement was denied by C.W. based on a cosmetic dent, indicating a dispute with their home-insurance carrier."
+  },
+  {
+    "id": 224957,
+    "date": "2025-11-24",
+    "subtype": "adjuster",
+    "user_role": "P.A. | P.A. | V.A. ",
+    "report": "A conversation with C.E. today about a bed and breakfast was denied. It was also stated that this topic is not in the playbook and that call recordings are not stored and cannot be replayed.",
+    "verdict": "clear_fit",
+    "why": "The caller is a homeowner with a bed and breakfast claim that was denied, indicating a clear dispute with their home-insurance carrier."
+  },
+  {
+    "id": 122138,
+    "date": "2025-10-02",
+    "subtype": "adjuster",
+    "user_role": "P.A. | P.A. | V.A. ",
+    "report": "- He is seeking an independent adjuster for a hailstorm claim from May 20th of last year.\n- He was referred by Dallas at A.H. and Ray.\n- After over a year, his insurance has only paid for the roof, and he feels the process is dragging. He wants someone to verify the work needed.",
+    "verdict": "clear_fit",
+    "why": "The caller is a homeowner experiencing a significant delay and underpayment on a hailstorm claim, explicitly stating the process is dragging and only the roof has been paid for after over a year, indicating a dispute with the carrier."
+  },
+  {
+    "id": 112094,
+    "date": "2025-09-24",
+    "subtype": "adjuster",
+    "user_role": "P.A. | P.A. | V.A. ",
+    "report": "B.C. called because his insurance claim was denied and he needs your help.",
+    "verdict": "clear_fit",
+    "why": "The caller is a homeowner whose insurance claim was denied, explicitly indicating a dispute with their home-insurance carrier."
+  },
+  {
+    "id": 91842,
+    "date": "2025-09-03",
+    "subtype": "adjuster",
+    "user_role": "P.A. | P.A. | V.A. ",
+    "report": "- Replying to your email, she says it's doubtful more work can be done on her house before Sept 12th.\n- Insurance didn't approve new tiles, and she doesn't want mismatched ones since the roof isn't leaking.\n- She is still waiting to hear from her contractor about skylights.\n- You are welcome to call her at [phone].",
+    "verdict": "clear_fit",
+    "why": "The caller is a homeowner whose insurance didn't approve new tiles, indicating a dispute with the carrier over coverage for their residential roof."
+  },
+  {
+    "id": 54733,
+    "date": "2025-07-22",
+    "subtype": "adjuster",
+    "user_role": "P.A. | P.A. | V.A. ",
+    "report": "F.W. called. He needs a public adjuster for a denied insurance claim and requested a call back today.",
+    "verdict": "clear_fit",
+    "why": "The caller is a homeowner who needs a public adjuster for a denied insurance claim, indicating a dispute with their home-insurance carrier."
+  },
+  {
+    "id": 599958,
+    "date": "2026-04-07",
+    "subtype": "roofer",
+    "user_role": "H.S. | S.M. | R.R.",
+    "report": "- Trina will try to call you today around 4 PM CT (5 PM ET).\n- Her parents are requesting a walkthrough at [address] for some issues with the walls.\n- She also wants to discuss S.I. paperwork with you before she sends it over.",
+    "verdict": "potential_fit",
+    "why": "The caller's parents are homeowners with wall issues, and the caller wants to discuss 'S.I. paperwork' before sending it over, indicating an active insurance claim that could potentially turn into a dispute."
+  },
+  {
+    "id": 589533,
+    "date": "2026-04-02",
+    "subtype": "roofer",
+    "user_role": "H.S. | S.M. | R.R.",
+    "report": "I.K. was expecting you to get back to him with information on his claim. He would like a call back today if you're still working, otherwise tomorrow is fine.",
+    "verdict": "potential_fit",
+    "why": "The caller is a homeowner expecting information on his claim, indicating an ongoing insurance claim that could potentially turn into a dispute with the carrier."
+  },
+  {
+    "id": 576042,
+    "date": "2026-03-30",
+    "subtype": "construction_engineering",
+    "user_role": "Construction & Engineering",
+    "report": "P.C. is following up on a roof estimate. They said you were contacting their insurance and they're wondering what the status is. They requested a callback.",
+    "verdict": "potential_fit",
+    "why": "The caller is a homeowner following up on a roof estimate and mentions the business is contacting their insurance, indicating an active insurance claim that could potentially turn into a dispute."
+  },
+  {
+    "id": 539579,
+    "date": "2026-03-17",
+    "subtype": "roofer",
+    "user_role": "H.S. | S.M. | R.R.",
+    "report": "P.M. called for an update on today's insurance visit. She wants to know what the adjuster said regarding the damage. She is available for a callback anytime.",
+    "verdict": "potential_fit",
+    "why": "The caller is a homeowner asking for an update on an insurance visit regarding damage, indicating an active claim that could potentially turn into a dispute with the carrier."
+  },
+  {
+    "id": 476132,
+    "date": "2026-02-25",
+    "subtype": "construction_engineering",
+    "user_role": "Construction & Engineering | M.E.",
+    "report": "The roof has a very noticeable leak in one room and from the outside. The inspector who came a few months ago apparently didn't report it. Paul asks you to call him.",
+    "verdict": "potential_fit",
+    "why": "The caller is a homeowner with a noticeable roof leak that an inspector apparently missed, indicating potential insurance-related damage that could lead to a dispute with their carrier."
+  },
+  {
+    "id": 472921,
+    "date": "2026-02-24",
+    "subtype": "construction_engineering",
+    "user_role": "Construction & Engineering",
+    "report": "- Allstate scheduled an inspection for his roof damage for tomorrow, Wednesday, Feb 25th, between 8-10 AM.\n- He is checking if you can be there, as you'd mentioned you wanted to be.\n- Please call him back.",
+    "verdict": "potential_fit",
+    "why": "The caller is a homeowner with roof damage who has an insurance inspection scheduled, indicating an active claim that could potentially turn into a dispute with the carrier."
+  },
+  {
+    "id": 413084,
+    "date": "2026-02-04",
+    "subtype": "roofer",
+    "user_role": "Roofing/Siding/Gutters | G.C.",
+    "report": "- M.L. has not yet received the carrier scope, estimate, or the check.\n- He will call back on this number when he receives the documents.\n- His best contact number is [phone] and he prefers a phone call.\n- He confirmed the project address is 2303 W.S..\n- He mentioned he had been wondering about you.",
+    "verdict": "potential_fit",
+    "why": "The caller is a homeowner involved in a claim, waiting on carrier documents, which could later turn into a dispute with the insurance carrier."
+  },
+  {
+    "id": 413069,
+    "date": "2026-02-04",
+    "subtype": "roofer",
+    "user_role": "Roofing/Siding/Gutters | G.C.",
+    "report": "- You asked me to call Melvin now about his roof replacement.\n- I will ask if he has received the carrier scope and estimate.\n- If he has it, I will try to schedule a meeting for you today around 2 or 3 PM.\n- I will update you after the call is finished.",
+    "verdict": "potential_fit",
+    "why": "The call report indicates a roof replacement and mentions the carrier scope and estimate, suggesting an ongoing insurance claim for a homeowner, but no explicit dispute with the carrier is mentioned yet."
+  },
+  {
+    "id": 341628,
+    "date": "2026-01-12",
+    "subtype": "restoration",
+    "user_role": "Construction | V.P. of N.A.",
+    "report": "M.B. wants to confirm if you or your team are coming to his house today at 10:00 a.m. for the mitigation visit and to meet the other insurance adjuster.",
+    "verdict": "potential_fit",
+    "why": "The caller is a homeowner with an insurance-related damage claim, as indicated by the mention of a \"mitigation visit\" and meeting \"the other insurance adjuster,\" but has not yet voiced a dispute."
+  },
+  {
+    "id": 288422,
+    "date": "2025-12-19",
+    "subtype": "construction_engineering",
+    "user_role": "Construction & Engineering | R.E.",
+    "report": "- Caller: T.A., referred by realtor M.T..\n- Request: He needs an electrician to inspect his knob and tube wiring.\n- Reason: His insurance company requires a letter stating the wiring is safe and in working order.\n- Callback: [phone].",
+    "verdict": "potential_fit",
+    "why": "The caller is a homeowner whose insurance company requires a letter about their wiring, indicating an ongoing insurance-related issue that could escalate into a dispute."
+  },
+  {
+    "id": 277887,
+    "date": "2025-12-16",
+    "subtype": "restoration",
+    "user_role": "Construction & Engineering | P.D. | BluSky Restoration",
+    "report": "- Jacob had a fire loss at his house today.\n- His insurance agent told him to call you right away.\n- He is requesting an immediate call back.",
+    "verdict": "potential_fit",
+    "why": "Jacob is a homeowner with a fire loss who was told by his insurance agent to call, indicating an active insurance claim, but he has not yet voiced a dispute with his carrier."
+  },
+  {
+    "id": 278675,
+    "date": "2025-12-16",
+    "subtype": "roofer",
+    "user_role": "H.S. | S.M. | R.R.",
+    "report": "- She is following up on the temporary cover for her leaking chimney. It's supposed to rain Thursday and she's worried about more water damage.\n- She also wants to know if you plan to fix the chimney and any related roof damage.\n- She has interior ceiling damage from the leak and is looking for a recommendation for that repair.",
+    "verdict": "potential_fit",
+    "why": "The caller is a homeowner with interior ceiling damage from a leak and is asking about fixing the chimney and roof damage, indicating an ongoing insurance-related issue that could escalate into a dispute."
+  },
+  {
+    "id": 247994,
+    "date": "2025-12-04",
+    "subtype": "home_repair_remodel",
+    "user_role": "Construction & Engineering | Handyman | D.D.",
+    "report": "Your appointment for Friday, December 5th at 9:45 AM is confirmed.\n\nPlease remember to bring:\n- Your current insurance information.\n- A method of payment (cash, checks, Mastercard, and Visa are accepted).",
+    "verdict": "potential_fit",
+    "why": "The call report mentions bringing 'current insurance information' which suggests an insurance-related claim, but no explicit dispute with the carrier is voiced."
+  },
+  {
+    "id": 218911,
+    "date": "2025-11-21",
+    "subtype": "construction_engineering",
+    "user_role": "Construction & Engineering",
+    "report": "- Wants to confirm your bid of $18,498.43 is for a full roof.\n- She has been approved for additional money from her insurance.\n- She would like to add a couple of things to the job.\n- She wants to schedule the work for approximately two weeks from now.",
+    "verdict": "potential_fit",
+    "why": "The caller is a homeowner who has been approved for additional money from her insurance, indicating an ongoing insurance claim that could potentially lead to a dispute."
+  },
+  {
+    "id": 192349,
+    "date": "2025-11-11",
+    "subtype": "roofer",
+    "user_role": "H.S. | S.M. | R.R.",
+    "report": "- Wants a call back when you have time. He's available anytime, including tonight.\n- He mentioned the shingle has not been picked up yet.\n- The adjuster has apparently turned the matter over to someone else.",
+    "verdict": "potential_fit",
+    "why": "The caller is a homeowner with an ongoing insurance claim, as indicated by the mention of shingles not being picked up and the adjuster turning the matter over to someone else, suggesting potential future issues with the carrier."
+  },
+  {
+    "id": 188921,
+    "date": "2025-11-09",
+    "subtype": "roofer",
+    "user_role": "Roofing/Siding/Gutters | G.C.",
+    "report": "- You tested my ability to handle customer calls with empathy.\n- You role-played as a customer, Andrew, with phone number [phone].\n- Andrew's requests: needs a different interior scope for insurance and wants to know when the solar panels will be removed for the roof replacement.",
+    "verdict": "potential_fit",
+    "why": "The caller is a homeowner who needs a different interior scope for insurance, indicating an ongoing insurance claim that could potentially turn into a dispute with the carrier."
+  },
+  {
+    "id": 187988,
+    "date": "2025-11-08",
+    "subtype": "roofer",
+    "user_role": "Roofing/Siding/Gutters | G.C.",
+    "report": "She has a huge tree in her roof and needs you to come and inspect it for her insurance.",
+    "verdict": "potential_fit",
+    "why": "The caller is a homeowner with residential property damage (tree on roof) and is involved in a claim, but has not yet voiced a dispute with the insurance carrier."
+  },
+  {
+    "id": 137376,
+    "date": "2025-10-14",
+    "subtype": "roofer",
+    "user_role": "H.S. | S.M. | R.R.",
+    "report": "D.B. called to talk about his claim. He requested a call back anytime after about half an hour from now.",
+    "verdict": "potential_fit",
+    "why": "The caller is a homeowner with a claim, but has not yet voiced a dispute with their insurance carrier."
+  },
+  {
+    "id": 85684,
+    "date": "2025-08-25",
+    "subtype": "construction_engineering",
+    "user_role": "Construction & Engineering",
+    "report": "Anthony called regarding a claim. He asked you to call him back at [phone] when you have a chance.",
+    "verdict": "potential_fit",
+    "why": "Anthony called regarding a claim, indicating an insurance-related issue, but has not yet voiced a dispute with the carrier."
+  },
+  {
+    "id": 59887,
+    "date": "2025-07-28",
+    "subtype": "roofer",
+    "user_role": "Construction & Engineering | Owner founder | J and J Roofing LLC",
+    "report": "- T.F. from Kingsburg called. - Her house was hit hard by the recent hail storm. - She wants you to call her back. - She said anytime is fine.",
+    "verdict": "potential_fit",
+    "why": "The caller is a homeowner whose residential property has insurance-related damage from a hail storm and is likely involved in a claim, but has not yet voiced a dispute with her carrier."
+  },
+  {
+    "id": 51228,
+    "date": "2025-07-17",
+    "subtype": "roofer",
+    "user_role": "Construction & Engineering | Owner founder | J and J Roofing LLC",
+    "report": "- E.F. called about the work on his house at [address].\n- He has a couple of questions about the contract you sent and wants to discuss what he heard from his insurance company.\n- He mentioned you are also working with his neighbor, Casey.\n- His number is [phone].",
+    "verdict": "potential_fit",
+    "why": "The caller is a homeowner who wants to discuss what he heard from his insurance company regarding work on his house, indicating an active insurance claim that could potentially lead to a dispute."
+  },
+  {
+    "id": 43955,
+    "date": "2025-07-09",
+    "subtype": "roofer",
+    "user_role": "H.S. | B.B. and R.C. | G.R. and S.R.",
+    "report": "- Wants you to call him back regarding the property inspection dispute at [address].\n- He asked for the call to be between 7:00 and 8:00 AM this morning.",
+    "verdict": "potential_fit",
+    "why": "The caller is a homeowner with a property inspection dispute, indicating an insurance-related issue that could escalate into a carrier dispute."
+  },
+  {
+    "id": 37288,
+    "date": "2025-06-30",
+    "subtype": "roofer",
+    "user_role": "H.S. | B.B. and R.C. | G.R. and S.R.",
+    "report": "- He is following up on the roof repair for the hole you already had someone put a tarp over.\n- He requested a callback and is available anytime.\n- He has homeowner's insurance.\n- His contact details are: Phone: ([phone], Address: [address], Summit, Mississippi, Email: [email].",
+    "verdict": "potential_fit",
+    "why": "The caller is a homeowner following up on a roof repair for which they have homeowner's insurance, indicating an ongoing claim that could potentially turn into a dispute with the carrier."
+  },
+  {
+    "id": 31561,
+    "date": "2025-06-16",
+    "subtype": "roofer",
+    "user_role": "H.S. | B.B. and R.C. | G.R. and S.R.",
+    "report": "- The insurance company's adjuster will be at your location for a meeting on June 17th at 9 AM (tomorrow).\n- Bubba requested you call him back to confirm your attendance.",
+    "verdict": "potential_fit",
+    "why": "The caller is a homeowner with an insurance adjuster meeting scheduled, indicating an active claim that could potentially turn into a dispute with the carrier."
+  }
+]

@@ -1,0 +1,128 @@
+# Layer 2 — QBR brief. One file per customer QBR, lives at:
+#   qbrs/<customer-slug>-<YYYY-MM>/brief.yml
+#
+# Fill this in before building the HTML. Every slot below ends up in the deck.
+# Fields marked "auto" come from Layer 1 (qbr_harvest.sh) — don't set by hand.
+
+# ────────── Customer identity ──────────
+customer:
+  name: "Hair Shunnarah Trial Attorneys"
+  short_name: "HSTA"              # used throughout copy instead of legal name
+  logo_path: "assets/customer-logo.svg"   # drop their logo into assets/
+  tagline: "Every claimant heard. Every call answered instantly."
+  partnered_since: "December 2024"
+  mission_url: "https://insuranceclaimhq.com/about-us/"   # source for mission quote
+
+# ────────── The meeting ──────────
+onsite:
+  date: "2026-04-20"
+  primary_contact: "Galen Hair"
+  location: "Metairie, LA"
+
+# ────────── Scope ──────────
+scope:
+  receiver_ids:
+    - "iqb2OrGSVLN1itClADzATN9BUYR2"    # the main AI line
+  window_start: "2025-06-16"
+  timezone: "America/Chicago"
+  ai_name: "Hank"                        # the customer's chosen AI persona
+
+# ────────── Seats / channels (slide 2 metric cards) ──────────
+seats:
+  main_lines_enabled: 1
+  main_lines_total: 2
+  individual_lines_enabled: 1
+  individual_lines_total: "?"            # use "?" if unknown
+
+channels:
+  enabled_label: "Inbound calls only"
+  scope_note: "1 of ? firms in the Shunnarah group"
+
+# ────────── Timeline callouts (slide 2 chart row) ──────────
+timeline:
+  - { when: "Mar 10 · 2025",      what: "Shannon onboards — Hank goes live on HSTA's main intake line" }
+  - { when: "Oct – Nov · 2025",   what: "Hurricane season peak · 330 calls handled" }
+  - { when: "Feb 4 · 2026",       what: "LeadDocket integration goes live" }
+  # auto-appended: { when: "Today", what: "<N> calls · <L> qualified leads captured" }
+
+# ────────── Featured calls (slide 3) ──────────
+# Pick 2 real conv_ids from assets/leads-backing.json. Grab audio + transcript
+# via `gcloud storage cp` and drop into assets/; reference paths below.
+featured_calls:
+  - conv_id: 318406
+    pill: "⚗️ Mass tort · Chemical plant exposure"
+    title: "Smitty's Supply explosion — KM, 15 miles downriver."
+    quote: "I've never asked anybody for nothing until now."
+    desc: "Homeowner on the Tangipahoa River. Oil sheen in the water, chemical smell for a month..."
+    audio: "assets/call-smittys-masstort.mp3"
+    duration_min: 10
+    urgent: true
+    when: "Sat · 8:28 AM CT"
+    fee_estimate: "$10K – $33K"
+    transcript_anonymized: |
+      Hank: Hair Shunnarah, this is Hank. How can I help you?
+      Caller: Yes, sir. How you doing this morning?
+      ... (full turns)
+
+  - conv_id: 145354
+    pill: "❤️ Engagement · Elderly Allstate caller"
+    # ...
+
+# ────────── Team row (slide 5) ──────────
+# YS-side team rotation. Usually stable across customers; tweak per account.
+team:
+  - { name: "Alex Dalyac",      role: "Founder & CEO",            photo: "team-alex.jpg" }
+  - { name: "Joris Abalea",     role: "iOS + CRM integrations",   photo: "team-joris.jpg",    new_face: true }
+  - { name: "Jake Albert",      role: "Web app lead",             photo: "team-jake.jpg",     new_face: true }
+  - { name: "Cheyney McInerny", role: "Customer success",         photo: "team-cheyney.jpg",  new_face: true }
+  - { name: "Eleonora Lala",    role: "Partnership growth",       photo: "team-lala.jpg",     new_face: true }
+
+# ────────── YS momentum bullets (slide 5) ──────────
+momentum:
+  - { icon: "2M", title: "2M calls / year run rate",
+      sub: "Platform-wide — the AI is battle-tested at scale." }
+  - { icon: "V",  title: "Verizon is now a distributor for YouSquared",
+      sub: "Listed in the Verizon Business Marketplace alongside One Talk."
+      link: "https://www.verizon.com/business/shop/marketplace" }
+  # etc.
+
+# ────────── Roadmap chapters (slide 6) ──────────
+# 4 chapters, each with impact + example transcript + nitty-gritty checklist.
+# Leave nitty-gritty[] empty if no concrete steps yet — Chapter will just show
+# the chevron but have no content when opened.
+roadmap:
+  - num: 1
+    title: 'Hank qualifies, signs up &amp; transfers <em>new</em> clients.'
+    sub: "PI contract signed on the call; warm hand-off to your intake team."
+    impact: "Signed contracts on the first call — no week-later follow-up, no lost momentum."
+    example:
+      header: "Envisioned call · based on conv 318406 (Smitty's mass tort)"
+      turns:
+        - { speaker: "Hank", ai: true, text: "..." }
+        - { speaker: "Caller", text: "..." }
+    nitty:
+      - "Migrate HSTA to the YouSquared Team plan"
+      - "..."
+
+  - num: 2
+    title: 'Hank updates &amp; transfers <em>existing</em> clients.'
+    # ...
+
+# ────────── Referral flywheel (slide 6, chapter 4) ──────────
+# Three tabs: property / ASTA-style legal matters / TCPA repeat spam.
+# Set `enabled: false` for customers where this doesn't apply (most non-HSTA).
+# When enabled, assets/referral-candidates.json + asta-candidates.json +
+# tcpa-candidates.json must exist (generated by a separate flywheel script).
+referral_flywheel:
+  enabled: true
+  per_user_per_year_rate: 3    # "X potential leads per Y² user per year"
+
+# ────────── Auto-filled from Layer 1 (DO NOT SET) ──────────
+_auto:
+  total_calls:       # from data/stats.json
+  off_hours_pct:
+  off_hours_count:
+  qualified_leads:
+  total_fee_value:
+  monthly_series:
+  hourly_24h:

@@ -1,0 +1,195 @@
+[
+  {
+    "phone_masked": "[phone ...0288]",
+    "call_count": 63,
+    "distinct_users_hit": 4,
+    "first_call": "2025-09-30",
+    "last_call": "2026-02-10",
+    "first_stop_request_date": "2026-01-10",
+    "stop_request_evidence": "Please remove this number from your records and stop calling.",
+    "industries_hit": [
+      "General Business",
+      "Pet services",
+      "Transportation",
+      "Waste management, trash bin cleaning, can-to-curb valet, valet trash, power washing"
+    ],
+    "sample_short_report": "You received a call from 'F. H. Con and associates' looking for 'H. W.'. They were repeatedly told that it was a wrong number and were asked to remove this number from their records.",
+    "why": "Caller contacted 4 Y2 users; AI asked them to stop on 2026-01-10 but caller kept calling through 2026-02-10 (total 63 calls)."
+  },
+  {
+    "phone_masked": "[phone ...2253]",
+    "call_count": 36,
+    "distinct_users_hit": 19,
+    "first_call": "2025-10-04",
+    "last_call": "2026-04-19",
+    "first_stop_request_date": "2026-03-28",
+    "stop_request_evidence": "Please remove this number from your Spectrum records.",
+    "industries_hit": [
+      "Automotive",
+      "Construction & Engineering",
+      "Consulting",
+      "Custom boat canvassing",
+      "Firearm sales and Entertainment",
+      "Home Services",
+      "Home healthcare agency",
+      "Independent Living",
+      "Lawncare",
+      "Not sure yet",
+      "Technology",
+      "Transportation",
+      "Unknown"
+    ],
+    "sample_short_report": "This was a wrong number. An automated system from Spectrum called looking for D. G. regarding an account status change.",
+    "why": "Caller contacted 19 Y2 users; AI asked them to stop on 2026-03-28 but caller kept calling through 2026-04-19 (total 36 calls)."
+  },
+  {
+    "phone_masked": "[phone ...5786]",
+    "call_count": 15,
+    "distinct_users_hit": 6,
+    "first_call": "2025-11-11",
+    "last_call": "2026-03-14",
+    "first_stop_request_date": "2026-03-06",
+    "stop_request_evidence": "Please remove this number from your call list.",
+    "industries_hit": [
+      "Pet services",
+      "Remodeling construction",
+      "Selector",
+      "Technology",
+      "Tree Removal and Land Clearing",
+      "Unknown"
+    ],
+    "sample_short_report": "A representative from West Lake Financial Services, Z. C., called asking for your account number. He did not state the reason for the call. Your number has been requested to be removed from their calling list.",
+    "why": "Caller contacted 6 Y2 users; AI asked them to stop on 2026-03-06 but caller kept calling through 2026-03-14 (total 15 calls)."
+  },
+  {
+    "phone_masked": "[phone ...0900]",
+    "call_count": 15,
+    "distinct_users_hit": 3,
+    "first_call": "2025-08-23",
+    "last_call": "2026-04-07",
+    "first_stop_request_date": "2025-08-23",
+    "stop_request_evidence": "Add me to your do not contact list. Capisce?",
+    "industries_hit": [
+      "Sales & Marketing",
+      "Technology",
+      "Unknown"
+    ],
+    "sample_short_report": "- An automated call from Verizon Financial Services regarding the status of your Verizon account for the phone number ending in 0064. - You are asked to call them back today at 1-[phone].",
+    "why": "Caller contacted 3 Y2 users; AI asked them to stop on 2025-08-23 but caller kept calling through 2026-04-07 (total 15 calls)."
+  },
+  {
+    "phone_masked": "[phone ...5506]",
+    "call_count": 14,
+    "distinct_users_hit": 1,
+    "first_call": "2026-01-28",
+    "last_call": "2026-04-18",
+    "first_stop_request_date": "2026-03-27",
+    "stop_request_evidence": "You do not have permission to call this number. Goodbye.",
+    "industries_hit": [
+      "Home Services"
+    ],
+    "sample_short_report": "The caller from Lane Health stated the matter required prompt attention and asked for a return call. As per your instructions, the call was disconnected.",
+    "why": "Caller contacted 1 Y2 users; AI asked them to stop on 2026-03-27 but caller kept calling through 2026-04-18 (total 14 calls)."
+  },
+  {
+    "phone_masked": "[phone ...7656]",
+    "call_count": 14,
+    "distinct_users_hit": 1,
+    "first_call": "2026-01-25",
+    "last_call": "2026-04-07",
+    "first_stop_request_date": "2026-02-06",
+    "stop_request_evidence": "Please don't call again unless it's respect",
+    "industries_hit": [
+      "Stay at home mom"
+    ],
+    "sample_short_report": "The caller made sexually explicit and abusive comments. The call contained no other information.",
+    "why": "Caller contacted 1 Y2 users; AI asked them to stop on 2026-02-06 but caller kept calling through 2026-04-07 (total 14 calls)."
+  },
+  {
+    "phone_masked": "[phone ...9207]",
+    "call_count": 13,
+    "distinct_users_hit": 1,
+    "first_call": "2026-03-13",
+    "last_call": "2026-04-14",
+    "first_stop_request_date": "2026-03-18",
+    "stop_request_evidence": "Lane Health does not have permission to call this number. Goodbye.",
+    "industries_hit": [
+      "Home Services"
+    ],
+    "sample_short_report": "Lane Health called, stating the matter required your prompt attention and asked for a call back. The call was disconnected as per your instructions.",
+    "why": "Caller contacted 1 Y2 users; AI asked them to stop on 2026-03-18 but caller kept calling through 2026-04-14 (total 13 calls)."
+  },
+  {
+    "phone_masked": "[phone ...6664]",
+    "call_count": 13,
+    "distinct_users_hit": 1,
+    "first_call": "2026-03-03",
+    "last_call": "2026-04-15",
+    "first_stop_request_date": "2026-03-03",
+    "stop_request_evidence": "You do not have permission to contact this phone number.",
+    "industries_hit": [
+      "Home Services"
+    ],
+    "sample_short_report": "Lane Health called about a matter requiring your prompt attention. Please call them back at the number you received the call from.",
+    "why": "Caller contacted 1 Y2 users; AI asked them to stop on 2026-03-03 but caller kept calling through 2026-04-15 (total 13 calls)."
+  },
+  {
+    "phone_masked": "[phone ...8785]",
+    "call_count": 7,
+    "distinct_users_hit": 1,
+    "first_call": "2026-03-11",
+    "last_call": "2026-04-16",
+    "first_stop_request_date": "2026-03-11",
+    "stop_request_evidence": "Please remove this number from your list.",
+    "industries_hit": [
+      "ARTIST"
+    ],
+    "sample_short_report": "This was an automated call from National Payday Loan Relief. Your number was requested to be removed from their list.",
+    "why": "Caller contacted 1 Y2 users; AI asked them to stop on 2026-03-11 but caller kept calling through 2026-04-16 (total 7 calls)."
+  },
+  {
+    "phone_masked": "[phone ...4233]",
+    "call_count": 7,
+    "distinct_users_hit": 1,
+    "first_call": "2026-03-02",
+    "last_call": "2026-04-08",
+    "first_stop_request_date": "2026-03-02",
+    "stop_request_evidence": "you do not have permission to contact this phone number",
+    "industries_hit": [
+      "Home Services"
+    ],
+    "sample_short_report": "Lane Health called about a matter that requires your prompt attention. Please call them back at the number they called from.",
+    "why": "Caller contacted 1 Y2 users; AI asked them to stop on 2026-03-02 but caller kept calling through 2026-04-08 (total 7 calls)."
+  },
+  {
+    "phone_masked": "[phone ...0961]",
+    "call_count": 7,
+    "distinct_users_hit": 3,
+    "first_call": "2026-01-12",
+    "last_call": "2026-04-09",
+    "first_stop_request_date": "2026-01-12",
+    "stop_request_evidence": "Please remove it from your records.",
+    "industries_hit": [
+      "Construction & Engineering",
+      "Pastor"
+    ],
+    "sample_short_report": "An automated call from Verizon Wireless Financial Services reported an 'urgent service alert' regarding your account. I informed them that they had reached the wrong number and requested it be removed from their records.",
+    "why": "Caller contacted 3 Y2 users; AI asked them to stop on 2026-01-12 but caller kept calling through 2026-04-09 (total 7 calls)."
+  },
+  {
+    "phone_masked": "[phone ...5169]",
+    "call_count": 5,
+    "distinct_users_hit": 3,
+    "first_call": "2025-09-05",
+    "last_call": "2025-10-22",
+    "first_stop_request_date": "2025-09-05",
+    "stop_request_evidence": "callin' add me to your do not contact list.",
+    "industries_hit": [
+      "Real Estate",
+      "Technology",
+      "Unknown"
+    ],
+    "sample_short_report": "A caller claiming to be 'P. K.' from Nigeria said she saw your Instagram, has 'fallen for you', and wants to meet. She asked you to send money via Bitcoin for the flight ticket. This is a likely scam attempt.",
+    "why": "Caller contacted 3 Y2 users; AI asked them to stop on 2025-09-05 but caller kept calling through 2025-10-22 (total 5 calls)."
+  }
+]

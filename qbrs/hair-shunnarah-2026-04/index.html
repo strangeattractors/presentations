@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hair Shunnarah × YouSquared — Q1 2026 Business Review</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<style>
+  :root {
+    --text:#2D2A26; --text2:#6B6560; --text3:#9E9893;
+    --bg:#FFFFFF; --bg2:#F5F2EF;
+    --accent:#E07A5F; --accent-deep:#C75B39; --gold:#E8B87D; --muted-gray:#C9C3BE; --muted-red:#B97A73;
+  }
+  * { box-sizing:border-box; }
+  html, body { margin:0; padding:0; background:#EDE8E3; font-family:'Inter',sans-serif; color:var(--text); line-height:1.55; }
+  .deck { max-width:1040px; margin:0 auto; padding:40px 0; }
+  .page { background:var(--bg); border-radius:16px; box-shadow:0 2px 20px rgba(45,42,38,0.06); padding:64px 72px; margin-bottom:32px; min-height:720px; position:relative; }
+  .page.alt { background:var(--bg2); }
+  .page-num { position:absolute; bottom:24px; right:32px; font-size:0.75em; color:var(--text3); letter-spacing:0.1em; text-transform:uppercase; }
+  .eyebrow { font-size:0.72em; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent-deep); font-weight:700; margin-bottom:16px; }
+  h1, h2, h3 { font-family:'Lora',serif; font-weight:600; margin:0; }
+  h1 { font-size:3em; line-height:1.1; }
+  h2 { font-size:2.1em; line-height:1.15; margin-bottom:28px; }
+  h3 { font-size:1.35em; line-height:1.25; }
+  p { margin:0 0 14px 0; }
+  .lead { font-size:1.15em; color:var(--text2); }
+
+  /* Hero slide */
+  .hero { background:linear-gradient(145deg,#2D2A26 0%,#433F3A 55%,#3A3632 100%); color:white; padding:96px 72px; min-height:720px; position:relative; overflow:hidden; border-radius:16px; margin-bottom:32px; }
+  .hero::before { content:''; position:absolute; top:-100px; right:-100px; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle, rgba(224,122,95,0.25) 0%, transparent 70%); }
+  .hero::after { content:''; position:absolute; bottom:-150px; left:-100px; width:400px; height:400px; border-radius:50%; background:radial-gradient(circle, rgba(224,122,95,0.15) 0%, transparent 70%); }
+  .hero > * { position:relative; z-index:1; }
+  .hero.hero-firm { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:72px 72px; min-height:720px; }
+  .hero-eyebrow { font-size:0.72rem; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.55); font-weight:600; margin-bottom:auto; align-self:stretch; padding-top:0; }
+  .hero-firm-stage { display:flex; flex-direction:column; align-items:center; gap:36px; margin:auto 0; }
+  .hero-firm-logo { width:min(640px, 80%); height:auto; background:white; padding:28px 40px; border-radius:14px; box-shadow:0 20px 48px rgba(0,0,0,0.35); }
+  .hero-firm-name { font-family:'Lora',serif; font-size:3.4rem; font-weight:700; line-height:1.05; color:#fff; letter-spacing:-0.01em; }
+  .hero-firm-name .subtler { font-weight:500; color:rgba(255,255,255,0.75); letter-spacing:0.01em; }
+  .hero-tagline { font-family:'Lora',serif; font-style:italic; font-size:1.35rem; color:rgba(255,255,255,0.82); margin:40px 0 auto; max-width:700px; line-height:1.4; }
+  .hero-partner { display:inline-flex; align-items:center; gap:14px; padding:14px 22px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:40px; backdrop-filter:blur(4px); }
+  .hero-partner-label { font-size:0.82rem; color:rgba(255,255,255,0.65); font-weight:500; letter-spacing:0.02em; }
+  .hero-y2-mark { height:22px; width:auto; filter:brightness(0) invert(1); opacity:0.95; }
+
+  /* Big stat */
+  .big-stat { text-align:center; padding:40px 0; }
+  .big-stat .num { font-family:'Lora',serif; font-size:6em; font-weight:700; color:var(--accent-deep); line-height:1; }
+  .big-stat .num-suffix { font-size:0.5em; color:var(--text2); font-weight:500; letter-spacing:0.05em; }
+  .big-stat .caption { font-size:1.15em; color:var(--text2); margin-top:16px; max-width:600px; margin-left:auto; margin-right:auto; }
+
+  /* Quote / pull */
+  .pullquote { font-family:'Lora',serif; font-size:2em; font-weight:500; line-height:1.3; color:var(--text); border-left:5px solid var(--accent); padding-left:28px; margin:0 0 32px 0; }
+  .pullquote-source { font-family:'Inter',sans-serif; font-size:0.75em; color:var(--text3); letter-spacing:0.12em; text-transform:uppercase; margin-top:16px; }
+
+  /* Two-column */
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+  .three-col { display:grid; grid-template-columns:1fr 1fr 1fr; gap:24px; }
+
+  /* Fact grid */
+  .fact-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:24px; }
+  .fact-card { background:var(--bg2); border-radius:12px; padding:24px 28px; }
+  .fact-card .fact-num { font-family:'Lora',serif; font-size:2.2em; font-weight:700; color:var(--accent-deep); line-height:1; }
+  .fact-card .fact-label { color:var(--text2); margin-top:8px; font-size:0.95em; }
+
+  /* Team row */
+  .team-row { display:grid; grid-template-columns:repeat(6,1fr); gap:16px; margin:24px 0 40px 0; }
+  .team-card { text-align:center; }
+  .team-card .avatar { width:96px; height:96px; border-radius:50%; object-fit:cover; margin:0 auto 10px auto; display:block; box-shadow:0 2px 12px rgba(45,42,38,0.12); }
+  .team-card .avatar-initials { width:96px; height:96px; border-radius:50%; margin:0 auto 10px auto; background:var(--accent); color:white; display:flex; align-items:center; justify-content:center; font-family:'Lora',serif; font-size:2em; font-weight:700; box-shadow:0 2px 12px rgba(45,42,38,0.12); }
+  .team-card .name { font-weight:600; font-size:0.95em; }
+  .team-card .role { font-size:0.82em; color:var(--text2); margin-top:2px; }
+  .team-card .tag { display:inline-block; font-size:0.65em; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent-deep); font-weight:700; margin-top:4px; }
+
+  /* Momentum bullets */
+  .momentum { list-style:none; padding:0; margin:0; display:grid; grid-template-columns:1fr 1fr; gap:14px 28px; }
+  .momentum li { display:flex; gap:14px; align-items:flex-start; padding:14px 0; }
+  .momentum .icon { flex-shrink:0; width:36px; height:36px; border-radius:8px; background:var(--bg2); color:var(--accent-deep); display:flex; align-items:center; justify-content:center; font-size:1.2em; font-weight:700; font-family:'Lora',serif; }
+  .momentum .icon-lockup { width:auto; min-width:108px; padding:0 10px; gap:6px; background:#FFFFFF; border:1px solid #E6DFD9; }
+  .momentum .icon-lockup .lockup-plus { color:var(--text3); font-family:'Inter',sans-serif; font-size:0.9em; font-weight:500; }
+  .momentum a { color:var(--accent-deep); text-decoration:underline; text-underline-offset:2px; }
+  .momentum a:hover { color:var(--accent); }
+  .momentum .m-text { flex:1; }
+  .momentum .m-title { font-weight:600; font-size:0.98em; }
+  .momentum .m-sub { font-size:0.85em; color:var(--text2); margin-top:2px; }
+
+  /* Roadmap */
+  .roadmap-item { border-bottom:1px solid #E6DFD9; }
+  .roadmap-item:last-child { border-bottom:none; }
+  .roadmap-row { display:grid; grid-template-columns:56px 1fr 1fr; gap:20px; padding:22px 0; align-items:start; }
+  .rm-chips { margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; }
+  .rm-chip { background:#FFFFFF; border:1px solid #E6DFD9; color:var(--accent-deep); font-size:0.78em; font-weight:600; letter-spacing:0.01em; padding:6px 12px; border-radius:18px; cursor:pointer; font-family:inherit; transition:background 0.15s, border-color 0.15s; }
+  .rm-chip:hover { background:rgba(224,122,95,0.08); border-color:var(--accent); }
+  .rm-chip.open { background:var(--accent); color:#fff; border-color:var(--accent); }
+  .rm-chip.open::before { content:'▾ '; margin-right:2px; }
+  .roadmap-impact { position:relative; }
+  .rm-chevron { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; background:transparent; border:1px solid #E6DFD9; color:var(--text2); font-size:0.75rem; cursor:pointer; font-family:inherit; margin-left:8px; vertical-align:middle; transition:transform 0.25s, background 0.15s, color 0.15s, border-color 0.15s; padding:0; line-height:1; }
+  .rm-chevron:hover { background:rgba(224,122,95,0.1); color:var(--accent-deep); border-color:var(--accent); }
+  .rm-chevron.open { transform:rotate(180deg); background:var(--accent); color:#fff; border-color:var(--accent); }
+  .roadmap-example, .roadmap-nitty { max-height:0; overflow:hidden; transition:max-height 0.4s ease, margin 0.3s ease, padding 0.3s ease; background:#F5F2EF; border-radius:10px; }
+  .roadmap-example { margin:0 -8px; }
+  .roadmap-nitty { margin:0 -8px; border-left:3px solid var(--gold); }
+  .roadmap-example.open { max-height:520px; margin-bottom:16px; overflow-y:auto; }
+  #referralExamples.open { max-height:640px; }
+  .roadmap-nitty.open { max-height:1400px; padding:14px 20px; margin-bottom:16px; overflow-y:auto; }
+  .roadmap-nitty details.contract-routing { margin:8px 0 4px 0; background:#FFFFFF; border:1px solid #E6DFD9; border-radius:6px; padding:6px 10px; }
+  .roadmap-nitty details.contract-routing > summary { cursor:pointer; font-size:0.82em; font-weight:600; color:var(--accent-deep); list-style:none; padding:2px 0; }
+  .roadmap-nitty details.contract-routing > summary::before { content:'▸ '; display:inline-block; width:14px; transition:transform 0.2s ease; }
+  .roadmap-nitty details.contract-routing[open] > summary::before { transform:rotate(90deg); }
+  .roadmap-nitty details.contract-routing table { width:100%; border-collapse:collapse; margin-top:8px; font-size:0.78em; }
+  .roadmap-nitty details.contract-routing th { text-align:left; padding:6px 8px; background:#F5F2EF; color:var(--accent-deep); font-weight:700; font-size:0.92em; border-bottom:1px solid #E6DFD9; }
+  .roadmap-nitty details.contract-routing td { padding:6px 8px; border-bottom:1px solid #EFEAE5; vertical-align:top; line-height:1.45; }
+  .roadmap-nitty details.contract-routing tr:last-child td { border-bottom:none; }
+  .roadmap-nitty details.contract-routing td:nth-child(2) { font-family:monospace; color:var(--text2); white-space:nowrap; }
+  .roadmap-nitty details.contract-routing td:nth-child(4) { font-weight:600; color:var(--accent-deep); }
+  .roadmap-example .ct-header { padding:10px 18px; border-bottom:1px solid #E6DFD9; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent-deep); font-weight:700; background:#FFFFFF; }
+  .roadmap-example .ct-body { padding:14px 18px; }
+  .roadmap-example .ct-turn { margin-bottom:8px; font-size:0.82rem; line-height:1.55; }
+
+  /* Call context — CRM/LeadDocket record preview shown before the transcript */
+  .call-context { background:#FFFFFF; border:1px solid #E6DFD9; border-left:3px solid var(--gold); border-radius:8px; padding:14px 16px 12px; margin-bottom:14px; font-size:0.78rem; line-height:1.5; }
+  .cc-title { font-size:0.66rem; letter-spacing:0.12em; text-transform:uppercase; color:#A8793A; font-weight:700; margin-bottom:10px; }
+  .cc-grid { display:grid; grid-template-columns:130px 1fr; row-gap:3px; column-gap:10px; margin-bottom:8px; }
+  .cc-k { color:var(--text2); font-weight:600; }
+  .cc-v { color:var(--text); }
+  .cc-dim { color:var(--text3); font-size:0.92em; }
+  .cc-section-label { font-size:0.64rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text2); font-weight:700; margin:10px 0 6px; padding-top:8px; border-top:1px dashed #E6DFD9; }
+  .cc-notes { list-style:none; padding:0; margin:0; }
+  .cc-notes li { padding:4px 0; color:var(--text); }
+  .cc-notes .cc-date { font-family:ui-monospace, SFMono-Regular, Menlo, monospace; color:var(--text2); font-size:0.72rem; margin-right:4px; }
+  .cc-notes .cc-author { color:var(--accent-deep); font-weight:600; margin-right:4px; }
+  .roadmap-nitty ul { margin:0; padding-left:18px; color:var(--text); font-size:0.85em; line-height:1.7; }
+  .roadmap-nitty li { margin-bottom:4px; }
+
+  /* Pace callout on chapter 1 */
+  .pace-callout { background:linear-gradient(135deg, rgba(232,184,125,0.2) 0%, rgba(224,122,95,0.12) 100%); border-left:3px solid var(--accent-deep); border-radius:0 8px 8px 0; padding:12px 16px; margin-bottom:14px; }
+  .pace-label { font-size:0.66rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent-deep); font-weight:700; margin-bottom:4px; }
+  .pace-body { font-size:0.85em; color:var(--text); line-height:1.5; }
+
+  /* Referral candidates list (bullet 4 example panel) */
+  .ref-tabs { display:flex; gap:6px; padding:10px 18px 0; background:#FFFFFF; border-bottom:1px solid #E6DFD9; position:sticky; top:0; z-index:2; }
+  .ref-tab { background:transparent; border:none; color:var(--text2); font-size:0.78rem; font-weight:600; padding:8px 14px; border-radius:8px 8px 0 0; cursor:pointer; font-family:inherit; border-bottom:2px solid transparent; margin-bottom:-1px; }
+  .ref-tab:hover { color:var(--text); background:rgba(224,122,95,0.06); }
+  .ref-tab.active { color:var(--accent-deep); border-bottom-color:var(--accent); }
+  .ref-panel { padding:14px 18px; display:none; }
+  .ref-panel.active { display:block; }
+  .ref-tab-desc { background:rgba(232,184,125,0.12); border-left:3px solid var(--gold); padding:10px 14px; border-radius:0 8px 8px 0; font-size:0.8rem; color:var(--text); line-height:1.5; margin-bottom:14px; }
+  .ref-list { display:flex; flex-direction:column; gap:10px; }
+  .ref-loading { color:var(--text2); font-size:0.85em; padding:14px 0; }
+  .ref-row { background:#FFFFFF; border:1px solid #E6DFD9; border-radius:8px; padding:10px 14px; font-size:0.8rem; line-height:1.5; }
+  .ref-row.clear { border-left:3px solid var(--accent); }
+  .ref-row.potential { border-left:3px solid var(--gold); }
+  .ref-row.asta_fit, .ref-row.asta { border-left:3px solid #6A8D73; }
+  .ref-row.maybe { border-left:3px solid #B8B3A8; }
+  .ref-row.tcpa { border-left:3px solid #B97A73; }
+  .ref-head { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:6px; }
+  .ref-badge { font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; font-weight:700; padding:2px 8px; border-radius:4px; }
+  .ref-badge.clear { background:rgba(224,122,95,0.15); color:var(--accent-deep); }
+  .ref-badge.potential { background:rgba(232,184,125,0.22); color:#A8793A; }
+  .ref-badge.asta_fit, .ref-badge.asta { background:rgba(106,141,115,0.15); color:#4A6651; }
+  .ref-badge.maybe { background:#EDE8E3; color:var(--text2); }
+  .ref-badge.tcpa { background:rgba(185,122,115,0.18); color:#8A4038; }
+  .ref-convid { font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:0.72rem; color:var(--text2); }
+  .ref-date { font-size:0.72rem; color:var(--text3); }
+  .ref-subtype { font-size:0.68rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); font-weight:600; }
+  .ref-report { color:var(--text); white-space:pre-wrap; }
+  .ref-why { margin-top:6px; padding-top:6px; border-top:1px dashed #E6DFD9; font-size:0.74rem; color:var(--text2); font-style:italic; }
+  .roadmap-num { font-family:'Lora',serif; font-size:2em; font-weight:700; color:var(--accent-deep); line-height:1; }
+  .roadmap-what { font-weight:600; font-size:1.02em; }
+  .roadmap-what .sub { font-weight:400; color:var(--text2); font-size:0.9em; margin-top:4px; }
+  .roadmap-impact { color:var(--text2); font-size:0.95em; padding-left:16px; border-left:2px solid var(--gold); }
+
+  /* Timeline (slide 4 callouts) */
+  .chart-wrap { position:relative; margin:12px 0 20px 0; }
+  .chart-callouts { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:20px; }
+  .chart-callout { background:var(--bg2); border-radius:10px; padding:14px 16px; border-left:3px solid var(--accent); }
+  .chart-callout .when { font-size:0.7em; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent-deep); font-weight:700; margin-bottom:4px; }
+  .chart-callout .what { font-size:0.9em; font-weight:500; }
+
+  /* Ask */
+  .ask-list { list-style:none; padding:0; margin:32px 0 0 0; }
+  .ask-list li { display:flex; gap:16px; align-items:flex-start; padding:22px 28px; background:var(--bg2); border-radius:12px; margin-bottom:16px; border-left:5px solid var(--accent); }
+  .ask-list .check { flex-shrink:0; width:28px; height:28px; border-radius:50%; border:2px solid var(--accent); display:flex; align-items:center; justify-content:center; color:var(--accent); font-weight:700; margin-top:2px; }
+  .ask-list .ask-title { font-weight:600; font-size:1.05em; }
+  .ask-list .ask-sub { color:var(--text2); font-size:0.9em; margin-top:4px; }
+
+  /* Call card (QBR — pitch-deck style, click-to-play audio) */
+  .call-card-qbr { position:relative; aspect-ratio:16/10; background:linear-gradient(165deg,#1a1816 0%,#2D2A26 50%,#3A3632 100%); color:white; border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); box-shadow:0 8px 24px rgba(45,42,38,0.18); cursor:pointer; transition:transform 0.25s, border-color 0.25s; }
+  .call-card-qbr:hover { transform:translateY(-2px); border-color:rgba(224,122,95,0.5); }
+  .call-card-qbr::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 75% 25%, rgba(224,122,95,0.22) 0%, transparent 55%); pointer-events:none; }
+  .ccq-waveform { position:absolute; left:0; right:0; bottom:0; height:60px; background:repeating-linear-gradient(90deg, rgba(224,122,95,0.25) 0, rgba(224,122,95,0.25) 2px, transparent 2px, transparent 5px); mask-image:linear-gradient(to top, black, transparent); opacity:0.55; pointer-events:none; }
+  .ccq-waveform.variant2 { background:repeating-linear-gradient(90deg, rgba(232,184,125,0.3) 0, rgba(232,184,125,0.3) 2px, transparent 2px, transparent 4px); }
+  .call-card-qbr > .ccq-overlay { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between; padding:20px 22px; pointer-events:none; z-index:2; }
+  .ccq-pill { display:inline-flex; align-self:flex-start; align-items:center; gap:6px; background:rgba(224,122,95,0.22); border:1px solid rgba(224,122,95,0.45); border-radius:20px; padding:4px 11px; font-size:0.66rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#FF8370; backdrop-filter:blur(6px); }
+  .ccq-pill.variant2 { background:rgba(232,184,125,0.2); border-color:rgba(232,184,125,0.45); color:#E8B87D; }
+  .ccq-title { font-family:'Lora',serif; font-size:1.15rem; font-weight:700; line-height:1.25; color:#fff; margin-bottom:6px; }
+  .ccq-desc { font-size:0.8rem; color:rgba(255,255,255,0.72); line-height:1.5; }
+  .ccq-quote { font-family:'Lora',serif; font-size:0.92rem; font-style:italic; color:rgba(255,255,255,0.88); padding-left:14px; border-left:3px solid var(--accent); margin-bottom:10px; line-height:1.45; }
+  .ccq-meta-row { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+  .ccq-tag { font-size:0.66rem; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.7); background:rgba(255,255,255,0.08); border-radius:6px; padding:3px 9px; }
+  .ccq-play-btn { position:absolute; top:16px; right:16px; width:44px; height:44px; background:rgba(224,122,95,0.95); border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(0,0,0,0.4); z-index:3; transition:transform 0.2s, background 0.2s, opacity 0.25s; pointer-events:none; }
+  .call-card-qbr:hover .ccq-play-btn { transform:scale(1.08); background:#FF8370; }
+  .ccq-play-btn::after { content:''; width:0; height:0; border-top:7px solid transparent; border-bottom:7px solid transparent; border-left:11px solid white; margin-left:3px; }
+  .call-card-qbr.playing .ccq-play-btn { opacity:0; }
+  .call-card-qbr.playing::after { content:'❚❚ Playing'; position:absolute; top:18px; right:18px; font-size:0.7rem; letter-spacing:0.1em; font-weight:600; background:rgba(0,0,0,0.55); color:white; padding:4px 10px; border-radius:14px; z-index:3; }
+  .ccq-audio-hidden { display:none; }
+
+  /* Stats dashboard */
+  .metrics-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:20px; }
+  .metric-card { background:var(--bg2); border-radius:12px; padding:18px 20px; border-left:3px solid var(--accent); position:relative; }
+  .metric-card.leads-card { cursor:help; transition:transform 0.15s, box-shadow 0.15s; outline:none; }
+  .metric-card.leads-card:hover, .metric-card.leads-card:focus { transform:translateY(-1px); box-shadow:0 6px 18px rgba(45,42,38,0.08); border-left-color:var(--accent-deep); }
+  .hover-hint { display:inline-block; font-size:0.6rem; letter-spacing:0.1em; color:var(--accent); font-weight:600; margin-left:4px; }
+  /* Leads tooltip — adapted from clone-backend all-access dashboard */
+  .leads-tooltip { position:fixed; z-index:9999; background:#1e293b; color:#e2e8f0; border-radius:12px; padding:14px 16px; font-size:0.78rem; line-height:1.5; max-width:540px; width:520px; max-height:70vh; overflow-y:auto; box-shadow:0 12px 40px rgba(0,0,0,0.35); pointer-events:none; opacity:0; transition:opacity 0.15s; scrollbar-width:thin; scrollbar-color:#475569 transparent; font-family:'Inter', sans-serif; }
+  .leads-tooltip.visible { opacity:1; pointer-events:auto; }
+  .leads-tooltip.pinned { box-shadow:0 16px 48px rgba(0,0,0,0.5); border:1px solid #334155; }
+  .lt-head { font-weight:700; font-size:0.88rem; color:#fff; margin-bottom:8px; padding-bottom:8px; border-bottom:1px solid #334155; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .lt-pin-hint { font-size:0.64rem; font-weight:500; color:#64748b; letter-spacing:0.05em; }
+  .leads-tooltip.pinned .lt-pin-hint { display:none; }
+  .lt-close { display:none; cursor:pointer; font-size:0.8rem; color:#94a3b8; padding:2px 8px; border:1px solid #334155; border-radius:4px; background:transparent; }
+  .lt-close:hover { color:#fff; background:#334155; }
+  .leads-tooltip.visible .lt-close { display:inline; }
+  .leads-tooltip ul { list-style:none; padding:0; margin:0; }
+  .leads-tooltip li { padding:7px 0; border-bottom:1px solid rgba(71,85,105,0.35); color:#cbd5e1; display:grid; grid-template-columns:54px 52px 1fr; gap:8px; align-items:baseline; }
+  .leads-tooltip li:last-child { border-bottom:none; }
+  .lt-fee { font-family:'Lora', serif; font-weight:700; color:#fb923c; font-size:0.78rem; }
+  .lt-fee.existing { color:#94a3b8; }
+  .lt-when { color:#64748b; font-size:0.7rem; }
+  .lt-topic { color:#e2e8f0; font-size:0.75rem; line-height:1.45; }
+  .leads-tooltip::-webkit-scrollbar { width:6px; }
+  .leads-tooltip::-webkit-scrollbar-thumb { background:#475569; border-radius:3px; }
+  .metric-label { font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text2); font-weight:600; margin-bottom:6px; }
+  .metric-value { font-family:'Lora',serif; font-size:2.2rem; font-weight:700; color:var(--text); line-height:1; }
+  .metric-sub { margin-top:6px; font-size:0.78rem; color:var(--text2); line-height:1.4; }
+  .panel-label { font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent-deep); font-weight:700; margin-bottom:8px; }
+  .panel-sub { font-size:0.78rem; color:var(--text2); margin-top:8px; line-height:1.5; }
+  .mini-call { background:var(--bg2); border-radius:10px; padding:14px 16px; border-left:3px solid var(--accent); display:flex; flex-direction:column; gap:6px; }
+  .mini-call-pill { display:inline-flex; align-self:flex-start; background:rgba(224,122,95,0.14); color:var(--accent-deep); border-radius:14px; padding:3px 10px; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; font-weight:700; }
+  .mini-call-pill.variant2 { background:rgba(232,184,125,0.22); color:#A8793A; }
+  .mini-call-title { font-weight:600; font-size:0.92rem; color:var(--text); }
+  .mini-call-fee { display:flex; justify-content:space-between; align-items:baseline; font-size:0.8rem; color:var(--text2); }
+  .mini-call-fee strong { font-family:'Lora',serif; font-size:1.05rem; color:var(--accent-deep); font-weight:700; }
+
+  /* Confidential stripe */
+  .confidential-stripe { background:#2D2A26; color:#FF8370; text-align:center; padding:10px 20px; font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; font-weight:600; border-radius:10px 10px 0 0; margin-bottom:-16px; position:relative; z-index:1; }
+
+  /* Fee callout — prominent on card */
+  .ccq-fee { display:inline-flex; flex-direction:column; align-items:flex-start; gap:2px; background:linear-gradient(135deg, rgba(232,184,125,0.28) 0%, rgba(224,122,95,0.28) 100%); border:1px solid rgba(232,184,125,0.55); border-radius:10px; padding:8px 14px; color:white; margin-top:10px; }
+  .ccq-fee .fee-label { font-size:0.6rem; letter-spacing:0.14em; text-transform:uppercase; color:#E8B87D; font-weight:700; }
+  .ccq-fee .fee-value { font-family:'Lora',serif; font-size:1.15rem; font-weight:700; color:#fff; letter-spacing:-0.01em; }
+
+  /* Transcript panel */
+  .call-col { display:flex; flex-direction:column; }
+  .call-transcript { max-height:0; overflow:hidden; transition:max-height 0.45s ease, margin 0.45s ease; background:#FFFFFF; border-radius:12px; border:1px solid #E6DFD9; }
+  .call-transcript.open { max-height:480px; margin-top:14px; overflow-y:auto; }
+  .ct-header { position:sticky; top:0; background:linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.95) 100%); padding:12px 18px; border-bottom:1px solid #E6DFD9; font-size:0.7rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent-deep); font-weight:700; display:flex; justify-content:space-between; align-items:center; }
+  .ct-close { background:transparent; border:1px solid #E6DFD9; color:var(--text2); width:26px; height:26px; border-radius:50%; font-size:0.9rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.15s, color 0.15s; padding:0; line-height:1; }
+  .ct-close:hover { background:var(--accent); color:white; border-color:var(--accent); }
+  .ct-body { padding:14px 18px 18px; }
+  .ct-turn { margin-bottom:10px; font-size:0.82rem; line-height:1.55; }
+  .ct-turn .sp { display:inline-block; min-width:60px; font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; font-weight:700; padding:2px 8px; border-radius:4px; margin-right:8px; vertical-align:baseline; }
+  .ct-turn.ai .sp { background:rgba(224,122,95,0.14); color:var(--accent-deep); }
+  .ct-turn.caller .sp { background:#F0EBE6; color:var(--text); }
+  .ct-turn .tx { color:var(--text); }
+  .ct-turn.ai .tx { color:var(--text2); font-style:italic; }
+
+  /* Utility */
+  .sep { height:1px; background:#E6DFD9; margin:32px 0; }
+  @media print { body{background:white;} .page,.hero{box-shadow:none; margin:0; page-break-after:always;} .deck{padding:0;} }
+</style>
+</head>
+<body>
+<div class="deck">
+
+<div class="confidential-stripe">Confidential — Hair Shunnarah × YouSquared Partnership — Not for redistribution</div>
+
+<div class="leads-tooltip" id="leadsTooltip"></div>
+
+<!-- ============== 1. HERO ============== -->
+<div class="hero hero-firm">
+  <div class="hero-eyebrow">Q1 2026 Business Review · For Galen Hair · April 20, 2026</div>
+
+  <div class="hero-firm-stage">
+    <img src="assets/ichq-logo.svg" alt="Hair Shunnarah Trial Attorneys / Insurance Claim HQ" class="hero-firm-logo">
+    <div class="hero-firm-name">Hair Shunnarah<br><span class="subtler">Trial Attorneys</span></div>
+  </div>
+
+  <div class="hero-tagline">"Every claimant heard. Every call answered instantly."</div>
+
+  <div class="hero-partner">
+    <span class="hero-partner-label">Partnered since December 2024 with</span>
+    <img src="assets/logo_yousquared.png" alt="YouSquared" class="hero-y2-mark">
+  </div>
+</div>
+
+<!-- ============== 2. BY THE NUMBERS (STATS DASHBOARD) ============== -->
+<div class="page">
+  <div class="eyebrow">By the Numbers</div>
+  <h2>Hank's first 10 months at Hair Shunnarah.</h2>
+
+  <div class="metrics-grid">
+    <div class="metric-card leads-card" id="leadsCard" tabindex="0">
+      <div class="metric-label">New leads captured <span class="hover-hint">hover →</span></div>
+      <div class="metric-value">34</div>
+      <div class="metric-sub">82% off-hours · <strong style="color:var(--accent-deep);">~$862K</strong> estimated fee value</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Calls handled</div>
+      <div class="metric-value">1,063</div>
+      <div class="metric-sub">24/7 coverage since Jun 16, 2025</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Seats enabled</div>
+      <div class="metric-value">1 <span style="font-size:0.55em; color:var(--text2); font-weight:500;">of 2</span></div>
+      <div class="metric-sub">main intake lines · plus <strong>1 of ?</strong> individual attorney lines</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Channels enabled</div>
+      <div class="metric-value" style="font-size:1.4rem; line-height:1.2;">Inbound<br>calls only</div>
+      <div class="metric-sub"><strong>1 of ?</strong> law firms in the Shunnarah group</div>
+    </div>
+  </div>
+
+  <div class="two-col" style="gap:28px; margin-top:32px;">
+    <div>
+      <div class="panel-label">Call volume per month</div>
+      <div style="height:240px;"><canvas id="miniVolumeChart"></canvas></div>
+      <div class="panel-sub">Peaks track Gulf Coast storm season · <strong style="color:var(--accent-deep);">34</strong> qualified leads captured</div>
+    </div>
+    <div>
+      <div class="panel-label">Estimated fee value captured</div>
+      <div style="height:240px;"><canvas id="valueChart"></canvas></div>
+      <div class="panel-sub"><strong style="color:var(--accent-deep);">~$862K</strong> across 34 qualified leads <span style="color:var(--text3);">— hover the leads card for the full list</span></div>
+    </div>
+  </div>
+
+  <div class="chart-callouts" style="margin-top:20px;">
+    <div class="chart-callout"><div class="when">Mar 10 · 2025</div><div class="what">Shannon onboards — Hank goes live on HSTA's main intake line</div></div>
+    <div class="chart-callout"><div class="when">Oct – Nov · 2025</div><div class="what">Hurricane season peak · 330 calls handled</div></div>
+    <div class="chart-callout"><div class="when">Feb 4 · 2026</div><div class="what">LeadDocket integration goes live</div></div>
+    <div class="chart-callout"><div class="when">Today</div><div class="what">1,063 Hank calls · 34 qualified leads captured</div></div>
+  </div>
+  <div class="page-num">02</div>
+</div>
+
+<!-- ============== 3. WHAT'S WORKING + SHOWCASE CALLS ============== -->
+<div class="page alt">
+  <div class="eyebrow">What's Working</div>
+  <h2>Two calls worth hearing.</h2>
+  <p class="lead" style="max-width:720px;">Hank's average conversation has deepened from <strong>50 seconds</strong> last summer to <strong>3 minutes</strong> by March '26 — callers are completing fuller intakes. Two recent examples:</p>
+
+  <div class="two-col" style="gap:24px; margin-top:20px;">
+
+    <!-- CALL 1: SMITTY'S MASS TORT -->
+    <div class="call-col">
+      <div class="call-card-qbr" onclick="playCall(this)">
+        <div class="ccq-waveform"></div>
+        <div class="ccq-overlay">
+          <span class="ccq-pill">⚗️ Mass tort · Chemical plant exposure</span>
+          <div>
+            <div class="ccq-quote">"I've never asked anybody for nothing until now."</div>
+            <div class="ccq-title">Smitty's Supply explosion — KM, 15 miles downriver.</div>
+            <div class="ccq-desc">Homeowner on the Tangipahoa River. Oil sheen in the water, chemical smell for a month, ongoing headaches + new eye twitching 2–3 months on. Wants to join the tort.</div>
+            <div class="ccq-fee">
+              <span class="fee-label">Est. contingency fee · 33%</span>
+              <span class="fee-value">$10K – $33K</span>
+            </div>
+            <div class="ccq-meta-row">
+              <span class="ccq-tag">10 min</span>
+              <span class="ccq-tag">Urgent</span>
+              <span class="ccq-tag">Sat · 8:28 AM CT</span>
+            </div>
+          </div>
+        </div>
+        <div class="ccq-play-btn" style="display:none"></div>
+        
+      </div>
+      <div class="call-transcript" id="transcript-smittys">
+        <div class="ct-header"><span>Transcript · anonymized</span><button class="ct-close" onclick="closeTranscript(this)" aria-label="Close transcript">✕</button></div>
+        <div class="ct-body">
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Hair Shunnarah, this is Hank. How can I help you?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Yes, sir. How you doing this morning?</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">I'm doing all right. Thanks for asking. I'm here to help. I'll record this call so our team has the full picture. What's going on today?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">I'm calling with the Smitty's claim in Louisiana.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Got it. Just so I understand clearly, what's happening with the Smitty's claim in Louisiana?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">I live on the Tangipahoa River in Independence, Louisiana, about 15 miles south of where the explosion happened.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Oh, that must have been frightening to be that close. Would you mind sharing what happened on your property after the explosion? And may I get your first name?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">KM.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Thank you. Okay, KM — is it all right if I call you by your first name? When you're ready, can you tell me what kind of damage you noticed after the explosion?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Yes, sir. That next morning when I got up, I noticed it was all over the ground — like real slippery, slimy, oil everywhere. And the second day was when the smell arrived. It smelled like a mechanic shop, all kinds of oils. That smell lasted over a month.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">KM, that sounds truly miserable to live through.</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Thank you. Yeah. It wasn't easy, but I've done it.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">You've really been pushing through a lot on your own, KM, breathing that smell for weeks, headaches, having to leave your home. What part of it is still affecting you the most right now?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">I've noticed that every three, maybe five days, I get another headache. This time the headache is making my eye twitch — my right eye, where the pain is. I've never experienced that. I don't take medicine — you can look at my doctor records. I'm feeling this pain still.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">KM, ongoing headaches and eye twitching after weeks of exposure would worry anyone. Has anything at the property or in the air changed since those headaches started?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">I haven't noticed the smell anymore — they came through with airboats and cleaned it up best as they could. You still see an oil sheen in the water a little bit. But the headaches are continuing after these two or three months now. I've never had them. I need to go get checked out.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">It makes complete sense you're worried, KM. We help people in situations just like this. Would you like help making sure you get a fair assessment and the compensation you deserve?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">I would like to if I could. I've never asked anybody for nothing until now.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Of course you can. Asking for help here is the right thing. Can I get your first and last name?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">KM, [last name].</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Thank you. What's the full property address where this happened?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">[address], Independence, Louisiana, 70443.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Thank you. A member of our intake team will reach out within 24 to 48 hours.</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">One more request, please. I screen for spam callers, so when y'all call, if you could text me, I know it's y'all.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Of course. Someone from our team will call you back. Thank you for trusting us today.</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Thank you. Goodbye.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Take care, KM. We're here for you.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CALL 2: AI ENGAGEMENT + HIGH VALUE -->
+    <div class="call-col">
+      <div class="call-card-qbr" onclick="playCall(this)">
+        <div class="ccq-waveform variant2"></div>
+        <div class="ccq-overlay">
+          <span class="ccq-pill variant2">❤️ Engagement · Elderly Allstate caller</span>
+          <div>
+            <div class="ccq-quote">"Bye. Thank you so much. Can't wait to hear from you."</div>
+            <div class="ccq-title">76-year-old LT — gutted home, hotel-to-hotel, $18K Allstate payout.</div>
+            <div class="ccq-desc">First Allstate claim in 21 years. Home unlivable, engineer's report dismissed. She gave Hank the entire story, thanked him repeatedly, hung up reassured — Saturday 3:38 PM with no HSTA staff on the line.</div>
+            <div class="ccq-fee">
+              <span class="fee-label">Est. contingency fee · 33% + LA bad-faith uplift</span>
+              <span class="fee-value">$26K – $66K</span>
+            </div>
+            <div class="ccq-meta-row">
+              <span class="ccq-tag">12 min</span>
+              <span class="ccq-tag">Urgent</span>
+              <span class="ccq-tag">Sat · 3:38 PM CT</span>
+            </div>
+          </div>
+        </div>
+        <div class="ccq-play-btn" style="display:none"></div>
+        
+      </div>
+      <div class="call-transcript" id="transcript-water">
+        <div class="ct-header"><span>Transcript · anonymized</span><button class="ct-close" onclick="closeTranscript(this)" aria-label="Close transcript">✕</button></div>
+        <div class="ct-body">
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Hi there. You've reached Hair Shunnarah trial attorneys. How can I help you today?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">I'm calling about uh to get information for a homeowner's dispute lawyer. Are you homeowner's insurance dispute?</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Yes, we help homeowners with insurance disputes, claims for denied, delayed, or underpaid property damage. Would you mind sharing what happened with your homeowners?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Okay. My name is LT and I live in Violet, Louisiana. I've been with Allstate Insurance for over 21 years, and this is my first claim on my homeowner's policy. They do not want to acknowledge things that were damaged in my house, and they didn't give me enough money to complete my home. I'm still living from hotel to hotel. I'm a disabled senior citizen and I think they've taken advantage of me. I hired an engineering inspector to evaluate my damages. I have a full report and I presented that to Allstate, and my adjuster will not acknowledge that report. So I need an attorney.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">LT, I'm so sorry you're going through this, especially with your home and health on the line. Can you tell me when the damage first happened?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">May 31st. It was the holiday. I called Roto-Rooter to try to get the water out of my house — the hot water heater. They did the mitigation. I signed a document for Allstate to pay them. The quote was $5–6,000 to $13,000. Then after they finished, they sent a bill for $22,000. And Allstate paid them all that money. Whereas they only gave me $18,007.59 for my damages. And it's not enough money to complete my house. My entire hardwood floors were removed. I don't have any kitchen cabinets at all. My house is not livable.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">That sounds incredibly overwhelming, LT.</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">It gave me a mental breakdown. I'm 76 years old, believe it or not. I don't know how I was standing up so strong, but it's getting to the best of me. I can't handle it anymore. So that's why I'm seeking legal advice.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">LT, you've carried so much on your own. No one should have to fight this hard, especially at your age. Would you like help making sure you get a fair assessment and the compensation you deserve?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Yes, I need help because I cry. I find myself crying all day long because I'm not getting anywhere. And every time I go look at my home, I just break down in tears.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Thank you, LT. You've shared so much and it really helps us understand what you're facing. Can I get your email address?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Yes, it's [email].</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Could you please provide the full property address where the damage occurred?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">[address] in Violet, Louisiana, 70092.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">A member of our intake team will reach out within 24 to 48 hours. Is there anything else you'd like to share?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">I have documentation to back up everything I said. I have all receipts. I have the documents from Roto-Rooter, the engineer's report I paid $1,100 for. And Allstate do not want to acknowledge it. They just keep shadow boxing me, never calling me back. It's really overwhelming. I'm mentally exhausted. I'll have a heart attack. I'm on a lot of medication. I have my knees replaced. I have a rod in my spine. I'm a 76-year-old woman. I've tried my best.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">LT, your strength through all this is remarkable. You've done everything right and your documentation will be a huge help for our team. Someone will reach out within the next day or two. You're in good hands now.</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Bye. Thank you so much. Can't wait to hear from you.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Bye, LT. Thank you for reaching out. We'll be in touch very soon.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:32px;">
+    <div class="fact-card" style="background:#FFFFFF;">
+      <div class="fact-num" style="font-size:1.6em;">330</div>
+      <div class="fact-label">Calls handled in Oct + Nov '25 — the busiest storm-season stretch. Zero dropped, zero backlog.</div>
+    </div>
+    <div class="fact-card" style="background:#FFFFFF;">
+      <div class="fact-num" style="font-size:1.6em;">100%</div>
+      <div class="fact-label">Of qualified intakes flowing into LeadDocket since Feb 4, 2026 — no re-keying, no cold hand-offs.</div>
+    </div>
+  </div>
+  <div class="page-num">03</div>
+</div>
+
+<!-- ============== 4. KPI + 24-HOUR HISTOGRAM ============== -->
+<div class="page alt">
+  <div class="eyebrow">Hank is ready for prime time</div>
+  <h2>Imagine Hank first in line on <em>every</em> call.</h2>
+  <p class="lead" style="max-width:760px;">
+    Today Hank catches the calls your team can't. <strong>1,015 of the last 1,063 calls (95%)</strong> came when no HSTA staff was at the desk — including 34 qualified new-client leads worth ~$862K. The chart below shows the 24-hour shape of that traffic. Tomorrow Hank is the voice answering <em>every</em> first ring — qualifying, closing, or handing off to the right intake specialist or attorney.
+  </p>
+
+  <div style="display:flex; gap:18px; align-items:center; margin-top:28px; margin-bottom:10px;">
+    <div style="font-size:0.72em; letter-spacing:0.14em; text-transform:uppercase; color:var(--text2); font-weight:600;">Hank call volume by hour of day · America/Chicago · since Jun 16, 2025</div>
+  </div>
+  <div class="chart-wrap" style="height:280px;">
+    <canvas id="hourlyChart"></canvas>
+  </div>
+  <div style="display:flex; gap:20px; margin-top:6px; font-size:0.8em; color:var(--text2);">
+    <div style="display:flex; align-items:center; gap:6px;"><span style="width:12px;height:12px;background:#E07A5F;border-radius:2px;"></span> New client lead</div>
+    <div style="display:flex; align-items:center; gap:6px;"><span style="width:12px;height:12px;background:#E8B87D;border-radius:2px;"></span> Existing client</div>
+    <div style="display:flex; align-items:center; gap:6px;"><span style="width:12px;height:12px;background:#C9C3BE;border-radius:2px;"></span> Unqualified / hang-up</div>
+    <div style="margin-left:auto; font-style:italic;">Shaded band = HSTA business hours (Mon–Fri 8a–5p CT)</div>
+  </div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:14px;">
+    <div style="background:var(--bg); border-radius:10px; padding:12px 16px; border-left:3px solid var(--accent); font-size:0.82em; color:var(--text2);">
+      <strong style="color:var(--accent-deep);">7 AM spike</strong> — morning rush. Callers hit the line right at office-open (avg call 2m 30s — substantive intakes).
+    </div>
+    <div style="background:var(--bg); border-radius:10px; padding:12px 16px; border-left:3px solid var(--accent); font-size:0.82em; color:var(--text2);">
+      <strong style="color:var(--accent-deep);">8 PM spike</strong> — after-hours attempts. People trying to reach a lawyer once the workday ends — exactly the window Hank unlocks.
+    </div>
+  </div>
+
+  <div class="fact-grid" style="margin-top:32px; grid-template-columns:1fr 1fr 1fr; gap:14px;">
+    <div class="fact-card" style="padding:18px 20px;">
+      <div class="fact-num" style="font-size:1.7em;">1,063</div>
+      <div class="fact-label" style="font-size:0.88em;">Total Hank calls since Jun 16, 2025.</div>
+    </div>
+    <div class="fact-card" style="padding:18px 20px;">
+      <div class="fact-num" style="font-size:1.7em;">34</div>
+      <div class="fact-label" style="font-size:0.88em;">Qualified <strong>new-client leads</strong> · <strong style="color:var(--accent-deep);">$862K</strong> estimated fee value.</div>
+    </div>
+    <div class="fact-card" style="padding:18px 20px;">
+      <div class="fact-num" style="font-size:1.7em;">28<span style="font-size:0.55em; color:var(--text2); font-weight:500;"> / 34</span></div>
+      <div class="fact-label" style="font-size:0.88em;">Leads arriving <strong>off-hours</strong> (82%) — unreachable without Hank.</div>
+    </div>
+  </div>
+  <div class="page-num">04</div>
+</div>
+
+<!-- ============== 5. TEAM + MOMENTUM ============== -->
+<div class="page">
+  <div class="eyebrow">Who's In Your Corner &amp; What's New</div>
+  <h2>Your extended team at YouSquared.</h2>
+
+  <div class="team-row">
+    <div class="team-card">
+      <img class="avatar" src="assets/team-alex.jpg" alt="Alex Dalyac">
+      <div class="name">Alex Dalyac</div>
+      <div class="role">Founder &amp; CEO</div>
+    </div>
+    <div class="team-card">
+      <img class="avatar" src="assets/team-adb.jpg" alt="Alexandre de Brébisson">
+      <div class="name">Alexandre de Brébisson</div>
+      <div class="role">Founder &amp; CTO</div>
+    </div>
+    <div class="team-card">
+      <img class="avatar" src="assets/team-joris.jpg" alt="Joris Abalea">
+      <div class="name">Joris Abalea</div>
+      <div class="role">iOS + CRM integrations</div>
+      <div class="tag">New face</div>
+    </div>
+    <div class="team-card">
+      <img class="avatar" src="assets/team-jake.jpg" alt="Jake Albert">
+      <div class="name">Jake Albert</div>
+      <div class="role">Web app lead</div>
+      <div class="tag">New face</div>
+    </div>
+    <div class="team-card">
+      <img class="avatar" src="assets/team-cheyney.jpg" alt="Cheyney McInerny">
+      <div class="name">Cheyney McInerny</div>
+      <div class="role">Account Mgmt</div>
+      <div class="tag">New face</div>
+    </div>
+    <div class="team-card">
+      <img class="avatar" src="assets/team-lala.jpg" alt="Eleonora Lala">
+      <div class="name">Eleonora Lala</div>
+      <div class="role">Account Mgmt</div>
+      <div class="tag">New face</div>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <h3 style="font-size:1.4em; margin-bottom:20px;">Momentum since we last spoke</h3>
+  <ul class="momentum">
+    <li>
+      <div class="icon">2M</div>
+      <div class="m-text">
+        <div class="m-title">2M calls / year run rate</div>
+        <div class="m-sub">Platform-wide — Hank is battle-tested at scale.</div>
+      </div>
+    </li>
+    <li>
+      <div class="icon icon-lockup">
+        <img src="assets/logo_verizon.png" alt="Verizon" style="height:14px;">
+        <span class="lockup-plus">+</span>
+        <img src="assets/logo_yousquared.png" alt="YouSquared" style="height:16px;">
+      </div>
+      <div class="m-text">
+        <div class="m-title">Verizon is now a distributor for YouSquared</div>
+        <div class="m-sub">Listed in the <a href="https://www.verizon.com/business/shop/marketplace" target="_blank" rel="noopener">Verizon Business Marketplace</a> alongside One Talk — enterprise customers can procure us directly on their Verizon bill.</div>
+      </div>
+    </li>
+    <li>
+      <div class="icon">◰</div>
+      <div class="m-text">
+        <div class="m-title">Web app is live · <a href="https://app.yousquared.ai/" target="_blank" rel="noopener">app.yousquared.ai</a></div>
+        <div class="m-sub">Full dashboard for your team — call history, transcripts, ops tooling.</div>
+      </div>
+    </li>
+    <li>
+      <div class="icon">📊</div>
+      <div class="m-text">
+        <div class="m-title">Analytics dashboard · <a href="https://app.yousquared.ai/analytics/all-access" target="_blank" rel="noopener">all-access view</a></div>
+        <div class="m-sub">Monthly volume, lead value, customer drill-downs — the view we used for this QBR.</div>
+      </div>
+    </li>
+    <li>
+      <div class="icon">⌂</div>
+      <div class="m-text">
+        <div class="m-title">Property ecosystem strategy</div>
+        <div class="m-sub">We handle intake for contractors &amp; public adjusters — your next referral source.</div>
+      </div>
+    </li>
+    <li>
+      <div class="icon">→</div>
+      <div class="m-text">
+        <div class="m-title">Scheduled outbound · <a href="https://app.yousquared.ai/outbound-prototype" target="_blank" rel="noopener">prototype preview</a></div>
+        <div class="m-sub">Hank will soon place calls too — callbacks, follow-ups, status updates.</div>
+      </div>
+    </li>
+  </ul>
+  <div class="page-num">05</div>
+</div>
+
+<!-- ============== 6. ROADMAP + IMPACT ============== -->
+<div class="page alt">
+  <div class="eyebrow">Roadmap for Hair Shunnarah</div>
+  <h2>Where Hank goes next — and what it unlocks.</h2>
+
+  <div style="margin-top:20px;">
+
+    <!-- BULLET 1 — voice AI foundation -->
+    <div class="roadmap-item">
+      <div class="roadmap-row">
+        <div class="roadmap-num">1</div>
+        <div class="roadmap-what">
+          Hank is best-in-class voice AI.
+          <div class="sub">Sub-second latency, natural turn-taking, empathic prosody — callers routinely don't realize they're talking to AI.</div>
+        </div>
+        <div class="roadmap-impact">
+          Everything else in this roadmap rides on how human the voice feels. Smooth speech is the foundation.
+          <button class="rm-chevron" data-target="nitty" onclick="toggleRoadmapPanel(this)" aria-label="Show next steps">▾</button>
+        </div>
+      </div>
+      <div class="roadmap-nitty">
+        <div class="pace-callout">
+          <div class="pace-label">Target</div>
+          <div class="pace-body"><strong>&lt; 800ms P50 response latency</strong> · graceful barge-in · zero same-day regressions. Today Hank beats the latency target on most calls; improvements ship weekly.</div>
+        </div>
+        <ul>
+          <li><strong>Sub-second response latency</strong> — P50 &lt; 800ms from end-of-caller-speech to Hank's first spoken token. The single biggest determinant of "feels human" vs "feels like a bot."</li>
+          <li><strong>Natural turn detection</strong> — don't cut callers off mid-thought; accommodate long pauses for distressed or elderly speakers (LT's 12-minute Saturday call is exhibit A)</li>
+          <li><strong>Graceful barge-in</strong> — if the caller interrupts, Hank stops cleanly and listens; no talk-over, no restart</li>
+          <li><strong>Empathic prosody</strong> — intonation, emphasis, and pacing match a human intake specialist on their best day, not monotone TTS</li>
+          <li><strong>Accent &amp; dialect handling</strong> — Southern LA speech patterns, "y'all", Cajun cadence, hands-free car audio, background noise</li>
+          <li><strong>Continuous quality monitoring</strong> — every call scored for smoothness + caller-satisfaction signals; regressions flagged same-day and rolled back</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- BULLET 2 — sign up new clients -->
+    <div class="roadmap-item">
+      <div class="roadmap-row">
+        <div class="roadmap-num">2</div>
+        <div class="roadmap-what">
+          Hank qualifies, signs up &amp; transfers <em>new</em> clients.
+          <div class="sub">First in line on every new caller, 24/7. Contract signed on the call; warm hand-off to your intake team.</div>
+          <div class="rm-chips">
+            <button class="rm-chip" data-target="example" onclick="toggleRoadmapPanel(this)">▸ see example call</button>
+          </div>
+        </div>
+        <div class="roadmap-impact">
+          Signed contracts on the first call — no week-later follow-up, no lost momentum.
+          <button class="rm-chevron" data-target="nitty" onclick="toggleRoadmapPanel(this)" aria-label="Show next steps">▾</button>
+        </div>
+      </div>
+      <div class="roadmap-nitty">
+        <div class="pace-callout">
+          <div class="pace-label">Pace check</div>
+          <div class="pace-body">At the current rate Hank hands over <strong>~3 qualified new-client leads per month</strong> — 10 in about <strong>3–4 months</strong>. In hurricane season (Jul–Nov) that rate nearly triples: <strong>6–7 / month</strong>, so 10 in <strong>about 6 weeks</strong>. Finishing this checklist is what puts those leads directly into signed retainers instead of voicemail hand-offs.</div>
+        </div>
+        <ul>
+          <li>Migrate HSTA to the YouSquared Team plan</li>
+          <li>Migrate Hank to the dynamic prompt — verify the migration is successful (e.g. do call-transfer tool calls trigger appropriately? does Hank still qualify the right leads? does contract-send fire in the right context?)</li>
+          <li>Reinstate signing tool</li>
+          <li>Add PI contract to signing tool</li>
+          <li>
+            Ensure Hank sends the correct contract in the correct situation
+            <details class="contract-routing">
+              <summary>View examples &amp; correct routing</summary>
+              <table>
+                <thead>
+                  <tr><th>Pattern</th><th>Conv</th><th>Summary</th><th>Right action</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Clean PI</td><td>530652</td><td>Car accident, untreated chest/stomach pain</td><td>SEND PI</td></tr>
+                  <tr><td>Clean property — hurricane</td><td>52347</td><td>Hurricane destroyed roof, insurer stopped responding</td><td>SEND PROP</td></tr>
+                  <tr><td>Clean property — water</td><td>145354</td><td>76yo disabled, Allstate underpaid on water damage</td><td>SEND PROP</td></tr>
+                  <tr><td>Non-storm first-party</td><td>52104</td><td>Truck crashed into home, insurer underpaying</td><td>SEND PROP — trigger is carrier dispute, not cause-of-loss</td></tr>
+                  <tr><td>Landlord-tenant property</td><td>73800</td><td>Landlord, tenant caused $100k damage + theft</td><td>SEND PROP — contract scope says "damages for properties", not limited to first-party</td></tr>
+                  <tr><td>Out-of-state property</td><td>274888</td><td>California homeowner, carrier uncooperative</td><td>SEND PROP — HSTA has nationwide coverage</td></tr>
+                  <tr><td>Low-recovery defensive</td><td>548740</td><td>Carrier accusing insured of misrep over stolen bike</td><td>NO CONTRACT — below threshold + defensive posture</td></tr>
+                  <tr><td>Commercial + agent fraud</td><td>404425</td><td>Commercial trucking claim + agent took $1,300</td><td>NO CONTRACT — commercial out of scope, low $</td></tr>
+                  <tr><td>Stolen auto, no injury</td><td>117172</td><td>Car stolen, no bodily injury</td><td>NO CONTRACT — fits neither retainer; see new-contract action item below</td></tr>
+                  <tr><td>Mass tort — Taxotere</td><td>507697</td><td>Chemo litigation active since 2020</td><td>NO CONTRACT — route to mass tort dept</td></tr>
+                  <tr><td>Mass tort — oil spill</td><td>593879</td><td>Commercial fisherman seeking oil-spill claim help</td><td>NO CONTRACT — route to mass tort dept</td></tr>
+                  <tr><td>Mass tort w/ property phrasing</td><td>530829</td><td>Smitty's oil, wants real-person callback, calls it "property"</td><td>NO CONTRACT — mass tort regardless of caller's phrasing</td></tr>
+                  <tr><td>Existing client property</td><td>573114</td><td>Existing client needs documents from his case</td><td>NO CONTRACT — transfer to main office</td></tr>
+                  <tr><td>Professional caller</td><td>576038</td><td>Opposing counsel asking for a specific attorney</td><td>NO CONTRACT — route / take message</td></tr>
+                </tbody>
+              </table>
+            </details>
+          </li>
+          <li>Create an auto-specific retainer for vehicle-only loss claims (e.g. stolen car, comprehensive loss without bodily injury) — currently falls between the PI contract (requires "injuries suffered") and the Property contract (scoped to real property / appraisal mechanism). Conv 117172 is a clean example of this gap.</li>
+          <li>Mass-tort intakes (e.g. Smitty's Supply): confirm which active torts HSTA is signing, which attorney owns each, and whether the standard PI contract covers the sign-up or a tort-specific retainer is required</li>
+          <li>Update RingCentral call-forwarding so Hank answers first on every inbound line — during business hours too, not just after-hours overflow</li>
+          <li>Create intake hunt group phone number (on RingCentral / equivalent)</li>
+          <li>Ensure that during working hours, Hank transfers qualified leads who aren't ready to sign up to the intake hunt group</li>
+          <li>Ensure Hank sends confirmation texts to qualified leads — so they commit, and so they have a trace of whose number represents them</li>
+          <li>Implement scheduled outbound text / call follow-ups for qualified leads that received a contract but haven't yet signed</li>
+        </ul>
+      </div>
+      <div class="roadmap-example">
+        <div class="ct-header"><span>Envisioned call · based on conv 318406 (Smitty's mass tort)</span></div>
+        <div class="ct-body">
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Hair Shunnarah, this is Hank. What's going on today?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">I'm calling with the Smitty's claim. I live 15 miles south of the plant — oil everywhere, month-long smell, headaches ever since.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">KM, I'm so sorry — sounds like the Smitty's mass tort we're actively representing on. <strong>Based on what you've shared, this qualifies for representation.</strong> I'm texting you our PI agreement right now — scroll and sign on your phone, takes 90 seconds.</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Got it — signing now.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Signature received. <strong>Connecting you to Attorney JC who handles Smitty's — hold on a moment.</strong></span></div>
+          <div class="ct-turn ai"><span class="sp">Attorney JC</span><span class="tx">KM? JC here at Hair Shunnarah. Hank filled me in on the exposure, the airboat cleanup, the headaches starting 2–3 months back. When did the eye twitching begin…?</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BULLET 3 — update/transfer existing clients -->
+    <div class="roadmap-item">
+      <div class="roadmap-row">
+        <div class="roadmap-num">3</div>
+        <div class="roadmap-what">
+          Hank updates &amp; transfers <em>existing</em> clients.
+          <div class="sub">First in line on every returning caller. Recognized by phone, greeted by name, routed to their case manager.</div>
+          <div class="rm-chips">
+            <button class="rm-chip" data-target="example" onclick="toggleRoadmapPanel(this)">▸ see example call</button>
+          </div>
+        </div>
+        <div class="roadmap-impact">
+          Existing clients feel remembered. Case managers get the call they actually need to take.
+          <button class="rm-chevron" data-target="nitty" onclick="toggleRoadmapPanel(this)" aria-label="Show next steps">▾</button>
+        </div>
+      </div>
+      <div class="roadmap-nitty">
+        <ul>
+          <li>Sync Filevine / LeadDocket contacts to YouSquared contacts; Hank greets saved numbers by name</li>
+          <li>Obtain Filevine API access</li>
+          <li>Confirm which fields Hank should access and be able to share / discuss with existing clients</li>
+          <li>Obtain phone numbers of staff so Hank knows exactly who to transfer to</li>
+          <li>Create a hunt group so existing-client "talk to someone" requests ring all available phones at once when their case manager doesn't pick up</li>
+          <li>Add staff to the YouSquared team account so calendars can be synced — Hank can schedule into their calendar when they can't be reached live</li>
+          <li>Implement outbound texts / calls as client cases progress — proactive status updates</li>
+        </ul>
+      </div>
+      <div class="roadmap-example">
+        <div class="ct-header"><span>Envisioned call · LT (water damage) calling back for an update</span></div>
+        <div class="ct-body">
+          <div class="call-context">
+            <div class="cc-title">LeadDocket record Hank pulls on caller ID match</div>
+            <div class="cc-grid">
+              <div class="cc-k">Contact</div><div class="cc-v">L. T.</div>
+              <div class="cc-k">Phone</div><div class="cc-v">+1 504 •••  •••• <span class="cc-dim">(matched on inbound)</span></div>
+              <div class="cc-k">Address</div><div class="cc-v">[redacted], Violet, LA 70092</div>
+              <div class="cc-k">Preferred language</div><div class="cc-v">English</div>
+            </div>
+            <div class="cc-section-label">Lead details</div>
+            <div class="cc-grid">
+              <div class="cc-k">Status</div><div class="cc-v">Open — Engineer's report under adjuster review</div>
+              <div class="cc-k">Summary</div><div class="cc-v">Homeowner's insurance dispute (Allstate) — water damage, home unlivable since 2025-05-31</div>
+              <div class="cc-k">Practice area</div><div class="cc-v">Property casualty / first-party insurance</div>
+              <div class="cc-k">Incident date</div><div class="cc-v">05/31/2025</div>
+              <div class="cc-k">Assigned staff</div><div class="cc-v">Attorney: Gretchen L. · Case mgr: Shannon R. · Intake: Paige C.</div>
+            </div>
+            <div class="cc-section-label">Recent notes</div>
+            <ul class="cc-notes">
+              <li><span class="cc-date">04/15/2026</span> <span class="cc-author">(Gretchen L.)</span> Adjuster acknowledged engineer's report; revised scope in progress.</li>
+              <li><span class="cc-date">03/22/2026</span> <span class="cc-author">(Shannon R.)</span> Client called for status; update pending adjuster response.</li>
+              <li><span class="cc-date">02/10/2026</span> <span class="cc-author">(Gretchen L.)</span> Filed supplemental claim with client's $1,100 engineer's report attached.</li>
+            </ul>
+          </div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Hi LT, it's Hank at Hair Shunnarah — good to hear from you. I see Attorney Gretchen is on your Allstate case. Calling for an update?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Yes, I wanted to know if the engineer's report went through.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx"><strong>Good news — Gretchen just noted yesterday that the adjuster has acknowledged the report and is revising scope. Let me connect you straight to her.</strong> One moment.</span></div>
+          <div class="ct-turn ai"><span class="sp">Attorney GL</span><span class="tx">LT? It's Gretchen. I do have an update — the adjuster has finally acknowledged the engineer's report. Let's walk through what that means for your claim…</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BULLET 4 -->
+    <div class="roadmap-item">
+      <div class="roadmap-row">
+        <div class="roadmap-num">4</div>
+        <div class="roadmap-what">
+          YouSquared facilitates case referrals from its network of users.
+          <div class="sub">When a Y² user's caller has a legal matter HSTA or ASTA handles, Hank brokers the intro — and our repeat spam callers become TCPA leads.</div>
+          <div class="rm-chips">
+            <button class="rm-chip" data-target="example" onclick="toggleRoadmapPanel(this)">▸ see example calls</button>
+          </div>
+        </div>
+        <div class="roadmap-impact">
+          Three lanes: <strong>property insurance</strong> cases that help a Y² user get paid, <strong>ASTA</strong>-handled matters (auto, injury, wrongful death, torts), and <strong>TCPA</strong> cases from repeat spam callers who were told to stop.
+          <button class="rm-chevron" data-target="nitty" onclick="toggleRoadmapPanel(this)" aria-label="Show next steps">▾</button>
+        </div>
+      </div>
+      <div class="roadmap-nitty">
+        <div class="pace-callout">
+          <div class="pace-label">Target</div>
+          <div class="pace-body"><strong>5 good cases ($10K+ fees) per week</strong> would be awesome — that's $50K / wk and ~$2.6M a year in HSTA fee pipeline from the Y² network. Today we see ~1 such case/week across property + ASTA leads combined; getting to 5 is a matter of onboarding more roofers + adjusters and wiring up the auto-detection hook.</div>
+        </div>
+        <ul>
+          <li>Adjusters drive clear fits (caller is already disputing their insurer); roofers drive potential fits (caller has an active claim that may turn)</li>
+          <li>Targeted outreach: onboard more roofers and public adjusters onto YouSquared to widen the funnel</li>
+          <li>Add an automatic referral-detection hook to Hank so every qualifying call is flagged and queued for hand-off</li>
+          <li>Agree the hand-off script and which HSTA intake line receives the bridged call</li>
+        </ul>
+      </div>
+      <div class="roadmap-example" id="referralExamples">
+        <div class="ct-header"><span>Real calls from the YouSquared network · past 10 months · anonymized</span></div>
+        <div class="ct-body">
+          <div class="ref-tabs">
+            <button class="ref-tab active" data-tab="property" onclick="switchRefTab(this)">🏠 Property insurance</button>
+            <button class="ref-tab" data-tab="asta" onclick="switchRefTab(this)">⚖️ ASTA matters</button>
+            <button class="ref-tab" data-tab="tcpa" onclick="switchRefTab(this)">🚫 TCPA (repeat spam)</button>
+          </div>
+          <div class="ref-panel active" id="refPanel-property">
+            <div class="ref-tab-desc">Caller has an active home-insurance claim that's being underpaid, delayed or denied — <strong>and the Y² user (roofer, adjuster, restoration firm) gets paid once HSTA unsticks the carrier.</strong> Win-win referral.</div>
+            <div class="ref-list" id="refList-property"><div class="ref-loading">Loading…</div></div>
+          </div>
+          <div class="ref-panel" id="refPanel-asta" hidden>
+            <div class="ref-tab-desc">Calls where a caller describes a bodily injury, auto accident, wrongful death, workplace injury or other matter Alexander Shunnarah Trial Attorneys and related firms handle.</div>
+            <div class="ref-list" id="refList-asta"><div class="ref-loading">Loading…</div></div>
+          </div>
+          <div class="ref-panel" id="refPanel-tcpa" hidden>
+            <div class="ref-tab-desc">Same Y² network, different lane. Pulled from calls already flagged as spam across our user base — then narrowed to repeat callers whose number the YouSquared AI explicitly asked to be placed on the do-not-contact list, and who kept calling anyway. Each is a potential Telephone Consumer Protection Act claim.</div>
+            <div class="ref-list" id="refList-tcpa"><div class="ref-loading">Loading…</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-num">06</div>
+</div>
+
+</div>
+
+<script>
+/* Play/pause audio; transcript opens on play, stays open on pause/end.
+   Explicit ✕ on transcript header collapses it. */
+function playCall(card){
+  const audio = card.querySelector('audio');
+  if(!audio) return;
+  const transcript = card.parentElement.querySelector('.call-transcript');
+  // Pause any other playing card (leave their transcript state alone unless we're opening this one's)
+  document.querySelectorAll('.call-card-qbr.playing').forEach(other => {
+    if(other !== card){
+      other.classList.remove('playing');
+      const a = other.querySelector('audio'); if(a){ a.pause(); }
+    }
+  });
+  if(audio.paused){
+    audio.play().then(()=>{
+      card.classList.add('playing');
+      if(transcript) transcript.classList.add('open');
+    }).catch(e=>console.error(e));
+  } else {
+    audio.pause();
+    card.classList.remove('playing');
+    // transcript stays open for reading
+  }
+  audio.onended = () => {
+    card.classList.remove('playing');
+    audio.currentTime = 0;
+    // transcript stays open
+  };
+}
+
+function closeTranscript(btn){
+  const t = btn.closest('.call-transcript');
+  if(t) t.classList.remove('open');
+}
+
+function toggleRoadmapPanel(btn){
+  const item = btn.closest('.roadmap-item');
+  if(!item) return;
+  const target = btn.dataset.target;                 // 'example' or 'nitty'
+  const panelClass = target === 'nitty' ? '.roadmap-nitty' : '.roadmap-example';
+  const panel = item.querySelector(panelClass);
+  if(!panel) return;
+  const isOpen = panel.classList.toggle('open');
+  btn.classList.toggle('open', isOpen);
+  if(isOpen && panel.id === 'referralExamples') loadReferralList();
+}
+
+const refTabLoaded = { property: false, asta: false, tcpa: false };
+const refTabSrc = {
+  property: 'assets/referral-candidates.json',
+  asta:     'assets/asta-candidates.json',
+  tcpa:     'assets/tcpa-candidates.json',
+};
+
+function renderRefRow(c, tab){
+  // Normalize fields across the three shapes
+  const id = c.id || c.conv_id;
+  const phone = c.phone || c.phone_masked;
+  const report = c.report || c.short_report || c.sample_short_report || '';
+  const subtype = c.subtype || c.user_subtype || c.user_industry
+                 || (Array.isArray(c.industries_hit) ? c.industries_hit.slice(0,3).join(' · ') : '')
+                 || (Array.isArray(c.industries) ? c.industries.join(', ') : '');
+  const verdict = c.verdict || (tab === 'asta' ? 'asta_fit' : tab === 'tcpa' ? 'tcpa' : 'clear_fit');
+  const cls = verdict === 'clear_fit' ? 'clear' : (verdict === 'potential_fit' ? 'potential' : verdict);
+  const label = {
+    clear_fit:'Clear fit', potential_fit:'Potential fit',
+    asta_fit:'ASTA fit', maybe:'Possible ASTA',
+    tcpa:'TCPA candidate',
+  }[verdict] || verdict;
+
+  let extra = '';
+  if(tab === 'tcpa' && c.call_count){
+    extra = `<span class="ref-date"><strong>${c.call_count}</strong> calls · ${c.distinct_users_hit || '?'} Y² users · ${c.first_call || ''} → ${c.last_call || ''}</span>`;
+  } else if(c.date){
+    extra = `<span class="ref-date">${c.date}</span>`;
+  }
+
+  const idInfo = id ? `<span class="ref-convid">conv ${id}</span>` : (phone ? `<span class="ref-convid">${phone}</span>` : '');
+  const stopEvidence = c.stop_request_evidence
+    ? `<div class="ref-why" style="color:var(--accent-deep); font-style:normal;">Told to stop ${c.first_stop_request_date ? 'on ' + c.first_stop_request_date : ''}: "${c.stop_request_evidence.replace(/</g,'&lt;')}"</div>` : '';
+
+  return `<div class="ref-row ${cls}">
+    <div class="ref-head">
+      <span class="ref-badge ${cls}">${label}</span>
+      ${idInfo}
+      ${extra}
+      ${subtype ? `<span class="ref-subtype">${String(subtype).replace(/_/g,' ')}</span>` : ''}
+    </div>
+    <div class="ref-report">${report.replace(/</g,'&lt;')}</div>
+    ${stopEvidence}
+    ${c.why ? `<div class="ref-why">Why: ${c.why.replace(/</g,'&lt;')}</div>` : ''}
+  </div>`;
+}
+
+function loadRefTab(tab){
+  if(refTabLoaded[tab]) return;
+  refTabLoaded[tab] = true;
+  fetch(refTabSrc[tab]).then(r => {
+    if(!r.ok) throw new Error(r.status + ' — data not ready yet');
+    return r.json();
+  }).then(data => {
+    const el = document.getElementById('refList-' + tab);
+    if(!data.length){
+      el.innerHTML = `<div class="ref-loading">No candidates yet — analysis still running.</div>`;
+      refTabLoaded[tab] = false;
+      return;
+    }
+    el.innerHTML = data.map(c => renderRefRow(c, tab)).join('');
+  }).catch(err => {
+    const el = document.getElementById('refList-' + tab);
+    el.innerHTML = `<div class="ref-loading">${err.message} — check back shortly.</div>`;
+    refTabLoaded[tab] = false;
+  });
+}
+
+function switchRefTab(btn){
+  const tab = btn.dataset.tab;
+  document.querySelectorAll('.ref-tab').forEach(t => t.classList.toggle('active', t === btn));
+  document.querySelectorAll('.ref-panel').forEach(p => {
+    const on = p.id === 'refPanel-' + tab;
+    p.classList.toggle('active', on);
+    p.hidden = !on;
+  });
+  loadRefTab(tab);
+}
+
+function loadReferralList(){
+  loadRefTab('property');  // default tab
+}
+
+Chart.register(ChartDataLabels);
+
+/* Business-hours shaded band plugin for the hourly chart */
+const bizHoursBand = {
+  id:'bizHoursBand',
+  beforeDatasetsDraw(chart){
+    const {ctx, chartArea, scales:{x,y}} = chart;
+    if(!chartArea) return;
+    const xStart = x.getPixelForValue(8) - (x.getPixelForValue(1)-x.getPixelForValue(0))/2;
+    const xEnd   = x.getPixelForValue(16) + (x.getPixelForValue(1)-x.getPixelForValue(0))/2;
+    ctx.save();
+    ctx.fillStyle = 'rgba(45,42,38,0.05)';
+    ctx.fillRect(xStart, chartArea.top, xEnd-xStart, chartArea.bottom-chartArea.top);
+    // Vertical dashed borders
+    ctx.strokeStyle = 'rgba(45,42,38,0.18)';
+    ctx.setLineDash([4,4]);
+    ctx.beginPath(); ctx.moveTo(xStart, chartArea.top); ctx.lineTo(xStart, chartArea.bottom); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(xEnd, chartArea.top); ctx.lineTo(xEnd, chartArea.bottom); ctx.stroke();
+    ctx.restore();
+  }
+};
+
+/* ============ SLIDE 2 — LEADS DATA + $ VALUE + MINI VOLUME ============ */
+const monthLabels = ['Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr*'];
+
+// Load the full 309-lead backing (fetched from same-directory JSON)
+let LEADS = [];
+let monthlyFeeK = [0,0,0,0,0,0,0,0,0,0,0]; // $K per month, Jun..Apr
+
+function aggregateMonthly(){
+  const monthIdx = { '2025-06':0,'2025-07':1,'2025-08':2,'2025-09':3,'2025-10':4,'2025-11':5,'2025-12':6,
+                     '2026-01':7,'2026-02':8,'2026-03':9,'2026-04':10 };
+  monthlyFeeK = [0,0,0,0,0,0,0,0,0,0,0];
+  LEADS.forEach(L => {
+    const idx = monthIdx[L.date.slice(0,7)];
+    if(idx !== undefined) monthlyFeeK[idx] += L.fee/1000;
+  });
+  monthlyFeeK = monthlyFeeK.map(v => Math.round(v));
+}
+
+let valueChart;
+function buildValueChart(){
+  if(valueChart) valueChart.destroy();
+  valueChart = new Chart(document.getElementById('valueChart').getContext('2d'), {
+    type:'bar',
+    data:{
+      labels:monthLabels,
+      datasets:[{ label:'Est. fee ($K)', data:monthlyFeeK, backgroundColor:'#E07A5F', borderRadius:4 }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, datalabels:{display:false}, tooltip:{backgroundColor:'#2D2A26', callbacks:{label:function(ctx){return '$'+ctx.parsed.y+'K est. fee';}}} },
+      scales:{
+        x:{grid:{display:false}, ticks:{color:'#6B6560', font:{family:'Inter', size:10}}},
+        y:{beginAtZero:true, grid:{color:'#EDE8E3'}, ticks:{color:'#9E9893', font:{family:'Inter', size:10}, callback:function(v){return '$'+v+'K';}}}
+      }
+    }
+  });
+}
+
+fetch('assets/leads-backing.json')
+  .then(r => r.json())
+  .then(data => { LEADS = data; aggregateMonthly(); buildValueChart(); })
+  .catch(err => { console.error('leads load failed', err); buildValueChart(); });
+
+/* ============ LEADS HOVER TOOLTIP — slide 2 ============ */
+const leadsCard = document.getElementById('leadsCard');
+const leadsTooltip = document.getElementById('leadsTooltip');
+let leadsPinned = false;
+let leadsRendered = false;
+
+function renderLeadsTooltip(){
+  if(leadsRendered) return;
+  const totalFee = LEADS.reduce((s,L)=>s+L.fee,0);
+  const fmt = n => n >= 1000 ? '$' + (n/1000).toFixed(n>=10000 ? 0 : 1) + 'K' : '$' + n;
+  const rows = LEADS.map(L => {
+    const typeLabel = (L.lead_type || '').replace(/_/g,' ');
+    return `
+    <li>
+      <span class="lt-fee ${L.category==='new_lead'?'':'existing'}">${fmt(L.fee)}</span>
+      <span class="lt-when">${L.dow} ${L.date.slice(5)}<br>${L.time}</span>
+      <span class="lt-topic"><strong style="color:#fff;">${typeLabel}</strong> · ${L.topic.replace(/</g,'&lt;')}</span>
+    </li>`;
+  }).join('');
+  const totalStr = totalFee >= 1e6 ? '~$' + (totalFee/1e6).toFixed(2) + 'M' : '~$' + Math.round(totalFee/1000) + 'K';
+  leadsTooltip.innerHTML = `
+    <div class="lt-head">
+      <span>${LEADS.length} qualified leads · ${totalStr} estimated fee</span>
+      <span class="lt-pin-hint">click to pin</span>
+      <button class="lt-close" onclick="closeLeadsTooltip()">✕ close</button>
+    </div>
+    <ul>${rows}</ul>`;
+  leadsRendered = true;
+}
+
+function positionLeadsTooltip(){
+  const r = leadsCard.getBoundingClientRect();
+  const tw = leadsTooltip.offsetWidth || 520;
+  const th = leadsTooltip.offsetHeight;
+  let x = r.left + r.width/2 - tw/2;
+  x = Math.max(16, Math.min(x, window.innerWidth - tw - 16));
+  let y = r.bottom + 10;
+  if(y + th > window.innerHeight - 16) y = Math.max(16, r.top - th - 10);
+  leadsTooltip.style.left = x + 'px';
+  leadsTooltip.style.top = y + 'px';
+}
+
+function showLeadsTooltip(){
+  if(!LEADS.length) return;
+  renderLeadsTooltip();
+  leadsTooltip.classList.add('visible');
+  positionLeadsTooltip();
+}
+function hideLeadsTooltip(){
+  if(leadsPinned) return;
+  leadsTooltip.classList.remove('visible');
+}
+function closeLeadsTooltip(){
+  leadsPinned = false;
+  leadsTooltip.classList.remove('visible','pinned');
+}
+
+if(leadsCard){
+  leadsCard.addEventListener('mouseenter', showLeadsTooltip);
+  leadsCard.addEventListener('focus', showLeadsTooltip);
+  leadsCard.addEventListener('mouseleave', hideLeadsTooltip);
+  leadsCard.addEventListener('click', () => {
+    leadsPinned = !leadsPinned;
+    if(leadsPinned){ showLeadsTooltip(); leadsTooltip.classList.add('pinned'); }
+    else { leadsTooltip.classList.remove('pinned'); hideLeadsTooltip(); }
+  });
+  // Don't close when hovering tooltip itself
+  leadsTooltip.addEventListener('mouseenter', () => leadsTooltip.classList.add('visible'));
+  leadsTooltip.addEventListener('mouseleave', hideLeadsTooltip);
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLeadsTooltip(); });
+  window.addEventListener('resize', () => { if(leadsTooltip.classList.contains('visible')) positionLeadsTooltip(); });
+}
+
+// Mini volume chart — same Jun-Apr monthly data as slide 4
+const mvUrgent    = [45,17,13, 5,11, 9, 8,15,13,10, 4];
+const mvNonUrgent = [17,38,46,20,33,54,30,19,16,23,10];
+const mvEmpty     = [77,63,86,56,119,93,73,38,17,23,44];
+const mvSpam      = [ 6, 5,12, 4, 8, 8, 4, 2, 2, 2, 1];
+new Chart(document.getElementById('miniVolumeChart').getContext('2d'), {
+  type:'line',
+  data:{
+    labels:monthLabels,
+    datasets:[
+      { label:'Spam',       data:mvSpam,      backgroundColor:'#B97A73', borderColor:'#B97A73', fill:true, tension:0.35, pointRadius:0, borderWidth:0 },
+      { label:'Empty',      data:mvEmpty,     backgroundColor:'#C9C3BE', borderColor:'#C9C3BE', fill:true, tension:0.35, pointRadius:0, borderWidth:0 },
+      { label:'Non-urgent', data:mvNonUrgent, backgroundColor:'#E8B87D', borderColor:'#E8B87D', fill:true, tension:0.35, pointRadius:0, borderWidth:0 },
+      { label:'Urgent',     data:mvUrgent,    backgroundColor:'#E07A5F', borderColor:'#E07A5F', fill:true, tension:0.35, pointRadius:0, borderWidth:0 }
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}, tooltip:{backgroundColor:'#2D2A26'}},
+    scales:{
+      x:{grid:{display:false}, ticks:{color:'#6B6560', font:{family:'Inter', size:10}}},
+      y:{stacked:true, beginAtZero:true, grid:{color:'#EDE8E3'}, ticks:{color:'#9E9893', font:{family:'Inter', size:10}}, max:180}
+    }
+  }
+});
+
+/* ============ HOURLY (24h) CHART — Slide 3 ============ */
+const hours = Array.from({length:24}, (_,i)=>i+':00');
+const unqualified = [5,1,6,6,7,4,6,52,13,23,25,31,27,25,17,20,28,42,15,30,88,63,59,68];
+const existing    = [0,0,0,0,1,1,3,37, 3, 4,11, 4, 5, 3, 8, 3, 5, 1, 2, 0, 2, 1, 0, 0];
+const newLead     = [1,0,2,3,2,3,16,50, 8,17,18,16,15,15,12,16, 9,17, 5,10,35,14,12,12];
+
+new Chart(document.getElementById('hourlyChart').getContext('2d'), {
+  type:'line',
+  data:{
+    labels:hours,
+    datasets:[
+      { label:'Unqualified',     data:unqualified, backgroundColor:'#C9C3BE', borderColor:'#C9C3BE', fill:true, tension:0.4, pointRadius:0, borderWidth:0 },
+      { label:'Existing client', data:existing,    backgroundColor:'#E8B87D', borderColor:'#E8B87D', fill:true, tension:0.4, pointRadius:0, borderWidth:0 },
+      { label:'New client lead', data:newLead,     backgroundColor:'#E07A5F', borderColor:'#E07A5F', fill:true, tension:0.4, pointRadius:0, borderWidth:0 }
+    ]
+  },
+  plugins:[bizHoursBand],
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    interaction:{mode:'index', intersect:false},
+    plugins:{
+      legend:{display:false},
+      datalabels:{display:false},
+      tooltip:{backgroundColor:'#2D2A26', titleFont:{family:'Lora'}, bodyFont:{family:'Inter'}}
+    },
+    scales:{
+      x:{grid:{display:false}, ticks:{color:'#6B6560', font:{family:'Inter', size:10}, autoSkip:false, callback:function(v,i){ return i%2===0 ? (i+':00') : ''; } }},
+      y:{stacked:true, beginAtZero:true, grid:{color:'#EDE8E3'}, ticks:{color:'#9E9893', font:{family:'Inter', size:11}}}
+    }
+  }
+});
+
+</script>
+</body>
+</html>

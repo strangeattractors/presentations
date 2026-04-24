@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proactive White Glove Support &mdash; Cheyney Playbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Inter',sans-serif; color:#2D2A26; line-height:1.6; }
+.page { max-width:960px; margin:0 auto; padding:60px 40px; }
+.page-warm { background:#F5F2EF; }
+.page-white { background:#FFFFFF; }
+.hero { background: linear-gradient(145deg, #2D2A26 0%, #433F3A 55%, #3A3632 100%); color:white; padding:80px 40px; text-align:center; position:relative; overflow:hidden; }
+.hero::before { content:''; position:absolute; width:600px; height:600px; background:radial-gradient(circle, rgba(255,131,112,0.15) 0%, transparent 70%); top:-200px; right:-100px; }
+.hero::after { content:''; position:absolute; width:400px; height:400px; background:radial-gradient(circle, rgba(224,122,95,0.1) 0%, transparent 70%); bottom:-150px; left:-50px; }
+.hero h1 { font-family:'Lora',serif; font-size:2.8em; font-weight:700; margin-bottom:16px; position:relative; z-index:1; }
+.hero .subtitle { font-size:1.15em; color:rgba(255,255,255,0.7); max-width:600px; margin:0 auto; position:relative; z-index:1; }
+.hero .date { color:#9E9893; margin-top:8px; font-size:0.95em; position:relative; z-index:1; }
+h2 { font-family:'Lora',serif; font-size:1.8em; font-weight:700; margin-bottom:8px; }
+h3 { font-family:'Lora',serif; font-size:1.3em; font-weight:600; margin-bottom:6px; }
+.section-sub { color:#6B6560; font-size:0.95em; margin-bottom:32px; }
+.path { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:0; margin:32px 0; }
+.path-step { padding:24px 20px; border-right:1px solid rgba(0,0,0,0.06); }
+.path-step:last-child { border-right:none; }
+.step-badge { display:inline-block; font-size:0.7em; font-weight:700; text-transform:uppercase; letter-spacing:1px; padding:3px 10px; border-radius:20px; margin-bottom:10px; }
+.badge-free { background:#E8F5E9; color:#2E7D32; }
+.badge-solo { background:#E3F2FD; color:#1565C0; }
+.badge-elite { background:#E3F2FD; color:#1565C0; }
+.badge-branch { background:#FFF3E0; color:#E65100; }
+.badge-enterprise { background:#F3E5F5; color:#6A1B9A; }
+.path-step h4 { font-family:'Lora',serif; font-size:1.05em; margin-bottom:6px; }
+.path-step p { font-size:0.82em; color:#6B6560; line-height:1.5; }
+table { width:100%; border-collapse:collapse; font-size:0.82em; margin:24px 0; }
+th { background:#2D2A26; color:white; padding:12px 14px; text-align:left; font-weight:600; font-size:0.78em; text-transform:uppercase; letter-spacing:0.5px; }
+td { padding:11px 14px; border-bottom:1px solid #E8E4E0; vertical-align:top; }
+tr:hover td { background:#FBF9F7; }
+.user-name { font-weight:600; }
+.company { color:#6B6560; font-size:0.9em; }
+.dive-card { background:white; border-radius:16px; padding:36px; margin:32px 0; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
+.dive-avatar { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Lora',serif; font-weight:700; font-size:1em; color:white; flex-shrink:0; }
+.dive-meta { font-size:0.82em; color:#6B6560; margin-top:2px; }
+.step-row { margin:24px 0; padding:24px; border-radius:12px; }
+.step-free { background:#F1F8F1; border-left:4px solid #2E7D32; }
+.step-solo { background:#EBF4FB; border-left:4px solid #1565C0; }
+.step-branch { background:#FFF8F0; border-left:4px solid #E65100; }
+.step-enterprise { background:#F8F0FA; border-left:4px solid #6A1B9A; }
+.step-row .step-title { font-weight:700; font-size:0.78em; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:12px; }
+.step-free .step-title { color:#2E7D32; }
+.step-solo .step-title { color:#1565C0; }
+.step-branch .step-title { color:#E65100; }
+.step-enterprise .step-title { color:#6A1B9A; }
+.step-row .uplift { font-family:'Lora',serif; font-weight:700; font-size:1.1em; margin-top:8px; }
+.step-free .uplift { color:#2E7D32; }
+.step-solo .uplift { color:#1565C0; }
+.step-branch .uplift { color:#E65100; }
+.step-enterprise .uplift { color:#6A1B9A; }
+.alert-box { background:rgba(224,122,95,0.08); border-radius:10px; padding:16px 20px; margin-top:14px; font-size:0.85em; font-style:italic; color:#6B6560; border-left:3px solid #E07A5F; }
+.arrow-row { text-align:center; padding:8px 0; color:#9E9893; font-size:1.5em; }
+.diag-label { font-weight:600; font-size:0.75em; text-transform:uppercase; letter-spacing:0.8px; color:#9E9893; margin-bottom:8px; }
+.diag-table { width:100%; border-collapse:collapse; font-size:0.85em; margin:0 0 16px 0; }
+.diag-table td { padding:6px 10px; border-bottom:1px solid rgba(0,0,0,0.06); vertical-align:top; }
+.diag-table tr:last-child td { border-bottom:none; }
+.diag-table .check { width:28px; text-align:center; font-size:1.1em; }
+.diag-table .val { text-align:right; font-family:'Lora',serif; font-weight:600; font-size:0.9em; white-space:nowrap; }
+.approach-label { font-weight:600; font-size:0.75em; text-transform:uppercase; letter-spacing:0.8px; color:#9E9893; margin:16px 0 8px 0; }
+.comms-label { font-weight:600; font-size:0.75em; text-transform:uppercase; letter-spacing:0.8px; color:#9E9893; margin:16px 0 8px 0; }
+.approach-text { font-size:0.9em; line-height:1.6; }
+@media (max-width:800px) {
+  .path { grid-template-columns:1fr; }
+  .path-step { border-right:none; border-bottom:1px solid rgba(0,0,0,0.06); }
+}
+@media print { .page { page-break-after:always; } }
+
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Proactive White Glove Support</h1>
+  <div class="subtitle">A seller playbook to diagnose, fix, and expand qualified sales leads through free and paid YouSquared activations</div>
+  <div class="date">Cheyney &middot; 2026-04-08 &middot; Window: Apr 2–8</div>
+</div>
+
+<div class="page page-white">
+  <h2>The 4-Step Upgrade Path</h2>
+  <p class="section-sub">Each step builds on the last. Start with free value, earn trust, expand.</p>
+  <div class="path">
+    <div class="path-step">
+      <span class="step-badge badge-free">Free Fixes</span>
+      <h4>Scenarios, FAQ &amp; Texts</h4>
+      <p>Fix how their AI handles different caller types. Add text follow-ups. Immediate value, zero cost.</p>
+    </div>
+    <div class="path-step">
+      <span class="step-badge badge-solo">Solo Upgrades</span>
+      <h4>Pro or Elite Plan</h4>
+      <p>Unlock call volume, calendar booking, and outbound follow-up for the individual user.</p>
+    </div>
+    <div class="path-step">
+      <span class="step-badge badge-branch">Branch Upgrade</span>
+      <h4>Team: 1 Branch</h4>
+      <p>Cover the branch line + individual rep lines. Transfer, shared inbox. 24/7 instant service.</p>
+    </div>
+    <div class="path-step">
+      <span class="step-badge badge-enterprise">Enterprise</span>
+      <h4>All Branches + Integration</h4>
+      <p>Every individual, branch &amp; national line. System integration for real answers. Full AI coverage.</p>
+    </div>
+  </div>
+</div>
+
+<div class="page page-warm">
+  <h2>User Overview</h2>
+  <p class="section-sub">Target sales leads ranked by total opportunity. Deep dives below.</p>
+  <table>
+    <tr><th>User</th><th>Company</th><th>Free Fixes</th><th>Solo Upgrades</th><th>Branch Upgrade</th><th>Enterprise</th><th>Alert Freq</th></tr>
+    <tr><td class='user-name'>M.G.</td><td class='company'>Compass</td><td>Greeting (<span style='color:#E07A5F;font-weight:600'>$14K/yr</span>)</td><td>&#10003; OK</td><td>No transfer, 103hr avg read</td><td>TBD</td><td><strong>Weekly</strong></td></tr>
+    <tr><td class='user-name'>J.G.</td><td class='company'>All Access Services</td><td>Scenarios, Greeting (<span style='color:#E07A5F;font-weight:600'>$11K/yr</span>)</td><td>&#10003; OK</td><td>73hr avg read</td><td>TBD</td><td><strong>Weekly</strong></td></tr>
+    <tr><td class='user-name'>N.M.</td><td class='company'>Super Patch</td><td>Scenarios, Greeting (<span style='color:#E07A5F;font-weight:600'>$1K/yr</span>)</td><td>Upgrade from Free</td><td>No transfer, 55hr avg read</td><td>TBD</td><td><strong>Weekly</strong></td></tr>
+    <tr><td class='user-name'>B.B.</td><td class='company'>All Access Services</td><td>Scenarios, Greeting (<span style='color:#E07A5F;font-weight:600'>$1K/yr</span>)</td><td>&#10003; OK</td><td>TBD</td><td>TBD</td><td>Monthly</td></tr>
+    <tr><td class='user-name'>E.O.</td><td class='company'>All Access Services</td><td>Scenarios, Greeting (<span style='color:#E07A5F;font-weight:600'>$400/yr</span>)</td><td>&#10003; OK</td><td>53hr avg read</td><td>TBD</td><td><strong>Weekly</strong></td></tr>
+    <tr><td class='user-name'>C.M.</td><td class='company'>All Access Services</td><td>Scenarios, Greeting (<span style='color:#E07A5F;font-weight:600'>$400/yr</span>)</td><td>&#10003; OK</td><td>62hr avg read</td><td>TBD</td><td><strong>Weekly</strong></td></tr>
+    <tr><td class='user-name'>S.E.</td><td class='company'>All Access Services</td><td>Scenarios, Greeting (<span style='color:#E07A5F;font-weight:600'>$100/yr</span>)</td><td>&#10003; OK</td><td>TBD</td><td>TBD</td><td>Monthly</td></tr>
+    <tr><td class='user-name'>gonzalez s.</td><td class='company'>zamarripa</td><td>Scenarios, Greeting (<span style='color:#E07A5F;font-weight:600'>$30/yr</span>)</td><td>Upgrade from Free</td><td>No transfer</td><td>TBD</td><td>Monthly</td></tr>
+    <tr><td class='user-name'>A.A.</td><td class='company'>McGill University Health Center</td><td>Scenarios, Greeting</td><td>&#10003; OK</td><td>No transfer</td><td>TBD</td><td>Monthly</td></tr>
+    <tr><td class='user-name'>N.R.</td><td class='company'>Earnin</td><td>FAQ</td><td>&#10003; OK</td><td>30hr avg read</td><td>TBD</td><td><strong>Weekly</strong></td></tr>
+  </table>
+</div>
+
+<div class="page page-white">
+  <h2>Deep Dive: M.G.</h2>
+  <p class="section-sub">Compass &mdash; Pro Plan</p>
+  <div class="dive-card">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:24px; padding-bottom:20px; border-bottom:1px solid #E8E4E0;">
+      <div>
+        <div class="diag-label" style="margin-bottom:6px;">Account Potential</div>
+        <h3 style="margin:0;">Compass</h3>
+        <div class="dive-meta">340,000 employees</div>
+      </div>
+      <div>
+        <div class="diag-label" style="margin-bottom:6px;">User Overview</div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="dive-avatar" style="background:#6A1B9A;">MG</div>
+          <div>
+            <div style="font-weight:600;">M.G., Sales Manager</div>
+            <div class="dive-meta">Pro plan &middot; AI "Jake" &middot; 54 calls/cycle &middot; 41% cvo &middot; 33 VIPs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="step-row step-free">
+      <div class="step-title">Free Fixes</div>
+      <div class="diag-label">Diagnosis</div>
+      <table class="diag-table">
+        <tr><td class="check">&#10003;</td><td>VIP contacts: 33 tagged (threshold: 2+)</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check" style="color:#E65100;">&#9888;</td><td>Cvo rate: 41%, greeting is 8 words &mdash; could trim</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check">&#10003;</td><td>Caller scenarios: configured</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check">&#10003;</td><td>FAQ: 247 chars</td><td class="val">&mdash;</td></tr>
+      </table>
+      <div class="approach-label">Approach</div>
+      <div class="approach-text">Jake is well-configured for free features.</div>
+      <div class="comms-label">Example outreach</div>
+      <div class="alert-box">Hey M, our system flagged a call where Jake applied generic handling to a caller that likely needed a more specific approach. Do you have 15 minutes to hop on a call to correct this together?</div>
+    </div>
+    <div class="arrow-row">&darr;</div>
+    <div class="step-row step-solo">
+      <div class="step-title">Solo Upgrade</div>
+      <div class="diag-label">Diagnosis</div>
+      <table class="diag-table">
+        <tr><td class="check">&#10003;</td><td>Call volume: 54/200 prev cycle (27%)</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check">&#10003;</td><td>Plan: Pro</td><td class="val">&mdash;</td></tr>
+      </table>
+      <div class="approach-label">Approach</div>
+      <div class="approach-text">Jake is on Pro &mdash; solo features are covered.</div>
+      
+    </div>
+    <div class="arrow-row">&darr;</div>
+    <div class="step-row step-branch">
+      <div class="step-title">Branch Upgrade &mdash; Compass</div>
+      <div class="diag-label">Diagnosis</div>
+      <table class="diag-table">
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Call transfer: not configured &mdash; urgent calls go to message-taking</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Avg time-to-read on revenue-stakes calls: 103 hours</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check">&#10003;</td><td>Dedicated phone number: configured</td><td class="val">&mdash;</td></tr>
+      </table>
+      <div class="approach-label">Approach</div>
+      <div class="approach-text">Let's get your Compass branch on YouSquared so every property inquiry to your branch line or your reps' direct lines is serviced instantly 24/7 by AI, and whenever necessary transferred to the right person.</div>
+      <div class="comms-label">Example outreach</div>
+      <div class="alert-box">Hey M, our system flagged a call with potential revenue at stake &mdash; it took about 103 hours before it was reviewed. With your branch line and reps on YouSquared, a team member could've picked that up live. Do you have 5 minutes to discuss?</div>
+    </div>
+    <div class="arrow-row">&darr;</div>
+    <div class="step-row step-enterprise">
+      <div class="step-title">Enterprise</div>
+      <div class="diag-label">Diagnosis</div>
+      <table class="diag-table">
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Additional branches: research needed</td><td class="val" style="color:#6A1B9A;">TBD</td></tr>
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Main national line: not on YouSquared</td><td class="val" style="color:#6A1B9A;">TBD</td></tr>
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>System integration: 14 of 2,410 contacts enriched &mdash; AI can't look up answers</td><td class="val" style="color:#6A1B9A;">TBD</td></tr>
+      </table>
+      <div class="approach-label">Approach</div>
+      <div class="approach-text">The enterprise opportunity at Compass is a separate conversation with Corporate. Focus Branch upgrade on M.G.'s local office first.</div>
+      <div class="comms-label">Example pitch</div>
+      <div class="alert-box">[user], right now Jake handles your personal line great. Imagine that same quality across all your locations &mdash; where any caller gets accurate answers from AI that knows your systems, and urgent calls get transferred to the nearest available person.</div>
+    </div>
+  </div>
+</div>
+
+<div class="page page-white">
+  <h2>Deep Dive: J.G.</h2>
+  <p class="section-sub">All Access Services &mdash; Team Plan</p>
+  <div class="dive-card">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:24px; padding-bottom:20px; border-bottom:1px solid #E8E4E0;">
+      <div>
+        <div class="diag-label" style="margin-bottom:6px;">Account Potential</div>
+        <h3 style="margin:0;">All Access Services</h3>
+        <div class="dive-meta">150 employees</div>
+      </div>
+      <div>
+        <div class="diag-label" style="margin-bottom:6px;">User Overview</div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="dive-avatar" style="background:#4E7A5F;">JG</div>
+          <div>
+            <div style="font-weight:600;">J.G., Sales manager</div>
+            <div class="dive-meta">Team plan &middot; AI "AI" &middot; 17 calls/cycle &middot; 55% cvo &middot; 43 VIPs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="step-row step-free">
+      <div class="step-title">Free Fixes</div>
+      <div class="diag-label">Diagnosis</div>
+      <table class="diag-table">
+        <tr><td class="check">&#10003;</td><td>VIP contacts: 43 tagged (threshold: 2+)</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check" style="color:#E65100;">&#9888;</td><td>Cvo rate: 55%, greeting is 13 words &mdash; could trim</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Caller scenarios: none defined &mdash; all caller types get generic handling</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check">&#10003;</td><td>FAQ: 9,567 chars</td><td class="val">&mdash;</td></tr>
+      </table>
+      <div class="approach-label">Approach</div>
+      <div class="approach-text">Let's fix your scenarios so your AI can handle different caller types. E.g. add caller scenario: "If caller asks about equipment" &rarr; "Ask what type, size, when needed, delivery or pickup."</div>
+      <div class="comms-label">Example outreach</div>
+      <div class="alert-box">Hey J, our system flagged a call where your AI applied generic handling to a caller that likely needed a more specific approach. Do you have 15 minutes to hop on a call to correct this together?</div>
+    </div>
+    <div class="arrow-row">&darr;</div>
+    <div class="step-row step-solo">
+      <div class="step-title">Solo Upgrade</div>
+      <div class="diag-label">Diagnosis</div>
+      <table class="diag-table">
+        <tr><td class="check">&#10003;</td><td>Call volume: 17/1,000 prev cycle (2%)</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check">&#10003;</td><td>Plan: Team &mdash; all features available</td><td class="val">&mdash;</td></tr>
+      </table>
+      <div class="approach-label">Approach</div>
+      <div class="approach-text">your AI is on Team &mdash; solo features are covered.</div>
+      
+    </div>
+    <div class="arrow-row">&darr;</div>
+    <div class="step-row step-branch">
+      <div class="step-title">Branch Upgrade &mdash; All Access Services</div>
+      <div class="diag-label">Diagnosis</div>
+      <table class="diag-table">
+        <tr><td class="check">&#10003;</td><td>Call transfer: configured</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Avg time-to-read on revenue-stakes calls: 73 hours</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check">&#10003;</td><td>Dedicated phone number: configured</td><td class="val">&mdash;</td></tr>
+      </table>
+      <div class="approach-label">Approach</div>
+      <div class="approach-text">Let's get your All Access Services branch on YouSquared so every equipment inquiry to your branch line or your reps' direct lines is serviced instantly 24/7 by AI, and whenever necessary transferred to the right person.</div>
+      <div class="comms-label">Example outreach</div>
+      <div class="alert-box">Hey J, our system flagged a call with potential revenue at stake &mdash; it took about 73 hours before it was reviewed. With your branch line and reps on YouSquared, a team member could've picked that up live. Do you have 5 minutes to discuss?</div>
+    </div>
+    <div class="arrow-row">&darr;</div>
+    <div class="step-row step-enterprise">
+      <div class="step-title">Enterprise</div>
+      <div class="diag-label">Diagnosis</div>
+      <table class="diag-table">
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Additional branches: research needed</td><td class="val" style="color:#6A1B9A;">TBD</td></tr>
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Main national line: not on YouSquared</td><td class="val" style="color:#6A1B9A;">TBD</td></tr>
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>System integration: 0 of 4,234 contacts enriched &mdash; AI can't look up answers</td><td class="val" style="color:#6A1B9A;">TBD</td></tr>
+      </table>
+      <div class="approach-label">Approach</div>
+      <div class="approach-text">Let's scale this across all of All Access Services's locations + main line on our AI integrated with your systems.</div>
+      <div class="comms-label">Example pitch</div>
+      <div class="alert-box">[user], right now your AI handles your personal line great. Imagine that same quality across all your locations &mdash; where any caller gets accurate answers from AI that knows your systems, and urgent calls get transferred to the nearest available person.</div>
+    </div>
+  </div>
+</div>
+
+<div class="page page-white">
+  <h2>Deep Dive: N.M.</h2>
+  <p class="section-sub">Super Patch &mdash; Free Plan</p>
+  <div class="dive-card">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:24px; padding-bottom:20px; border-bottom:1px solid #E8E4E0;">
+      <div>
+        <div class="diag-label" style="margin-bottom:6px;">Account Potential</div>
+        <h3 style="margin:0;">Super Patch</h3>
+        <div class="dive-meta">100 employees</div>
+      </div>
+      <div>
+        <div class="diag-label" style="margin-bottom:6px;">User Overview</div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="dive-avatar" style="background:#C75B39;">NM</div>
+          <div>
+            <div style="font-weight:600;">N.M., Health and Wellness Strategist and Event MC and Host</div>
+            <div class="dive-meta">Free plan &middot; AI "AI" &middot; 4 calls/cycle &middot; 43% cvo &middot; 14 VIPs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="step-row step-free">
+      <div class="step-title">Free Fixes</div>
+      <div class="diag-label">Diagnosis</div>
+      <table class="diag-table">
+        <tr><td class="check">&#10003;</td><td>VIP contacts: 14 tagged (threshold: 2+)</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check" style="color:#E65100;">&#9888;</td><td>Cvo rate: 43%, greeting is 18 words &mdash; could trim</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Caller scenarios: none defined &mdash; all caller types get generic handling</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check">&#10003;</td><td>FAQ: 1,951 chars</td><td class="val">&mdash;</td></tr>
+      </table>
+      <div class="approach-label">Approach</div>
+      <div class="approach-text">Let's fix your scenarios so your AI can handle different caller types. E.g. add caller scenario: "If patient asking for refill" &rarr; "Ask for name, DOB, medication name, and pharmacy preference."</div>
+      <div class="comms-label">Example outreach</div>
+      <div class="alert-box">Hey N, our system flagged a call where your AI applied generic handling to a caller that likely needed a more specific approach. Do you have 15 minutes to hop on a call to correct this together?</div>
+    </div>
+    <div class="arrow-row">&darr;</div>
+    <div class="step-row step-solo">
+      <div class="step-title">Solo Upgrade</div>
+      <div class="diag-label">Diagnosis</div>
+      <table class="diag-table">
+        <tr><td class="check">&#10003;</td><td>Call volume: 4/20 prev cycle (20%)</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Plan: Free &mdash; limited to 20 calls/cycle</td><td class="val">&mdash;</td></tr>
+      </table>
+      <div class="approach-label">Approach</div>
+      <div class="approach-text">Let's upgrade you to Pro so your AI can handle more calls and add outbound follow-up.</div>
+      
+    </div>
+    <div class="arrow-row">&darr;</div>
+    <div class="step-row step-branch">
+      <div class="step-title">Branch Upgrade &mdash; Super Patch</div>
+      <div class="diag-label">Diagnosis</div>
+      <table class="diag-table">
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Call transfer: not configured &mdash; urgent calls go to message-taking</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Avg time-to-read on revenue-stakes calls: 55 hours</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Branch line: not on YouSquared</td><td class="val" style="color:#E65100;">TBD</td></tr>
+      </table>
+      <div class="approach-label">Approach</div>
+      <div class="approach-text">Let's get your Super Patch branch on YouSquared so every patient call to your branch line or your reps' direct lines is serviced instantly 24/7 by AI, and whenever necessary transferred to the right person.</div>
+      <div class="comms-label">Example outreach</div>
+      <div class="alert-box">Hey N, our system flagged a call with potential revenue at stake &mdash; it took about 55 hours before it was reviewed. With your branch line and reps on YouSquared, a team member could've picked that up live. Do you have 5 minutes to discuss?</div>
+    </div>
+    <div class="arrow-row">&darr;</div>
+    <div class="step-row step-enterprise">
+      <div class="step-title">Enterprise</div>
+      <div class="diag-label">Diagnosis</div>
+      <table class="diag-table">
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Additional branches: research needed</td><td class="val" style="color:#6A1B9A;">TBD</td></tr>
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Main national line: not on YouSquared</td><td class="val" style="color:#6A1B9A;">TBD</td></tr>
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>System integration: 0 of 6,366 contacts enriched &mdash; AI can't look up answers</td><td class="val" style="color:#6A1B9A;">TBD</td></tr>
+      </table>
+      <div class="approach-label">Approach</div>
+      <div class="approach-text">Let's scale this across all of Super Patch's locations + main line on our AI integrated with your systems.</div>
+      <div class="comms-label">Example pitch</div>
+      <div class="alert-box">[user], right now your AI handles your personal line great. Imagine that same quality across all your locations &mdash; where any caller gets accurate answers from AI that knows your systems, and urgent calls get transferred to the nearest available person.</div>
+    </div>
+  </div>
+</div>
+
+<div class="page page-white">
+  <h2>Deep Dive: B.B.</h2>
+  <p class="section-sub">All Access Services &mdash; Team Plan</p>
+  <div class="dive-card">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:24px; padding-bottom:20px; border-bottom:1px solid #E8E4E0;">
+      <div>
+        <div class="diag-label" style="margin-bottom:6px;">Account Potential</div>
+        <h3 style="margin:0;">All Access Services</h3>
+        <div class="dive-meta">100 employees</div>
+      </div>
+      <div>
+        <div class="diag-label" style="margin-bottom:6px;">User Overview</div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="dive-avatar" style="background:#C75B39;">BB</div>
+          <div>
+            <div style="font-weight:600;">B.B., Outside Sales Representative</div>
+            <div class="dive-meta">Team plan &middot; AI "AI" &middot; 7 calls/cycle &middot; 76% cvo &middot; 22 VIPs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="step-row step-free">
+      <div class="step-title">Free Fixes</div>
+      <div class="diag-label">Diagnosis</div>
+      <table class="diag-table">
+        <tr><td class="check">&#10003;</td><td>VIP contacts: 22 tagged (threshold: 2+)</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check" style="color:#E65100;">&#9888;</td><td>Cvo rate: 76%, greeting is 24 words &mdash; could trim</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Caller scenarios: none defined &mdash; all caller types get generic handling</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check">&#10003;</td><td>FAQ: 9,638 chars</td><td class="val">&mdash;</td></tr>
+      </table>
+      <div class="approach-label">Approach</div>
+      <div class="approach-text">Let's fix your scenarios so your AI can handle different caller types. E.g. add caller scenario: "If caller asks about equipment" &rarr; "Ask what type, size, when needed, delivery or pickup."</div>
+      <div class="comms-label">Example outreach</div>
+      <div class="alert-box">Hey B, our system flagged a call where your AI applied generic handling to a caller that likely needed a more specific approach. Do you have 15 minutes to hop on a call to correct this together?</div>
+    </div>
+    <div class="arrow-row">&darr;</div>
+    <div class="step-row step-solo">
+      <div class="step-title">Solo Upgrade</div>
+      <div class="diag-label">Diagnosis</div>
+      <table class="diag-table">
+        <tr><td class="check">&#10003;</td><td>Call volume: 7/1,000 prev cycle (1%)</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check">&#10003;</td><td>Plan: Team &mdash; all features available</td><td class="val">&mdash;</td></tr>
+      </table>
+      <div class="approach-label">Approach</div>
+      <div class="approach-text">your AI is on Team &mdash; solo features are covered.</div>
+      
+    </div>
+    <div class="arrow-row">&darr;</div>
+    <div class="step-row step-branch">
+      <div class="step-title">Branch Upgrade &mdash; All Access Services</div>
+      <div class="diag-label">Diagnosis</div>
+      <table class="diag-table">
+        <tr><td class="check">&#10003;</td><td>Call transfer: configured</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check">&#10003;</td><td>Dedicated phone number: configured</td><td class="val">&mdash;</td></tr>
+      </table>
+      <div class="approach-label">Approach</div>
+      <div class="approach-text">Let's get your All Access Services branch on YouSquared so every equipment inquiry to your branch line or your reps' direct lines is serviced instantly 24/7 by AI, and whenever necessary transferred to the right person.</div>
+      <div class="comms-label">Example outreach</div>
+      <div class="alert-box">Hey B, with your branch line and reps on YouSquared, every equipment inquiry would be handled live 24/7 and transferred to the right person when needed. Do you have 5 minutes to discuss?</div>
+    </div>
+    <div class="arrow-row">&darr;</div>
+    <div class="step-row step-enterprise">
+      <div class="step-title">Enterprise</div>
+      <div class="diag-label">Diagnosis</div>
+      <table class="diag-table">
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Additional branches: research needed</td><td class="val" style="color:#6A1B9A;">TBD</td></tr>
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Main national line: not on YouSquared</td><td class="val" style="color:#6A1B9A;">TBD</td></tr>
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>System integration: 1 of 3,272 contacts enriched &mdash; AI can't look up answers</td><td class="val" style="color:#6A1B9A;">TBD</td></tr>
+      </table>
+      <div class="approach-label">Approach</div>
+      <div class="approach-text">Let's scale this across all of All Access Services's locations + main line on our AI integrated with your systems.</div>
+      <div class="comms-label">Example pitch</div>
+      <div class="alert-box">[user], right now your AI handles your personal line great. Imagine that same quality across all your locations &mdash; where any caller gets accurate answers from AI that knows your systems, and urgent calls get transferred to the nearest available person.</div>
+    </div>
+  </div>
+</div>
+
+<div class="page page-white">
+  <h2>Deep Dive: E.O.</h2>
+  <p class="section-sub">All Access Services &mdash; Pro Plan</p>
+  <div class="dive-card">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:24px; padding-bottom:20px; border-bottom:1px solid #E8E4E0;">
+      <div>
+        <div class="diag-label" style="margin-bottom:6px;">Account Potential</div>
+        <h3 style="margin:0;">All Access Services</h3>
+        <div class="dive-meta">150 employees</div>
+      </div>
+      <div>
+        <div class="diag-label" style="margin-bottom:6px;">User Overview</div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="dive-avatar" style="background:#2E7D32;">EO</div>
+          <div>
+            <div style="font-weight:600;">E.O., Account manager</div>
+            <div class="dive-meta">Pro plan &middot; AI "[agent]" &middot; 5 calls/cycle &middot; 59% cvo &middot; 35 VIPs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="step-row step-free">
+      <div class="step-title">Free Fixes</div>
+      <div class="diag-label">Diagnosis</div>
+      <table class="diag-table">
+        <tr><td class="check">&#10003;</td><td>VIP contacts: 35 tagged (threshold: 2+)</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check" style="color:#E65100;">&#9888;</td><td>Cvo rate: 59%, greeting is 19 words &mdash; could trim</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Caller scenarios: none defined &mdash; all caller types get generic handling</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check">&#10003;</td><td>FAQ: 16,162 chars</td><td class="val">&mdash;</td></tr>
+      </table>
+      <div class="approach-label">Approach</div>
+      <div class="approach-text">Let's fix your scenarios so [agent] can handle different caller types. E.g. add caller scenario: "If caller asks about equipment" &rarr; "Ask what type, size, when needed, delivery or pickup."</div>
+      <div class="comms-label">Example outreach</div>
+      <div class="alert-box">Hey E, our system flagged a call where [agent] applied generic handling to a caller that likely needed a more specific approach. Do you have 15 minutes to hop on a call to correct this together?</div>
+    </div>
+    <div class="arrow-row">&darr;</div>
+    <div class="step-row step-solo">
+      <div class="step-title">Solo Upgrade</div>
+      <div class="diag-label">Diagnosis</div>
+      <table class="diag-table">
+        <tr><td class="check">&#10003;</td><td>Call volume: 5/90 prev cycle (6%)</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check">&#10003;</td><td>Plan: Pro</td><td class="val">&mdash;</td></tr>
+      </table>
+      <div class="approach-label">Approach</div>
+      <div class="approach-text">[agent] is on Pro &mdash; solo features are covered.</div>
+      
+    </div>
+    <div class="arrow-row">&darr;</div>
+    <div class="step-row step-branch">
+      <div class="step-title">Branch Upgrade &mdash; All Access Services</div>
+      <div class="diag-label">Diagnosis</div>
+      <table class="diag-table">
+        <tr><td class="check">&#10003;</td><td>Call transfer: configured</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Avg time-to-read on revenue-stakes calls: 53 hours</td><td class="val">&mdash;</td></tr>
+        <tr><td class="check">&#10003;</td><td>Dedicated phone number: configured</td><td class="val">&mdash;</td></tr>
+      </table>
+      <div class="approach-label">Approach</div>
+      <div class="approach-text">Let's get your All Access Services branch on YouSquared so every equipment inquiry to your branch line or your reps' direct lines is serviced instantly 24/7 by AI, and whenever necessary transferred to the right person.</div>
+      <div class="comms-label">Example outreach</div>
+      <div class="alert-box">Hey E, our system flagged a call with potential revenue at stake &mdash; it took about 53 hours before it was reviewed. With your branch line and reps on YouSquared, a team member could've picked that up live. Do you have 5 minutes to discuss?</div>
+    </div>
+    <div class="arrow-row">&darr;</div>
+    <div class="step-row step-enterprise">
+      <div class="step-title">Enterprise</div>
+      <div class="diag-label">Diagnosis</div>
+      <table class="diag-table">
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Additional branches: research needed</td><td class="val" style="color:#6A1B9A;">TBD</td></tr>
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>Main national line: not on YouSquared</td><td class="val" style="color:#6A1B9A;">TBD</td></tr>
+        <tr><td class="check" style="color:#C62828;">&#10007;</td><td>System integration: 19 of 1,720 contacts enriched &mdash; AI can't look up answers</td><td class="val" style="color:#6A1B9A;">TBD</td></tr>
+      </table>
+      <div class="approach-label">Approach</div>
+      <div class="approach-text">Let's scale this across all of All Access Services's locations + main line on our AI integrated with your systems.</div>
+      <div class="comms-label">Example pitch</div>
+      <div class="alert-box">[user], right now [colleague] handles your personal line great. Imagine that same quality across all your locations &mdash; where any caller gets accurate answers from AI that knows your systems, and urgent calls get transferred to the nearest available person.</div>
+    </div>
+  </div>
+</div>
+
+<div class="page page-warm">
+  <h2>Principles</h2>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px;">
+    <div style="background:white; border-radius:12px; padding:20px; text-align:center;">
+      <div style="font-size:1.8em; margin-bottom:8px;">&#9201;</div>
+      <h3 style="font-size:1em;">Event-Triggered</h3>
+      <p style="font-size:0.85em; color:#6B6560;">Outreach is triggered by real-time pain, not scheduled cadences.</p>
+    </div>
+    <div style="background:white; border-radius:12px; padding:20px; text-align:center;">
+      <div style="font-size:1.8em; margin-bottom:8px;">&#128274;</div>
+      <h3 style="font-size:1em;">Privacy-Safe</h3>
+      <p style="font-size:0.85em; color:#6B6560;">Never mention caller name, phone, or topic. &quot;Our system flagged&quot; framing.</p>
+    </div>
+    <div style="background:white; border-radius:12px; padding:20px; text-align:center;">
+      <div style="font-size:1.8em; margin-bottom:8px;">&#127873;</div>
+      <h3 style="font-size:1em;">Free First</h3>
+      <p style="font-size:0.85em; color:#6B6560;">Always lead with free fixes. Paid upgrades come second.</p>
+    </div>
+    <div style="background:white; border-radius:12px; padding:20px; text-align:center;">
+      <div style="font-size:1.8em; margin-bottom:8px;">&#128197;</div>
+      <h3 style="font-size:1em;">Max 1x/Week</h3>
+      <p style="font-size:0.85em; color:#6B6560;">One alert per week. Pause after 3 no-responses.</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,302 @@
+[
+  {
+    "conv_id": 632436,
+    "date": "2026-04-17",
+    "user_subtype": "Pest Control",
+    "user_industry": "Pest Control",
+    "user_job_title": "Inspector",
+    "short_report": "N. A. called to check on you after hearing about your shoulder injury. She would like you to call her back when you're feeling up to it. Anytime is fine.",
+    "verdict": "maybe",
+    "why": "The caller is checking on the recipient's shoulder injury, indicating a potential personal injury, but the cause and actionability are unclear."
+  },
+  {
+    "conv_id": 632338,
+    "date": "2026-04-17",
+    "user_subtype": "Hospitality",
+    "user_industry": "Hospitality",
+    "user_job_title": "general manager",
+    "short_report": "J. F. reported a serious incident: an employee, J., was injured when a heavy crowbar landed on his forehead. She said it's serious and needs you to call her back as soon as possible.",
+    "verdict": "asta_fit",
+    "why": "The caller reported a serious workplace injury where an employee was hit by a crowbar, which clearly fits ASTA's practice area for workplace injuries."
+  },
+  {
+    "conv_id": 620007,
+    "date": "2026-04-14",
+    "user_subtype": "Equipment Rental",
+    "user_industry": "Equipment Rental",
+    "user_job_title": "Outside Sales Representative ",
+    "short_report": "M. from Geico's claims department called to discuss the accident that happened on the 11th. She asked you to call them back.",
+    "verdict": "asta_fit",
+    "why": "The call from Geico's claims department regarding an accident on the 11th strongly indicates a potential auto accident claim, which is a core ASTA practice area."
+  },
+  {
+    "conv_id": 601499,
+    "date": "2026-04-07",
+    "user_subtype": "Technology",
+    "user_industry": "Technology",
+    "user_job_title": "computer support tech",
+    "short_report": "N. from Gallagher Bassett Workers' Comp called regarding a workers' comp injury. She asked you to call her back tomorrow between 8:30 a.m. and 4:30 p.m.",
+    "verdict": "asta_fit",
+    "why": "The caller is from a workers' comp company regarding a workers' comp injury, which is a direct fit for ASTA's practice areas."
+  },
+  {
+    "conv_id": 591147,
+    "date": "2026-04-03",
+    "user_subtype": "Construction & Engineering",
+    "user_industry": "Construction & Engineering",
+    "user_job_title": null,
+    "short_report": "Wants you to call her back regarding a personal injury lawyer and their suggestions.",
+    "verdict": "asta_fit",
+    "why": "The caller explicitly states they want to be called back regarding a personal injury lawyer, indicating a direct need for ASTA's services."
+  },
+  {
+    "conv_id": 587581,
+    "date": "2026-04-02",
+    "user_subtype": "Notary",
+    "user_industry": "Notary",
+    "user_job_title": null,
+    "short_report": "- E. from Nationwide has been reassigned to your car accident claim from September 2024. - A passenger in the other vehicle has hired an attorney for their open injury claim. - You are asked to call back regarding this development.",
+    "verdict": "asta_fit",
+    "why": "The call report indicates a car accident claim from September 2024 with an open injury claim from a passenger in the other vehicle, which directly aligns with ASTA's practice area of auto accidents and personal injury."
+  },
+  {
+    "conv_id": 585674,
+    "date": "2026-04-01",
+    "user_subtype": "Retreat Center",
+    "user_industry": "Retreat Center",
+    "user_job_title": null,
+    "short_report": "The caller left a strange and likely accidental message: \"I'm not buckled up.\"",
+    "verdict": "maybe",
+    "why": "The caller's message \"I'm not buckled up\" suggests a potential auto accident context, which could be an ASTA practice area, but it's too ambiguous to confirm."
+  },
+  {
+    "conv_id": 568199,
+    "date": "2026-03-26",
+    "user_subtype": "Unknown",
+    "user_industry": "Unknown",
+    "user_job_title": null,
+    "short_report": "D. from Chaddle Rock Legal Injury Advocates called about a Depo-Provera survey you submitted. She said time is of the essence and asked you to call back at [phone].",
+    "verdict": "asta_fit",
+    "why": "The call is about a Depo-Provera survey, which suggests a potential defective product or mass tort claim, fitting an ASTA practice area."
+  },
+  {
+    "conv_id": 556315,
+    "date": "2026-03-23",
+    "user_subtype": "Hospitality",
+    "user_industry": "Hospitality",
+    "user_job_title": "General Manager, Certified Training Manager, and ServSafe Proctor",
+    "short_report": "- R. from Zenith Insurance called to discuss your workers' comp injury.- She needs you to call her back anytime before 3:30 PM today.- Your claim number is 1139683.",
+    "verdict": "asta_fit",
+    "why": "The call is from an insurance company discussing the YouSquared user's workers' compensation injury, which is a direct fit for ASTA's practice areas."
+  },
+  {
+    "conv_id": 547109,
+    "date": "2026-03-19",
+    "user_subtype": "Construction & Engineering",
+    "user_industry": "Construction & Engineering",
+    "user_job_title": "Director of operations",
+    "short_report": "T. wants a call back about a couple of insurance claims he's not sure you remember:\n- R. T.: a back injury claim over $100k.\n- A 2019 claim where a driver fell asleep.",
+    "verdict": "asta_fit",
+    "why": "The caller is asking about two insurance claims involving a back injury and a driver falling asleep, both of which are potential personal injury cases that fit ASTA's practice areas."
+  },
+  {
+    "conv_id": 538137,
+    "date": "2026-03-17",
+    "user_subtype": "Automotive",
+    "user_industry": "Automotive",
+    "user_job_title": "Owner & Founder",
+    "short_report": "L. called to check on you because you've been sitting on the highway for a long time. He said to tell you he hopes you got moving and that it must be a fatality because the road on the map is completely purple.",
+    "verdict": "maybe",
+    "why": "The caller mentions a potential fatality and a road closure, which could indicate a serious accident, but it's unclear if the YouSquared user or someone they represent is directly involved as a victim."
+  },
+  {
+    "conv_id": 523744,
+    "date": "2026-03-12",
+    "user_subtype": "Personal",
+    "user_industry": "Personal",
+    "user_job_title": null,
+    "short_report": "L. was in a car accident and has rental insurance. She wants to set up a rental agreement with you and needs you to tell her what to do.",
+    "verdict": "asta_fit",
+    "why": "The caller, L., was in a car accident and is seeking assistance, which directly aligns with ASTA's practice area of auto accidents."
+  },
+  {
+    "conv_id": 522086,
+    "date": "2026-03-12",
+    "user_subtype": "Transportation",
+    "user_industry": "Transportation",
+    "user_job_title": "Driver",
+    "short_report": "V. from the law office of Anthony Kushan called. She has questions regarding your accident of March 9, 2026 and requested you call her back anytime.",
+    "verdict": "asta_fit",
+    "why": "The call is from a law office regarding the YouSquared user's accident, indicating a potential personal injury claim."
+  },
+  {
+    "conv_id": 512129,
+    "date": "2026-03-09",
+    "user_subtype": "Automotive",
+    "user_industry": "Automotive",
+    "user_job_title": "Owner",
+    "short_report": "- S., L.'s father, called. - He had an accident on the 95 on Saturday but says he's okay and has insurance. - He wants you to call him back tomorrow morning.",
+    "verdict": "asta_fit",
+    "why": "The caller's father was in an auto accident and wants a call back, indicating a potential personal injury claim."
+  },
+  {
+    "conv_id": 507272,
+    "date": "2026-03-06",
+    "user_subtype": "Life safety consulting and Code experts",
+    "user_industry": "Life safety consulting and Code experts",
+    "user_job_title": "Founder ",
+    "short_report": "She was in a car crash and said she is really hurt.",
+    "verdict": "asta_fit",
+    "why": "The caller was in a car crash and stated she is really hurt, which directly aligns with ASTA's practice area of auto accidents and indicates a potential personal injury claim."
+  },
+  {
+    "conv_id": 495225,
+    "date": "2026-03-03",
+    "user_subtype": "Technology",
+    "user_industry": "Technology",
+    "user_job_title": "Playlist Curator",
+    "short_report": "- You are being contacted by E. from Geico regarding a car accident claim.\n- You stated you were the one who was hit.\n- You instructed me to immediately hang up on any insurance callers who claim you were at fault.",
+    "verdict": "asta_fit",
+    "why": "The call report indicates a car accident where the YouSquared user was hit, and an insurance company (Geico) is calling about the claim, which is a clear signal for an ASTA practice area."
+  },
+  {
+    "conv_id": 491817,
+    "date": "2026-03-02",
+    "user_subtype": "Garage Door Sales and Repair",
+    "user_industry": "Garage Door Sales and Repair",
+    "user_job_title": "Garage Door Sales and Repair",
+    "short_report": "- J. B. from Broadspire claims called about an accident. - She asked you to call her back at 5:00 p.m. EST today, or email her. - Her email is [email].",
+    "verdict": "maybe",
+    "why": "The call is from a claims adjuster about an accident, which suggests a potential personal injury case, but the specific nature of the accident and injury is not detailed enough to confirm ASTA fit."
+  },
+  {
+    "conv_id": 483936,
+    "date": "2026-02-27",
+    "user_subtype": "Construction & Engineering",
+    "user_industry": "Construction & Engineering",
+    "user_job_title": null,
+    "short_report": "- J. from Care Now Urgent Care called about a work-related injury for your employee, B. G.\n- She needs the claim information and to confirm it has been filed.\n- She also wants to verify your insurance is still Associated Risk Management.\n- Please call her back at [phone].",
+    "verdict": "asta_fit",
+    "why": "The call is about a work-related injury for an employee, which falls under ASTA's practice area for workplace/on-the-job injuries."
+  },
+  {
+    "conv_id": 483905,
+    "date": "2026-02-27",
+    "user_subtype": "Garage Door Sales and Repair",
+    "user_industry": "Garage Door Sales and Repair",
+    "user_job_title": "Garage Door Sales and Repair",
+    "short_report": "- L. from Broadsfire called about an auto accident on December 12th. - Please call her back at [phone] to discuss the documentation needed to resolve the claim. - She is available anytime.",
+    "verdict": "asta_fit",
+    "why": "The caller, L. from Broadsfire, is calling about an auto accident on December 12th and needs documentation to resolve the claim, indicating a potential personal injury case."
+  },
+  {
+    "conv_id": 477716,
+    "date": "2026-02-25",
+    "user_subtype": "Retail sales",
+    "user_industry": "Retail sales",
+    "user_job_title": "district services manager",
+    "short_report": "- S. W. from Helmsman is the adjuster for your workers' compensation claim from the accident on February 19th.\n- She requests you call her back at [phone]. Anytime is fine.",
+    "verdict": "asta_fit",
+    "why": "The call is from an adjuster regarding a workers' compensation claim from an accident, which is a direct fit for ASTA's practice area of workplace/on-the-job injuries."
+  },
+  {
+    "conv_id": 476794,
+    "date": "2026-02-25",
+    "user_subtype": "Construction & Engineering",
+    "user_industry": "Construction & Engineering",
+    "user_job_title": null,
+    "short_report": "This is a follow-up call regarding a patient with a work injury. Please call back at [phone].",
+    "verdict": "asta_fit",
+    "why": "The call is a follow-up regarding a patient with a work injury, which is a clear fit for ASTA's practice area of workplace/on-the-job injuries."
+  },
+  {
+    "conv_id": 476720,
+    "date": "2026-02-25",
+    "user_subtype": "Construction & Engineering",
+    "user_industry": "Construction & Engineering",
+    "user_job_title": null,
+    "short_report": "An employee is at CareNow Urgent Care ([address]) for a work injury. Please answer their next call or call them back at [phone].",
+    "verdict": "asta_fit",
+    "why": "The call report explicitly states an employee is at urgent care for a work injury, which is a clear fit for ASTA's workplace/on-the-job injuries practice area."
+  },
+  {
+    "conv_id": 474837,
+    "date": "2026-02-25",
+    "user_subtype": "Insurance",
+    "user_industry": "Insurance",
+    "user_job_title": "Agent",
+    "short_report": "- C. C. T., an existing client, called to report a car accident. - He said someone hit his car while backing up. - He mentioned that he sent you a photo.",
+    "verdict": "maybe",
+    "why": "The caller reported a car accident where someone hit his car, which is an ASTA practice area, but it's unclear if there was any bodily injury, making it ambiguous."
+  },
+  {
+    "conv_id": 472431,
+    "date": "2026-02-24",
+    "user_subtype": "Construction & Engineering",
+    "user_industry": "Construction & Engineering",
+    "user_job_title": null,
+    "short_report": "- Called about the State Farm claim for the October 30th accident. - Requested a return call tomorrow morning.",
+    "verdict": "asta_fit",
+    "why": "The caller is inquiring about a State Farm claim for an accident, which strongly suggests an auto accident and potential personal injury, fitting ASTA's practice areas."
+  },
+  {
+    "conv_id": 461967,
+    "date": "2026-02-20",
+    "user_subtype": "Consulting",
+    "user_industry": "Consulting",
+    "user_job_title": "Operations Overseer Manager",
+    "short_report": "D. from Premier Med Group called to confirm your appointment with Dr. K. for Monday at 12:30. You need to bring the insurance declaration page from the accident to the appointment.",
+    "verdict": "maybe",
+    "why": "The call mentions an appointment related to an accident and the need for an insurance declaration page, indicating a potential personal injury claim, but it's an appointment confirmation, not an inquiry about legal services."
+  },
+  {
+    "conv_id": 457116,
+    "date": "2026-02-18",
+    "user_subtype": "Life safety consulting and Code experts",
+    "user_industry": "Life safety consulting and Code experts",
+    "user_job_title": "Founder ",
+    "short_report": "M. from State Farm called about an accident you were in as a passenger in a lift vehicle. He needs to go over some details. - Call him back at: [phone] - Best time to call: 10:00 a.m. to 3:30 p.m. CST - Reference claim number: 1196T082D",
+    "verdict": "asta_fit",
+    "why": "The call is from State Farm regarding an accident where the YouSquared user was a passenger in a lift vehicle, indicating a potential personal injury claim."
+  },
+  {
+    "conv_id": 455450,
+    "date": "2026-02-18",
+    "user_subtype": "Unknown",
+    "user_industry": "Unknown",
+    "user_job_title": null,
+    "short_report": "T. called about the Progressive claim #26215979805 for the January 30th accident. They have accepted responsibility for the accident. They want to move forward with the next steps of the claim. They requested you call them back in the morning.",
+    "verdict": "asta_fit",
+    "why": "The caller is discussing a Progressive claim for an accident where the other party has accepted responsibility, indicating a potential personal injury case from an auto accident."
+  },
+  {
+    "conv_id": 452071,
+    "date": "2026-02-17",
+    "user_subtype": "Home Services",
+    "user_industry": "Home Services",
+    "user_job_title": "Retired",
+    "short_report": "- This appears to be an accidental recording of an argument with someone named L. - The caller is very upset about a missed call regarding a medical appointment she arranged. - She mentions being in bed for three days with a knee injury. - The end of the message contains sounds indicating extreme pain. - A phone number was mentioned: New Braunfels, [phone].",
+    "verdict": "maybe",
+    "why": "The caller mentions a knee injury that has kept her in bed for three days and sounds to be in extreme pain, suggesting a potential personal injury, but the cause of the injury is unclear."
+  },
+  {
+    "conv_id": 442411,
+    "date": "2026-02-13",
+    "user_subtype": "Automotive",
+    "user_industry": "Automotive",
+    "user_job_title": null,
+    "short_report": "A.G. has had an accident. Details from her dad: - She fell from a cart, hitting her head and shoulder. Her shoulder may be broken. - They are on [address]. - An ambulance is on the way. - A.G. is conscious. - He tried to contact her wife, who said she could not come.",
+    "verdict": "asta_fit",
+    "why": "A.G. suffered a fall resulting in a potential broken shoulder and head injury, which is a clear personal injury event fitting ASTA's premises liability practice area."
+  },
+  {
+    "conv_id": 435479,
+    "date": "2026-02-11",
+    "user_subtype": "Unknown",
+    "user_industry": "Unknown",
+    "user_job_title": null,
+    "short_report": "Progressive Claims called about a claim for an accident on January 30th involving a 2023 Chevy Express. They requested a callback. The claim number is 26215979805.",
+    "verdict": "maybe",
+    "why": "The call is from an insurance company about an accident claim, which suggests a potential personal injury, but it's unclear if there was a bodily injury or if the call is solely about property damage."
+  }
+]

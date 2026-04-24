@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouSquared — AI Secretary for Service Businesses</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #2D2A26;          /* warm charcoal */
+  --ink-2: #433F3A;
+  --paper: #FFFFFF;
+  --cream: #F5F2EF;        /* warm gray */
+  --cream-2: #EDE8E2;
+  --accent: #E07A5F;       /* terracotta */
+  --accent-light: #FF8370; /* coral */
+  --accent-pale: #FCE7E0;
+  --gold: #F9A825;
+  --gold-pale: #FFF8E1;
+  --text: #2D2A26;
+  --muted: #6B6560;
+  --muted-2: #9E9893;
+  --rule: #E4DED7;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', -apple-system, sans-serif; background: var(--paper); color: var(--text); overflow-x: hidden; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 40px;
+  background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; font-family: 'Lora', Georgia, serif; font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; color: var(--ink); }
+.nav-logo img { height: 24px; }
+.nav-logo .tag { color: var(--muted); font-family: 'Inter',sans-serif; font-weight: 400; font-size: 0.8rem; }
+.nav-dots { display: flex; gap: 8px; }
+.nav-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--rule); border: none; cursor: pointer; transition: background 0.2s, transform 0.2s; }
+.nav-dot.active { background: var(--accent); transform: scale(1.4); }
+
+/* SLIDES */
+.slide {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 90px 48px 80px;
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  position: relative;
+}
+.slide.visible { opacity: 1; transform: translateY(0); }
+.slide-inner { max-width: 1040px; width: 100%; }
+
+/* Shared typography */
+.section-label {
+  font-family: 'Inter', monospace; font-size: 0.7rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 12px; font-weight: 500;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); max-width: 80px; }
+.section-title {
+  font-family: 'Lora', Georgia, serif; font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+  font-weight: 700; letter-spacing: -0.02em; line-height: 1.18; margin-bottom: 14px; color: var(--ink);
+}
+.section-title em { font-style: italic; color: var(--accent); }
+.section-intro { font-size: 0.98rem; color: var(--muted); line-height: 1.7; max-width: 620px; margin-bottom: 28px; }
+
+/* ============ SLIDE 1 — HERO ============ */
+#slide-1 {
+  background: linear-gradient(145deg, #2D2A26 0%, #433F3A 55%, #3A3632 100%);
+  color: var(--paper); min-height: 100vh; overflow: hidden;
+}
+#slide-1::before {
+  content: ''; position: absolute; top: -240px; right: -220px; width: 680px; height: 680px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,131,112,0.28) 0%, transparent 70%);
+  pointer-events: none;
+}
+#slide-1::after {
+  content: ''; position: absolute; bottom: -120px; left: -140px; width: 460px; height: 460px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(224,122,95,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+#slide-1 .slide-inner { display: grid; grid-template-columns: 1fr 0.9fr; gap: 56px; align-items: center; }
+.hero-eyebrow { font-family: 'Inter',monospace; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 24px; font-weight: 600; }
+.hero-title { font-family: 'Lora', Georgia, serif; font-size: clamp(2.4rem, 4.8vw, 3.8rem); font-weight: 700; line-height: 1.1; color: #fff; margin-bottom: 14px; letter-spacing: -0.02em; }
+.hero-title em { font-style: italic; color: var(--accent-light); }
+.hero-sub { font-size: 1.02rem; color: rgba(255,255,255,0.7); margin-bottom: 30px; font-weight: 300; max-width: 520px; line-height: 1.65; }
+.hero-badge { display: inline-flex; align-items: center; gap: 10px; background: rgba(255,131,112,0.18); border: 1px solid rgba(255,131,112,0.32); border-radius: 22px; padding: 8px 16px; font-size: 0.82rem; color: var(--accent-light); margin-bottom: 32px; font-weight: 500; }
+.dot-pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-light); animation: pulse 1.8s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+.hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden; max-width: 560px; }
+.hero-stat { background: rgba(255,255,255,0.04); padding: 20px 18px; text-align: center; border-right: 1px solid rgba(255,255,255,0.07); }
+.hero-stat:last-child { border-right: none; }
+.hero-stat-num { font-family: 'Lora', Georgia, serif; font-size: 1.9rem; font-weight: 700; color: #fff; display: block; margin-bottom: 4px; }
+.hero-stat-label { font-size: 0.68rem; color: rgba(255,255,255,0.5); letter-spacing: 0.08em; text-transform: uppercase; }
+
+.hero-visual { position: relative; }
+.hero-visual .frame { background: rgba(255,255,255,0.05); border-radius: 20px; border: 1px solid rgba(255,255,255,0.08); padding: 14px; box-shadow: 0 20px 60px rgba(0,0,0,0.35); }
+.hero-visual .placeholder {
+  aspect-ratio: 4/3;
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,131,112,0.3), transparent 55%),
+    radial-gradient(circle at 75% 60%, rgba(224,122,95,0.22), transparent 60%),
+    linear-gradient(135deg, #3A3632 0%, #2D2A26 100%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.82);
+  padding: 30px;
+  text-align: center;
+}
+.hero-visual .placeholder .iconwrap { width: 64px; height: 64px; border-radius: 50%; background: rgba(255,131,112,0.22); border: 1.5px solid rgba(255,131,112,0.45); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+.hero-visual .placeholder .iconwrap svg { stroke: var(--accent-light); width: 28px; height: 28px; fill: none; stroke-width: 1.8; }
+.hero-visual .placeholder .ptitle { font-family: 'Lora',serif; font-style: italic; font-size: 1.05rem; line-height: 1.5; max-width: 320px; }
+.hero-visual .caption { text-align: center; font-family: 'Inter',sans-serif; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 12px; }
+
+/* ============ SLIDE 2 — PROBLEM ============ */
+#slide-2 { background: var(--paper); }
+.problem-layout { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: start; }
+.problem-box { background: var(--gold-pale); border: 1px solid rgba(249,168,37,0.25); border-left: 4px solid var(--gold); border-radius: 12px; padding: 26px 30px; margin-bottom: 22px; }
+.problem-box p { font-size: 1rem; line-height: 1.7; color: var(--ink); }
+.problem-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.fact-card { background: var(--cream); border-radius: 12px; padding: 20px 22px; border: 1px solid var(--rule); }
+.fact-card .num { font-family: 'Lora', Georgia, serif; font-size: 1.95rem; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 6px; }
+.fact-card .label { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+.fact-source { font-size: 0.66rem; display: block; margin-top: 6px; color: var(--muted-2); font-style: italic; }
+
+.problem-right .pull-quote { background: #fff; border-radius: 18px; border: 1px solid var(--rule); padding: 28px 30px; box-shadow: 0 8px 32px rgba(0,0,0,0.05); }
+.problem-right .pull-quote blockquote { font-family: 'Lora',Georgia,serif; font-size: 1.08rem; font-style: italic; color: var(--ink); line-height: 1.55; margin-bottom: 14px; }
+.problem-right .pull-quote cite { font-family: 'Inter',sans-serif; font-style: normal; font-size: 0.8rem; color: var(--muted); display: block; line-height: 1.5; }
+.problem-right .pull-quote cite strong { color: var(--accent); font-weight: 600; }
+.problem-right .illus { background: var(--cream); border-radius: 18px; border: 1px solid var(--rule); padding: 26px 22px; margin-bottom: 18px; text-align: center; }
+.problem-right .illus .iconwrap { width: 76px; height: 76px; border-radius: 50%; background: var(--accent-pale); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+.problem-right .illus svg { stroke: var(--accent); width: 38px; height: 38px; fill: none; stroke-width: 1.6; }
+.problem-right .illus .caption { font-family: 'Lora',serif; font-style: italic; font-size: 0.98rem; color: var(--ink); line-height: 1.5; max-width: 320px; margin: 0 auto; }
+
+/* ============ SLIDE 3 — SOLUTION ============ */
+#slide-3 { background: linear-gradient(160deg, #FFFFFF 60%, #FCE7E0 100%); align-items: flex-start; padding-top: 90px; padding-bottom: 70px; }
+.solution-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 8px; }
+.use-case { background: #fff; border-radius: 14px; padding: 22px 22px; border: 1px solid var(--rule); transition: box-shadow 0.25s, transform 0.25s; }
+.use-case:hover { box-shadow: 0 10px 32px rgba(0,0,0,0.07); transform: translateY(-2px); }
+.use-case-icon { width: 40px; height: 40px; border-radius: 11px; background: var(--accent-pale); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+.use-case-icon svg { stroke: var(--accent); width: 20px; height: 20px; fill: none; stroke-width: 2; }
+.use-case h3 { font-family: 'Lora', Georgia, serif; font-size: 1.02rem; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+.use-case p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+.use-case .tag { display: inline-block; margin-top: 14px; font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); font-weight: 600; background: var(--accent-pale); border-radius: 5px; padding: 3px 9px; }
+
+/* ============ SLIDE 4 — EXAMPLE CALLS ============ */
+#slide-4 { background: var(--ink); color: var(--paper); }
+#slide-4 .section-title { color: #fff; }
+#slide-4 .section-title em { color: var(--accent-light); }
+#slide-4 .section-intro { color: rgba(255,255,255,0.55); }
+.calls-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.call-card { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.12); background: var(--ink); aspect-ratio: 16/10; cursor: pointer; transition: transform 0.25s, border-color 0.25s; }
+.call-card:hover { transform: translateY(-2px); border-color: rgba(255,131,112,0.45); }
+.call-card.audio-only { cursor: default; }
+.call-card.audio-only:hover { transform: none; border-color: rgba(255,255,255,0.12); }
+.call-card .poster, .call-card video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.call-card video { opacity: 0; transition: opacity 0.35s ease; background: #000; z-index: 3; }
+.call-card.playing video { opacity: 1; }
+.call-card .overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 18px 20px; pointer-events: none; background: linear-gradient(180deg, rgba(14,17,23,0.35) 0%, rgba(14,17,23,0.1) 35%, rgba(14,17,23,0) 55%, rgba(14,17,23,0.8) 100%); transition: opacity 0.3s; z-index: 2; }
+.call-card.playing .overlay, .call-card.playing .play-btn { opacity: 0; pointer-events: none; }
+.call-card .pill { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; background: rgba(255,131,112,0.22); border: 1px solid rgba(255,131,112,0.45); border-radius: 20px; padding: 4px 11px; font-size: 0.66rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent-light); backdrop-filter: blur(6px); }
+.call-card .bottom { display: flex; flex-direction: column; gap: 3px; }
+.call-card h4 { font-family: 'Lora',Georgia,serif; font-size: 1.04rem; font-weight: 700; color: #fff; letter-spacing: -0.005em; }
+.call-card .desc { font-size: 0.78rem; color: rgba(255,255,255,0.7); line-height: 1.5; }
+.call-card .play-btn { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; background: rgba(224,122,95,0.95); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,0,0,0.4); z-index: 2; transition: transform 0.2s, opacity 0.3s, background 0.2s; pointer-events: none; }
+.call-card:hover .play-btn { transform: scale(1.1); background: rgba(255,131,112,1); }
+.call-card .play-btn::after { content: ''; width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 10px solid #fff; margin-left: 2px; }
+.call-card.audio-only .play-btn { display: none; }
+
+/* ============ SLIDE 5 — INDUSTRIES ============ */
+#slide-5 { background: var(--cream); align-items: flex-start; padding-top: 90px; }
+.industries-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.industry-card { background: #fff; border-radius: 14px; padding: 22px 22px; border: 1px solid var(--rule); }
+.industry-card .icon { width: 44px; height: 44px; border-radius: 11px; background: var(--accent-pale); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+.industry-card .icon svg { stroke: var(--accent); width: 22px; height: 22px; fill: none; stroke-width: 1.8; }
+.industry-card h3 { font-family: 'Lora',Georgia,serif; font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+.industry-card .subs { display: flex; flex-wrap: wrap; gap: 5px; }
+.industry-card .sub-chip { font-size: 0.7rem; background: var(--cream); border: 1px solid var(--rule); border-radius: 14px; padding: 3px 9px; color: var(--muted); }
+.industry-footnote { margin-top: 22px; font-size: 0.78rem; color: var(--muted); text-align: center; font-style: italic; }
+
+/* ============ SLIDE 6 — TEAM · BACKERS ============ */
+#slide-6 { background: var(--paper); }
+.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-bottom: 32px; }
+.team-card { background: var(--cream); border-radius: 16px; padding: 26px 22px; border: 1px solid var(--rule); text-align: center; }
+.team-avatar { width: 72px; height: 72px; border-radius: 50%; background: var(--accent-pale); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; overflow: hidden; border: 2px solid rgba(224,122,95,0.3); }
+.team-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.team-name { font-family: 'Lora', Georgia, serif; font-size: 0.98rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.team-role { font-size: 0.72rem; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+.team-bio { font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
+.backers-row { display: flex; align-items: center; justify-content: center; gap: 34px; margin-bottom: 32px; padding: 20px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); flex-wrap: wrap; }
+.backer-pill { font-family: 'Inter',sans-serif; font-size: 0.74rem; letter-spacing: 0.06em; color: var(--muted); font-weight: 500; }
+.backers-row img { height: 26px; opacity: 0.75; }
+.backers-label { font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-2); font-weight: 600; margin-right: 8px; }
+.customer-row { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.customer-chip { font-family: 'Inter',sans-serif; font-size: 0.78rem; font-weight: 600; color: var(--ink); background: var(--cream); border: 1px solid var(--rule); border-radius: 10px; padding: 10px 14px; }
+.customer-chip .sub { color: var(--muted); font-weight: 400; font-size: 0.72rem; margin-left: 6px; }
+
+/* ============ SLIDE 7 — RESULTS + TESTIMONIALS ============ */
+#slide-7 { background: linear-gradient(160deg, #2D2A26 0%, #3A3632 100%); color: var(--paper); }
+#slide-7 .section-label { color: rgba(255,255,255,0.5); }
+#slide-7 .section-label::after { background: rgba(255,255,255,0.14); }
+#slide-7 .section-title { color: #fff; }
+#slide-7 .section-title em { color: var(--accent-light); }
+#slide-7 .section-intro { color: rgba(255,255,255,0.55); }
+.metric-strip { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 28px; }
+.metric-card { border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 20px 22px; background: rgba(255,255,255,0.04); position: relative; overflow: hidden; }
+.metric-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent-light)); border-radius: 3px 3px 0 0; }
+.metric-val { font-family: 'Lora', Georgia, serif; font-size: 2rem; font-weight: 700; color: #fff; line-height: 1; margin-bottom: 6px; display: flex; align-items: baseline; gap: 3px; }
+.metric-val .unit { font-size: 1.05rem; color: var(--accent-light); }
+.metric-label { font-size: 0.78rem; color: rgba(255,255,255,0.55); }
+
+.testimonials-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 16px; }
+.t-anchor { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; }
+.t-anchor video { width: 100%; border-radius: 10px; margin-bottom: 12px; background: #000; }
+.t-anchor .pill-video { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; background: rgba(255,131,112,0.18); border: 1px solid rgba(255,131,112,0.4); border-radius: 20px; padding: 4px 10px; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 10px; }
+.t-anchor blockquote { font-family: 'Lora', serif; font-style: italic; font-size: 0.95rem; line-height: 1.5; color: #fff; margin-bottom: 12px; }
+.t-anchor cite { font-family: 'Inter',sans-serif; font-style: normal; font-size: 0.76rem; color: rgba(255,255,255,0.55); line-height: 1.5; }
+.t-anchor cite strong { color: var(--accent-light); font-weight: 600; }
+
+.t-col { display: flex; flex-direction: column; gap: 16px; }
+.t-quote { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; }
+.t-quote .pill { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; background: rgba(224,122,95,0.18); border: 1px solid rgba(224,122,95,0.4); border-radius: 20px; padding: 3px 10px; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 10px; }
+.t-quote .headshot-row { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+.t-quote .headshot { width: 40px; height: 40px; border-radius: 50%; overflow: hidden; border: 1.5px solid rgba(255,131,112,0.35); flex-shrink: 0; background: var(--ink-2); }
+.t-quote .headshot img { width: 100%; height: 100%; object-fit: cover; }
+.t-quote .name { font-family: 'Lora', serif; font-size: 0.88rem; color: #fff; font-weight: 700; line-height: 1.25; }
+.t-quote .role { font-size: 0.68rem; color: rgba(255,255,255,0.5); margin-top: 2px; line-height: 1.4; }
+.t-quote blockquote { font-family: 'Lora', serif; font-style: italic; font-size: 0.84rem; line-height: 1.55; color: rgba(255,255,255,0.82); }
+
+/* ============ SLIDE 8 — GET STARTED ============ */
+#slide-8 { background: var(--cream); align-items: flex-start; padding-top: 90px; padding-bottom: 80px; }
+.cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 32px; }
+.cta-box { background: #fff; border: 1px solid var(--rule); border-radius: 18px; padding: 26px 28px; display: flex; align-items: center; gap: 18px; transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; cursor: pointer; }
+.cta-box:hover { border-color: var(--accent); box-shadow: 0 10px 30px rgba(224,122,95,0.12); transform: translateY(-2px); }
+.cta-box .icon { width: 56px; height: 56px; border-radius: 14px; background: var(--accent-pale); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.cta-box .icon svg { stroke: var(--accent); width: 28px; height: 28px; fill: none; stroke-width: 1.8; }
+.cta-box .info { flex: 1; }
+.cta-box .action { font-family: 'Inter',sans-serif; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 4px; }
+.cta-box .target { font-family: 'Lora',Georgia,serif; font-size: 1.28rem; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+.cta-box .meta { font-size: 0.82rem; color: var(--muted); }
+
+.setup-line { text-align: center; font-family: 'Lora',serif; font-style: italic; font-size: 1rem; color: var(--muted); margin-bottom: 22px; }
+.setup-line strong { color: var(--accent); font-style: normal; font-weight: 600; }
+
+.pricing-head { font-family: 'Lora',serif; font-size: 1.15rem; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+.pricing-sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 16px; }
+.pricing-table { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+.price-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 18px 20px; }
+.price-card h4 { font-family: 'Lora',serif; font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.price-card .price { font-family: 'Lora',serif; font-size: 1.6rem; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 4px; display: flex; align-items: baseline; gap: 4px; }
+.price-card .price .period { font-size: 0.78rem; color: var(--muted); font-weight: 400; }
+.price-card .price.free { color: var(--accent); }
+.price-card .quota { font-size: 0.78rem; color: var(--muted); margin-bottom: 10px; }
+.price-card ul { list-style: none; padding: 0; font-size: 0.8rem; color: var(--ink); line-height: 1.7; }
+.price-card ul li { position: relative; padding-left: 18px; }
+.price-card ul li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+.teams-strip { background: var(--ink); color: #fff; border-radius: 14px; padding: 18px 22px; display: grid; grid-template-columns: auto 1fr 1fr 1fr; gap: 18px; align-items: center; }
+.teams-label { font-family: 'Lora',serif; font-size: 0.98rem; font-weight: 700; color: #fff; }
+.teams-tier { font-size: 0.8rem; }
+.teams-tier .t-name { font-weight: 600; color: var(--accent-light); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 2px; }
+.teams-tier .t-price { font-family: 'Lora',serif; font-size: 1rem; color: #fff; font-weight: 700; }
+.teams-tier .t-desc { font-size: 0.72rem; color: rgba(255,255,255,0.55); margin-top: 2px; }
+
+.pricing-footnote { font-size: 0.72rem; color: var(--muted); text-align: center; margin-top: 14px; font-style: italic; }
+.trust-strip { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--rule); font-size: 0.74rem; color: var(--muted); }
+.trust-strip span { display: inline-flex; align-items: center; gap: 6px; }
+.trust-strip span::before { content: '●'; color: var(--accent); font-size: 0.55em; }
+
+/* PROGRESS */
+.slide-progress { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; gap: 7px; z-index: 99; }
+.progress-bar { width: 28px; height: 3px; border-radius: 2px; background: var(--rule); overflow: hidden; cursor: pointer; }
+.progress-fill { height: 100%; width: 0%; background: var(--accent); border-radius: 2px; transition: width 0.6s ease; }
+.progress-bar.active .progress-fill { width: 100%; }
+.progress-bar.done .progress-fill { width: 100%; background: var(--rule); }
+
+/* RESPONSIVE */
+@media (max-width: 820px) {
+  nav { padding: 12px 20px; }
+  .slide { padding: 80px 22px 60px; }
+  #slide-1 .slide-inner, .problem-layout, .solution-grid, .calls-grid, .industries-grid, .team-grid,
+    .cta-grid, .pricing-table, .testimonials-grid, .metric-strip { grid-template-columns: 1fr; }
+  .problem-facts { grid-template-columns: 1fr 1fr; }
+  .industries-grid { grid-template-columns: 1fr 1fr; }
+  .teams-strip { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <img src="assets/logo_yousquared.png" alt="YouSquared">
+    <span class="tag">YouSquared</span>
+  </div>
+  <div class="nav-dots" id="navDots"></div>
+</nav>
+
+<!-- ============ SLIDE 1 — HERO ============ -->
+<section class="slide" id="slide-1">
+  <div class="slide-inner">
+    <div>
+      <div class="hero-eyebrow">AI Secretary for Service Businesses</div>
+      <h1 class="hero-title">An <em>instant</em> answer<br>to every call.</h1>
+      <p class="hero-sub">YouSquared is a 24/7 voice AI secretary that answers every incoming call — triaging, scheduling, qualifying, and continuously learning. So your team can focus on the customer in front of them.</p>
+      <div class="hero-badge"><span class="dot-pulse"></span> Available 24/7 — nights, weekends, holidays</div>
+      <div class="hero-stats">
+        <div class="hero-stat"><span class="hero-stat-num">2M+</span><span class="hero-stat-label">Calls annualized</span></div>
+        <div class="hero-stat"><span class="hero-stat-num">4.6★</span><span class="hero-stat-label">App Store iOS</span></div>
+        <div class="hero-stat"><span class="hero-stat-num">11+</span><span class="hero-stat-label">Languages</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="frame">
+        <img src="assets/illustration_mainstreet.png" alt="A Main Street of small service businesses — pharmacist, doctor, real estate agent, contractor, lawyer, and truck driver — each fully present with a customer while YouSquared AI handles their calls" style="width:100%; border-radius:14px; display:block;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 2 — PROBLEM ============ -->
+<section class="slide" id="slide-2">
+  <div class="slide-inner">
+    <div class="section-label">01 — The problem</div>
+    <h2 class="section-title">Phones are the <em>silent revenue leak</em></h2>
+    <div class="problem-layout">
+      <div>
+        <div class="problem-box">
+          <p>Every missed call is a customer you might never hear from again. Every call left on hold erodes trust. Every interruption is a human moment lost — a patient not heard, a lead not won, a relationship not built.</p>
+        </div>
+        <div class="problem-facts">
+          <div class="fact-card">
+            <div class="num">62%</div>
+            <div class="label">of callers hang up if no one picks up within 45 seconds<span class="fact-source">Invoca Call Intelligence Benchmark, 2023</span></div>
+          </div>
+          <div class="fact-card">
+            <div class="num">85%</div>
+            <div class="label">won't call back after an unanswered call<span class="fact-source">BIA Kelsey SMB Study</span></div>
+          </div>
+          <div class="fact-card">
+            <div class="num">30–150</div>
+            <div class="label">calls/day handled by a typical small service business</div>
+          </div>
+          <div class="fact-card">
+            <div class="num">10–20 hrs</div>
+            <div class="label">lost per staff member every week to phone interruptions</div>
+          </div>
+        </div>
+      </div>
+      <div class="problem-right">
+        <div class="illus" style="padding:0; background:transparent; border:none;">
+          <img src="assets/problem_placeholder.png" alt="Overwhelmed office with phones ringing" style="width:100%; border-radius:14px; display:block; border:1px solid var(--rule); box-shadow: 0 8px 32px rgba(0,0,0,0.05);">
+        </div>
+        <div class="pull-quote" style="margin-top: 18px;">
+          <blockquote>"I miss calls when I'm in back-to-back procedures. YouSquared lets me know the urgent ones to return first."</blockquote>
+          <cite><strong>Dr Talat Bessissow</strong><br>Assoc. Professor of Medicine, Gastroenterology<br>McGill University Health Centre</cite>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 3 — SOLUTION ============ -->
+<section class="slide" id="slide-3">
+  <div class="slide-inner">
+    <div class="section-label">02 — The solution</div>
+    <h2 class="section-title">What your <em>AI Secretary</em> does</h2>
+    <p class="section-intro">Every unanswered call is a customer you might never hear from again. YouSquared answers instantly — not just pickup, but triage, scheduling, qualification, and continuous learning — without replacing your team, by freeing them.</p>
+    <div class="solution-grid">
+      <div class="use-case">
+        <div class="use-case-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <h3>24/7 Pickup</h3>
+        <p>Nights, weekends, holidays. No voicemail, no hold — a real conversation on the first ring.</p>
+        <span class="tag">Always on</span>
+      </div>
+      <div class="use-case">
+        <div class="use-case-icon"><svg viewBox="0 0 24 24"><path d="M6 3v18M6 3l12 9-12 9"/></svg></div>
+        <h3>Smart Triage</h3>
+        <p>Urgent vs. routine. Urgent reaches you in seconds via text. Routine is handled end-to-end.</p>
+        <span class="tag">After-hours</span>
+      </div>
+      <div class="use-case">
+        <div class="use-case-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <h3>Booking & Scheduling</h3>
+        <p>Appointments, jobs, consultations — straight into your calendar, confirmed by text.</p>
+        <span class="tag">Zero wait</span>
+      </div>
+      <div class="use-case">
+        <div class="use-case-icon"><svg viewBox="0 0 24 24"><path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4"/><path d="M9 11V7a3 3 0 0 1 6 0v4"/></svg></div>
+        <h3>New-Lead Qualification</h3>
+        <p>Name, address, service type, urgency, budget. Pre-qualified before you ever pick up.</p>
+        <span class="tag">Lead quality</span>
+      </div>
+      <div class="use-case">
+        <div class="use-case-icon"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+        <h3>Reminders & Follow-ups</h3>
+        <p>Confirmations, adherence check-ins, no-show prevention, promos — automated outbound.</p>
+        <span class="tag">Retention</span>
+      </div>
+      <div class="use-case">
+        <div class="use-case-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <h3>Multilingual + Learning</h3>
+        <p>11+ languages. Tunes to your business over days — not months — from your team's voice feedback.</p>
+        <span class="tag">Tailored</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 4 — EXAMPLE CALLS ============ -->
+<section class="slide" id="slide-4">
+  <div class="slide-inner">
+    <div class="section-label" style="color:rgba(255,255,255,0.5);">03 — Hear it in action</div>
+    <h2 class="section-title">Real calls, <em>across industries</em></h2>
+    <p class="section-intro">Every recording is a real conversation handled by a YouSquared AI — with the customer's consent.</p>
+    <div class="calls-grid">
+      <!-- Healthcare — Pharmacy -->
+      <div class="call-card" onclick="playCall(this)">
+        <img class="poster" src="assets/poster_call.svg" alt="">
+        <video src="assets/PHARMACY-PATIENT-CALL.mp4" preload="none" playsinline></video>
+        <div class="overlay">
+          <span class="pill">🏥 Healthcare · Pharmacy</span>
+          <div class="bottom">
+            <h4>Patient Prescription Call</h4>
+            <div class="desc">AI takes a refill request, confirms medication, sends an SMS confirmation.</div>
+          </div>
+        </div>
+        <div class="play-btn"></div>
+      </div>
+
+      <!-- Healthcare — Oncology -->
+      <div class="call-card" onclick="playCall(this)">
+        <img class="poster" src="assets/poster_call.svg" alt="">
+        <video src="assets/Medical Oncology.mp4" preload="none" playsinline></video>
+        <div class="overlay">
+          <span class="pill">🩺 Healthcare · Oncology</span>
+          <div class="bottom">
+            <h4>Post-Treatment Check-In</h4>
+            <div class="desc">AI conducts a structured symptom check-in after chemotherapy infusion.</div>
+          </div>
+        </div>
+        <div class="play-btn"></div>
+      </div>
+
+      <!-- Construction — Equipment Rental -->
+      <div class="call-card" onclick="playCall(this)">
+        <img class="poster" src="assets/poster_call.svg" alt="">
+        <video src="assets/Order-Construction-Equipment-Rental.mp4" preload="none" playsinline></video>
+        <div class="overlay">
+          <span class="pill">🏗️ Construction · Equip. Rental</span>
+          <div class="bottom">
+            <h4>New Rental Order</h4>
+            <div class="desc">AI captures equipment type, delivery address, date and PO number — sends text confirmation.</div>
+          </div>
+        </div>
+        <div class="play-btn"></div>
+      </div>
+
+      <!-- Real Estate — audio-only placeholder -->
+      <div class="call-card audio-only">
+        <img class="poster" src="assets/poster_call.svg" alt="">
+        <div class="overlay">
+          <span class="pill">🔑 Real Estate · Agent</span>
+          <div class="bottom">
+            <h4>New Buyer Inquiry</h4>
+            <div class="desc">AI qualifies a new buyer: area, price range, timeline. Books a showing before the competition.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 5 — INDUSTRIES ============ -->
+<section class="slide" id="slide-5">
+  <div class="slide-inner">
+    <div class="section-label">04 — Pre-configured for your industry</div>
+    <h2 class="section-title">Auto-configured for <em>25+ verticals</em></h2>
+    <p class="section-intro">Pre-built call-handling playbooks per industry. Onboarded in minutes. Learns your specific business from day one.</p>
+    <div class="industries-grid" style="grid-template-columns: repeat(2, 1fr); gap: 20px;">
+      <div class="industry-card">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 2 4 7v10l8 5 8-5V7l-8-5z"/><path d="M9 12h6M12 9v6"/></svg></div>
+        <h3>Healthcare</h3>
+        <div class="subs">
+          <span class="sub-chip">Pharmacy</span><span class="sub-chip">Dental</span><span class="sub-chip">Mental Health</span>
+          <span class="sub-chip">Primary Care</span><span class="sub-chip">Chiropractic</span><span class="sub-chip">Veterinary</span>
+          <span class="sub-chip">Optometry</span><span class="sub-chip">Medical Spa</span>
+        </div>
+      </div>
+      <div class="industry-card">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10M10 18v-4h4v4"/></svg></div>
+        <h3>Property</h3>
+        <div class="subs">
+          <span class="sub-chip">Real Estate</span><span class="sub-chip">Mortgage</span><span class="sub-chip">Property Mgmt</span>
+          <span class="sub-chip">General Contractor</span><span class="sub-chip">Plumbing</span><span class="sub-chip">Electrical</span>
+          <span class="sub-chip">HVAC</span><span class="sub-chip">Equipment Rental</span><span class="sub-chip">Cleaning</span>
+          <span class="sub-chip">Landscaping</span><span class="sub-chip">Pest Control</span>
+        </div>
+      </div>
+      <div class="industry-card">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M6 21V10l6-4 6 4v11M10 14h4M10 18h4"/></svg></div>
+        <h3>Legal</h3>
+        <div class="subs">
+          <span class="sub-chip">Family Law</span><span class="sub-chip">Personal Injury</span><span class="sub-chip">Immigration</span>
+          <span class="sub-chip">Criminal Defense</span><span class="sub-chip">Employment</span>
+        </div>
+      </div>
+      <div class="industry-card">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 16V8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M9 16h6"/></svg></div>
+        <h3>Auto Transport</h3>
+        <div class="subs">
+          <span class="sub-chip">Repair Shop</span><span class="sub-chip">Towing</span><span class="sub-chip">Transportation</span>
+          <span class="sub-chip">Delivery</span>
+        </div>
+      </div>
+    </div>
+    <div class="industry-footnote">Every playbook is configured for new-client and existing-client scenarios, urgency triage, and your specific business rules.</div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 6 — TEAM · BACKERS · CUSTOMERS ============ -->
+<section class="slide" id="slide-6">
+  <div class="slide-inner">
+    <div class="section-label">05 — Who we are</div>
+    <h2 class="section-title">Built by <em>AI pioneers</em>, trusted across industries</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar"><img src="assets/headshot_ad.jpg" alt="Alexandre Dalyac"></div>
+        <div class="team-name">Alexandre Dalyac</div>
+        <div class="team-role">CEO &amp; Co-founder</div>
+        <div class="team-bio">Founded Tractable, AI unicorn valued at $1B+ serving Fortune 500. Serial entrepreneur with deep expertise in applied AI.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar"><img src="assets/headshot_adb.png" alt="Alexandre de Brébisson"></div>
+        <div class="team-name">Alexandre de Brébisson</div>
+        <div class="team-role">CTO &amp; Co-founder</div>
+        <div class="team-bio">PhD supervised by Yoshua Bengio (Mila Montréal). Inventor of voice cloning. Cutting-edge AI &amp; signal-processing research.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar"><img src="assets/headshot_bessissow.jpg" alt="Dr Talat Bessissow"></div>
+        <div class="team-name">Dr Talat Bessissow</div>
+        <div class="team-role">Medical Advisor</div>
+        <div class="team-bio">Associate Professor of Medicine, Gastroenterology, MUHC / McGill. Grounds our healthcare deployments.</div>
+      </div>
+    </div>
+
+    <div class="backers-row">
+      <span class="backers-label">Backed by</span>
+      <img src="assets/logo_airstreet.png" alt="Air Street Capital">
+      <div style="width:1px; height:24px; background:var(--rule);"></div>
+      <img src="assets/logo_zetta.png" alt="Zetta"> <span class="backer-pill">Zetta Venture Partners</span>
+      <div style="width:1px; height:24px; background:var(--rule);"></div>
+      <img src="assets/logo_k5global.svg" alt="K5 Global"> <span class="backer-pill">K5 Global</span>
+    </div>
+
+    <div class="customer-row">
+      <div class="customer-chip">Mt Sinai <span class="sub">· oncology</span></div>
+      <div class="customer-chip">MUHC <span class="sub">· gastro</span></div>
+      <div class="customer-chip">Safer Pharmacy <span class="sub">· NYC</span></div>
+      <div class="customer-chip">Harris St Laurent &amp; Wechsler <span class="sub">· NY law</span></div>
+      <div class="customer-chip">Marietta Smile Gallery <span class="sub">· dental</span></div>
+      <div class="customer-chip">McKinney VIP Transportation</div>
+      <div class="customer-chip">Taylor Insurance Group</div>
+      <div class="customer-chip">Senemar &amp; Associates <span class="sub">· real estate</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 7 — RESULTS + TESTIMONIALS ============ -->
+<section class="slide" id="slide-7">
+  <div class="slide-inner">
+    <div class="section-label">06 — Results</div>
+    <h2 class="section-title">Measurable impact <em>across every vertical</em></h2>
+    <div class="metric-strip">
+      <div class="metric-card">
+        <div class="metric-val"><span>−75</span><span class="unit">%</span></div>
+        <div class="metric-label">Missed calls — near-elimination with 24/7 pickup</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val"><span>+30–80</span><span class="unit">%</span></div>
+        <div class="metric-label">Time saved — staff freed from phone interruptions</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val"><span>+20</span><span class="unit">%</span></div>
+        <div class="metric-label">Throughput — more jobs / appointments processed</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val"><span>+20</span><span class="unit">pts</span></div>
+        <div class="metric-label">NPS — customer satisfaction lift</div>
+      </div>
+    </div>
+
+    <div class="testimonials-grid">
+      <!-- Dr Ali video anchor -->
+      <div class="t-anchor">
+        <span class="pill-video">▶ Video testimonial</span>
+        <video src="assets/dr_ali_testimonial.mp4" controls preload="metadata" poster="assets/headshot_ali.jpg"></video>
+        <blockquote>"I'm the only doctor who gives out his cell phone number. People feel like — oh my God, I can reach my doctor anytime."</blockquote>
+        <cite><strong>Dr Imran Ali, MD MS MPH</strong><br>Asst. Professor, Icahn School of Medicine at Mount Sinai<br>Board-certified Geriatric &amp; Internal Medicine · Baker Award (Yale)</cite>
+      </div>
+
+      <div class="t-col">
+        <div class="t-quote">
+          <span class="pill">🔑 Real Estate · Sales</span>
+          <div class="headshot-row">
+            <div class="headshot"><img src="assets/headshot_2.png" alt="Brad Johnson"></div>
+            <div>
+              <div class="name">Brad Johnson</div>
+              <div class="role">Owner · Senemar &amp; Associates</div>
+            </div>
+          </div>
+          <blockquote>"YouSquared turns cold calls into warm leads and has doubled my income."</blockquote>
+        </div>
+
+        <div class="t-quote">
+          <span class="pill">⚖️ Legal</span>
+          <div class="headshot-row">
+            <div class="headshot"><img src="assets/headshot_6.png" alt="Jonathan Harris"></div>
+            <div>
+              <div class="name">Jonathan Harris</div>
+              <div class="role">Founder · Harris St Laurent &amp; Wechsler (NY)</div>
+            </div>
+          </div>
+          <blockquote>"In employment law, timing is everything. YouSquared ensures I never lose a high-value client because I was in a deposition."</blockquote>
+        </div>
+      </div>
+
+      <div class="t-col">
+        <div class="t-quote">
+          <span class="pill">🦷 Healthcare · Dental</span>
+          <div class="headshot-row">
+            <div class="headshot"><img src="assets/headshot_9.png" alt="Dr Michael Thomas Jr"></div>
+            <div>
+              <div class="name">Dr Michael Thomas Jr, DMD</div>
+              <div class="role">Owner · Marietta Smile Gallery</div>
+            </div>
+          </div>
+          <blockquote>"We now offer our patients 24/7 phone support — without adding work for our team."</blockquote>
+        </div>
+
+        <div class="t-quote">
+          <span class="pill">🚐 Transportation</span>
+          <div class="headshot-row">
+            <div class="headshot"><img src="assets/headshot_5.png" alt="Carlos Arostegui"></div>
+            <div>
+              <div class="name">Carlos Arostegui</div>
+              <div class="role">Owner · McKinney VIP Transportation</div>
+            </div>
+          </div>
+          <blockquote>"YouSquared has made us instantly responsive to enquiries. Business has grown 30%."</blockquote>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 8 — GET STARTED ============ -->
+<section class="slide" id="slide-8">
+  <div class="slide-inner">
+    <div class="section-label">07 — Get started</div>
+    <h2 class="section-title">Get started <em>now</em> — 3 minutes, free</h2>
+    <p class="section-intro">Two paths. Both take three minutes. Your first 20 AI calls are on us.</p>
+
+    <div class="cta-grid">
+      <a class="cta-box" href="https://apps.apple.com/us/app/yousquared" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="icon"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg></div>
+        <div class="info">
+          <div class="action">Get Started Now</div>
+          <div class="target">iOS App</div>
+          <div class="meta">App Store · 4.6★ · opens the YouSquared app</div>
+        </div>
+      </a>
+      <a class="cta-box" href="https://www.yousquared.ai/" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <div class="info">
+          <div class="action">Get Started Now</div>
+          <div class="target">Web</div>
+          <div class="meta">yousquared.ai · sign up in your browser</div>
+        </div>
+      </a>
+    </div>
+
+    <p class="setup-line">Setup takes <strong>3 minutes</strong>. First <strong>20 AI calls free</strong>. No credit card.</p>
+
+    <div class="pricing-head">Simple pricing</div>
+    <p class="pricing-sub">All plans include 24/7 pickup, triage, scheduling, multilingual and continuous learning.</p>
+    <div class="pricing-table">
+      <div class="price-card">
+        <h4>Basic</h4>
+        <div class="price free">Free<span class="period">/ forever</span></div>
+        <div class="quota">20 AI calls / month</div>
+        <ul>
+          <li>AI handles your missed calls</li>
+          <li>iOS + Web app</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <h4>Pro</h4>
+        <div class="price">$30<span class="period">/ month</span></div>
+        <div class="quota">90 AI calls / month</div>
+        <ul>
+          <li>AI handles calls, texts &amp; schedule</li>
+          <li>Continuous learning</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <h4>Elite</h4>
+        <div class="price">$60<span class="period">/ month</span></div>
+        <div class="quota">Unlimited calls</div>
+        <ul>
+          <li>Everything in Pro</li>
+          <li>Unlimited AI call volume</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="teams-strip">
+      <div class="teams-label">For teams →</div>
+      <div class="teams-tier">
+        <div class="t-name">Starter</div>
+        <div class="t-price">$300 <span style="font-size:0.78rem;font-weight:400;opacity:0.6;">/mo</span></div>
+        <div class="t-desc">5 users · 14-day trial</div>
+      </div>
+      <div class="teams-tier">
+        <div class="t-name">Growth</div>
+        <div class="t-price">from $2,160 <span style="font-size:0.78rem;font-weight:400;opacity:0.6;">/mo</span></div>
+        <div class="t-desc">20 users · white-glove · integrations</div>
+      </div>
+      <div class="teams-tier">
+        <div class="t-name">Enterprise</div>
+        <div class="t-price">Custom</div>
+        <div class="t-desc">40+ users · talk to sales</div>
+      </div>
+    </div>
+
+    <div class="pricing-footnote">Team tier pricing shown for general industries. Healthcare, Legal and Financial Services add a compliance premium (+X%).</div>
+
+    <div class="trust-strip">
+      <span>HIPAA compliant</span>
+      <span>SOC 2 in progress</span>
+      <span>2M+ calls handled</span>
+      <span>4.6★ App Store</span>
+    </div>
+  </div>
+</section>
+
+<div class="slide-progress" id="slideProgress"></div>
+
+<script>
+function playCall(card) {
+  const video = card.querySelector('video');
+  if (!video) return;
+  card.classList.add('playing');
+  video.controls = true;
+  video.play().catch(() => { /* user-gesture required — ignore */ });
+}
+const slides = document.querySelectorAll('.slide');
+const navDots = document.getElementById('navDots');
+const progressEl = document.getElementById('slideProgress');
+const N = slides.length;
+for (let i = 0; i < N; i++) {
+  const dot = document.createElement('button');
+  dot.className = 'nav-dot';
+  dot.onclick = () => slides[i].scrollIntoView({ behavior: 'smooth' });
+  navDots.appendChild(dot);
+  const bar = document.createElement('div');
+  bar.className = 'progress-bar';
+  bar.innerHTML = '<div class="progress-fill"></div>';
+  bar.onclick = () => slides[i].scrollIntoView({ behavior: 'smooth' });
+  progressEl.appendChild(bar);
+}
+const dots = navDots.querySelectorAll('.nav-dot');
+const bars = progressEl.querySelectorAll('.progress-bar');
+function updateActive(idx) {
+  dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  bars.forEach((b, i) => {
+    b.classList.toggle('active', i === idx);
+    b.classList.toggle('done', i < idx);
+  });
+}
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      const idx = Array.from(slides).indexOf(entry.target);
+      updateActive(idx);
+    }
+  });
+}, { threshold: 0.4 });
+slides.forEach(s => io.observe(s));
+updateActive(0);
+</script>
+</body>
+</html>

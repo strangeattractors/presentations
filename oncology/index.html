@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouSquared — AI Secretary for Supportive Oncology &amp; Geriatric Medicine</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #0e1117; --paper: #f7f4ef; --cream: #ede9e1;
+  --accent: #2a6b4f; --accent-light: #3d9970; --accent-pale: #d4ece3;
+  --gold: #c8963e; --gold-pale: #fdf3e3;
+  --text: #2c2c2c; --muted: #7a7a72; --rule: #d8d3ca;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--paper); color: var(--text); overflow-x: hidden; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 48px;
+  background: rgba(247,244,239,0.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
+}
+.nav-logo { font-family: 'Playfair Display', Georgia, serif; font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); }
+.nav-logo span { color: var(--accent); }
+.nav-dots { display: flex; gap: 8px; }
+.nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--rule); border: none; cursor: pointer; transition: background 0.2s, transform 0.2s; }
+.nav-dot.active { background: var(--accent); transform: scale(1.3); }
+
+/* SLIDES */
+.slide {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 100px 48px 90px;
+  opacity: 0; transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  position: relative;
+}
+.slide.visible { opacity: 1; transform: translateY(0); }
+.slide-inner { max-width: 960px; width: 100%; }
+
+/* SECTION LABEL + TITLE */
+.section-label {
+  font-family: 'DM Mono', Consolas, monospace; font-size: 0.68rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); max-width: 80px; }
+.section-title {
+  font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 16px; color: var(--ink);
+}
+.section-title em { font-style: italic; color: var(--accent); }
+.section-intro { font-size: 1rem; color: var(--muted); line-height: 1.7; max-width: 580px; margin-bottom: 32px; }
+
+/* SLIDE 1 — HERO */
+#slide-1 { background: var(--ink); color: var(--paper); min-height: 100vh; overflow: hidden; }
+#slide-1::before {
+  content: ''; position: absolute; top: -200px; right: -200px; width: 600px; height: 600px;
+  border-radius: 50%; background: radial-gradient(circle, rgba(42,107,79,0.3) 0%, transparent 70%); pointer-events: none;
+}
+#slide-1::after {
+  content: ''; position: absolute; bottom: -100px; left: -100px; width: 400px; height: 400px;
+  border-radius: 50%; background: radial-gradient(circle, rgba(200,150,62,0.15) 0%, transparent 70%); pointer-events: none;
+}
+.hero-eyebrow { font-family: 'DM Mono', Consolas, monospace; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 28px; }
+.hero-title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 700; line-height: 1.12; color: #fff; margin-bottom: 12px; letter-spacing: -0.02em; }
+.hero-title em { font-style: italic; color: var(--accent-light); }
+.hero-sub { font-size: 1.05rem; color: rgba(247,244,239,0.65); margin-bottom: 36px; font-weight: 300; max-width: 540px; line-height: 1.65; }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(42,107,79,0.25); border: 1px solid rgba(61,153,112,0.35); border-radius: 20px; padding: 8px 16px; font-size: 0.8rem; color: var(--accent-light); margin-bottom: 36px; }
+.dot-pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-light); animation: pulse 1.8s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+.hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden; max-width: 640px; }
+.hero-stat { background: rgba(255,255,255,0.04); padding: 24px 20px; text-align: center; border-right: 1px solid rgba(255,255,255,0.07); }
+.hero-stat:last-child { border-right: none; }
+.hero-stat-num { font-family: 'Playfair Display', Georgia, serif; font-size: 2rem; font-weight: 700; color: #fff; display: block; margin-bottom: 4px; }
+.hero-stat-label { font-size: 0.7rem; color: rgba(247,244,239,0.45); letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* SLIDE 2 — PROBLEM */
+#slide-2 { background: var(--paper); }
+.problem-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+.problem-left { display: flex; flex-direction: column; gap: 20px; }
+.problem-box { background: var(--gold-pale); border: 1px solid rgba(200,150,62,0.25); border-left: 4px solid var(--gold); border-radius: 12px; padding: 28px 32px; }
+.problem-box p { font-size: 1rem; line-height: 1.75; }
+.problem-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.fact-card { background: var(--cream); border-radius: 12px; padding: 22px 24px; border: 1px solid var(--rule); }
+.fact-card .num { font-family: 'Playfair Display', Georgia, serif; font-size: 2rem; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 8px; }
+.fact-card .label { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+.fact-source { font-size: 0.68rem; display: block; margin-top: 6px; color: #aaa; }
+.patient-quote-frame { background: #fff; border-radius: 20px; border: 1px solid var(--rule); padding: 32px 28px; box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+.patient-quote-frame blockquote { font-family: 'Playfair Display', Georgia, serif; font-size: 1.15rem; font-style: italic; color: var(--ink); line-height: 1.55; margin-bottom: 16px; }
+.patient-quote-frame cite { font-family: 'DM Sans', sans-serif; font-style: normal; font-size: 0.82rem; color: var(--muted); display: block; line-height: 1.5; }
+.patient-quote-frame cite strong { color: var(--accent); font-weight: 600; }
+
+/* SLIDE 3 — SOLUTION */
+#slide-3 { background: linear-gradient(160deg, #f7f4ef 60%, #e8f3ed 100%); align-items: flex-start; padding-top: 100px; padding-bottom: 80px; }
+.solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.use-case { background: #fff; border-radius: 14px; padding: 22px 24px; border: 1px solid var(--rule); transition: box-shadow 0.25s, transform 0.25s; cursor: default; }
+.use-case:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-2px); }
+.use-case-icon { width: 38px; height: 38px; border-radius: 10px; background: var(--accent-pale); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; font-size: 1.1rem; }
+.use-case h3 { font-family: 'Playfair Display', Georgia, serif; font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+.use-case p { font-size: 0.84rem; color: var(--muted); line-height: 1.6; }
+.use-case .tag { display: inline-block; margin-top: 12px; font-size: 0.66rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); font-weight: 600; background: var(--accent-pale); border-radius: 4px; padding: 3px 8px; }
+
+/* SLIDE 4 — TEAM */
+#slide-4 { background: var(--cream); }
+.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 36px; }
+.team-card { background: #fff; border-radius: 16px; padding: 28px 22px; border: 1px solid var(--rule); text-align: center; }
+.team-avatar { width: 72px; height: 72px; border-radius: 50%; background: var(--accent-pale); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; font-size: 1.3rem; overflow: hidden; }
+.team-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.team-name { font-family: 'Playfair Display', Georgia, serif; font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.team-role { font-size: 0.72rem; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 10px; }
+.team-bio { font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
+.backers-row { display: flex; align-items: center; justify-content: center; gap: 32px; margin-bottom: 36px; padding: 20px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.backer-pill { font-family: 'DM Mono', Consolas, monospace; font-size: 0.75rem; letter-spacing: 0.06em; color: var(--muted); font-weight: 500; }
+.customers-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.customer-card { background: #fff; border-radius: 12px; padding: 18px 16px; border: 1px solid var(--rule); text-align: center; }
+.customer-card .c-icon { font-size: 1.4rem; margin-bottom: 8px; }
+.customer-card .c-name { font-size: 0.82rem; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+.customer-card .c-desc { font-size: 0.72rem; color: var(--muted); line-height: 1.45; }
+
+/* SLIDE 5 — RESULTS + DR ALI */
+#slide-5 { background: var(--ink); color: var(--paper); }
+.results-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+.metric-stack { display: flex; flex-direction: column; gap: 16px; }
+.metric-card { border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 24px 28px; background: rgba(255,255,255,0.03); position: relative; overflow: hidden; }
+.metric-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent-light)); border-radius: 3px 3px 0 0; }
+.metric-val { font-family: 'Playfair Display', Georgia, serif; font-size: 2.2rem; font-weight: 700; color: #fff; line-height: 1; margin-bottom: 4px; display: flex; align-items: baseline; gap: 4px; }
+.metric-val .unit { font-size: 1.1rem; color: var(--accent-light); }
+.metric-label { font-size: 0.82rem; color: rgba(247,244,239,0.5); }
+.ali-profile { border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 28px; background: rgba(255,255,255,0.04); }
+.ali-header { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.ali-name { font-family: 'Playfair Display', Georgia, serif; font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.ali-creds { font-size: 0.78rem; color: rgba(247,244,239,0.45); line-height: 1.6; }
+.ali-creds strong { color: var(--accent-light); font-weight: 600; }
+.ali-quotes { display: flex; flex-direction: column; gap: 14px; }
+.ali-quote { background: rgba(255,255,255,0.04); border-left: 3px solid var(--accent); border-radius: 0 10px 10px 0; padding: 14px 18px; font-size: 0.85rem; color: rgba(247,244,239,0.75); line-height: 1.6; font-style: italic; }
+
+/* SLIDE 6 — NEXT STEPS */
+#slide-6 { background: var(--paper); align-items: flex-start; padding-top: 100px; padding-bottom: 80px; }
+.next-steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.org-col { background: #fff; border-radius: 16px; border: 1px solid var(--rule); overflow: hidden; }
+.org-header { padding: 20px 22px 16px; border-bottom: 1px solid var(--rule); }
+.org-name { font-family: 'Playfair Display', Georgia, serif; font-size: 1.1rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.org-sub { font-size: 0.72rem; color: var(--muted); }
+.accelerator-box { background: var(--accent-pale); margin: 14px; border-radius: 10px; padding: 14px 16px; }
+.accelerator-box .a-name { font-size: 0.82rem; font-weight: 600; color: var(--accent); margin-bottom: 4px; }
+.accelerator-box .a-desc { font-size: 0.74rem; color: var(--text); line-height: 1.5; }
+.accelerator-box .a-email { font-family: 'DM Mono', Consolas, monospace; font-size: 0.68rem; color: var(--accent); display: block; margin-top: 6px; }
+.contacts-list { padding: 0 14px 18px; }
+.contacts-list h4 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin: 14px 0 10px; font-weight: 600; }
+.contact-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; }
+.contact-num { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--accent); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 0.7rem; color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+.contact-info .c-title { font-size: 0.8rem; font-weight: 600; color: var(--ink); }
+.contact-info .c-role { font-size: 0.72rem; color: var(--muted); line-height: 1.4; }
+.contact-info .c-why { font-size: 0.7rem; color: var(--accent); font-style: italic; margin-top: 2px; }
+.contact-footnote { font-size: 0.68rem; color: var(--muted); line-height: 1.55; margin: 10px 14px 18px; padding-top: 10px; border-top: 1px dashed var(--rule); font-style: italic; }
+
+/* PROGRESS */
+.slide-progress { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 99; }
+.progress-bar { width: 32px; height: 3px; border-radius: 2px; background: var(--rule); overflow: hidden; cursor: pointer; }
+.progress-fill { height: 100%; width: 0%; background: var(--accent); border-radius: 2px; transition: width 0.6s ease; }
+.progress-bar.active .progress-fill { width: 100%; }
+.progress-bar.done .progress-fill { width: 100%; background: var(--rule); }
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+  nav { padding: 14px 20px; }
+  .slide { padding: 90px 24px 60px; }
+  #slide-1 .slide-inner, .problem-layout, .solution-grid, .results-layout, .next-steps-grid,
+  .team-grid, .hero-stats, .customers-grid { grid-template-columns: 1fr; }
+  .problem-facts { grid-template-columns: 1fr 1fr; }
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo" style="display: flex; align-items: center; gap: 8px;"><img src="oncology_prez_assets/logo_yousquared.png" alt="YouSquared" style="height: 26px;"> <span style="font-size: 0.85rem; color: var(--muted); font-family: 'DM Sans', sans-serif; font-weight: 400;">YouSquared</span></div>
+  <div class="nav-dots" id="navDots"></div>
+</nav>
+
+<!-- ==================== SLIDE 1: HERO ==================== -->
+<section class="slide" id="slide-1">
+  <div class="slide-inner" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
+    <div>
+      <div class="hero-eyebrow">AI Secretary &mdash; Supportive Oncology &amp; Geriatric Medicine</div>
+      <h1 class="hero-title">Every patient heard.<br>Every call <em>answered.</em></h1>
+      <p class="hero-sub">YouSquared is a voice AI secretary that answers your patients' calls 24/7 &mdash; triaging emergencies, sharing updates, and giving families the feeling their doctor is always there.</p>
+      <div class="hero-badge"><span class="dot-pulse"></span> Available 24/7 &mdash; nights, weekends, holidays</div>
+      <div class="hero-stats" style="max-width: 100%;">
+        <div class="hero-stat"><span class="hero-stat-num">2M+</span><span class="hero-stat-label">Calls handled annualized</span></div>
+        <div class="hero-stat"><span class="hero-stat-num">4.6&#9733;</span><span class="hero-stat-label">App Store iOS</span></div>
+        <div class="hero-stat"><span class="hero-stat-num">11+</span><span class="hero-stat-label">Languages</span></div>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 0;">
+      <div style="background: rgba(255,255,255,0.06); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); padding: 14px 14px 8px; text-align: center;">
+        <img src="oncology_prez_assets/oncology_after.png" alt="Oncologist calmly with patient while AI handles calls" style="width: 100%; border-radius: 12px; display: block;">
+        <div style="font-size: 0.65rem; color: rgba(247,244,239,0.35); margin-top: 6px; font-family: 'DM Mono', Consolas, monospace; letter-spacing: 0.06em; text-transform: uppercase;">With YouSquared</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 2: PROBLEM ==================== -->
+<section class="slide" id="slide-2">
+  <div class="slide-inner">
+    <div class="section-label">01 &mdash; The problem</div>
+    <h2 class="section-title">Cancer patients can't reach their doctor <em>when it matters most</em></h2>
+    <div class="problem-layout">
+      <div class="problem-left">
+        <div class="problem-box">
+          <p>A single physician manages <strong>20&ndash;40 active patients</strong> undergoing treatment. Each one generates family calls, symptom questions, lab result inquiries, and after-hours emergencies. The EHR inbox alone can hold <strong>1,000+ unread messages</strong>. Missed calls don't just frustrate &mdash; they delay triage.</p>
+        </div>
+        <div class="problem-facts">
+          <div class="fact-card">
+            <div class="num">62%</div>
+            <div class="label">of cancer patients report unmet communication needs during treatment<span class="fact-source">ASCO Patient Experience Survey, 2023</span></div>
+          </div>
+          <div class="fact-card">
+            <div class="num">1,000+</div>
+            <div class="label">EHR inbox messages per physician &mdash; each requiring sign-off, creating documentation backlog</div>
+          </div>
+          <div class="fact-card">
+            <div class="num">53%</div>
+            <div class="label">of physicians report burnout &mdash; inbox and phone burden a top driver<span class="fact-source">Medscape Physician Burnout Report, 2024</span></div>
+          </div>
+          <div class="fact-card">
+            <div class="num">3 mo.</div>
+            <div class="label">&ldquo;Three months with an aggressive cancer like mine could have changed many outcomes.&rdquo;<span class="fact-source">Stephanie di Bacco, Stage 3 TNBC</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="problem-right">
+        <div style="background: #fff; border-radius: 20px; border: 1px solid var(--rule); padding: 16px 16px 10px; box-shadow: 0 8px 32px rgba(0,0,0,0.07); margin-bottom: 20px; text-align: center;">
+          <img src="oncology_prez_assets/oncology_before.png" alt="Oncologist overwhelmed by calls, monitors, and waiting families" style="width: 100%; border-radius: 12px; display: block;" onerror="this.parentElement.innerHTML='<div style=\'padding:30px 20px; color:var(--muted); font-size:0.85rem; line-height:1.6;\'><em>Illustration: Stressed oncologist at desk with 3 monitors, phone to ear, families waiting anxiously. Papers piled up, Epic inbox overflowing. Overwhelmed and chaotic.</em></div>'">
+          <div style="font-size: 0.7rem; color: var(--muted); margin-top: 8px; font-family: 'DM Mono', Consolas, monospace; letter-spacing: 0.06em; text-transform: uppercase;">Without YouSquared</div>
+        </div>
+        <div class="patient-quote-frame">
+          <blockquote>&ldquo;I felt heard. I was seen. I wasn't just another patient &mdash; I was Steph, a real person.&rdquo;</blockquote>
+          <cite><strong>Stephanie di Bacco</strong><br>Stage 3 Triple-Negative Breast Cancer survivor<br>On her first interaction with a YouSquared AI</cite>
+          <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--rule);">
+            <blockquote style="font-size: 0.95rem;">&ldquo;AI is here to simplify the system, reduce the burden, and drive positive change for both patients and professionals alike. Let's save lives, not waste time.&rdquo;</blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 3: SOLUTION ==================== -->
+<section class="slide" id="slide-3">
+  <div class="slide-inner">
+    <div class="section-label">02 &mdash; The solution</div>
+    <h2 class="section-title">What your <em>AI secretary</em> does</h2>
+    <p class="section-intro">Every unanswered call is a patient who feels abandoned. YouSquared answers instantly &mdash; triaging, informing, connecting &mdash; without replacing the physician, by freeing them. <strong style="color: var(--accent);">Works alongside your EHR</strong> &mdash; we handle the voice channels EHRs can't: after-hours inbound, outbound voice outreach, procedure intake.</p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px;">
+      <div style="background: var(--ink); border-radius: 14px; overflow: hidden; border: 1px solid var(--rule); position: relative;">
+        <img src="oncology_prez_assets/thumb_clinical_trial_30s.jpg" alt="Clinical trial referral call" style="width: 100%; display: block; opacity: 0.9;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 44px; height: 44px; background: rgba(42,107,79,0.85); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+          <div style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 14px solid #fff; margin-left: 3px;"></div>
+        </div>
+        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 14px; background: linear-gradient(transparent, rgba(14,17,23,0.9));">
+          <div style="font-size: 0.72rem; color: #fff; font-weight: 600;">Clinical Trial Referral Call</div>
+          <div style="font-size: 0.65rem; color: rgba(255,255,255,0.5);">AI pre-screens breast cancer patient for trial eligibility</div>
+        </div>
+      </div>
+      <div style="background: var(--ink); border-radius: 14px; overflow: hidden; border: 1px solid var(--rule); position: relative;">
+        <img src="oncology_prez_assets/thumb_medical_oncology_60s.jpg" alt="Medical oncology call" style="width: 100%; display: block; opacity: 0.9;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 44px; height: 44px; background: rgba(42,107,79,0.85); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+          <div style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 14px solid #fff; margin-left: 3px;"></div>
+        </div>
+        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 14px; background: linear-gradient(transparent, rgba(14,17,23,0.9));">
+          <div style="font-size: 0.72rem; color: #fff; font-weight: 600;">Medical Oncology Call</div>
+          <div style="font-size: 0.65rem; color: rgba(255,255,255,0.5);">AI handles patient symptom check-in after treatment</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="solution-grid">
+
+      <div class="use-case">
+        <div class="use-case-icon">&#128680;</div>
+        <h3>Emergency Triage</h3>
+        <p>&ldquo;The nurse talked to Brian. He asked blood pressure, vitals, oxygen saturation. He triaged it &mdash; I got an urgent alert and got the patient to the hospital immediately.&rdquo; &mdash; Dr.&nbsp;Ali</p>
+        <div class="tag">After-hours inbound</div>
+      </div>
+
+      <div class="use-case">
+        <div class="use-case-icon">&#129656;</div>
+        <h3>Lab Results Delivery</h3>
+        <p>Trained on your patient's latest results, the AI shares hemoglobin, white count, tumor markers with family members &mdash; on your terms, in your voice.</p>
+        <div class="tag">Family communication</div>
+      </div>
+
+      <div class="use-case">
+        <div class="use-case-icon">&#128203;</div>
+        <h3>Post-Treatment Check-Ins</h3>
+        <p>Outbound call after infusion or new medication: &ldquo;On a scale of 1&ndash;10, how are you feeling? Any nausea, fatigue, pain?&rdquo; &mdash; structured patient-reported outcomes for clinical trials.</p>
+        <div class="tag">Clinical trials / PRO</div>
+      </div>
+
+      <div class="use-case">
+        <div class="use-case-icon">&#128276;</div>
+        <h3>Proactive Reminders</h3>
+        <p>Labs every 6 months, flu and COVID vaccines for immunocompromised patients in autumn, oral chemo adherence, annual follow-up visits &mdash; scheduled outbound calls and texts your EHR can't send.</p>
+        <div class="tag">Scheduled outbound</div>
+      </div>
+
+      <div class="use-case">
+        <div class="use-case-icon">&#128197;</div>
+        <h3>Procedure Booking</h3>
+        <p>Inbound referral &rarr; AI intake (symptoms, meds, transport, preferred slot) &rarr; your review queue &rarr; you approve the slot &rarr; AI confirms with the patient. For infusions, scans, biopsies.</p>
+        <div class="tag">Triage-gated</div>
+      </div>
+
+      <div class="use-case">
+        <div class="use-case-icon">&#128140;</div>
+        <h3>Weekend Coverage</h3>
+        <p>&ldquo;I'm the only doctor who gives his phone number out. People feel like &mdash; oh my God, I can reach my doctor anytime.&rdquo; &mdash; Dr.&nbsp;Ali</p>
+        <div class="tag">Continuity of care</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 4: TEAM, BACKERS & CUSTOMERS ==================== -->
+<section class="slide" id="slide-4">
+  <div class="slide-inner">
+    <div class="section-label">03 &mdash; Who we are</div>
+    <h2 class="section-title">Built by <em>AI pioneers</em>, backed by the best</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar"><img src="oncology_prez_assets/headshot_ad.jpg" alt="Alexandre Dalyac"></div>
+        <div class="team-name">Alexandre Dalyac</div>
+        <div class="team-role">CEO &amp; Co-founder</div>
+        <div class="team-bio">Founded Tractable, AI unicorn valued at $1B+, serving Fortune 500. Serial entrepreneur with deep expertise in applied AI.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar"><img src="oncology_prez_assets/headshot_adb.png" alt="Alexandre de Brébisson"></div>
+        <div class="team-name">Alexandre de Br&eacute;bisson</div>
+        <div class="team-role">CTO &amp; Co-founder</div>
+        <div class="team-bio">PhD supervised by Yoshua Bengio (Mila Montreal). Inventor of voice cloning. Cutting-edge AI &amp; signal processing research.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar"><img src="oncology_prez_assets/headshot_bessissow.jpg" alt="Dr Talat Bessissow"></div>
+        <div class="team-name">Dr Talat Bessissow</div>
+        <div class="team-role">Medical Advisor</div>
+        <div class="team-bio">Associate Professor of Medicine, Gastroenterology, MUHC / McGill. Strong medical grounding for healthcare deployment.</div>
+      </div>
+    </div>
+
+    <div class="backers-row">
+      <img src="oncology_prez_assets/logo_airstreet.png" alt="Air Street Capital" style="height: 28px; opacity: 0.7;">
+      <div style="width: 1px; height: 28px; background: var(--rule);"></div>
+      <img src="oncology_prez_assets/logo_zetta.png" alt="Zetta Venture Partners" style="height: 24px; opacity: 0.7;">
+      <span class="backer-pill">Zetta Venture Partners</span>
+      <div style="width: 1px; height: 28px; background: var(--rule);"></div>
+      <img src="oncology_prez_assets/logo_k5global.svg" alt="K5 Global" style="height: 24px; opacity: 0.7;">
+      <span class="backer-pill">K5 Global</span>
+    </div>
+
+    <div class="customers-grid">
+      <div class="customer-card">
+        <div class="c-icon">&#127979;</div>
+        <div class="c-name">Mount Sinai / TNJH</div>
+        <div class="c-desc">Dr. Ali &mdash; daily active user in geriatric oncology since early 2026</div>
+      </div>
+      <div class="customer-card">
+        <div class="c-icon">&#129657;</div>
+        <div class="c-name">MUHC Gastro</div>
+        <div class="c-desc">Automated nurse line at McGill University Health Centre</div>
+      </div>
+      <div class="customer-card">
+        <div class="c-icon">&#128138;</div>
+        <div class="c-name">Safer Pharmacy</div>
+        <div class="c-desc">NYC pharmacy &mdash; active call handling deployment</div>
+      </div>
+      <div class="customer-card">
+        <div class="c-icon">&#9989;</div>
+        <div class="c-name">HIPAA Compliant</div>
+        <div class="c-desc">Approved by Mount Sinai institutional leadership</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 5: RESULTS + DR ALI ==================== -->
+<section class="slide" id="slide-5">
+  <div class="slide-inner">
+    <div class="section-label" style="color:rgba(247,244,239,0.45);">04 &mdash; Results</div>
+    <h2 class="section-title" style="color:#fff;">&ldquo;I'm the only doctor who gives out <em style="color:var(--accent-light);">his cell phone number</em>&rdquo;</h2>
+    <div class="results-layout">
+
+      <div class="metric-stack">
+        <div class="metric-card">
+          <div class="metric-val">100<span class="unit">%</span></div>
+          <div class="metric-label">Calls answered &mdash; no patient hears a voicemail</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">0</div>
+          <div class="metric-label">Missed emergencies &mdash; urgent alerts reach physician immediately</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">10<span class="unit">&times;</span></div>
+          <div class="metric-label">More efficient &mdash; reading summaries vs. answering the phone</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">24/7</div>
+          <div class="metric-label">Always on &mdash; nights, weekends, holidays</div>
+        </div>
+      </div>
+
+      <div class="ali-profile">
+        <div class="ali-header" style="display: flex; gap: 18px; align-items: center;">
+          <img src="oncology_prez_assets/headshot_ali.jpg" alt="Dr. Imran Ali" style="width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.15); flex-shrink: 0;">
+          <div>
+          <div class="ali-name">Dr. Imran Ali, MD, MS, MPH</div>
+          <div class="ali-creds">
+            Asst. Professor, <strong>Icahn School of Medicine at Mount Sinai</strong><br>
+            Board-certified Geriatric Medicine &amp; Internal Medicine<br>
+            Founding board, <strong>American Academy of Geriatric Oncology</strong><br>
+            Pfizer consultant &mdash; GDF-15 drug trial steering committee<br>
+            <strong>Baker Award for Compassionate Care</strong> (Yale)
+          </div>
+          </div>
+        </div>
+        <div class="ali-quotes">
+          <div class="ali-quote">&ldquo;I was getting phone calls on my desk phone. People left messages two weeks ago and couldn't get to me in time.&rdquo;</div>
+          <div class="ali-quote">&ldquo;I'm the only doctor who gives my phone number out. People feel like &mdash; oh my God, I can reach my doctor anytime.&rdquo;</div>
+          <div class="ali-quote">&ldquo;If you ignore patients &mdash; patient dissatisfaction, they feel disconnected. The AI makes them feel acknowledged. That's the power.&rdquo;</div>
+        </div>
+        <div style="margin-top: 16px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); position: relative;">
+          <video src="oncology_prez_assets/dr_ali_testimonial.mp4" controls preload="metadata" poster="oncology_prez_assets/headshot_ali.jpg" style="width: 100%; display: block; border-radius: 12px;"></video>
+          <div style="position: absolute; top: 10px; left: 12px; font-family: 'DM Mono', Consolas, monospace; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-light); background: rgba(14,17,23,0.75); padding: 3px 8px; border-radius: 6px; backdrop-filter: blur(4px);">&#9654; Full video testimonial</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 6: NEXT STEPS ==================== -->
+<section class="slide" id="slide-6">
+  <div class="slide-inner">
+    <div class="section-label">05 &mdash; Next steps</div>
+    <h2 class="section-title">Three doors <em>to open</em></h2>
+    <p class="section-intro">Accelerator programs and key contacts across all three institutions.</p>
+    <div class="next-steps-grid">
+
+      <!-- MOUNT SINAI -->
+      <div class="org-col">
+        <div class="org-header" style="display: flex; align-items: center; gap: 14px;">
+          <img src="oncology_prez_assets/logo_mountsinai.svg" alt="Mount Sinai" style="height: 36px; flex-shrink: 0;">
+          <div>
+            <div class="org-name">Mount Sinai</div>
+            <div class="org-sub">Health System &mdash; New York</div>
+          </div>
+        </div>
+        <div class="accelerator-box">
+          <div class="a-name">Elementa Labs</div>
+          <div class="a-desc">12-week virtual incubator by Mount Sinai Innovation Partners. No equity. Dedicated internal champion.</div>
+          <span class="a-email">elementalabs@mssm.edu</span>
+        </div>
+        <div class="contacts-list">
+          <h4>Top 3 contacts</h4>
+          <div class="contact-item">
+            <div class="contact-num">1</div>
+            <div class="contact-info">
+              <div class="c-title">Andrew Dunn, MD</div>
+              <div class="c-role">Chief, Division of Hospital Medicine</div>
+              <div class="c-why">Ali's division chief &mdash; 0 hops. Already built patient communication tools.</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-num">2</div>
+            <div class="contact-info">
+              <div class="c-title">Girish Nadkarni, MD</div>
+              <div class="c-role">Chief AI Officer, Windreich Dept of AI</div>
+              <div class="c-why">1 hop via Dunn. Holds all three AI roles at Sinai.</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-num">3</div>
+            <div class="contact-info">
+              <div class="c-title">Dov Shamir, PhD</div>
+              <div class="c-role">Head, Elementa Labs (MSIP)</div>
+              <div class="c-why">Runs the accelerator. Direct application path.</div>
+            </div>
+          </div>
+          <div class="contact-footnote">Also consider: Robbie Freeman, DNP (Chief Digital Transformation Officer &mdash; owns AI product deployment); Kereeti Pisapati (Dir. Digital Health BD at MSIP &mdash; evaluates digital health startups); Erik Lium, PhD (President, MSIP)</div>
+        </div>
+      </div>
+
+      <!-- YALE -->
+      <div class="org-col">
+        <div class="org-header" style="display: flex; align-items: center; gap: 14px;">
+          <img src="oncology_prez_assets/logo_ynhhs.svg" alt="Yale New Haven Health" style="height: 36px; flex-shrink: 0;">
+          <div>
+            <div class="org-name">Yale New Haven Health</div>
+            <div class="org-sub">Health System &mdash; Connecticut</div>
+          </div>
+        </div>
+        <div class="accelerator-box">
+          <div class="a-name">Center for Health Care Innovation</div>
+          <div class="a-desc">Co-development partnerships + strategic investment ($250K&ndash;$1M). Office hours 2nd Friday/month.</div>
+          <span class="a-email">innovation@ynhh.org</span>
+        </div>
+        <div class="contacts-list">
+          <h4>Top 3 contacts</h4>
+          <div class="contact-item">
+            <div class="contact-num">1</div>
+            <div class="contact-info">
+              <div class="c-title">Walter Lindop</div>
+              <div class="c-role">Lead Innovation Consultant, CHI</div>
+              <div class="c-why">Front door for AI startups. Leads digital health venture investments.</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-num">2</div>
+            <div class="contact-info">
+              <div class="c-title">Anne Diamond, JD</div>
+              <div class="c-role">President, Bridgeport Hospital &amp; EVP YNHHS</div>
+              <div class="c-why">Ali works at her hospital &mdash; 0 hops. Can greenlight a local pilot.</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-num">3</div>
+            <div class="contact-info">
+              <div class="c-title">Margaret Cartiera, PhD</div>
+              <div class="c-role">Innovation Director, CHI &amp; CBIT</div>
+              <div class="c-why">Senior director overseeing CHI operations. Yale Ventures advisor.</div>
+            </div>
+          </div>
+          <div class="contact-footnote">Also consider: Lee Schwamm, MD (SVP &amp; Chief Digital Health Officer &mdash; system-wide AI decision-maker); Patrick Kenney, MD (Chief Ambulatory Physician Exec &mdash; oversees all NEMG); Josh Geballe (MD, Yale Ventures).<br><br><strong style="color: var(--accent); font-style: normal;">Existing warm paths via David van Dijk (Yale Medicine + CS, vandijklab.org):</strong> David Braun, MD (GU oncology trialist, Yale Cancer Center); Jeffrey Ishizuka, MD (oncology trialist); Sophie Holmes (voice AI for clinical trial pre-screening).</div>
+        </div>
+      </div>
+
+      <!-- PFIZER -->
+      <div class="org-col">
+        <div class="org-header" style="display: flex; align-items: center; gap: 14px;">
+          <img src="oncology_prez_assets/logo_pfizer.svg" alt="Pfizer" style="height: 28px; flex-shrink: 0;">
+          <div>
+            <div class="org-name">Pfizer</div>
+            <div class="org-sub">Oncology &mdash; Global</div>
+          </div>
+        </div>
+        <div class="accelerator-box">
+          <div class="a-name">Start4Health ScaleUps Studio</div>
+          <div class="a-desc">6-week access to global Pfizer executives. Oncology is explicit focus. Applications open Oct&ndash;Nov.</div>
+          <span class="a-email">centerfordigitalinnovation.pfizer.com</span>
+        </div>
+        <div class="contacts-list">
+          <h4>Top 3 contacts</h4>
+          <div class="contact-item">
+            <div class="contact-num">1</div>
+            <div class="contact-info">
+              <div class="c-title">Marianne Gandee</div>
+              <div class="c-role">VP, Patient Solutions &amp; Alliances, NA Oncology</div>
+              <div class="c-why">Publicly advocates GenAI for patient conversations. Primary decision-maker.</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-num">2</div>
+            <div class="contact-info">
+              <div class="c-title">Ashok Vardhan</div>
+              <div class="c-role">Head, Oncology Med Affairs AI Innovation</div>
+              <div class="c-why">Internal AI buyer who evaluates vendors. Role created May 2024.</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-num">3</div>
+            <div class="contact-info">
+              <div class="c-title">Ioanna Georgiou</div>
+              <div class="c-role">Director, Open Innovation (Pfizer CDI)</div>
+              <div class="c-why">Runs Start4Health. Direct accelerator application path.</div>
+            </div>
+          </div>
+          <div class="contact-footnote">Also consider: Tamara Atkins, MBA (Dir. Oncology Patient Solutions &mdash; evaluates tools on Gandee's team); Kristin Olson, JD (Sr. Dir. Oncology Policy &mdash; ASCO networker); Johanna Bendell, MD (Chief Dev. Officer Oncology &mdash; escalation path)</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="slide-progress" id="slideProgress"></div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const navDots = document.getElementById('navDots');
+const progressEl = document.getElementById('slideProgress');
+const N = slides.length;
+for (let i = 0; i < N; i++) {
+  const dot = document.createElement('button');
+  dot.className = 'nav-dot';
+  dot.onclick = () => slides[i].scrollIntoView({ behavior: 'smooth' });
+  navDots.appendChild(dot);
+  const bar = document.createElement('div');
+  bar.className = 'progress-bar';
+  bar.innerHTML = '<div class="progress-fill"></div>';
+  bar.onclick = () => slides[i].scrollIntoView({ behavior: 'smooth' });
+  progressEl.appendChild(bar);
+}
+const dots = navDots.querySelectorAll('.nav-dot');
+const bars = progressEl.querySelectorAll('.progress-bar');
+function updateActive(idx) {
+  dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  bars.forEach((b, i) => {
+    b.classList.toggle('active', i === idx);
+    b.classList.toggle('done', i < idx);
+  });
+}
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      const idx = Array.from(slides).indexOf(entry.target);
+      updateActive(idx);
+    }
+  });
+}, { threshold: 0.4 });
+slides.forEach(s => io.observe(s));
+updateActive(0);
+</script>
+
+</body>
+</html>
