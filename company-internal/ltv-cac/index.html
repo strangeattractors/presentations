@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LTV:CAC Dashboard — YouSquared</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; color: #2D2A26; background: #F5F2EF; line-height: 1.5; }
+  .page { max-width: 1080px; margin: 0 auto; background: #fff; }
+
+  /* HEADER */
+  .hero {
+    background: linear-gradient(145deg, #2D2A26 0%, #433F3A 55%, #3A3632 100%);
+    color: #fff;
+    padding: 48px 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 85% 20%, rgba(224, 122, 95, 0.18), transparent 55%);
+    pointer-events: none;
+  }
+  .hero-title { font-family: 'Lora', serif; font-size: 2.4em; font-weight: 700; letter-spacing: -0.5px; }
+  .hero-sub { font-size: 1.05em; opacity: 0.78; margin-top: 6px; font-weight: 300; letter-spacing: 0.3px; }
+  .trend {
+    background: rgba(224, 122, 95, 0.18);
+    border: 1px solid rgba(224, 122, 95, 0.45);
+    color: #F5B8A7;
+    padding: 10px 18px;
+    border-radius: 24px;
+    font-size: 0.88em;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .trend.down { color: #F5B8A7; }
+  .logo-strip { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; opacity: 0.92; }
+  .logo-strip img { height: 28px; }
+  .logo-strip span { font-size: 0.78em; text-transform: uppercase; letter-spacing: 2.5px; color: #E07A5F; font-weight: 600; }
+
+  /* MAIN RATIO */
+  .ratio {
+    padding: 64px 56px 48px;
+    text-align: center;
+    border-bottom: 1px solid #EDE8E3;
+  }
+  .ratio-label {
+    font-size: 0.82em;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #6B6560;
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+  .ratio-value {
+    font-family: 'Lora', serif;
+    font-size: 8em;
+    font-weight: 700;
+    color: #E07A5F;
+    line-height: 1;
+    letter-spacing: -3px;
+  }
+  .ratio-target {
+    color: #6B6560;
+    font-size: 0.95em;
+    margin-top: 12px;
+    margin-bottom: 32px;
+  }
+  .ratio-target strong { color: #2D2A26; font-weight: 600; }
+
+  /* Progress bar */
+  .bar-wrap { max-width: 720px; margin: 0 auto 48px; }
+  .bar {
+    position: relative;
+    height: 14px;
+    background: #EDE8E3;
+    border-radius: 7px;
+    overflow: visible;
+  }
+  .bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #E07A5F 0%, #D4523A 100%);
+    border-radius: 7px;
+    width: 25.7%; /* 0.77 / 3.0 */
+  }
+  .bar-target {
+    position: absolute;
+    top: -6px; bottom: -6px;
+    right: 0;
+    width: 2px;
+    background: #2D2A26;
+  }
+  .bar-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 0.78em;
+    color: #6B6560;
+  }
+  .bar-labels .end { color: #2D2A26; font-weight: 600; }
+
+  /* Equation row */
+  .eq {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .eq-box {
+    background: #F5F2EF;
+    border-radius: 12px;
+    padding: 20px 28px;
+    min-width: 120px;
+    text-align: center;
+  }
+  .eq-box .n { font-family: 'Lora', serif; font-size: 1.8em; font-weight: 700; color: #2D2A26; }
+  .eq-box .l { font-size: 0.72em; text-transform: uppercase; letter-spacing: 1.5px; color: #6B6560; margin-top: 4px; font-weight: 600; }
+  .eq-box.result { background: #2D2A26; color: #fff; }
+  .eq-box.result .n { color: #E07A5F; }
+  .eq-box.result .l { color: #9E9893; }
+  .eq-op { font-family: 'Lora', serif; font-size: 2em; color: #9E9893; font-weight: 400; }
+
+  /* TWO-COL BREAKDOWN */
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: #EDE8E3;
+  }
+  .col {
+    background: #fff;
+    padding: 48px 48px;
+  }
+  .col-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 2px solid #2D2A26;
+    padding-bottom: 16px;
+    margin-bottom: 28px;
+  }
+  .col-head .title { font-family: 'Lora', serif; font-size: 1.5em; font-weight: 700; }
+  .col-head .total { font-family: 'Lora', serif; font-size: 2.2em; font-weight: 700; color: #E07A5F; line-height: 1; }
+
+  .metric {
+    padding: 18px 0;
+    border-bottom: 1px solid #F0ECE7;
+  }
+  .metric:last-child { border-bottom: none; }
+  .metric-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .metric-label { font-weight: 500; font-size: 0.95em; color: #2D2A26; }
+  .metric-value {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Lora', serif;
+    font-size: 1.35em;
+    font-weight: 700;
+    color: #2D2A26;
+  }
+  .metric-target {
+    font-size: 0.78em;
+    color: #6B6560;
+    margin-top: 4px;
+  }
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot.good { background: #5A9A6F; }
+  .dot.close { background: #D49A2E; }
+  .dot.off { background: #C75B39; }
+  .metric-row.headline .metric-value { font-size: 1.55em; }
+
+  /* Segment boxes (Solo/Team) */
+  .segments {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .seg {
+    background: #F5F2EF;
+    border-radius: 12px;
+    padding: 18px 20px;
+    text-align: center;
+  }
+  .seg.team { background: #2D2A26; color: #fff; }
+  .seg .l { font-size: 0.72em; text-transform: uppercase; letter-spacing: 1.5px; color: #6B6560; font-weight: 600; margin-bottom: 6px; }
+  .seg.team .l { color: #E07A5F; }
+  .seg .v { font-family: 'Lora', serif; font-size: 2em; font-weight: 700; color: #2D2A26; line-height: 1; }
+  .seg.team .v { color: #fff; }
+  .seg .pct { font-size: 0.85em; color: #6B6560; margin-top: 6px; font-weight: 500; }
+  .seg.team .pct { color: #9E9893; }
+
+  /* INSIGHTS */
+  .insights {
+    background: #F5F2EF;
+    padding: 48px 56px;
+  }
+  .insights-title {
+    font-family: 'Lora', serif;
+    font-size: 1.6em;
+    font-weight: 700;
+    margin-bottom: 28px;
+  }
+  .insights-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .insight {
+    background: #fff;
+    border-left: 4px solid #E07A5F;
+    border-radius: 0 10px 10px 0;
+    padding: 20px 24px;
+  }
+  .insight .head {
+    font-size: 0.74em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #E07A5F;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .insight .body { font-size: 0.92em; color: #3A3632; line-height: 1.55; }
+  .insight .body strong { color: #2D2A26; font-weight: 700; }
+
+  /* FOOTER */
+  .foot {
+    background: #2D2A26;
+    color: #9E9893;
+    padding: 28px 56px;
+    font-size: 0.82em;
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .foot code {
+    font-family: 'Inter', sans-serif;
+    color: #F5B8A7;
+    background: rgba(224, 122, 95, 0.08);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  @media (max-width: 780px) {
+    .hero, .ratio, .col, .insights, .foot { padding-left: 28px; padding-right: 28px; }
+    .ratio-value { font-size: 5.5em; }
+    .cols, .insights-grid { grid-template-columns: 1fr; }
+    .hero { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="hero">
+    <div>
+      <div class="logo-strip">
+        <img src="assets/logo_yousquared.png" alt="YouSquared">
+        <span>Growth Dashboard</span>
+      </div>
+      <div class="hero-title">LTV : CAC</div>
+      <div class="hero-sub">YouSquared · December 2025</div>
+    </div>
+    <div class="trend down">&#8600; 19% vs November</div>
+  </div>
+
+  <!-- MAIN RATIO -->
+  <div class="ratio">
+    <div class="ratio-label">Lifetime Value to Customer Acquisition Cost</div>
+    <div class="ratio-value">0.77</div>
+    <div class="ratio-target"><strong>Target: 3.0</strong> &nbsp;·&nbsp; every $1 spent returns $3 in revenue</div>
+
+    <div class="bar-wrap">
+      <div class="bar">
+        <div class="bar-fill"></div>
+        <div class="bar-target"></div>
+      </div>
+      <div class="bar-labels">
+        <span>0</span>
+        <span>1.5 close</span>
+        <span>2.7 good</span>
+        <span class="end">3.0 target</span>
+      </div>
+    </div>
+
+    <div class="eq">
+      <div class="eq-box"><div class="n">$63</div><div class="l">LTV</div></div>
+      <div class="eq-op">&divide;</div>
+      <div class="eq-box"><div class="n">$82</div><div class="l">CAC</div></div>
+      <div class="eq-op">=</div>
+      <div class="eq-box result"><div class="n">0.77</div><div class="l">Ratio</div></div>
+    </div>
+  </div>
+
+  <!-- TWO-COL BREAKDOWN -->
+  <div class="cols">
+
+    <!-- CAC -->
+    <div class="col">
+      <div class="col-head">
+        <div class="title">CAC Breakdown</div>
+        <div class="total">$82</div>
+      </div>
+
+      <div class="metric">
+        <div class="metric-row headline">
+          <div class="metric-label">Ad Spend</div>
+          <div class="metric-value">$24,954</div>
+        </div>
+        <div class="metric-target">Google Ads £17.6K &times; 1.31 + Apple Search Ads $846</div>
+      </div>
+
+      <div class="metric">
+        <div class="metric-row headline">
+          <div class="metric-label">Onboarded Users</div>
+          <div class="metric-value">304</div>
+        </div>
+        <div class="metric-target">Completed call-forwarding setup</div>
+      </div>
+
+      <div class="metric">
+        <div class="metric-row">
+          <div class="metric-label">Download Rate</div>
+          <div class="metric-value"><span class="dot close"></span>11%</div>
+        </div>
+        <div class="metric-target">Target: 15% &nbsp;·&nbsp; App Store impressions &rarr; installs</div>
+      </div>
+
+      <div class="metric">
+        <div class="metric-row">
+          <div class="metric-label">Activation Rate</div>
+          <div class="metric-value"><span class="dot off"></span>37%</div>
+        </div>
+        <div class="metric-target">Target: 70% &nbsp;·&nbsp; 1st open &rarr; onboarded</div>
+      </div>
+
+      <div class="metric">
+        <div class="metric-row">
+          <div class="metric-label">Organic %</div>
+          <div class="metric-value"><span class="dot off"></span>13%</div>
+        </div>
+        <div class="metric-target">Target: 30% &nbsp;·&nbsp; non-paid downloads</div>
+      </div>
+    </div>
+
+    <!-- LTV -->
+    <div class="col">
+      <div class="col-head">
+        <div class="title">LTV Breakdown</div>
+        <div class="total">$63</div>
+      </div>
+
+      <div class="segments">
+        <div class="seg">
+          <div class="l">Solo</div>
+          <div class="v">$20</div>
+          <div class="pct">32% of LTV</div>
+        </div>
+        <div class="seg team">
+          <div class="l">Team</div>
+          <div class="v">$43</div>
+          <div class="pct">68% of LTV</div>
+        </div>
+      </div>
+
+      <div class="metric">
+        <div class="metric-row">
+          <div class="metric-label">Subscription Rate</div>
+          <div class="metric-value"><span class="dot close"></span>9%</div>
+        </div>
+        <div class="metric-target">Target: 10% &nbsp;·&nbsp; onboarded &rarr; paying</div>
+      </div>
+
+      <div class="metric">
+        <div class="metric-row">
+          <div class="metric-label">Pro / Elite / Team Mix</div>
+          <div class="metric-value"><span class="dot off"></span>97 / 2 / 1</div>
+        </div>
+        <div class="metric-target">Target: 94 / 4 / 2 &nbsp;·&nbsp; Team mix is the biggest LTV lever</div>
+      </div>
+
+      <div class="metric">
+        <div class="metric-row">
+          <div class="metric-label">Subscriber Lifetime</div>
+          <div class="metric-value"><span class="dot off"></span>7.3 / 12 mo</div>
+        </div>
+        <div class="metric-target">Target: 12 mo &nbsp;·&nbsp; Solo / Team retention</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- INSIGHTS -->
+  <div class="insights">
+    <div class="insights-title">What this tells us</div>
+    <div class="insights-grid">
+      <div class="insight">
+        <div class="head">Biggest lever &middot; Activation</div>
+        <div class="body">Activation at <strong>37% vs 70% target</strong>. Every 10pp improvement cuts CAC by ~20%.</div>
+      </div>
+      <div class="insight">
+        <div class="head">Team converts drive LTV</div>
+        <div class="body"><strong>1% of subscribers = 68% of LTV</strong>. Moving 1% &rarr; 2% Team mix nearly doubles LTV.</div>
+      </div>
+      <div class="insight">
+        <div class="head">Organic acquisition declining</div>
+        <div class="body">Organic share dropped from <strong>22% &rarr; 13%</strong>. Paid dependency is compounding CAC pressure.</div>
+      </div>
+      <div class="insight">
+        <div class="head">Solo retention weak</div>
+        <div class="body"><strong>7.3 mo vs 12 mo target</strong>. Signals PMF gaps vs competitors (M1, Beside).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="foot">
+    <div>
+      <code>CAC = Ad Spend &divide; Onboarded Users</code>
+      &nbsp;&nbsp;
+      <code>LTV = Sub Rate &times; &Sigma;(Mix% &times; Price &times; Lifetime)</code>
+    </div>
+    <div>Last updated: December 2025</div>
+  </div>
+
+</div>
+
+</body>
+</html>
