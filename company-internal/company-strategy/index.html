@@ -745,7 +745,91 @@
     display: block;
   }
 
-  /* LTV:CAC mini-widget */
+  /* LTV:CAC mini diagram (Distribution section, links to dashboard) */
+  .ltv-cac-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    margin: 8px auto 32px;
+    max-width: 620px;
+    transition: transform 0.2s ease, filter 0.2s ease;
+  }
+  .ltv-cac-link:hover { transform: translateY(-2px); filter: brightness(1.02); }
+  .ltv-cac-mini {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 14px;
+    align-items: stretch;
+  }
+  .lcm-cac {
+    background: #FBEAE3;
+    border-radius: 14px;
+    padding: 26px 28px;
+  }
+  .lcm-cac .lcm-label {
+    color: #C75B39;
+    font-size: 0.78em;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .lcm-cac .lcm-value {
+    font-family: 'Lora', serif;
+    font-size: 3.4em;
+    font-weight: 700;
+    color: #C75B39;
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .lcm-cac .lcm-sub {
+    color: #B66846;
+    font-size: 0.92em;
+  }
+  .lcm-ltvs {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 14px;
+  }
+  .lcm-ltv {
+    border-radius: 14px;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .lcm-ltv .lcm-label {
+    font-size: 0.74em;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .lcm-ltv .lcm-value {
+    font-family: 'Lora', serif;
+    font-size: 2.1em;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .lcm-team { background: #D8E8DC; }
+  .lcm-team .lcm-label { color: #5A9A6F; }
+  .lcm-team .lcm-value { color: #5A9A6F; }
+  .lcm-solo { background: #5A9A6F; }
+  .lcm-solo .lcm-label { color: #fff; opacity: 0.85; }
+  .lcm-solo .lcm-value { color: #fff; }
+  .lcm-cta {
+    margin-top: 10px;
+    text-align: right;
+    font-size: 0.85em;
+    color: #E07A5F;
+    font-weight: 600;
+  }
+  @media (max-width: 640px) {
+    .ltv-cac-mini { grid-template-columns: 1fr; }
+    .lcm-ltvs { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
+  }
+
+  /* legacy LTV:CAC mini-widget (kept for compatibility) */
   .ltv-widget {
     margin: 16px 0 12px;
   }
@@ -844,7 +928,7 @@
   <div class="hero-inner hero-grid">
     <div class="hero-text">
       <div class="hero-eyebrow">YouSquared · Company Strategy</div>
-      <h1>We make services<br>24/7 available</h1>
+      <h1>We make services<br>instantly available 24/7</h1>
       <p class="hero-sub"><span class="hero-sub-default">With <em>industry expert AIs</em> that handle <em>communication &amp; admin</em>.</span><span class="hero-sub-vision" hidden>With AI that becomes <em>your digital extension</em>.</span><button class="hero-reveal-toggle" type="button" aria-expanded="false" aria-pressed="false" aria-label="Toggle vision"><span class="hero-reveal-chev">▾</span></button></p>
     </div>
     <div class="hero-image">
@@ -857,8 +941,8 @@
 <section>
   <div class="section-inner">
     <div class="section-label">The Thesis</div>
-    <h2 class="section-title">AI voicemail is the wedge into all communication &amp; admin</h2>
-    <p class="section-lead">Co-developed with visionary experts</p>
+    <h2 class="section-title">AI voicemail is the wedge into communication &amp; admin</h2>
+    <p class="section-lead">We co-develop with visionary experts to generate revenue uplift</p>
 
     <div class="ev-toggle">
       <div class="ev-tabs" role="tablist">
@@ -973,6 +1057,27 @@
     <h2 class="section-title">Scaling requires earning $3 for every $1 in acquisition</h2>
     <p class="section-lead">By spreading organically &amp; selling Team plans</p>
 
+    <a class="ltv-cac-link" href="../ltv-cac/" target="_blank" rel="noopener" aria-label="Open the LTV:CAC dashboard">
+      <div class="ltv-cac-mini">
+        <div class="lcm-cac">
+          <div class="lcm-label">CAC</div>
+          <div class="lcm-value">$70</div>
+          <div class="lcm-sub">per onboarded user</div>
+        </div>
+        <div class="lcm-ltvs">
+          <div class="lcm-ltv lcm-team">
+            <div class="lcm-label">LTV · Team</div>
+            <div class="lcm-value">$63</div>
+          </div>
+          <div class="lcm-ltv lcm-solo">
+            <div class="lcm-label">LTV · Solo</div>
+            <div class="lcm-value">$44</div>
+          </div>
+        </div>
+      </div>
+      <div class="lcm-cta">see the LTV:CAC dashboard →</div>
+    </a>
+
     <details class="card">
       <summary>
         <div class="card-index">a</div>
@@ -1071,8 +1176,8 @@
       <summary>
         <div class="card-index">c</div>
         <div class="card-title">
-          ≥ 12 months subscriber retention
-          <span class="vs">vs <strong>9.3 mo today</strong> · Solo lifetime Jan 2026</span>
+          Retain customers
+          <span class="vs">≥ 12 mo subscriber retention, vs <strong>9.3 mo today</strong></span>
         </div>
         <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
       </summary>
