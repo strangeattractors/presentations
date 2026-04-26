@@ -486,6 +486,45 @@
     .hero-image img { max-width: 320px; }
   }
 
+  /* Hero click-to-reveal */
+  .hero-reveal { margin-top: 26px; }
+  .hero-reveal > summary {
+    cursor: pointer;
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,0.55);
+    font-size: 0.78em;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    font-weight: 600;
+    transition: color 0.2s ease;
+    user-select: none;
+  }
+  .hero-reveal > summary:hover { color: #F5B8A7; }
+  .hero-reveal > summary::-webkit-details-marker { display: none; }
+  .hero-reveal-chev {
+    display: inline-block;
+    transition: transform 0.25s ease;
+    font-size: 1.1em;
+    line-height: 1;
+  }
+  .hero-reveal[open] > summary { color: #F5B8A7; }
+  .hero-reveal[open] .hero-reveal-chev { transform: rotate(180deg); }
+  .hero-reveal-body {
+    margin: 14px 0 0;
+    padding: 16px 20px;
+    background: rgba(224, 122, 95, 0.10);
+    border-left: 3px solid #E07A5F;
+    border-radius: 0 8px 8px 0;
+    color: #F5B8A7;
+    font-family: 'Lora', serif;
+    font-size: 1.1em;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
   /* Expert-to-vertical toggle infographic */
   .ev-toggle {
     background: #FAF8F5;
@@ -810,8 +849,12 @@
   <div class="hero-inner hero-grid">
     <div class="hero-text">
       <div class="hero-eyebrow">YouSquared · Company Strategy</div>
-      <h1>We're building the<br>AI Creator Economy</h1>
-      <p class="hero-sub">Where people don't just <em>use</em> AI — they <em>customize</em> and <em>monetize</em> their AI.</p>
+      <h1>We make services<br>24/7 available</h1>
+      <p class="hero-sub">With <em>industry expert AIs</em> that handle <em>communication &amp; admin</em>.</p>
+      <details class="hero-reveal">
+        <summary><span class="hero-reveal-chev">▾</span> The bigger picture</summary>
+        <p class="hero-reveal-body">Let your YouSquared AI become your digital extension.</p>
+      </details>
     </div>
     <div class="hero-image">
       <img src="assets/illu-hero-creator-economy-v2.png" alt="Four domain experts seated on a flowing ribbon, each holding a telephone receiver, against industry backdrops">
