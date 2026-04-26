@@ -270,6 +270,75 @@
   .channel-table .check { color: #5A9A6F; text-align: center; font-weight: 600; }
   .channel-table .dash  { color: #C9C3BD; text-align: center; }
 
+  /* Completion donut + click-to-expand detail */
+  .channel-table button.cell {
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease;
+  }
+  .channel-table button.cell:hover { background: #FAF8F5; }
+  .channel-table button.cell.active { background: #FFF0EC; }
+  .prog {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: conic-gradient(#5A9A6F 0, #5A9A6F var(--pct, 0%), #EDE8E3 var(--pct, 0%), #EDE8E3 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .prog.zero { background: #F0EDE8; }
+  .prog::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    background: #fff;
+    border-radius: 50%;
+  }
+  .prog span {
+    position: relative;
+    z-index: 1;
+    font-size: 0.66em;
+    font-weight: 700;
+    color: #2D2A26;
+    letter-spacing: -0.3px;
+  }
+  .cell-detail {
+    margin-top: 14px;
+    padding: 14px 16px;
+    background: #FAF8F5;
+    border: 1px solid #EDE8E3;
+    border-radius: 8px;
+    min-height: 60px;
+    max-width: 460px;
+  }
+  .cell-detail .cd-empty { color: #9E9893; font-style: italic; margin: 0; font-size: 0.92em; }
+  .cell-detail .cd-head { font-weight: 600; color: #2D2A26; margin-bottom: 6px; }
+  .cell-detail .cd-head .cd-pct { color: #5A9A6F; font-weight: 600; margin-left: 8px; }
+  .cell-detail .cd-head .cd-pct.zero { color: #9E9893; }
+  .cell-detail .cd-eta { color: #6B6560; font-size: 0.92em; margin: 0; }
+  .cell-detail .cd-section-label { font-size: 0.7em; text-transform: uppercase; letter-spacing: 1.2px; color: #6B6560; font-weight: 700; margin: 4px 0 6px; }
+  .cell-detail ul.cd-todos { list-style: none; padding: 0; margin: 0; }
+  .cell-detail ul.cd-todos li {
+    padding: 4px 0 4px 16px;
+    position: relative;
+    color: #3A3632;
+    font-size: 0.92em;
+  }
+  .cell-detail ul.cd-todos li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 11px;
+    width: 5px; height: 5px;
+    background: #E07A5F;
+    border-radius: 50%;
+  }
+
   /* "Where we are" — split */
   .stance-quote {
     font-family: 'Lora', serif;
@@ -792,15 +861,28 @@
           </summary>
           <div class="ev-expand">
             <p style="font-family:'Lora',serif; font-size:1.1em; font-weight:600; line-height:1.4; margin:0 0 14px; color:#2D2A26;"><span style="color:#E07A5F;">AI voicemail</span> is the wedge. Customers want <span style="color:#E07A5F;">omnichannel</span>.</p>
-            <div class="channel-table" style="max-width:420px;margin:0;">
+            <div class="channel-table" style="margin:0;">
               <div class="cell head"></div>
               <div class="cell head">Inbound</div>
               <div class="cell head">Outbound</div>
-              <div class="cell row-label">Calls</div><div class="cell check">✓</div><div class="cell check">✓</div>
-              <div class="cell row-label">Texts</div><div class="cell check">✓</div><div class="cell check">✓</div>
-              <div class="cell row-label">Email</div><div class="cell check">✓</div><div class="cell check">✓</div>
-              <div class="cell row-label">Events</div><div class="cell check">✓</div><div class="cell check">✓</div>
-              <div class="cell row-label">Web Chat</div><div class="cell check">✓</div><div class="cell dash">—</div>
+              <div class="cell row-label">Calls</div>
+              <button class="cell" type="button" data-key="calls-inbound"><div class="prog" style="--pct:75%"><span>75%</span></div></button>
+              <button class="cell" type="button" data-key="calls-outbound"><div class="prog" style="--pct:25%"><span>25%</span></div></button>
+              <div class="cell row-label">Texts</div>
+              <button class="cell" type="button" data-key="texts-inbound"><div class="prog" style="--pct:5%"><span>5%</span></div></button>
+              <button class="cell" type="button" data-key="texts-outbound"><div class="prog" style="--pct:50%"><span>50%</span></div></button>
+              <div class="cell row-label">Events</div>
+              <button class="cell" type="button" data-key="events-inbound"><div class="prog" style="--pct:25%"><span>25%</span></div></button>
+              <button class="cell" type="button" data-key="events-outbound"><div class="prog zero"><span>0%</span></div></button>
+              <div class="cell row-label">Email</div>
+              <button class="cell" type="button" data-key="email-inbound"><div class="prog zero"><span>0%</span></div></button>
+              <button class="cell" type="button" data-key="email-outbound"><div class="prog zero"><span>0%</span></div></button>
+              <div class="cell row-label">Web Chat</div>
+              <button class="cell" type="button" data-key="webchat-inbound"><div class="prog zero"><span>0%</span></div></button>
+              <button class="cell" type="button" data-key="webchat-outbound"><div class="prog zero"><span>0%</span></div></button>
+            </div>
+            <div class="cell-detail" id="channel-cell-detail">
+              <p class="cd-empty">Click a circle to see what's done and what's next.</p>
             </div>
           </div>
         </details>
@@ -1024,6 +1106,38 @@
       document.querySelectorAll('.ev-logo-cell').forEach((cell, i) => {
         cell.innerHTML = data.logos[i] || '';
       });
+    });
+  });
+
+  // Channel matrix — click a completion circle to see what's done / what's next
+  const channelTodos = {
+    'calls-inbound':    { label: 'Inbound calls',    pct: 75, todos: ['SOTA latency', 'User-handled call recording'] },
+    'calls-outbound':   { label: 'Outbound calls',   pct: 25, todos: ['Outbound scenarios', 'User-handled call recording'] },
+    'texts-inbound':    { label: 'Inbound texts',    pct: 5,  todos: ['Number porting'] },
+    'texts-outbound':   { label: 'Outbound texts',   pct: 50, todos: ['Polish work — to scope'] },
+    'events-inbound':   { label: 'Inbound events',   pct: 25, todos: ['Log 3rd-party events'] },
+    'events-outbound':  { label: 'Outbound events',  pct: 0,  todos: ['Adoption', 'Scheduling glitches'] },
+    'email-inbound':    { label: 'Inbound email',    pct: 0,  eta: 'Q3' },
+    'email-outbound':   { label: 'Outbound email',   pct: 0,  eta: 'Q3' },
+    'webchat-inbound':  { label: 'Inbound web chat', pct: 0,  eta: 'Q4' },
+    'webchat-outbound': { label: 'Outbound web chat',pct: 0,  eta: 'Q4' },
+  };
+  document.querySelectorAll('.channel-table button.cell').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.channel-table button.cell.active').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const data = channelTodos[btn.dataset.key];
+      if (!data) return;
+      const detail = document.getElementById('channel-cell-detail');
+      const pctClass = data.pct === 0 ? 'cd-pct zero' : 'cd-pct';
+      let body = '<div class="cd-head">' + data.label + '<span class="' + pctClass + '">' + data.pct + '% complete</span></div>';
+      if (data.eta) {
+        body += '<p class="cd-eta">Not started — ETA ' + data.eta + '.</p>';
+      } else if (data.todos && data.todos.length) {
+        body += '<div class="cd-section-label">Primary ToDos</div>';
+        body += '<ul class="cd-todos">' + data.todos.map(t => '<li>' + t + '</li>').join('') + '</ul>';
+      }
+      detail.innerHTML = body;
     });
   });
 </script>
