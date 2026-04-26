@@ -746,12 +746,23 @@
   }
 
   /* LTV:CAC mini diagram (Distribution section, links to dashboard) */
+  .distribution-header {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 48px;
+    align-items: center;
+    margin-bottom: 36px;
+  }
+  .distribution-header .section-label,
+  .distribution-header .section-title,
+  .distribution-header .section-lead { margin-left: 0; margin-right: 0; }
+  @media (max-width: 820px) {
+    .distribution-header { grid-template-columns: 1fr; gap: 24px; }
+  }
   .ltv-cac-link {
     display: block;
     text-decoration: none;
     color: inherit;
-    margin: 8px auto 32px;
-    max-width: 620px;
     transition: transform 0.2s ease, filter 0.2s ease;
   }
   .ltv-cac-link:hover { transform: translateY(-2px); filter: brightness(1.02); }
@@ -1053,30 +1064,33 @@
 <!-- SECTION 2: DISTRIBUTION -->
 <section class="alt">
   <div class="section-inner">
-    <div class="section-label">Distribution</div>
-    <h2 class="section-title">Scaling requires earning $3 for every $1 in acquisition</h2>
-    <p class="section-lead">By spreading organically &amp; selling Team plans</p>
-
-    <a class="ltv-cac-link" href="../ltv-cac/" target="_blank" rel="noopener" aria-label="Open the LTV:CAC dashboard">
-      <div class="ltv-cac-mini">
-        <div class="lcm-cac">
-          <div class="lcm-label">CAC</div>
-          <div class="lcm-value">$70</div>
-          <div class="lcm-sub">per onboarded user</div>
-        </div>
-        <div class="lcm-ltvs">
-          <div class="lcm-ltv lcm-team">
-            <div class="lcm-label">LTV · Team</div>
-            <div class="lcm-value">$63</div>
-          </div>
-          <div class="lcm-ltv lcm-solo">
-            <div class="lcm-label">LTV · Solo</div>
-            <div class="lcm-value">$44</div>
-          </div>
-        </div>
+    <div class="distribution-header">
+      <div class="distribution-text">
+        <div class="section-label">Distribution</div>
+        <h2 class="section-title">Scaling requires earning $3 for every $1 in acquisition</h2>
+        <p class="section-lead">By spreading organically &amp; selling Team plans</p>
       </div>
-      <div class="lcm-cta">see the LTV:CAC dashboard →</div>
-    </a>
+      <a class="ltv-cac-link" href="../ltv-cac/" target="_blank" rel="noopener" aria-label="Open the LTV:CAC dashboard">
+        <div class="ltv-cac-mini">
+          <div class="lcm-cac">
+            <div class="lcm-label">CAC</div>
+            <div class="lcm-value">$70</div>
+            <div class="lcm-sub">per onboarded user</div>
+          </div>
+          <div class="lcm-ltvs">
+            <div class="lcm-ltv lcm-team">
+              <div class="lcm-label">LTV · Team</div>
+              <div class="lcm-value">$63</div>
+            </div>
+            <div class="lcm-ltv lcm-solo">
+              <div class="lcm-label">LTV · Solo</div>
+              <div class="lcm-value">$44</div>
+            </div>
+          </div>
+        </div>
+        <div class="lcm-cta">see the LTV:CAC dashboard →</div>
+      </a>
+    </div>
 
     <details class="card">
       <summary>
