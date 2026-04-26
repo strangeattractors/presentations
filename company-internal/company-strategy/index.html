@@ -517,19 +517,8 @@
     transition: transform 0.25s ease;
   }
   .hero-reveal-toggle[aria-expanded="true"] .hero-reveal-chev { transform: rotate(180deg); }
-  .hero-reveal-body {
-    margin: 18px 0 0;
-    padding: 16px 20px;
-    background: rgba(224, 122, 95, 0.10);
-    border-left: 3px solid #E07A5F;
-    border-radius: 0 8px 8px 0;
-    color: #F5B8A7;
-    font-family: 'Lora', serif;
-    font-size: 1.1em;
-    font-weight: 500;
-    line-height: 1.4;
-  }
-  .hero-reveal-body[hidden] { display: none; }
+  .hero-sub-default[hidden],
+  .hero-sub-vision[hidden] { display: none; }
 
   /* Expert-to-vertical toggle infographic */
   .ev-toggle {
@@ -856,8 +845,7 @@
     <div class="hero-text">
       <div class="hero-eyebrow">YouSquared · Company Strategy</div>
       <h1>We make services<br>24/7 available</h1>
-      <p class="hero-sub">With <em>industry expert AIs</em> that handle <em>communication &amp; admin</em>.<button class="hero-reveal-toggle" type="button" aria-expanded="false" aria-controls="hero-reveal-body" aria-label="Reveal more"><span class="hero-reveal-chev">▾</span></button></p>
-      <p class="hero-reveal-body" id="hero-reveal-body" hidden>Let your YouSquared AI become your digital extension.</p>
+      <p class="hero-sub"><span class="hero-sub-default">With <em>industry expert AIs</em> that handle <em>communication &amp; admin</em>.</span><span class="hero-sub-vision" hidden>With AI that becomes <em>your digital extension</em>.</span><button class="hero-reveal-toggle" type="button" aria-expanded="false" aria-pressed="false" aria-label="Toggle vision"><span class="hero-reveal-chev">▾</span></button></p>
     </div>
     <div class="hero-image">
       <img src="assets/illu-hero-creator-economy-v2.png" alt="Four domain experts seated on a flowing ribbon, each holding a telephone receiver, against industry backdrops">
@@ -1155,14 +1143,18 @@
     });
   });
 
-  // Hero reveal — click chevron after the sub to expand the deeper message
+  // Hero sub toggle — chevron swaps the sub between the concrete framing
+  // and the deeper 'digital extension' framing
   const heroToggle = document.querySelector('.hero-reveal-toggle');
-  const heroBody = document.getElementById('hero-reveal-body');
-  if (heroToggle && heroBody) {
+  const heroDefault = document.querySelector('.hero-sub-default');
+  const heroVision = document.querySelector('.hero-sub-vision');
+  if (heroToggle && heroDefault && heroVision) {
     heroToggle.addEventListener('click', () => {
-      const isOpen = heroToggle.getAttribute('aria-expanded') === 'true';
-      heroToggle.setAttribute('aria-expanded', String(!isOpen));
-      heroBody.hidden = isOpen;
+      const showingVision = !heroVision.hidden;
+      heroVision.hidden = showingVision;
+      heroDefault.hidden = !showingVision;
+      heroToggle.setAttribute('aria-expanded', String(!showingVision));
+      heroToggle.setAttribute('aria-pressed', String(!showingVision));
     });
   }
 
