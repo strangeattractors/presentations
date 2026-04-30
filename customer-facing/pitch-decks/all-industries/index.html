@@ -230,6 +230,17 @@ nav {
 .t-quote .name { font-family: 'Lora', serif; font-size: 0.88rem; color: #fff; font-weight: 700; line-height: 1.25; }
 .t-quote .role { font-size: 0.68rem; color: rgba(255,255,255,0.5); margin-top: 2px; line-height: 1.4; }
 .t-quote blockquote { font-family: 'Lora', serif; font-style: italic; font-size: 0.84rem; line-height: 1.55; color: rgba(255,255,255,0.82); }
+.t-quote.has-video { cursor: pointer; transition: border-color 0.2s, transform 0.2s; position: relative; }
+.t-quote.has-video:hover { border-color: rgba(255,131,112,0.5); transform: translateY(-1px); }
+.t-quote .video-pill { position: absolute; top: 14px; right: 14px; background: rgba(224,122,95,0.85); color: #fff; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 9px; border-radius: 14px; backdrop-filter: blur(6px); }
+
+/* TESTIMONIAL VIDEO MODAL */
+.testi-modal { position: fixed; inset: 0; background: rgba(14,14,14,0.85); backdrop-filter: blur(8px); z-index: 200; display: none; align-items: center; justify-content: center; padding: 40px; }
+.testi-modal.open { display: flex; }
+.testi-modal-inner { position: relative; max-width: 880px; width: 100%; background: #0a0a0a; border: 1px solid rgba(255,131,112,0.3); border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.6); }
+.testi-modal video { width: 100%; max-height: 80vh; display: block; background: #000; }
+.testi-modal-close { position: absolute; top: 14px; right: 14px; width: 38px; height: 38px; border-radius: 50%; background: rgba(0,0,0,0.65); border: 1px solid rgba(255,255,255,0.18); color: #fff; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s; z-index: 2; }
+.testi-modal-close:hover { background: rgba(224,122,95,0.85); border-color: var(--accent); }
 
 /* ============ SLIDE 8 — GET STARTED ============ */
 #slide-8 { background: var(--cream); align-items: flex-start; padding-top: 90px; padding-bottom: 80px; }
@@ -574,7 +585,7 @@ nav {
 <section class="slide" id="slide-7">
   <div class="slide-inner">
     <div class="section-label">06 — Results</div>
-    <h2 class="section-title">Measurable impact <em>across every vertical</em></h2>
+    <h2 class="section-title">Measurable impact <em>across verticals</em></h2>
     <div class="metric-strip">
       <div class="metric-card">
         <div class="metric-val"><span>−75</span><span class="unit">%</span></div>
@@ -604,8 +615,9 @@ nav {
       </div>
 
       <div class="t-col">
-        <div class="t-quote">
+        <div class="t-quote has-video" data-video="assets/brad_johnson_testimonial.mp4" data-poster="assets/headshot_2.png" onclick="openTestimonial(this)">
           <span class="pill">🔑 Real Estate · Sales</span>
+          <span class="video-pill">▶ Video</span>
           <div class="headshot-row">
             <div class="headshot"><img src="assets/headshot_2.png" alt="Brad Johnson"></div>
             <div>
@@ -630,16 +642,17 @@ nav {
       </div>
 
       <div class="t-col">
-        <div class="t-quote">
-          <span class="pill">🦷 Healthcare · Dental</span>
+        <div class="t-quote has-video" data-video="assets/christine_taylor_testimonial.mp4" data-poster="assets/headshot_taylor.png" onclick="openTestimonial(this)">
+          <span class="pill">🛡️ Insurance</span>
+          <span class="video-pill">▶ Video</span>
           <div class="headshot-row">
-            <div class="headshot"><img src="assets/headshot_9.png" alt="Dr Michael Thomas Jr"></div>
+            <div class="headshot"><img src="assets/headshot_taylor.png" alt="Christine Taylor"></div>
             <div>
-              <div class="name">Dr Michael Thomas Jr, DMD</div>
-              <div class="role">Owner · Marietta Smile Gallery</div>
+              <div class="name">Christine Taylor</div>
+              <div class="role">Owner · Taylor Insurance Group</div>
             </div>
           </div>
-          <blockquote>"We now offer our patients 24/7 phone support — without adding work for our team."</blockquote>
+          <blockquote>"YouSquared answers every call so I never lose a quote — even when I'm with another client."</blockquote>
         </div>
 
         <div class="t-quote">
@@ -748,6 +761,13 @@ nav {
   </div>
 </section>
 
+<div class="testi-modal" id="testiModal" onclick="if(event.target===this)closeTestimonial()">
+  <div class="testi-modal-inner">
+    <button class="testi-modal-close" onclick="closeTestimonial()" aria-label="Close">✕</button>
+    <video id="testiModalVideo" controls preload="metadata" playsinline></video>
+  </div>
+</div>
+
 <div class="slide-progress" id="slideProgress"></div>
 
 <script>
@@ -758,6 +778,23 @@ function playCall(card) {
   video.controls = true;
   video.play().catch(() => { /* user-gesture required — ignore */ });
 }
+function openTestimonial(card) {
+  const modal = document.getElementById('testiModal');
+  const video = document.getElementById('testiModalVideo');
+  video.src = card.dataset.video;
+  if (card.dataset.poster) video.poster = card.dataset.poster;
+  modal.classList.add('open');
+  video.play().catch(() => {});
+}
+function closeTestimonial() {
+  const modal = document.getElementById('testiModal');
+  const video = document.getElementById('testiModalVideo');
+  video.pause();
+  video.removeAttribute('src');
+  video.load();
+  modal.classList.remove('open');
+}
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeTestimonial(); });
 const slides = document.querySelectorAll('.slide');
 const navDots = document.getElementById('navDots');
 const progressEl = document.getElementById('slideProgress');
