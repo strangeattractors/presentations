@@ -227,55 +227,31 @@ nav {
 
 /* ============ SLIDE 8 — GET STARTED ============ */
 #slide-8 { background: var(--cream); align-items: flex-start; padding-top: 90px; padding-bottom: 80px; }
-.cta-marketplace {
-  display: flex; align-items: center; justify-content: space-between; gap: 20px;
-  background: linear-gradient(135deg, #fff 0%, var(--accent-pale) 100%);
-  border: 2px solid var(--accent); border-radius: 18px;
-  padding: 22px 28px; margin-bottom: 16px;
-  box-shadow: 0 12px 40px rgba(224,122,95,0.15);
-  text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
-}
-.cta-marketplace:hover { transform: translateY(-2px); box-shadow: 0 16px 48px rgba(224,122,95,0.22); }
-.cta-marketplace-left { display: flex; align-items: center; gap: 18px; }
-.cta-marketplace-left img { height: 28px; flex-shrink: 0; }
-.cta-marketplace .action { font-family: 'Inter',sans-serif; font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 4px; }
-.cta-marketplace .target { font-family: 'Lora',Georgia,serif; font-size: 1.1rem; font-weight: 700; color: var(--ink); margin-bottom: 3px; line-height: 1.3; }
-.cta-marketplace .meta { font-size: 0.84rem; color: var(--muted); line-height: 1.5; }
-.cta-marketplace-arrow { font-size: 1.6rem; color: var(--accent); font-weight: 300; flex-shrink: 0; }
+.pricing-row-label { font-family: 'Inter',monospace; font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 10px; margin-top: 18px; }
+.pricing-row-label:first-of-type { margin-top: 0; }
 
-.cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 28px; }
-.cta-box { background: #fff; border: 1px solid var(--rule); border-radius: 18px; padding: 26px 28px; display: flex; align-items: center; gap: 18px; transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; cursor: pointer; }
-.cta-box:hover { border-color: var(--accent); box-shadow: 0 10px 30px rgba(224,122,95,0.12); transform: translateY(-2px); }
-.cta-box .icon { width: 56px; height: 56px; border-radius: 14px; background: var(--accent-pale); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.cta-box .icon svg { stroke: var(--accent); width: 28px; height: 28px; fill: none; stroke-width: 1.8; }
-.cta-box .info { flex: 1; }
-.cta-box .action { font-family: 'Inter',sans-serif; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 4px; }
-.cta-box .target { font-family: 'Lora',Georgia,serif; font-size: 1.28rem; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
-.cta-box .meta { font-size: 0.82rem; color: var(--muted); }
-.setup-line { text-align: center; font-family: 'Lora',serif; font-style: italic; font-size: 1rem; color: var(--muted); margin-bottom: 22px; }
-.setup-line strong { color: var(--accent); font-style: normal; font-weight: 600; }
-.pricing-head { font-family: 'Lora',serif; font-size: 1.15rem; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
-.pricing-sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 16px; }
-.pricing-table { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
-.price-card { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 18px 20px; position: relative; }
-.price-card.recommended { border: 2px solid var(--accent); padding-top: 30px; box-shadow: 0 8px 28px rgba(224,122,95,0.12); }
-.price-card.recommended .badge { position: absolute; top: -10px; left: 16px; background: var(--accent); color: #fff; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 10px; }
-.price-card .price .strike { color: var(--muted-2); text-decoration: line-through; font-weight: 400; margin-left: 4px; }
-.price-card h4 { font-family: 'Lora',serif; font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
-.price-card .price { font-family: 'Lora',serif; font-size: 1.6rem; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 4px; display: flex; align-items: baseline; gap: 4px; }
-.price-card .price .period { font-size: 0.78rem; color: var(--muted); font-weight: 400; }
-.price-card .price.free { color: var(--accent); }
-.price-card .quota { font-size: 0.78rem; color: var(--muted); margin-bottom: 10px; }
-.price-card ul { list-style: none; padding: 0; font-size: 0.8rem; color: var(--ink); line-height: 1.7; }
-.price-card ul li { position: relative; padding-left: 18px; }
-.price-card ul li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
-.teams-strip { background: var(--ink); color: #fff; border-radius: 14px; padding: 18px 22px; display: grid; grid-template-columns: auto 1fr 1fr 1fr; gap: 18px; align-items: center; }
-.teams-label { font-family: 'Lora',serif; font-size: 0.98rem; font-weight: 700; color: #fff; }
-.teams-tier { font-size: 0.8rem; }
-.teams-tier .t-name { font-weight: 600; color: var(--accent-light); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 2px; }
-.teams-tier .t-price { font-family: 'Lora',serif; font-size: 1rem; color: #fff; font-weight: 700; }
-.teams-tier .t-desc { font-size: 0.72rem; color: rgba(255,255,255,0.55); margin-top: 2px; }
-.pricing-footnote { font-size: 0.72rem; color: var(--muted); text-align: center; margin-top: 14px; font-style: italic; }
+.plan-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 6px; }
+.plan-card {
+  background: #fff; border: 1px solid var(--rule); border-radius: 14px;
+  padding: 16px 18px; position: relative;
+  text-decoration: none; color: inherit;
+  display: flex; flex-direction: column;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.plan-card:hover { border-color: var(--accent); box-shadow: 0 8px 24px rgba(224,122,95,0.1); transform: translateY(-1px); }
+.plan-card.recommended { border: 2px solid var(--accent); padding-top: 26px; box-shadow: 0 8px 24px rgba(224,122,95,0.12); }
+.plan-badge { position: absolute; top: -10px; left: 14px; background: var(--accent); color: #fff; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 10px; }
+.plan-name { font-family: 'Lora',serif; font-size: 0.92rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.plan-price { font-family: 'Lora',serif; font-size: 1.4rem; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 4px; display: flex; align-items: baseline; gap: 4px; flex-wrap: wrap; }
+.plan-price .period { font-size: 0.74rem; color: var(--muted); font-weight: 400; }
+.plan-price .strike { color: var(--muted-2); text-decoration: line-through; font-weight: 400; margin-left: 4px; }
+.plan-price.free { color: var(--accent); }
+.plan-quota { font-size: 0.74rem; color: var(--muted); margin-bottom: 10px; line-height: 1.4; }
+.plan-feats { list-style: none; padding: 0; font-size: 0.78rem; color: var(--ink); line-height: 1.6; }
+.plan-feats li { position: relative; padding-left: 16px; }
+.plan-feats li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+.pricing-footnote { font-size: 0.72rem; color: var(--muted); text-align: center; margin-top: 14px; font-style: italic; line-height: 1.6; max-width: 760px; margin-left: auto; margin-right: auto; }
 .trust-strip { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--rule); font-size: 0.74rem; color: var(--muted); }
 .trust-strip span { display: inline-flex; align-items: center; gap: 6px; }
 .trust-strip span::before { content: '●'; color: var(--accent); font-size: 0.55em; }
@@ -292,9 +268,8 @@ nav {
   nav { padding: 12px 20px; }
   .slide { padding: 80px 22px 60px; }
   #slide-1 .slide-inner, .problem-layout, .calls-grid, .industries-grid, .team-grid,
-    .cta-grid, .pricing-table, .testimonials-grid, .metric-strip, .setup-layout { grid-template-columns: 1fr; }
+    .plan-grid, .testimonials-grid, .metric-strip, .setup-layout { grid-template-columns: 1fr; }
   .problem-facts { grid-template-columns: 1fr 1fr; }
-  .teams-strip { grid-template-columns: 1fr 1fr; }
 }
 </style>
 </head>
@@ -662,95 +637,73 @@ nav {
   <div class="slide-inner">
     <div class="section-label">07 — Get started</div>
     <h2 class="section-title">Get YouSquared on the <em>Verizon Business Marketplace</em></h2>
-    <p class="section-intro">Buy through your Verizon account and get the <strong style="color:var(--accent);">exclusive launch offer</strong>: Pro at <strong style="color:var(--accent);">$15/month for the first 3 months</strong>, then $30/month. Available only on the Verizon Business Marketplace.</p>
+    <p class="section-intro">Buy through your Verizon account and get the <strong style="color:var(--accent);">exclusive launch offer</strong>: Pro at <strong style="color:var(--accent);">$15/month for the first 3 months</strong>, then $30/month. Setup in 3 minutes — first 20 AI calls free, no credit card.</p>
 
-    <a class="cta-marketplace" href="https://www.verizon.com/business/business-marketplace/" target="_blank" rel="noopener">
-      <div class="cta-marketplace-left">
-        <img src="assets/logo_verizon.png" alt="Verizon">
-        <div>
-          <div class="action">Verizon-exclusive launch offer</div>
-          <div class="target">verizon.com/business/business-marketplace</div>
-          <div class="meta">Pro plan at $15/mo for 3 months — only on the Verizon Business Marketplace.</div>
-        </div>
-      </div>
-      <div class="cta-marketplace-arrow">→</div>
-    </a>
-
-    <div class="cta-grid">
-      <a class="cta-box" href="https://apps.apple.com/us/app/yousquared-ai-call-secretary/id6737294407" target="_blank" rel="noopener" style="text-decoration:none;">
-        <div class="icon"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg></div>
-        <div class="info">
-          <div class="action">Or direct</div>
-          <div class="target">iOS App</div>
-          <div class="meta">App Store · 4.6★ · same product, billed by us</div>
-        </div>
-      </a>
-      <a class="cta-box" href="https://www.yousquared.ai/" target="_blank" rel="noopener" style="text-decoration:none;">
-        <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
-        <div class="info">
-          <div class="action">Or direct</div>
-          <div class="target">Web</div>
-          <div class="meta">yousquared.ai · sign up in your browser</div>
-        </div>
-      </a>
-    </div>
-
-    <p class="setup-line">Setup takes <strong>3 minutes</strong>. First <strong>20 AI calls free</strong>. No credit card.</p>
-
-    <div class="pricing-head">Simple pricing</div>
-    <p class="pricing-sub">All plans include 24/7 pickup, triage, scheduling, multilingual and continuous learning.</p>
-    <div class="pricing-table">
-      <div class="price-card">
-        <h4>Basic</h4>
-        <div class="price free">Free<span class="period">/ forever</span></div>
-        <div class="quota">20 AI calls / month</div>
-        <ul>
+    <div class="pricing-row-label">For solo</div>
+    <div class="plan-grid">
+      <a class="plan-card" href="https://www.verizon.com/business/business-marketplace/" target="_blank" rel="noopener">
+        <div class="plan-name">Basic</div>
+        <div class="plan-price free">Free<span class="period">/ forever</span></div>
+        <div class="plan-quota">20 AI calls / month</div>
+        <ul class="plan-feats">
           <li>AI handles your missed calls</li>
           <li>iOS + Web app</li>
         </ul>
-      </div>
-      <div class="price-card recommended">
-        <div class="badge">Verizon launch offer</div>
-        <h4>Pro</h4>
-        <div class="price">$15<span class="period">/ month <span class="strike">$30</span></span></div>
-        <div class="quota">First 3 months on Verizon Marketplace, then $30/mo</div>
-        <ul>
-          <li>AI handles calls, texts &amp; schedule</li>
-          <li>Continuous learning</li>
-          <li>Live call transfer to your One Talk users</li>
+      </a>
+      <a class="plan-card recommended" href="https://www.verizon.com/business/business-marketplace/" target="_blank" rel="noopener">
+        <div class="plan-badge">Verizon launch offer</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">$15<span class="period">/ mo <span class="strike">$30</span></span></div>
+        <div class="plan-quota">First 3 months · then $30/mo</div>
+        <ul class="plan-feats">
+          <li>90 AI calls / month</li>
+          <li>Live transfer to One Talk users</li>
+          <li>Texts, scheduling, continuous learning</li>
         </ul>
-      </div>
-      <div class="price-card">
-        <h4>Elite</h4>
-        <div class="price">$60<span class="period">/ month</span></div>
-        <div class="quota">Unlimited calls</div>
-        <ul>
+      </a>
+      <a class="plan-card" href="https://www.verizon.com/business/business-marketplace/" target="_blank" rel="noopener">
+        <div class="plan-name">Elite</div>
+        <div class="plan-price">$60<span class="period">/ mo</span></div>
+        <div class="plan-quota">Unlimited AI calls</div>
+        <ul class="plan-feats">
           <li>Everything in Pro</li>
-          <li>Unlimited AI call volume</li>
+          <li>Unlimited call volume</li>
         </ul>
-      </div>
+      </a>
     </div>
 
-    <div class="teams-strip">
-      <div class="teams-label">For teams →</div>
-      <div class="teams-tier">
-        <div class="t-name">Starter</div>
-        <div class="t-price">$300 <span style="font-size:0.78rem;font-weight:400;opacity:0.6;">/mo</span></div>
-        <div class="t-desc">5 users · 14-day trial</div>
-      </div>
-      <div class="teams-tier">
-        <div class="t-name">Growth</div>
-        <div class="t-price">from $2,160 <span style="font-size:0.78rem;font-weight:400;opacity:0.6;">/mo</span></div>
-        <div class="t-desc">20 users · white-glove · integrations</div>
-      </div>
-      <div class="teams-tier">
-        <div class="t-name">Enterprise</div>
-        <div class="t-price">Custom</div>
-        <div class="t-desc">40+ users · talk to sales</div>
-      </div>
+    <div class="pricing-row-label">For teams</div>
+    <div class="plan-grid">
+      <a class="plan-card" href="https://www.yousquared.ai/" target="_blank" rel="noopener">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price">$300<span class="period">/ mo</span></div>
+        <div class="plan-quota">5 users · 14-day trial</div>
+        <ul class="plan-feats">
+          <li>Elite features for all users</li>
+          <li>Shared call &amp; intake history</li>
+        </ul>
+      </a>
+      <a class="plan-card" href="https://www.yousquared.ai/" target="_blank" rel="noopener">
+        <div class="plan-name">Growth</div>
+        <div class="plan-price">$2,160<span class="period">/ mo</span></div>
+        <div class="plan-quota">20 users · 14-day trial</div>
+        <ul class="plan-feats">
+          <li>Everything in Starter</li>
+          <li>White-glove onboarding &amp; integrations</li>
+        </ul>
+      </a>
+      <a class="plan-card" href="https://www.yousquared.ai/" target="_blank" rel="noopener">
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-price">Custom<span class="period">&nbsp;</span></div>
+        <div class="plan-quota">40+ users · talk to sales</div>
+        <ul class="plan-feats">
+          <li>Dedicated account management</li>
+          <li>Custom integrations &amp; SLAs</li>
+        </ul>
+      </a>
     </div>
 
-    <div class="pricing-footnote">$15/mo Pro launch price applies to the first 3 months, exclusively via the Verizon Business Marketplace. 15% discount on annual billing on all plans. Healthcare, Legal and Financial Services add a compliance premium on team tiers.</div>
+    <div class="pricing-footnote">$15/mo Pro launch price applies to the first 3 months, exclusively via the Verizon Business Marketplace. 15% discount on annual billing on all plans. Healthcare, Legal and Financial Services add a compliance premium on team tiers. Click any plan to see details.</div>
 
     <div class="trust-strip">
       <span>HIPAA compliant</span>
