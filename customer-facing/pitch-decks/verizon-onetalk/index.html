@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouSquared × One Talk — VAR Seller Enablement</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #2D2A26;
+  --ink-2: #433F3A;
+  --paper: #FFFFFF;
+  --cream: #F5F2EF;
+  --cream-2: #EDE8E2;
+  --accent: #E07A5F;
+  --accent-light: #FF8370;
+  --accent-pale: #FCE7E0;
+  --gold: #F9A825;
+  --gold-pale: #FFF8E1;
+  --teal: #2A9D8F;
+  --teal-pale: #DCF2EE;
+  --text: #2D2A26;
+  --muted: #6B6560;
+  --muted-2: #9E9893;
+  --rule: #E4DED7;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', -apple-system, sans-serif; background: var(--paper); color: var(--text); overflow-x: hidden; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 40px;
+  background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
+}
+.nav-logo { display: flex; align-items: center; gap: 14px; font-family: 'Lora', Georgia, serif; font-size: 0.95rem; font-weight: 700; letter-spacing: -0.01em; color: var(--ink); }
+.nav-logo img.ys { height: 24px; }
+.nav-logo img.vz { height: 16px; opacity: 0.85; }
+.nav-logo .x { color: var(--muted-2); font-weight: 300; font-size: 1rem; }
+.nav-logo .tag { color: var(--muted); font-family: 'Inter',sans-serif; font-weight: 400; font-size: 0.78rem; letter-spacing: 0.01em; }
+.nav-dots { display: flex; gap: 8px; }
+.nav-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--rule); border: none; cursor: pointer; transition: background 0.2s, transform 0.2s; }
+.nav-dot.active { background: var(--accent); transform: scale(1.4); }
+
+/* SLIDES */
+.slide {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 90px 48px 80px;
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  position: relative;
+}
+.slide.visible { opacity: 1; transform: translateY(0); }
+.slide-inner { max-width: 1100px; width: 100%; }
+
+/* Shared typography */
+.section-label {
+  font-family: 'Inter', monospace; font-size: 0.7rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 12px; font-weight: 500;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); max-width: 80px; }
+.section-label .num { color: var(--accent); font-weight: 600; }
+.section-title {
+  font-family: 'Lora', Georgia, serif; font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+  font-weight: 700; letter-spacing: -0.02em; line-height: 1.18; margin-bottom: 14px; color: var(--ink);
+}
+.section-title em { font-style: italic; color: var(--accent); }
+.section-intro { font-size: 0.98rem; color: var(--muted); line-height: 1.7; max-width: 660px; margin-bottom: 28px; }
+
+/* ============ SLIDE 1 — HERO ============ */
+#slide-1 {
+  background: linear-gradient(145deg, #2D2A26 0%, #433F3A 55%, #3A3632 100%);
+  color: var(--paper); min-height: 100vh; overflow: hidden;
+}
+#slide-1::before {
+  content: ''; position: absolute; top: -240px; right: -220px; width: 680px; height: 680px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,131,112,0.22) 0%, transparent 70%);
+  pointer-events: none;
+}
+#slide-1::after {
+  content: ''; position: absolute; bottom: -120px; left: -140px; width: 460px; height: 460px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(224,122,95,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+#slide-1 .slide-inner { display: grid; grid-template-columns: 1fr 0.9fr; gap: 56px; align-items: center; }
+.hero-cobrand { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+.hero-cobrand img.ys { height: 28px; filter: brightness(0) invert(1); }
+.hero-cobrand img.vz { height: 18px; }
+.hero-cobrand .x { color: rgba(255,255,255,0.4); font-family: 'Lora', serif; font-size: 1.3rem; font-weight: 300; }
+.hero-eyebrow { font-family: 'Inter',monospace; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 22px; font-weight: 600; }
+.hero-title { font-family: 'Lora', Georgia, serif; font-size: clamp(2.2rem, 4.4vw, 3.4rem); font-weight: 700; line-height: 1.1; color: #fff; margin-bottom: 16px; letter-spacing: -0.02em; }
+.hero-title em { font-style: italic; color: var(--accent-light); }
+.hero-sub { font-size: 1.02rem; color: rgba(255,255,255,0.72); margin-bottom: 30px; font-weight: 300; max-width: 540px; line-height: 1.65; }
+.hero-badge { display: inline-flex; align-items: center; gap: 10px; background: rgba(255,131,112,0.18); border: 1px solid rgba(255,131,112,0.4); border-radius: 22px; padding: 8px 16px; font-size: 0.82rem; color: var(--accent-light); margin-bottom: 32px; font-weight: 500; }
+.dot-pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-light); animation: pulse 1.8s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+.hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden; max-width: 580px; }
+.hero-stat { background: rgba(255,255,255,0.04); padding: 20px 18px; text-align: center; border-right: 1px solid rgba(255,255,255,0.07); }
+.hero-stat:last-child { border-right: none; }
+.hero-stat-num { font-family: 'Lora', Georgia, serif; font-size: 1.8rem; font-weight: 700; color: #fff; display: block; margin-bottom: 4px; }
+.hero-stat-label { font-size: 0.66rem; color: rgba(255,255,255,0.5); letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.4; }
+
+.hero-visual { position: relative; }
+.hero-visual .frame { background: rgba(255,255,255,0.05); border-radius: 20px; border: 1px solid rgba(255,255,255,0.08); padding: 14px; box-shadow: 0 20px 60px rgba(0,0,0,0.35); }
+.hero-visual img { width:100%; border-radius: 14px; display:block; }
+.hero-visual .caption { text-align: center; font-family: 'Inter',sans-serif; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 14px; }
+
+/* ============ SLIDE 2 — PROBLEM ============ */
+#slide-2 { background: var(--paper); }
+.problem-layout { display: grid; grid-template-columns: 1.05fr 1fr; gap: 40px; align-items: start; }
+.problem-box { background: var(--gold-pale); border: 1px solid rgba(249,168,37,0.25); border-left: 4px solid var(--gold); border-radius: 12px; padding: 22px 26px; margin-bottom: 20px; }
+.problem-box p { font-size: 1rem; line-height: 1.65; color: var(--ink); }
+.problem-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.fact-card { background: var(--cream); border-radius: 12px; padding: 18px 20px; border: 1px solid var(--rule); }
+.fact-card .num { font-family: 'Lora', Georgia, serif; font-size: 1.85rem; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 6px; }
+.fact-card .label { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+.fact-source { font-size: 0.64rem; display: block; margin-top: 6px; color: var(--muted-2); font-style: italic; }
+.problem-illus img { width: 100%; border-radius: 18px; border: 1px solid var(--rule); box-shadow: 0 8px 32px rgba(0,0,0,0.06); display: block; }
+.problem-callout {
+  margin-top: 18px; background: var(--accent-pale); border: 1px solid rgba(224,122,95,0.2); border-left: 4px solid var(--accent);
+  border-radius: 12px; padding: 18px 22px;
+}
+.problem-callout .label { font-family: 'Inter',monospace; font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 6px; }
+.problem-callout p { font-family: 'Lora', serif; font-style: italic; font-size: 0.96rem; color: var(--ink); line-height: 1.55; }
+
+/* ============ SLIDE 3 — HOW IT WORKS ============ */
+#slide-3 { background: linear-gradient(160deg, #FFFFFF 60%, #FCE7E0 100%); align-items: flex-start; padding-top: 90px; padding-bottom: 70px; }
+.callpath-wrap { background: #fff; border: 1px solid var(--rule); border-radius: 18px; padding: 28px 28px 24px; margin-bottom: 22px; box-shadow: 0 6px 24px rgba(0,0,0,0.04); }
+.callpath { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 14px; margin-bottom: 18px; }
+.cp-node { background: var(--cream); border: 1px solid var(--rule); border-radius: 14px; padding: 18px 16px; text-align: center; }
+.cp-node.ai { background: linear-gradient(135deg, var(--accent-pale) 0%, #fff 100%); border-color: rgba(224,122,95,0.3); }
+.cp-node .icon { width: 40px; height: 40px; border-radius: 10px; background: var(--accent-pale); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 8px; }
+.cp-node.ai .icon { background: rgba(224,122,95,0.15); }
+.cp-node .icon svg { stroke: var(--accent); width: 20px; height: 20px; fill: none; stroke-width: 2; }
+.cp-node.ai .icon svg { stroke: var(--accent); }
+.cp-node .ttl { font-family: 'Lora', serif; font-size: 0.92rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.cp-node .meta { font-size: 0.74rem; color: var(--muted); line-height: 1.45; }
+.cp-arrow { color: var(--muted-2); font-size: 1.4rem; }
+.callpath-note { font-size: 0.84rem; color: var(--muted); text-align: center; font-style: italic; padding-top: 12px; border-top: 1px dashed var(--rule); }
+.callpath-note strong { color: var(--accent); font-style: normal; font-weight: 600; }
+
+.handle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.handle-col { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 22px 24px; }
+.handle-col.resolves { border-top: 3px solid var(--teal); }
+.handle-col.transfers { border-top: 3px solid var(--accent); }
+.handle-col h3 { font-family: 'Lora', serif; font-size: 1.05rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
+.handle-col h3 .pill { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 5px; font-weight: 600; }
+.handle-col.resolves h3 .pill { background: var(--teal-pale); color: var(--teal); }
+.handle-col.transfers h3 .pill { background: var(--accent-pale); color: var(--accent); }
+.handle-col p.sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 14px; line-height: 1.55; }
+.handle-col ul { list-style: none; padding: 0; }
+.handle-col li { font-size: 0.86rem; color: var(--ink); padding: 7px 0 7px 22px; position: relative; line-height: 1.5; border-bottom: 1px dashed var(--rule); }
+.handle-col li:last-child { border-bottom: none; }
+.handle-col.resolves li::before { content: '✓'; position: absolute; left: 0; color: var(--teal); font-weight: 700; }
+.handle-col.transfers li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+/* ============ SLIDE 4 — HUNT GROUP HOOK ============ */
+#slide-4 { background: var(--ink); color: var(--paper); }
+#slide-4 .section-label { color: rgba(255,255,255,0.5); }
+#slide-4 .section-label::after { background: rgba(255,255,255,0.14); }
+#slide-4 .section-label .num { color: var(--accent-light); }
+#slide-4 .section-title { color: #fff; }
+#slide-4 .section-title em { color: var(--accent-light); }
+#slide-4 .section-intro { color: rgba(255,255,255,0.6); max-width: 760px; }
+.hg-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 22px; }
+.hg-card { border-radius: 16px; padding: 22px 24px; }
+.hg-card.before { background: rgba(249,168,37,0.06); border: 1px solid rgba(249,168,37,0.22); }
+.hg-card.after { background: rgba(255,131,112,0.08); border: 1px solid rgba(255,131,112,0.3); }
+.hg-card .head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.hg-card .head .pill { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 5px; font-weight: 700; }
+.hg-card.before .head .pill { background: rgba(249,168,37,0.22); color: #F9D67A; }
+.hg-card.after .head .pill { background: rgba(255,131,112,0.2); color: var(--accent-light); }
+.hg-card h3 { font-family: 'Lora', serif; font-size: 1.1rem; font-weight: 700; color: #fff; }
+.hg-flow { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; padding: 12px; background: rgba(255,255,255,0.04); border-radius: 10px; }
+.hg-flow .step { font-family: 'Inter',sans-serif; font-size: 0.74rem; color: rgba(255,255,255,0.78); padding: 4px 10px; border-radius: 6px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); white-space: nowrap; }
+.hg-flow .step.fail { color: #F9D67A; border-color: rgba(249,168,37,0.4); background: rgba(249,168,37,0.12); }
+.hg-flow .step.win { color: #B8A6FF; border-color: rgba(255,131,112,0.4); background: rgba(255,131,112,0.15); }
+.hg-flow .arr { color: rgba(255,255,255,0.35); font-size: 0.85rem; }
+.hg-summary { font-family: 'Lora', serif; font-style: italic; font-size: 0.92rem; line-height: 1.55; color: rgba(255,255,255,0.85); }
+.hg-card.before .hg-summary { color: #F9D67A; }
+
+.hg-features { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 22px; }
+.hg-feat { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 16px 14px; }
+.hg-feat .nrm { font-family: 'Lora', serif; font-size: 1.3rem; font-weight: 700; color: var(--accent-light); display: block; line-height: 1; margin-bottom: 8px; }
+.hg-feat .ttl { font-family: 'Inter', sans-serif; font-size: 0.78rem; font-weight: 600; color: #fff; margin-bottom: 4px; line-height: 1.35; }
+.hg-feat .desc { font-size: 0.72rem; color: rgba(255,255,255,0.55); line-height: 1.5; }
+
+.hg-tip { background: rgba(255,131,112,0.12); border: 1px solid rgba(255,131,112,0.3); border-left: 4px solid var(--accent-light); border-radius: 12px; padding: 16px 22px; }
+.hg-tip .label { font-family: 'Inter', monospace; font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-light); font-weight: 600; margin-bottom: 6px; }
+.hg-tip p { font-family: 'Lora', serif; font-style: italic; font-size: 0.95rem; color: rgba(255,255,255,0.92); line-height: 1.55; }
+
+/* ============ SLIDE 5 — DISCOVERY SPRINT ============ */
+#slide-5 { background: var(--paper); }
+.sprint-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 22px; }
+.sprint-row { display: grid; grid-template-columns: 96px 1fr 1.4fr; gap: 22px; align-items: center; padding: 16px 22px; background: #fff; border: 1px solid var(--rule); border-radius: 12px; transition: border-color 0.2s; }
+.sprint-row:hover { border-color: var(--accent); }
+.sprint-row .min { font-family: 'Lora', serif; font-size: 1.1rem; font-weight: 700; color: var(--accent); letter-spacing: -0.01em; }
+.sprint-row .step { font-family: 'Lora', serif; font-size: 1rem; font-weight: 700; color: var(--ink); }
+.sprint-row .what { font-size: 0.86rem; color: var(--muted); line-height: 1.55; }
+
+.sprint-tip { background: var(--teal-pale); border: 1px solid rgba(42,157,143,0.25); border-left: 4px solid var(--teal); border-radius: 12px; padding: 16px 22px; }
+.sprint-tip .label { font-family: 'Inter', monospace; font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); font-weight: 600; margin-bottom: 6px; }
+.sprint-tip p { font-family: 'Lora', serif; font-style: italic; font-size: 0.95rem; color: var(--ink); line-height: 1.55; }
+
+/* ============ SLIDE 6 — CUTOVER ============ */
+#slide-6 { background: var(--cream); }
+.cutover-hero { background: #fff; border: 1px solid var(--rule); border-radius: 18px; padding: 24px 28px; margin-bottom: 22px; box-shadow: 0 6px 24px rgba(0,0,0,0.04); }
+.cutover-hero h3 { font-family: 'Lora', serif; font-size: 1.1rem; font-weight: 700; color: var(--ink); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+.cutover-hero h3 .pill { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 5px; font-weight: 700; background: var(--accent-pale); color: var(--accent); }
+.cutover-hero p { font-size: 0.92rem; color: var(--muted); line-height: 1.6; margin-bottom: 14px; max-width: 880px; }
+.cutover-perks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.cutover-perks .p { font-size: 0.8rem; color: var(--ink); padding: 9px 14px; background: var(--cream); border: 1px solid var(--rule); border-radius: 8px; line-height: 1.45; }
+.cutover-perks .p strong { color: var(--accent); }
+
+.steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+.step-card { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 14px 16px; position: relative; }
+.step-card .n { font-family: 'Lora', serif; font-size: 0.85rem; font-weight: 700; color: var(--accent); margin-bottom: 4px; letter-spacing: 0.04em; }
+.step-card .t { font-size: 0.83rem; color: var(--ink); line-height: 1.45; font-weight: 500; }
+
+.rollback-strip { background: var(--accent); color: #fff; border-radius: 12px; padding: 14px 22px; display: flex; align-items: center; gap: 14px; }
+.rollback-strip svg { stroke: #fff; width: 22px; height: 22px; fill: none; stroke-width: 2; flex-shrink: 0; }
+.rollback-strip .lbl { font-family: 'Inter', monospace; font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.75; font-weight: 600; }
+.rollback-strip .body { font-size: 0.92rem; line-height: 1.5; }
+.rollback-strip .body strong { font-weight: 700; }
+
+/* ============ SLIDE 7 — RESULTS ============ */
+#slide-7 { background: linear-gradient(160deg, #2D2A26 0%, #3A3632 100%); color: var(--paper); }
+#slide-7 .section-label { color: rgba(255,255,255,0.5); }
+#slide-7 .section-label::after { background: rgba(255,255,255,0.14); }
+#slide-7 .section-label .num { color: var(--accent-light); }
+#slide-7 .section-title { color: #fff; }
+#slide-7 .section-title em { color: var(--accent-light); }
+.metric-strip { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 26px; }
+.metric-card { border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 20px 22px; background: rgba(255,255,255,0.04); position: relative; overflow: hidden; }
+.metric-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent-light)); border-radius: 3px 3px 0 0; }
+.metric-val { font-family: 'Lora', Georgia, serif; font-size: 2rem; font-weight: 700; color: #fff; line-height: 1; margin-bottom: 6px; display: flex; align-items: baseline; gap: 3px; }
+.metric-val .unit { font-size: 1.05rem; color: var(--accent-light); }
+.metric-label { font-size: 0.78rem; color: rgba(255,255,255,0.6); line-height: 1.5; }
+
+.testi-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 16px; margin-bottom: 22px; }
+.testi { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 20px 22px; display: flex; flex-direction: column; }
+.testi.author { border-color: rgba(255,131,112,0.4); background: rgba(255,131,112,0.08); }
+.testi .pill { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; background: rgba(224,122,95,0.18); border: 1px solid rgba(224,122,95,0.4); border-radius: 20px; padding: 3px 10px; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 12px; }
+.testi.author .pill { background: rgba(255,131,112,0.18); border-color: rgba(255,131,112,0.45); color: var(--accent-light); }
+.testi .head-row { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }
+.testi .hs { width: 44px; height: 44px; border-radius: 50%; overflow: hidden; border: 1.5px solid rgba(255,131,112,0.35); flex-shrink: 0; background: var(--ink-2); }
+.testi.author .hs { border-color: rgba(255,131,112,0.5); }
+.testi .hs img { width: 100%; height: 100%; object-fit: cover; }
+.testi .name { font-family: 'Lora', serif; font-size: 0.92rem; color: #fff; font-weight: 700; line-height: 1.25; }
+.testi .role { font-size: 0.7rem; color: rgba(255,255,255,0.55); margin-top: 2px; line-height: 1.4; }
+.testi blockquote { font-family: 'Lora', serif; font-style: italic; font-size: 0.92rem; line-height: 1.55; color: rgba(255,255,255,0.92); }
+
+.logos-row { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; padding: 16px 0; border-top: 1px solid rgba(255,255,255,0.1); }
+.logos-row .lbl { font-family: 'Inter', sans-serif; font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); font-weight: 600; margin-right: 6px; }
+.cust-chip { font-family: 'Inter',sans-serif; font-size: 0.74rem; font-weight: 500; color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 7px 11px; }
+.cust-chip .sub { color: rgba(255,255,255,0.5); font-weight: 400; font-size: 0.7rem; margin-left: 5px; }
+
+/* ============ SLIDE 8 — FAQ ============ */
+#slide-8 { background: var(--paper); }
+.faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.faq { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px 22px; transition: border-color 0.2s, box-shadow 0.2s; }
+.faq:hover { border-color: var(--accent); box-shadow: 0 6px 20px rgba(224,122,95,0.06); }
+.faq .q { font-family: 'Lora', serif; font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 8px; line-height: 1.4; }
+.faq .a { font-size: 0.88rem; color: var(--ink); line-height: 1.6; }
+
+/* ============ SLIDE 9 — CTA ============ */
+#slide-9 { background: linear-gradient(160deg, #FFFFFF 0%, var(--accent-pale) 100%); align-items: flex-start; padding-top: 90px; }
+.cta-hero { background: #fff; border: 1px solid var(--rule); border-radius: 22px; padding: 36px 36px; margin-bottom: 24px; box-shadow: 0 12px 40px rgba(224,122,95,0.08); }
+.cta-hero h3 { font-family: 'Lora', serif; font-size: 1.4rem; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+.cta-hero h3 em { font-style: italic; color: var(--accent); }
+.cta-hero p { font-size: 0.94rem; color: var(--muted); line-height: 1.65; max-width: 660px; margin-bottom: 18px; }
+.cta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.cta-box { background: var(--cream); border: 1px solid var(--rule); border-radius: 14px; padding: 22px 24px; display: flex; gap: 16px; align-items: flex-start; transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; cursor: pointer; }
+.cta-box:hover { border-color: var(--accent); box-shadow: 0 8px 26px rgba(224,122,95,0.1); transform: translateY(-2px); }
+.cta-box .icon { width: 48px; height: 48px; border-radius: 12px; background: var(--accent-pale); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.cta-box .icon svg { stroke: var(--accent); width: 24px; height: 24px; fill: none; stroke-width: 1.8; }
+.cta-box .info { flex: 1; }
+.cta-box .action { font-family: 'Inter',sans-serif; font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 4px; }
+.cta-box .target { font-family: 'Lora',Georgia,serif; font-size: 1.15rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; line-height: 1.3; }
+.cta-box .meta { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+.trust-strip { display: flex; justify-content: center; gap: 22px; flex-wrap: wrap; margin-top: 26px; padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); font-size: 0.76rem; color: var(--muted); }
+.trust-strip span { display: inline-flex; align-items: center; gap: 6px; }
+.trust-strip span::before { content: '●'; color: var(--accent); font-size: 0.55em; }
+
+.deck-foot { text-align: center; margin-top: 22px; font-size: 0.74rem; color: var(--muted-2); font-family: 'Inter',sans-serif; letter-spacing: 0.04em; }
+.deck-foot strong { color: var(--muted); font-weight: 600; }
+
+/* PROGRESS */
+.slide-progress { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; gap: 7px; z-index: 99; }
+.progress-bar { width: 28px; height: 3px; border-radius: 2px; background: var(--rule); overflow: hidden; cursor: pointer; }
+.progress-fill { height: 100%; width: 0%; background: var(--accent); border-radius: 2px; transition: width 0.6s ease; }
+.progress-bar.active .progress-fill { width: 100%; }
+.progress-bar.done .progress-fill { width: 100%; background: var(--rule); }
+
+/* RESPONSIVE */
+@media (max-width: 980px) {
+  .hg-features { grid-template-columns: repeat(2, 1fr); }
+  .steps-grid { grid-template-columns: repeat(2, 1fr); }
+  .testi-grid { grid-template-columns: 1fr; }
+  .metric-strip { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 820px) {
+  nav { padding: 12px 18px; }
+  .slide { padding: 80px 22px 60px; }
+  #slide-1 .slide-inner, .problem-layout, .handle-grid, .hg-compare, .cta-row, .faq-grid, .cutover-perks, .callpath { grid-template-columns: 1fr; }
+  .sprint-row { grid-template-columns: 80px 1fr; }
+  .sprint-row .what { grid-column: 1 / -1; }
+  .cp-arrow { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <img class="ys" src="assets/logo_yousquared.png" alt="YouSquared">
+    <span class="x">×</span>
+    <img class="vz" src="assets/logo_verizon.png" alt="Verizon">
+    <span class="tag">VAR Seller Enablement</span>
+  </div>
+  <div class="nav-dots" id="navDots"></div>
+</nav>
+
+<!-- ============ SLIDE 1 — HERO ============ -->
+<section class="slide" id="slide-1">
+  <div class="slide-inner">
+    <div>
+      <div class="hero-cobrand">
+        <img class="ys" src="assets/logo_yousquared.png" alt="YouSquared">
+        <span class="x">×</span>
+        <img class="vz" src="assets/logo_verizon.png" alt="Verizon">
+      </div>
+      <div class="hero-eyebrow">VAR Seller Enablement · One Talk integration</div>
+      <h1 class="hero-title">The smartest <em>add-on</em><br>to every One Talk account.</h1>
+      <p class="hero-sub">YouSquared is an AI voice assistant that answers the main number, handles what it can, and warm-transfers what it can't — without rebuilding a single hunt group, user, or voicemail box.</p>
+      <div class="hero-badge"><span class="dot-pulse"></span> Available on the Verizon Marketplace</div>
+      <div class="hero-stats">
+        <div class="hero-stat"><span class="hero-stat-num">2M+</span><span class="hero-stat-label">Calls handled</span></div>
+        <div class="hero-stat"><span class="hero-stat-num">1 week</span><span class="hero-stat-label">Yes to live</span></div>
+        <div class="hero-stat"><span class="hero-stat-num">5 min</span><span class="hero-stat-label">Rollback window</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="frame">
+        <img src="assets/illustration_mainstreet.png" alt="A Main Street of small service businesses — pharmacist, doctor, real estate agent, contractor, lawyer, and truck driver — each fully present with a customer while YouSquared AI handles their calls">
+      </div>
+      <div class="caption">YouSquared.ai Channel Enablement · Version 1.0 · 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 2 — PROBLEM ============ -->
+<section class="slide" id="slide-2">
+  <div class="slide-inner">
+    <div class="section-label"><span class="num">01</span> The opportunity</div>
+    <h2 class="section-title">Every One Talk customer has the <em>same phone problem</em></h2>
+    <p class="section-intro">Your customers already have phones that ring. They don't have a system that answers, triages, and converts. The gap between "we have phones" and "we never miss a call" is exactly what YouSquared fills — and what you sell on every account.</p>
+    <div class="problem-layout">
+      <div>
+        <div class="problem-box">
+          <p>62% of callers hang up after 45 seconds. 85% never call back. Every missed call is a customer your One Talk account just lost — silently, every day.</p>
+        </div>
+        <div class="problem-facts">
+          <div class="fact-card">
+            <div class="num">62%</div>
+            <div class="label">hang up if no one picks up within 45 seconds<span class="fact-source">Invoca Call Intelligence Benchmark</span></div>
+          </div>
+          <div class="fact-card">
+            <div class="num">85%</div>
+            <div class="label">won't call back after an unanswered call<span class="fact-source">BIA Kelsey SMB Study</span></div>
+          </div>
+          <div class="fact-card">
+            <div class="num">90 sec</div>
+            <div class="label">typical wait through a dead hunt-group rotation before voicemail</div>
+          </div>
+          <div class="fact-card">
+            <div class="num">10–20 hrs</div>
+            <div class="label">lost per staff member every week to phone interruptions</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="problem-illus">
+          <img src="assets/problem_placeholder.png" alt="Overwhelmed front office with phones ringing and patients waiting">
+        </div>
+        <div class="problem-callout">
+          <div class="label">For VAR partners</div>
+          <p>"This is one of the lowest-risk add-ons a partner can sell into a stable One Talk account — and one of the easiest to demo. Lead with the broken hunt group story."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 3 — HOW IT WORKS ============ -->
+<section class="slide" id="slide-3">
+  <div class="slide-inner">
+    <div class="section-label"><span class="num">02</span> How it works</div>
+    <h2 class="section-title">YouSquared sits <em>in front of</em> One Talk</h2>
+    <p class="section-intro">From the caller's perspective, nothing changes — same number, same business. From the routing perspective, one thing changes: the number that used to hit an auto attendant or hunt group now hits YouSquared first. Everything downstream stays exactly as it is.</p>
+
+    <div class="callpath-wrap">
+      <div class="callpath">
+        <div class="cp-node">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <div class="ttl">Caller dials</div>
+          <div class="meta">Same main number<br>they always dial</div>
+        </div>
+        <div class="cp-arrow">→</div>
+        <div class="cp-node ai">
+          <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+          <div class="ttl">YouSquared answers</div>
+          <div class="meta">The new "Option 0":<br>a conversational AI</div>
+        </div>
+        <div class="cp-arrow">→</div>
+        <div class="cp-node">
+          <div class="icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div class="ttl">Resolve <span style="color:var(--muted-2);">/</span> Transfer</div>
+          <div class="meta">AI handles it,<br>or routes to existing One Talk</div>
+        </div>
+      </div>
+      <div class="callpath-note">The customer's hunt groups, ring strategies, voicemail, and after-hours logic all stay <strong>exactly as they are.</strong> If anything goes sideways, repointing back is a 5-minute change.</div>
+    </div>
+
+    <div class="handle-grid">
+      <div class="handle-col resolves">
+        <h3>Handles without a transfer <span class="pill">Self-serve</span></h3>
+        <p class="sub">If the answer is the same for every caller and doesn't change hour to hour, the AI handles it.</p>
+        <ul>
+          <li>Hours, location, directions, parking</li>
+          <li>FAQs from website or knowledge base</li>
+          <li>Status questions ("Are you open Sunday?")</li>
+          <li>Simple scheduling and intake capture</li>
+          <li>Message-taking with structured transcripts to email/CRM</li>
+        </ul>
+      </div>
+      <div class="handle-col transfers">
+        <h3>Transfers to a human <span class="pill">Warm handoff</span></h3>
+        <p class="sub">If the answer depends on who's calling or what's happening right now, it's a transfer — into the existing One Talk destinations.</p>
+        <ul>
+          <li>Anything the AI isn't confident about</li>
+          <li>"Let me talk to someone" — instant route</li>
+          <li>Emergencies and urgency keywords</li>
+          <li>Sales, billing, support — routed by intent</li>
+          <li>After-hours escalations to on-call staff</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 4 — HUNT GROUP HOOK ============ -->
+<section class="slide" id="slide-4">
+  <div class="slide-inner">
+    <div class="section-label"><span class="num">03</span> The selling hook</div>
+    <h2 class="section-title">Fix the <em>broken hunt group</em></h2>
+    <p class="section-intro">This is the one feature that lands every demo. Every business owner has watched a sales call go to voicemail because Alice was at lunch and Bob was on another line. Lead with this story — it's often easier to sell than the FAQ automation piece.</p>
+
+    <div class="hg-compare">
+      <div class="hg-card before">
+        <div class="head"><span class="pill">Before</span><h3>Traditional hunt group</h3></div>
+        <div class="hg-flow">
+          <span class="step">Caller dials</span>
+          <span class="arr">→</span>
+          <span class="step fail">Alice 20s</span>
+          <span class="arr">→</span>
+          <span class="step fail">Bob 20s</span>
+          <span class="arr">→</span>
+          <span class="step fail">Carol 20s</span>
+          <span class="arr">→</span>
+          <span class="step fail">Voicemail</span>
+        </div>
+        <p class="hg-summary">90 seconds of dead air. Lead is gone.</p>
+      </div>
+      <div class="hg-card after">
+        <div class="head"><span class="pill">After</span><h3>YouSquared in front</h3></div>
+        <div class="hg-flow">
+          <span class="step">Caller dials</span>
+          <span class="arr">→</span>
+          <span class="step win">AI greets, qualifies</span>
+          <span class="arr">→</span>
+          <span class="step win">Confirms presence</span>
+          <span class="arr">→</span>
+          <span class="step win">Warm transfer w/ context</span>
+        </div>
+        <p class="hg-summary">Caller is qualified before the phone rings. No dead rotations.</p>
+      </div>
+    </div>
+
+    <div class="hg-features">
+      <div class="hg-feat">
+        <span class="nrm">01</span>
+        <div class="ttl">Confirm presence</div>
+        <div class="desc">AI verifies a member of the group is reachable before transferring.</div>
+      </div>
+      <div class="hg-feat">
+        <span class="nrm">02</span>
+        <div class="ttl">Hold with context</div>
+        <div class="desc">"Connecting you now — while you wait, can I confirm what you're looking for?"</div>
+      </div>
+      <div class="hg-feat">
+        <span class="nrm">03</span>
+        <div class="ttl">Offer callback</div>
+        <div class="desc">No queue. AI takes a number, calls back when a rep is free.</div>
+      </div>
+      <div class="hg-feat">
+        <span class="nrm">04</span>
+        <div class="ttl">Escalate intelligently</div>
+        <div class="desc">Falls through to secondary destination — front desk, owner cell, after-hours service.</div>
+      </div>
+      <div class="hg-feat">
+        <span class="nrm">05</span>
+        <div class="ttl">Log every attempt</div>
+        <div class="desc">Every transfer, outcome, and callback request is captured — surfaces what dumb PBX hides.</div>
+      </div>
+    </div>
+
+    <div class="hg-tip">
+      <div class="label">Partner tip</div>
+      <p>Three transfer patterns to mix-and-match per intent: <strong>Smart handoff</strong> (warm transfer + whispered summary), <strong>Presence-aware</strong> (skip dead rotations), <strong>Deflect-and-capture</strong> (low-urgency requests booked without ringing a phone).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 5 — DISCOVERY SPRINT ============ -->
+<section class="slide" id="slide-5">
+  <div class="slide-inner">
+    <div class="section-label"><span class="num">04</span> How to sell it</div>
+    <h2 class="section-title">The <em>30-minute discovery sprint</em></h2>
+    <p class="section-intro">One screen-share. Six questions. Everything YouSquared needs to go live. For an existing One Talk customer you don't need a CSR or a bill — you need the answers below. Use this as your call agenda.</p>
+
+    <div class="sprint-grid">
+      <div class="sprint-row">
+        <div class="min">0–5 min</div>
+        <div class="step">Inbound number map</div>
+        <div class="what">Which number(s) will the AI answer? Usually just the main published number — but confirm: "If I call the number on your website right now, what happens?"</div>
+      </div>
+      <div class="sprint-row">
+        <div class="min">5–15 min</div>
+        <div class="step">Transfer destination map</div>
+        <div class="what">Every existing hunt group, user, voicemail box, and after-hours path the AI might transfer to. Use the customer's real internal names.</div>
+      </div>
+      <div class="sprint-row">
+        <div class="min">15–22 min</div>
+        <div class="step">Self-serve intent list</div>
+        <div class="what">The top 5–10 reasons people call that the AI can resolve without a human. Almost always #1 is hours and location.</div>
+      </div>
+      <div class="sprint-row">
+        <div class="min">22–27 min</div>
+        <div class="step">Escalation rules</div>
+        <div class="what">Emergency keywords ("leak", "down", "bleeding"), after-hours destinations, VIP handling, fallback if everyone's busy.</div>
+      </div>
+      <div class="sprint-row">
+        <div class="min">27–30 min</div>
+        <div class="step">Knowledge sources</div>
+        <div class="what">Where the AI pulls answers from — public website, Google Business Profile, FAQ PDF, services sheet, or a 20-minute Q&amp;A doc you'll give them a template for.</div>
+      </div>
+    </div>
+
+    <div class="sprint-tip">
+      <div class="label">Partner tip</div>
+      <p>Walk through in this order every time. The intent list is easier to discuss <strong>after</strong> they've mapped their transfer destinations — it forces them to think about what should NOT be transferred.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 6 — CUTOVER ============ -->
+<section class="slide" id="slide-6">
+  <div class="slide-inner">
+    <div class="section-label"><span class="num">05</span> Technical cutover</div>
+    <h2 class="section-title">It's just a <em>number repoint</em></h2>
+    <p class="section-intro">There's exactly one technical change required to go live: the inbound number that currently hits a One Talk auto attendant or hunt group now hits the YouSquared endpoint. Everything downstream is untouched.</p>
+
+    <div class="cutover-hero">
+      <h3>Direct number routing <span class="pill">Recommended · Model 1</span></h3>
+      <p>The customer's main number points at a YouSquared-provided number/SIP endpoint. The AI answers, does its work, and when it needs to transfer, it dials the existing One Talk hunt group or user DID like any other outside caller. Cleanest setup, easiest rollback, no carrier-side changes. (Model 2 — full SIP integration with native caller ID — is the upgrade path after 30–60 days of use.)</p>
+      <div class="cutover-perks">
+        <div class="p"><strong>Days, not weeks</strong> — first 90% of customers go live this way</div>
+        <div class="p"><strong>No carrier changes</strong> — no Verizon provisioning required</div>
+        <div class="p"><strong>5-minute rollback</strong> — repoint back to the original auto attendant</div>
+      </div>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card"><div class="n">Step 1</div><div class="t">Build the agent from the discovery worksheet.</div></div>
+      <div class="step-card"><div class="n">Step 2</div><div class="t">Assign a YouSquared test number, run internal call tests.</div></div>
+      <div class="step-card"><div class="n">Step 3</div><div class="t">With customer on the line, walk every intent + transfer path.</div></div>
+      <div class="step-card"><div class="n">Step 4</div><div class="t">Schedule a 15-minute cutover window in low-traffic time.</div></div>
+      <div class="step-card"><div class="n">Step 5</div><div class="t">In One Talk admin, repoint the main inbound number to YouSquared.</div></div>
+      <div class="step-card"><div class="n">Step 6</div><div class="t">Dial the main number from an outside line — confirm AI answers.</div></div>
+      <div class="step-card"><div class="n">Step 7</div><div class="t">Walk every intent + transfer path end-to-end on the real number.</div></div>
+      <div class="step-card"><div class="n">Step 8</div><div class="t">Monitor 24 hours with one-click rollback ready.</div></div>
+    </div>
+
+    <div class="rollback-strip">
+      <svg viewBox="0 0 24 24"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+      <div>
+        <div class="lbl">Rollback plan</div>
+        <div class="body">Document exactly how to repoint the inbound number back to the original auto attendant <strong>before</strong> cutover. Store it in the ticket, the CRM, and the customer's record. If the AI misbehaves in the first 48 hours, rollback takes under 5 minutes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 7 — RESULTS ============ -->
+<section class="slide" id="slide-7">
+  <div class="slide-inner">
+    <div class="section-label"><span class="num">06</span> Results</div>
+    <h2 class="section-title">Measurable impact <em>across every vertical</em></h2>
+    <div class="metric-strip">
+      <div class="metric-card">
+        <div class="metric-val"><span>−75</span><span class="unit">%</span></div>
+        <div class="metric-label">Missed calls — near-elimination with 24/7 pickup</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val"><span>+30–80</span><span class="unit">%</span></div>
+        <div class="metric-label">Time saved — staff freed from phone interruptions</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val"><span>+20</span><span class="unit">%</span></div>
+        <div class="metric-label">Throughput — more jobs / appointments processed</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val"><span>+20</span><span class="unit">pts</span></div>
+        <div class="metric-label">NPS — customer satisfaction lift</div>
+      </div>
+    </div>
+
+    <div class="testi-grid">
+      <div class="testi author">
+        <span class="pill">⚖️ Author of this playbook · Legal</span>
+        <div class="head-row">
+          <div class="hs"><img src="assets/headshot_6.png" alt="Jonathan Harris"></div>
+          <div>
+            <div class="name">Jonathan Harris</div>
+            <div class="role">Founder · Harris St Laurent &amp; Wechsler (NY)</div>
+          </div>
+        </div>
+        <blockquote>"In employment law, timing is everything. YouSquared ensures I never lose a high-value client because I was in a deposition."</blockquote>
+      </div>
+      <div class="testi">
+        <span class="pill">🔑 Real Estate</span>
+        <div class="head-row">
+          <div class="hs"><img src="assets/headshot_2.png" alt="Brad Johnson"></div>
+          <div>
+            <div class="name">Brad Johnson</div>
+            <div class="role">Owner · Senemar &amp; Associates</div>
+          </div>
+        </div>
+        <blockquote>"YouSquared turns cold calls into warm leads and has doubled my income."</blockquote>
+      </div>
+      <div class="testi">
+        <span class="pill">🚐 Transportation</span>
+        <div class="head-row">
+          <div class="hs"><img src="assets/headshot_5.png" alt="Carlos Arostegui"></div>
+          <div>
+            <div class="name">Carlos Arostegui</div>
+            <div class="role">Owner · McKinney VIP Transportation</div>
+          </div>
+        </div>
+        <blockquote>"YouSquared made us instantly responsive to enquiries. Business has grown 30%."</blockquote>
+      </div>
+    </div>
+
+    <div class="logos-row">
+      <span class="lbl">Trusted by</span>
+      <div class="cust-chip">Mt Sinai <span class="sub">· oncology</span></div>
+      <div class="cust-chip">MUHC <span class="sub">· gastro</span></div>
+      <div class="cust-chip">Safer Pharmacy <span class="sub">· NYC</span></div>
+      <div class="cust-chip">Harris St Laurent &amp; Wechsler <span class="sub">· NY law</span></div>
+      <div class="cust-chip">Marietta Smile Gallery <span class="sub">· dental</span></div>
+      <div class="cust-chip">McKinney VIP Transportation</div>
+      <div class="cust-chip">Senemar &amp; Associates <span class="sub">· real estate</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 8 — FAQ ============ -->
+<section class="slide" id="slide-8">
+  <div class="slide-inner">
+    <div class="section-label"><span class="num">07</span> Objection handling</div>
+    <h2 class="section-title">What customers ask, <em>and what to say</em></h2>
+    <p class="section-intro">A quick reference for the VAR. Customers ask these almost every time — answer them in the same words and the call moves forward.</p>
+    <div class="faq-grid">
+      <div class="faq">
+        <div class="q">"Will this replace my phone system?"</div>
+        <div class="a">No. YouSquared sits in front of the existing One Talk setup. Every user, hunt group, voicemail box stays exactly where it is. The AI just answers the main number first.</div>
+      </div>
+      <div class="faq">
+        <div class="q">"What if the AI gets something wrong?"</div>
+        <div class="a">It's configured to transfer when it's not confident. If the caller ever says "let me talk to a person", it transfers immediately. And the whole thing rolls back to the original configuration in under five minutes.</div>
+      </div>
+      <div class="faq">
+        <div class="q">"Will my customers know they're talking to an AI?"</div>
+        <div class="a">That's a choice. The agent can be explicitly disclosed ("I'm the virtual assistant for Acme") or introduced more neutrally. Most customers start with explicit disclosure — it's the right call ethically, and callers are far more tolerant when they know what it is.</div>
+      </div>
+      <div class="faq">
+        <div class="q">"Can the AI call me on my cell when needed?"</div>
+        <div class="a">Yes. The AI can transfer to any number — a One Talk user, a hunt group, a mobile, a third-party after-hours service. Transfer destinations are just phone numbers.</div>
+      </div>
+      <div class="faq">
+        <div class="q">"What if we already have an auto attendant we like?"</div>
+        <div class="a">YouSquared is almost always a better experience. But if the customer is attached to it, deploy the AI in front of the auto attendant — the AI handles what it can and transfers anything else into the existing menu.</div>
+      </div>
+      <div class="faq">
+        <div class="q">"How long does this take to set up?"</div>
+        <div class="a">For an existing One Talk customer with a good knowledge source: one discovery call, two to three days of configuration, a test call, and a 15-minute cutover. Most accounts go live within a week of saying yes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 9 — CTA ============ -->
+<section class="slide" id="slide-9">
+  <div class="slide-inner">
+    <div class="section-label"><span class="num">08</span> Your next step</div>
+    <h2 class="section-title">Start your <em>first deployment</em> this week</h2>
+    <p class="section-intro">You don't need a pipeline. Pick the One Talk account you know best — the one with the busiest phones — and book a 30-minute discovery call. We'll co-sell, configure, and cut over with you.</p>
+
+    <div class="cta-hero">
+      <h3>Two ways to <em>get started</em></h3>
+      <p>The fastest path is a joint discovery call with our channel team. The self-serve path lets you run the playbook yourself using the worksheet from this deck.</p>
+      <div class="cta-row">
+        <a class="cta-box" href="mailto:channel@yousquared.ai" style="text-decoration:none;">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="info">
+            <div class="action">Co-sell with us</div>
+            <div class="target">Joint discovery call</div>
+            <div class="meta">Channel enablement team available for live customer calls. Email channel@yousquared.ai with the account name.</div>
+          </div>
+        </a>
+        <a class="cta-box" href="https://www.yousquared.ai/" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+          <div class="info">
+            <div class="action">Run it yourself</div>
+            <div class="target">Self-serve playbook</div>
+            <div class="meta">Use the discovery worksheet (slide 4) on your next One Talk customer call. We'll handle config from the worksheet you send.</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="trust-strip">
+      <span>HIPAA compliant</span>
+      <span>SOC 2 in progress</span>
+      <span>2M+ calls handled</span>
+      <span>4.6★ App Store</span>
+      <span>Verizon Marketplace</span>
+    </div>
+
+    <div class="deck-foot">— End of Playbook — &nbsp;·&nbsp; <strong>YouSquared.ai Channel Enablement</strong> &nbsp;·&nbsp; Confidential for Partner Use</div>
+  </div>
+</section>
+
+<div class="slide-progress" id="slideProgress"></div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const navDots = document.getElementById('navDots');
+const progressEl = document.getElementById('slideProgress');
+const N = slides.length;
+for (let i = 0; i < N; i++) {
+  const dot = document.createElement('button');
+  dot.className = 'nav-dot';
+  dot.onclick = () => slides[i].scrollIntoView({ behavior: 'smooth' });
+  navDots.appendChild(dot);
+  const bar = document.createElement('div');
+  bar.className = 'progress-bar';
+  bar.innerHTML = '<div class="progress-fill"></div>';
+  bar.onclick = () => slides[i].scrollIntoView({ behavior: 'smooth' });
+  progressEl.appendChild(bar);
+}
+const dots = navDots.querySelectorAll('.nav-dot');
+const bars = progressEl.querySelectorAll('.progress-bar');
+function updateActive(idx) {
+  dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  bars.forEach((b, i) => {
+    b.classList.toggle('active', i === idx);
+    b.classList.toggle('done', i < idx);
+  });
+}
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      const idx = Array.from(slides).indexOf(entry.target);
+      updateActive(idx);
+    }
+  });
+}, { threshold: 0.4 });
+slides.forEach(s => io.observe(s));
+updateActive(0);
+</script>
+</body>
+</html>
