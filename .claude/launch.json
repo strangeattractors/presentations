@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "ltv-cac",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "4567", "--directory", "/Users/alexdalyac/git/presentations-repo/company-internal/ltv-cac"],
+      "port": 4567
+    },
+    {
+      "name": "verizon-onetalk",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "4571", "--directory", "/Users/alexdalyac/git/presentations-repo/customer-facing/pitch-decks/verizon-onetalk"],
+      "port": 4571
+    }
+  ]
+}
