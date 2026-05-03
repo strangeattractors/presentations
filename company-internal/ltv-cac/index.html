@@ -231,6 +231,79 @@
     border-bottom: 1px solid var(--border);
   }
   .row:last-child { border-bottom: none; }
+
+  /* Expandable rows */
+  details.row-x { padding: 0; border-bottom: 1px solid var(--border); }
+  details.row-x:last-child { border-bottom: none; }
+  details.row-x > summary { list-style: none; cursor: pointer; }
+  details.row-x > summary::-webkit-details-marker { display: none; }
+  details.row-x > summary > .row { border-bottom: none; }
+  details.row-x > summary .chev-mini {
+    width: 14px; height: 14px;
+    color: var(--faint);
+    transition: transform 0.2s ease;
+    margin-left: 4px;
+    flex-shrink: 0;
+  }
+  details.row-x[open] > summary .chev-mini { transform: rotate(90deg); color: var(--terracotta); }
+  details.row-x .row-body {
+    padding: 4px 0 18px 56px;
+    font-size: 0.88em;
+    color: var(--charcoal);
+  }
+
+  /* Nested expansions */
+  details.nx { margin: 6px 0; }
+  details.nx > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 5px 0;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    color: var(--charcoal);
+  }
+  details.nx > summary::-webkit-details-marker { display: none; }
+  details.nx > summary::before {
+    content: '';
+    display: inline-block;
+    width: 0; height: 0;
+    border-left: 4px solid var(--faint);
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    flex-shrink: 0;
+  }
+  details.nx[open] > summary::before {
+    transform: rotate(90deg);
+    border-left-color: var(--terracotta);
+  }
+  details.nx > .nx-body {
+    padding: 4px 0 4px 14px;
+    margin-left: 1px;
+    border-left: 2px solid var(--border);
+  }
+  ul.nx-bullets { list-style: none; padding: 0; margin: 4px 0; }
+  ul.nx-bullets li {
+    padding: 3px 0 3px 14px;
+    position: relative;
+    color: var(--muted);
+  }
+  ul.nx-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 11px;
+    width: 5px; height: 5px;
+    background: var(--terracotta);
+    border-radius: 50%;
+  }
+  ul.nx-bullets li strong { color: var(--charcoal); }
+  .row-body .crit {
+    margin-top: 8px;
+    font-size: 0.86em;
+    color: var(--faint);
+    font-style: italic;
+  }
   .ic {
     width: 42px; height: 42px;
     border-radius: 12px;
@@ -404,22 +477,49 @@
     <div class="panel">
       <div class="panel-head">CAC components</div>
 
-      <div class="row">
-        <div class="ic" id="m-org-ic">🌱</div>
-        <div>
-          <div class="metric-name">Organic growth</div>
-          <div class="metric-val"><span class="v" id="m-org">+0.8%/wk</span><span class="goal">goal: +5%/wk · organic new users</span></div>
+      <details class="row-x">
+        <summary>
+          <div class="row">
+            <div class="ic" id="m-org-ic">🌱</div>
+            <div>
+              <div class="metric-name">Organic % <svg class="chev-mini" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></div>
+              <div class="metric-val"><span class="v" id="m-org">+0.8%/wk</span><span class="goal">goal: +5%/wk · organic new users</span></div>
+            </div>
+            <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill" id="m-org-bar" style="width:16%"></div></div></div>
+          </div>
+        </summary>
+        <div class="row-body">
+          <details class="nx" open>
+            <summary><strong>0.5 links shared/user/m</strong> <span style="color:var(--muted);font-weight:400">target · measured ≈ 0.37 today</span></summary>
+            <div class="nx-body">
+              <ul class="nx-bullets">
+                <li><strong>AI texts download link to caller</strong> · 0.03 links/user/m <span style="color:var(--faint)">· 58 events · 27 unique senders · last 30d</span></li>
+                <li><strong>User shares referral link/code</strong> · 0.02 links/user/m <span style="color:var(--faint)">· 37 events: 7 link-copied + 30 invite-friends-tapped · 26 unique senders</span></li>
+                <li><strong>User adds teammates</strong> · <span style="color:var(--faint);font-style:italic">no Mixpanel event yet — need to instrument</span></li>
+                <li><strong>User shares call</strong> · 0.03 links/user/m <span style="color:var(--faint)">· 68 short-audio URLs created · 43 unique senders</span></li>
+                <li><strong>Free user's AI custom texts</strong> · 0.29 links/user/m <span style="color:var(--faint)">· 609 custom-sms-to-caller (all tiers — free split TBD) · 124 unique senders</span></li>
+              </ul>
+            </div>
+          </details>
         </div>
-        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill" id="m-org-bar" style="width:16%"></div></div></div>
+      </details>
+
+      <div class="row">
+        <div class="ic" id="m-adcpa-ic">💵</div>
+        <div>
+          <div class="metric-name">Ad cost per activation</div>
+          <div class="metric-val"><span class="v" id="m-adcpa">$70</span><span class="goal">goal: ≤$25 · ad spend ÷ onboarded</span></div>
+        </div>
+        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill" id="m-adcpa-bar" style="width:36%"></div></div></div>
       </div>
 
       <div class="row">
-        <div class="ic" id="m-cpc-ic">💵</div>
+        <div class="ic wash-good">🤝</div>
         <div>
-          <div class="metric-name">Ad cost / click</div>
-          <div class="metric-val"><span class="v" id="m-cpc">£2.43</span><span class="goal">goal: £2 · Google Ads</span></div>
+          <div class="metric-name">Partner cost per activation</div>
+          <div class="metric-val"><span class="v good" id="m-pcpa">$0</span><span class="goal">goal: keep at $0 · Verizon: rev share, no upfront</span></div>
         </div>
-        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill" id="m-cpc-bar" style="width:82%"></div></div></div>
+        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill good" id="m-pcpa-bar" style="width:100%"></div></div></div>
       </div>
 
       <div class="row">
@@ -446,20 +546,71 @@
         <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill" id="m-subr-bar" style="width:100%"></div></div></div>
       </div>
 
-      <div class="row">
-        <div class="ic" id="m-mix-ic">📊</div>
-        <div>
-          <div class="metric-name">Mix (Pro · Elite · Team)</div>
-          <div class="metric-val"><span class="v" id="m-mix">87 · 11 · 3</span><span class="goal">goal: 94 / 4 / 2</span></div>
+      <details class="row-x">
+        <summary>
+          <div class="row">
+            <div class="ic" id="m-mix-ic">📊</div>
+            <div>
+              <div class="metric-name">Mix (Pro · Elite · Team) <svg class="chev-mini" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></div>
+              <div class="metric-val"><span class="v" id="m-mix">98 · 13 · 3</span><span class="goal">active subscribers · last month</span></div>
+            </div>
+            <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill" id="m-mix-bar" style="width:95%"></div></div></div>
+          </div>
+        </summary>
+        <div class="row-body">
+          <details class="nx">
+            <summary><strong>3 Team plans</strong></summary>
+            <div class="nx-body">
+              <ul class="nx-bullets">
+                <li>Hair Shunnarah</li>
+                <li>Safer Pharmacy</li>
+                <li>Ahava Medical</li>
+              </ul>
+              <details class="nx">
+                <summary><strong>X Team leads</strong> <span style="color:var(--faint);font-weight:400">— pipeline</span></summary>
+                <div class="nx-body">
+                  <details class="nx">
+                    <summary><strong>X Solo users with Team potential</strong></summary>
+                    <div class="nx-body">
+                      <details class="nx">
+                        <summary><strong>X champion users with Team potential</strong></summary>
+                        <div class="nx-body">
+                          <ul class="nx-bullets">
+                            <li>McGill Health</li>
+                            <li>Compass</li>
+                          </ul>
+                        </div>
+                      </details>
+                      <details class="nx">
+                        <summary><strong>X to be championed</strong></summary>
+                        <div class="nx-body">
+                          <ul class="nx-bullets">
+                            <li>Centex</li>
+                            <li>United Rentals</li>
+                            <li>Kings County District Attorney's Office</li>
+                            <li><span style="color:var(--faint)">…</span></li>
+                          </ul>
+                          <div class="crit">Criteria: &gt;$1k lead value · still using product · works at 20+ employee company</div>
+                        </div>
+                      </details>
+                    </div>
+                  </details>
+                  <ul class="nx-bullets">
+                    <li><strong>X Safer Pharmacy referrals</strong></li>
+                    <li><strong>X Verizon referrals</strong></li>
+                  </ul>
+                </div>
+              </details>
+            </div>
+          </details>
         </div>
-        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill" id="m-mix-bar" style="width:55%"></div></div></div>
-      </div>
+      </details>
 
       <div class="row">
         <div class="ic wash-good">🏷️</div>
         <div>
           <div class="metric-name">Price (Pro · Elite · Team)</div>
-          <div class="metric-val"><span class="v good">$30 · $60 · $4,000</span><span class="goal">on target ✓</span></div>
+          <div class="metric-val"><span class="v good">$30 · $60 · $2,000+</span><span class="goal">on target ✓</span></div>
         </div>
         <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill good" style="width:100%"></div></div></div>
       </div>
@@ -476,38 +627,7 @@
     </div>
   </div>
 
-  <!-- UPFRONT PAY -->
-  <div class="upfront">
-    <div class="upfront-head">Upfront pay · annual subscriptions</div>
-    <div class="row" style="border-bottom:none; padding: 6px 0;">
-      <div class="ic" id="m-upf-ic">💸</div>
-      <div>
-        <div class="metric-name">Upfront pay · Solo / Team</div>
-        <div class="metric-val"><span class="v" id="m-upf-solo">0%</span><span class="v good" style="margin-left:-2px;">· 100%</span><span class="goal">goal: 30% · 50% · annual &gt; monthly</span></div>
-      </div>
-      <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill" id="m-upf-bar" style="width:0%"></div></div></div>
-    </div>
-  </div>
 
-  <!-- APRIL WARNING -->
-  <div class="warn">
-    <div class="warn-head">⚠ April outlook · challenging</div>
-    <strong>No Team plan signed this month.</strong> Pipeline is thin — we don't yet have a steady flow of decision-maker meetings. Every month without a Team signing leaves ~$48K of locked-in LTV on the table. Top April priority: rebuild the top-of-funnel DM meeting cadence.
-  </div>
-
-  <!-- NOTES / INSIGHTS -->
-  <div class="notes">
-    <div class="notes-title">What this tells us</div>
-    <ul>
-      <li><strong>Mar rebound driven by ad-spend cuts</strong> — Google spend dropped £18K → £6K while onboarded held at 121. CAC fell from $227 → $70.</li>
-      <li><strong>Activation still the biggest CAC lever</strong> — 33% vs 70% target. Every 10pp gain cuts CAC ~20%.</li>
-      <li><strong>Elite mix climbing</strong> — 3% Dec → 19% Mar. More users choosing $60/mo unlimited plan.</li>
-      <li><strong>Team book is the locked-in lever</strong> — 3 active Team customers (HSTA, Safer Pharmacy, Ahava Medical) contribute the majority of forward LTV at $4K/mo average.</li>
-    </ul>
-    <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 0.78em; color: var(--faint);">
-      <strong style="color: var(--muted);">Methodology note.</strong> Onboarded = Mixpanel <code style="background:transparent; padding:0;">call_forwarding_verification_success</code> · Subs = RevenueCat <code style="background:transparent; padding:0;">rc_initial_purchase_event</code> · Solo lifetime <strong>9.3mo</strong> from <a href="../subscriber-retention/" style="color:var(--terracotta);text-decoration:none;">subscriber-retention dashboard</a> (Kaplan–Meier, weighted ARPU $31.73) · Team lifetime 12mo baseline · Mix shown as % of active subs incl. 3 Teams · Team% in LTV formula held at 1% (B2C2B forward steady-state) — intentionally conservative vs actual stock of 3%. Ad cost/click is Google Ads only (Apple/Meta excluded).
-    </div>
-  </div>
 
   <!-- FOOTER -->
   <div class="foot">
@@ -524,41 +644,37 @@ const DATA = {
     ratio: "1.11", trend: "Dec 2025 · tracking begins", trendClass: "",
     cac: "$85", ltvSolo: "$35", ltvTeam: "$59",
     org: "—", orgStatus: "off", orgBar: 0,
+    adcpa: "$85", adcpaStatus: "off", adcpaBar: 29,
     act: "33%", actStatus: "off", actBar: 47,
-    cpc: "£4.21", cpcStatus: "off", cpcBar: 100,
     subr: "12%", subrStatus: "good", subrBar: 100,
-    mix: "93 · 4 · 3", mixStatus: "close", mixBar: 75,
-    upfSolo: "0%", upfStatus: "off", upfBar: 0,
+    mix: "96 · 4 · 3", mixStatus: "good", mixBar: 90,
   },
   jan: {
     ratio: "1.16", trend: "↗ +5% vs Dec", trendClass: "",
     cac: "$126", ltvSolo: "$58", ltvTeam: "$87",
     org: "—", orgStatus: "off", orgBar: 0,
+    adcpa: "$126", adcpaStatus: "off", adcpaBar: 20,
     act: "26%", actStatus: "off", actBar: 37,
-    cpc: "£2.77", cpcStatus: "close", cpcBar: 72,
     subr: "18%", subrStatus: "good", subrBar: 100,
-    mix: "91 · 7 · 3", mixStatus: "good", mixBar: 90,
-    upfSolo: "5%", upfStatus: "off", upfBar: 17,
+    mix: "105 · 9 · 3", mixStatus: "good", mixBar: 95,
   },
   feb: {
     ratio: "0.78", trend: "↘ -33% vs Jan", trendClass: "down",
     cac: "$227", ltvSolo: "$72", ltvTeam: "$105",
     org: "—", orgStatus: "off", orgBar: 0,
+    adcpa: "$227", adcpaStatus: "off", adcpaBar: 11,
     act: "29%", actStatus: "off", actBar: 41,
-    cpc: "£2.62", cpcStatus: "close", cpcBar: 76,
     subr: "22%", subrStatus: "good", subrBar: 100,
-    mix: "88 · 9 · 3", mixStatus: "good", mixBar: 95,
-    upfSolo: "5%", upfStatus: "off", upfBar: 17,
+    mix: "102 · 12 · 3", mixStatus: "good", mixBar: 95,
   },
   mar: {
     ratio: "1.53", trend: "↗ +96% vs Feb · best month on record", trendClass: "",
     cac: "$70", ltvSolo: "$44", ltvTeam: "$63",
     org: "+0.8%/wk", orgStatus: "off", orgBar: 16,
+    adcpa: "$70", adcpaStatus: "off", adcpaBar: 36,
     act: "33%", actStatus: "off", actBar: 47,
-    cpc: "£2.43", cpcStatus: "close", cpcBar: 82,
     subr: "13%", subrStatus: "good", subrBar: 100,
-    mix: "87 · 11 · 3", mixStatus: "good", mixBar: 95,
-    upfSolo: "0%", upfStatus: "off", upfBar: 0,
+    mix: "98 · 13 · 3", mixStatus: "good", mixBar: 95,
   },
 };
 
@@ -590,18 +706,10 @@ function select(month) {
   };
 
   setStatus("m-org", "m-org-bar", "m-org-ic", d.org, d.orgStatus, d.orgBar);
+  setStatus("m-adcpa", "m-adcpa-bar", "m-adcpa-ic", d.adcpa, d.adcpaStatus, d.adcpaBar);
   setStatus("m-act", "m-act-bar", "m-act-ic", d.act, d.actStatus, d.actBar);
-  setStatus("m-cpc", "m-cpc-bar", "m-cpc-ic", d.cpc, d.cpcStatus, d.cpcBar);
   setStatus("m-subr", "m-subr-bar", "m-subr-ic", d.subr, d.subrStatus, d.subrBar);
   setStatus("m-mix", "m-mix-bar", "m-mix-ic", d.mix, d.mixStatus, d.mixBar);
-
-  const upfV = document.getElementById("m-upf-solo");
-  upfV.textContent = d.upfSolo;
-  upfV.className = VALUE_CLASS[d.upfStatus];
-  document.getElementById("m-upf-ic").className = ICON_WASH[d.upfStatus];
-  const upfBar = document.getElementById("m-upf-bar");
-  upfBar.className = BAR_CLASS[d.upfStatus];
-  upfBar.style.width = d.upfBar + "%";
 
   // Update active point on the trend chart
   if (window._trendChart) {
