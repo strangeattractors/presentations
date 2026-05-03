@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
   :root {
     --terracotta: #E07A5F;
@@ -126,9 +127,21 @@
     box-shadow: 0 1px 2px rgba(45,42,38,0.04), 0 8px 22px rgba(45,42,38,0.05);
     margin-bottom: 20px;
     display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 40px;
+    grid-template-columns: minmax(220px, auto) minmax(260px, auto) minmax(320px, 1.3fr);
+    gap: 32px;
     align-items: center;
+  }
+  .headline-trend {
+    height: 200px;
+    position: relative;
+  }
+  .headline-trend canvas { max-width: 100%; height: 100% !important; }
+  .headline-trend .trend-title {
+    font-size: 0.72em; text-transform: uppercase; letter-spacing: 2.5px;
+    color: var(--muted); font-weight: 600; margin-bottom: 6px;
+  }
+  .headline-trend .trend-sub {
+    font-size: 0.78em; color: var(--faint); margin-bottom: 8px;
   }
   .headline-left .h-label {
     font-size: 0.72em;
@@ -356,37 +369,6 @@
     <div class="sub"><span id="sub-month">March 2026</span> · tracking since Dec 2025 · April outlook at-risk</div>
   </div>
 
-  <!-- TIME-SERIES STRIP -->
-  <div class="strip-wrap">
-    <div class="strip-head">
-      <div class="t">Monthly LTV : CAC</div>
-      <div class="h">Target 3.0 · Dec 2025 → Mar 2026</div>
-    </div>
-    <div class="strip" id="strip">
-      <div class="mo close" data-month="dec">
-        <div class="mo-label">Dec 2025</div>
-        <div class="mo-ratio">1.11</div>
-        <div class="mo-bar"><div class="mo-fill" style="width:37%"></div></div>
-      </div>
-      <div class="mo close" data-month="jan">
-        <div class="mo-label">Jan 2026</div>
-        <div class="mo-ratio">1.16</div>
-        <div class="mo-bar"><div class="mo-fill" style="width:39%"></div></div>
-      </div>
-      <div class="mo close" data-month="feb">
-        <div class="mo-label">Feb 2026</div>
-        <div class="mo-ratio">0.78</div>
-        <div class="mo-bar"><div class="mo-fill" style="width:26%"></div></div>
-      </div>
-      <div class="mo close current" data-month="mar">
-        <div class="mo-tag">current</div>
-        <div class="mo-label">Mar 2026</div>
-        <div class="mo-ratio">1.53</div>
-        <div class="mo-bar"><div class="mo-fill" style="width:51%"></div></div>
-      </div>
-    </div>
-  </div>
-
   <!-- HEADLINE -->
   <div class="headline">
     <div class="headline-left">
@@ -409,6 +391,11 @@
         <div class="bl">LTV · Solo</div>
         <div class="bv" id="h-ltv-solo">$44</div>
       </div>
+    </div>
+    <div class="headline-trend">
+      <div class="trend-title">Monthly LTV : CAC</div>
+      <div class="trend-sub">Target 3.0 · click a point to view that month</div>
+      <canvas id="trend-chart"></canvas>
     </div>
   </div>
 
@@ -663,24 +650,99 @@ function select(month) {
   upfBar.className = BAR_CLASS[d.upfStatus];
   upfBar.style.width = d.upfBar + "%";
 
-  document.querySelectorAll("#strip .mo").forEach(el => {
-    el.classList.remove("current");
-    const tag = el.querySelector(".mo-tag");
-    if (tag) tag.remove();
-  });
-  const picked = document.querySelector(`#strip .mo[data-month="${month}"]`);
-  picked.classList.add("current");
-  if (!picked.querySelector(".mo-tag")) {
-    const tag = document.createElement("div");
-    tag.className = "mo-tag";
-    tag.textContent = "selected";
-    picked.insertBefore(tag, picked.firstChild);
+  // Update active point on the trend chart
+  if (window._trendChart) {
+    const idx = MONTH_KEYS.indexOf(month);
+    window._trendChart.data.datasets[0].pointRadius = MONTH_KEYS.map((_, i) => i === idx ? 9 : 5);
+    window._trendChart.data.datasets[0].pointBorderWidth = MONTH_KEYS.map((_, i) => i === idx ? 3 : 2);
+    window._trendChart.update("none");
   }
 }
 
-document.querySelectorAll("#strip .mo").forEach(el => {
-  el.addEventListener("click", () => select(el.dataset.month));
-});
+const MONTH_KEYS = ["dec", "jan", "feb", "mar"];
+const MONTH_LABELS = ["Dec '25", "Jan '26", "Feb '26", "Mar '26"];
+
+(function initTrend() {
+  const ctx = document.getElementById("trend-chart");
+  if (!ctx) return;
+  const ratios = MONTH_KEYS.map(k => parseFloat(DATA[k].ratio));
+  const css = getComputedStyle(document.documentElement);
+  const terracotta = css.getPropertyValue("--terracotta").trim() || "#E07A5F";
+  const muted = css.getPropertyValue("--muted").trim() || "#6B6560";
+  const good = css.getPropertyValue("--good").trim() || "#5A9A6F";
+
+  window._trendChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: MONTH_LABELS,
+      datasets: [{
+        data: ratios,
+        borderColor: terracotta,
+        backgroundColor: "rgba(224, 122, 95, 0.10)",
+        borderWidth: 2.5,
+        tension: 0.3,
+        fill: true,
+        pointBackgroundColor: terracotta,
+        pointBorderColor: "#fff",
+        pointBorderWidth: 2,
+        pointRadius: 5,
+        pointHoverRadius: 9,
+      }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      onClick: (e, els) => {
+        if (els && els.length) select(MONTH_KEYS[els[0].index]);
+      },
+      onHover: (e, els) => {
+        e.native.target.style.cursor = els && els.length ? "pointer" : "default";
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: { label: (ctx) => `LTV:CAC ${ctx.parsed.y.toFixed(2)}` },
+          backgroundColor: "rgba(45,42,38,0.92)",
+          padding: 10,
+          titleFont: { family: "Inter", weight: "600" },
+          bodyFont: { family: "Inter" },
+        },
+        annotation: undefined,
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          suggestedMax: 3.2,
+          grid: { color: "rgba(45,42,38,0.06)" },
+          ticks: { color: muted, font: { family: "Inter", size: 11 }, stepSize: 1 },
+        },
+        x: {
+          grid: { display: false },
+          ticks: { color: muted, font: { family: "Inter", size: 11, weight: "500" } },
+        },
+      },
+    },
+    plugins: [{
+      id: "targetLine",
+      afterDraw(chart) {
+        const { ctx, chartArea: { left, right }, scales: { y } } = chart;
+        const yPos = y.getPixelForValue(3);
+        ctx.save();
+        ctx.strokeStyle = good;
+        ctx.setLineDash([4, 4]);
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(left, yPos); ctx.lineTo(right, yPos);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = good;
+        ctx.font = "600 10px Inter, sans-serif";
+        ctx.fillText("Target 3.0", right - 64, yPos - 6);
+        ctx.restore();
+      },
+    }],
+  });
+})();
 
 select("mar");
 </script>
