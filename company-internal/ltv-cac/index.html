@@ -432,6 +432,18 @@
 </style>
 </head>
 <body>
+<style>
+  body.embed { padding: 0 !important; }
+  body.embed .page { padding: 16px 16px 0 !important; max-width: none !important; }
+  body.embed .title-block,
+  body.embed .foot { display: none !important; }
+</style>
+<script>
+  if (new URLSearchParams(location.search).has("embed")) {
+    document.documentElement.classList.add("embed");
+    document.addEventListener("DOMContentLoaded", () => document.body.classList.add("embed"));
+  }
+</script>
 
 <div class="page">
 

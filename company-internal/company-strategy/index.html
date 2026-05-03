@@ -1064,171 +1064,36 @@
 <!-- SECTION 2: DISTRIBUTION -->
 <section class="alt">
   <div class="section-inner">
-    <div class="distribution-header">
-      <div class="distribution-text">
-        <div class="section-label">Distribution</div>
-        <h2 class="section-title">Scaling requires earning $3 for every $1 in acquisition</h2>
-        <p class="section-lead">By spreading organically &amp; selling Team plans</p>
-      </div>
-      <a class="ltv-cac-link" href="../ltv-cac/" target="_blank" rel="noopener" aria-label="Open the LTV:CAC dashboard">
-        <div class="ltv-cac-mini">
-          <div class="lcm-cac">
-            <div class="lcm-label">CAC</div>
-            <div class="lcm-value">$70</div>
-            <div class="lcm-sub">per onboarded user</div>
-          </div>
-          <div class="lcm-ltvs">
-            <div class="lcm-ltv lcm-team">
-              <div class="lcm-label">LTV · Team</div>
-              <div class="lcm-value">$63</div>
-            </div>
-            <div class="lcm-ltv lcm-solo">
-              <div class="lcm-label">LTV · Solo</div>
-              <div class="lcm-value">$44</div>
-            </div>
-          </div>
-        </div>
-        <div class="lcm-cta">see the LTV:CAC dashboard →</div>
-      </a>
+    <div class="distribution-text" style="margin-bottom:24px">
+      <div class="section-label">Distribution</div>
+      <h2 class="section-title">Scaling requires earning $3 for every $1 in acquisition</h2>
+      <p class="section-lead">By spreading organically &amp; selling Team plans · <a href="../ltv-cac/" target="_blank" rel="noopener" style="color:#E07A5F;text-decoration:none;font-weight:600">open dashboard ↗</a></p>
     </div>
 
-    <details class="card">
-      <summary>
-        <div class="card-index">a</div>
-        <div class="card-title">
-          Spread organically
-          <span class="vs">Target +5% / week organic new users, vs <strong>+0.8% today</strong> · Mar 2026</span>
-        </div>
-        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
-      </summary>
-      <div class="card-body">
-        <details class="nest" open>
-          <summary>PLG base layer — <strong style="color:#E07A5F">3% of viewers activate × 0.5 links shared/user/m</strong></summary>
-          <div class="nest-body">
-            <details class="nest">
-              <summary>3% of viewers activate</summary>
-              <div class="nest-body">
-                <details class="nest">
-                  <summary>iOS · 8% download → 40% activate</summary>
-                  <div class="nest-body">
-                    <ul class="bullets">
-                      <li>Drop-offs: <span style="color:#9E9893; font-style:italic">X, Y, Z</span></li>
-                    </ul>
-                  </div>
-                </details>
-                <details class="nest">
-                  <summary>Web · 3% activate</summary>
-                  <div class="nest-body">
-                    <ul class="bullets"><li><span style="color:#9E9893; font-style:italic">to break down</span></li></ul>
-                  </div>
-                </details>
-              </div>
-            </details>
-            <details class="nest">
-              <summary>0.5 links shared/user/m <span style="color:#9E9893; font-weight:400; font-size:0.88em">target · measured ≈ 0.37 today</span></summary>
-              <div class="nest-body">
-                <ul class="bullets">
-                  <li><strong>AI texts download link to caller</strong> · <strong style="color:#E07A5F">0.03 links/user/m</strong> <span class="role">58 events · 27 unique senders · last 30d</span></li>
-                  <li><strong>User shares referral link/code</strong> · <strong style="color:#E07A5F">0.02 links/user/m</strong> <span class="role">37 events: 7 link-copied + 30 invite-friends-tapped · 26 unique senders</span></li>
-                  <li><strong>User adds teammates</strong> · <span style="color:#9E9893; font-style:italic">no Mixpanel event yet — need to instrument</span></li>
-                  <li><strong>User shares call</strong> · <strong style="color:#E07A5F">0.03 links/user/m</strong> <span class="role">68 short-audio URLs created · 43 unique senders</span></li>
-                  <li><strong>Free user's AI custom texts</strong> · <strong style="color:#E07A5F">0.29 links/user/m</strong> <span class="role">609 custom-sms-to-caller (all tiers — free-tier split TBD) · 124 unique senders</span></li>
-                </ul>
-                <p style="margin-top:14px; font-size:0.82em; color:#9E9893;">Window: 2026-04-03 → 2026-05-03 · denominator: 2,084 MAU (users with ≥1 <code>end_of_call</code> in window) · source: Mixpanel segmentation API.</p>
-              </div>
-            </details>
-          </div>
-        </details>
-        <details class="nest">
-          <summary>Paid ads</summary>
-          <div class="nest-body">
-            <ul class="bullets">
-              <li><strong>Google Search ads</strong> · $8K/mo · CAC $70 · CPC £2.43 · 121 onboards/mo · LTV:CAC 1.53 <span class="role">Mar 2026 · best month on record</span></li>
-              <li><strong>Apple Search Ads</strong> · $500/mo experiment</li>
-              <li><strong>Meta · LinkedIn</strong> · not yet launched</li>
-            </ul>
-            <p style="margin-top:10px; font-size:0.88em; color:#6B6560;">See the <a href="../ltv-cac/" target="_blank" rel="noopener" style="color:#E07A5F; text-decoration:none; font-weight:600;">LTV:CAC dashboard</a> for the monthly trend →</p>
-          </div>
-        </details>
-      </div>
-    </details>
+    <iframe id="ltv-cac-embed" src="../ltv-cac/?embed=1" loading="lazy"
+            style="width:100%; min-height:1000px; border:0; border-radius:14px; background:#F5F2EF; display:block;"
+            title="LTV:CAC dashboard"></iframe>
+    <script>
+      (function() {
+        const f = document.getElementById("ltv-cac-embed");
+        const fit = () => {
+          try {
+            const h = f.contentDocument.body.scrollHeight;
+            if (h && h > 200) f.style.height = (h + 16) + "px";
+          } catch (e) { /* same-origin only */ }
+        };
+        f.addEventListener("load", () => {
+          fit();
+          // Watch for in-iframe content changes (e.g. expanding details)
+          try {
+            const ro = new ResizeObserver(fit);
+            ro.observe(f.contentDocument.body);
+          } catch (e) {}
+        });
+        window.addEventListener("resize", fit);
+      })();
+    </script>
 
-    <details class="card">
-      <summary>
-        <div class="card-index">b</div>
-        <div class="card-title">
-          Sell Team plans
-          <span class="vs">Target 4% of users upgrade to ≥ $2k/mo Team plan, vs <strong>1% today</strong> · Team mix Dec 2025</span>
-        </div>
-        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
-      </summary>
-      <div class="card-body">
-        <details class="nest" open>
-          <summary>Product-led sales — users intro 5 decision-makers / week</summary>
-          <div class="nest-body">
-            <ul class="bullets">
-              <li>Identify qualified leads within the user base</li>
-              <li>Get users to intro their leadership</li>
-            </ul>
-            <details class="nest">
-              <summary>White-glove playbook</summary>
-              <div class="nest-body">
-                <p>See <a href="../../customer-facing/white-glove-playbooks/seller-playbook/">proactive support seller playbook →</a></p>
-              </div>
-            </details>
-          </div>
-        </details>
-        <details class="nest">
-          <summary>Outbound layer — 5 decision-makers / week from cold</summary>
-          <div class="nest-body">
-            <ul class="bullets">
-              <li>Paid ads</li>
-              <li>Partnerships <span class="role">(Verizon)</span></li>
-            </ul>
-            <details class="nest">
-              <summary>Cold outreach</summary>
-              <div class="nest-body">
-                <ul class="bullets">
-                  <li>LinkedIn invites + weekly posts</li>
-                  <li>Cold emails inviting the decision-maker to call our demo number</li>
-                </ul>
-              </div>
-            </details>
-            <ul class="bullets"><li>Events</li></ul>
-          </div>
-        </details>
-      </div>
-    </details>
-
-    <details class="card">
-      <summary>
-        <div class="card-index">c</div>
-        <div class="card-title">
-          Retain customers
-          <span class="vs">≥ 12 mo subscriber retention, vs <strong>9.3 mo today</strong></span>
-        </div>
-        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
-      </summary>
-      <div class="card-body">
-        <div class="retention-split">
-          <div class="retention-half">
-            <div class="retention-half-label">Solo subscribers · 9.3 mo today</div>
-            <a class="retention-thumb" href="../subscriber-retention/" target="_blank" rel="noopener">
-              <img src="../subscriber-retention/assets/retention-chart.svg" alt="Subscriber retention curve">
-              <div class="retention-thumb-cta">see the dashboard →</div>
-            </a>
-          </div>
-          <div class="retention-half">
-            <div class="retention-half-label">Team customers · still subscribed</div>
-            <div class="customer"><span class="name">Hair Shunnarah</span><span class="note">$50k/yr · 7-figure potential</span></div>
-            <div class="customer"><span class="name">McGill University Health Center</span></div>
-            <div class="customer"><span class="name">Safer Pharmacy</span></div>
-            <div class="customer"><span class="name">Ahava Medical</span></div>
-            <div class="customer churn"><span class="name">All Access Services</span><span class="note">$20k/yr churned — lessons learned</span></div>
-          </div>
-        </div>
-      </div>
-    </details>
   </div>
 </section>
 
