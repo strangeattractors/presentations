@@ -51,7 +51,10 @@ def update_file(path: Path, meta: dict, defaults: dict) -> str:
         src = re.sub(r"<title>[^<]*</title>", f"<title>{html.escape(page_title)}</title>", src, count=1)
 
     if START in src and END in src:
-        new = re.sub(re.escape(START) + r".*?" + re.escape(END), block, src, count=1, flags=re.DOTALL)
+        # Match the whole block including its leading indent so the replacement
+        # doesn't double-indent on subsequent runs.
+        pattern = r"[ \t]*" + re.escape(START) + r".*?" + re.escape(END)
+        new = re.sub(pattern, block, src, count=1, flags=re.DOTALL)
         action = "replaced"
     else:
         new, n = re.subn(r"(<title>[^<]*</title>\s*\n)", r"\1" + block + "\n", src, count=1)
