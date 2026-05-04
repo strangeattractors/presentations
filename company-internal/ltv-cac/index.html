@@ -511,7 +511,7 @@
             <div class="ic" id="m-org-ic">🌱</div>
             <div>
               <div class="metric-name">Organic % <svg class="chev-mini" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></div>
-              <div class="metric-val"><span class="v" id="m-org">+0.8%/wk</span><span class="goal">goal: +5%/wk · organic new users</span></div>
+              <div class="metric-val"><span class="v" id="m-org">+0.8%/wk</span><span class="goal">goal: +5%/wk<br>new users</span></div>
             </div>
             <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill" id="m-org-bar" style="width:16%"></div></div></div>
           </div>
@@ -536,7 +536,7 @@
         <div class="ic" id="m-adcpa-ic">💵</div>
         <div>
           <div class="metric-name">Ad cost per activation</div>
-          <div class="metric-val"><span class="v" id="m-adcpa">$70</span><span class="goal">goal: ≤$35 · ad spend ÷ onboarded</span></div>
+          <div class="metric-val"><span class="v" id="m-adcpa">$70</span><span class="goal">goal: ≤$30</span></div>
         </div>
         <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill" id="m-adcpa-bar" style="width:36%"></div></div></div>
       </div>
@@ -545,7 +545,7 @@
         <div class="ic wash-good">🤝</div>
         <div>
           <div class="metric-name">Partner cost per activation</div>
-          <div class="metric-val"><span class="v good" id="m-pcpa">$0</span><span class="goal">goal: keep at $0 · Verizon: rev share, no upfront</span></div>
+          <div class="metric-val"><span class="v good" id="m-pcpa">$0</span><span class="goal">goal: $0 ·<br>Verizon, Safer Pharmacy</span></div>
         </div>
         <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill good" id="m-pcpa-bar" style="width:100%"></div></div></div>
       </div>
@@ -554,7 +554,7 @@
         <div class="ic" id="m-act-ic">🎯</div>
         <div>
           <div class="metric-name">Activation rate</div>
-          <div class="metric-val"><span class="v" id="m-act">33%</span><span class="goal">goal: 70% · 1st open → onboarded</span></div>
+          <div class="metric-val"><span class="v" id="m-act">44%</span><span class="goal">goal: 70%<br>1st open → onboarded</span></div>
         </div>
         <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill" id="m-act-bar" style="width:47%"></div></div></div>
       </div>
@@ -569,7 +569,7 @@
         <div class="ic" id="m-subr-ic">💳</div>
         <div>
           <div class="metric-name">Subscription rate</div>
-          <div class="metric-val"><span class="v" id="m-subr">13%</span><span class="goal">goal: 10% · onboarded → paying</span></div>
+          <div class="metric-val"><span class="v" id="m-subr">13%</span><span class="goal">goal: 10%<br>onboarded → paying</span></div>
         </div>
         <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill" id="m-subr-bar" style="width:100%"></div></div></div>
       </div>
@@ -656,14 +656,28 @@
         <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill good" style="width:100%"></div></div></div>
       </div>
 
-      <div class="row">
-        <div class="ic wash-close">⏱</div>
-        <div>
-          <div class="metric-name">Lifetime (Pro · Elite · Team)</div>
-          <div class="metric-val"><span class="v"><span style="color:var(--good)">9</span> · <span style="color:var(--good)">9</span> · <span style="color:var(--close)">12</span> mo</span><span class="goal">goal: 12 · 12 · 36 mo · <a href="../subscriber-retention/" style="color:var(--terracotta);text-decoration:none;">details</a></span></div>
+      <details class="row-x">
+        <summary>
+          <div class="row">
+            <div class="ic wash-close">⏱</div>
+            <div>
+              <div class="metric-name">Lifetime (Pro · Elite · Team) <svg class="chev-mini" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></div>
+              <div class="metric-val"><span class="v"><span style="color:var(--good)">9</span> · <span style="color:var(--good)">9</span> · <span style="color:var(--close)">12</span> mo</span><span class="goal">goal: 12 · 12 · 36 mo</span></div>
+            </div>
+            <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill close" style="width:67%"></div></div></div>
+          </div>
+        </summary>
+        <div class="row-body">
+          <details class="nx" open>
+            <summary><strong>Subscriber retention</strong> <span style="color:var(--muted);font-weight:400">Kaplan-Meier survival curves by tier</span></summary>
+            <div class="nx-body">
+              <ul class="nx-bullets">
+                <li><a href="../subscriber-retention/" style="color:var(--terracotta);text-decoration:none;font-weight:600">→ Open subscriber retention dashboard</a></li>
+              </ul>
+            </div>
+          </details>
         </div>
-        <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill close" style="width:67%"></div></div></div>
-      </div>
+      </details>
 
     </div>
   </div>
@@ -685,7 +699,7 @@ const DATA = {
     ratio: "1.11", trend: "Dec 2025 · tracking begins", trendClass: "",
     cac: "$85", ltvSolo: "$35", ltvTeam: "$59",
     org: "—", orgStatus: "off", orgBar: 0,
-    adcpa: "$85", adcpaStatus: "off", adcpaBar: 41,
+    adcpa: "$85", adcpaStatus: "off", adcpaBar: 35,
     act: "33%", actStatus: "off", actBar: 47,
     subr: "12%", subrStatus: "good", subrBar: 100,
     mix: '<span style="color:var(--close)">96</span> · <span style="color:var(--close)">4</span> · <span style="color:var(--off)">3</span>', mixStatus: "good", mixBar: 90,
@@ -694,7 +708,7 @@ const DATA = {
     ratio: "1.16", trend: "↗ +5% vs Dec", trendClass: "",
     cac: "$126", ltvSolo: "$58", ltvTeam: "$87",
     org: "—", orgStatus: "off", orgBar: 0,
-    adcpa: "$126", adcpaStatus: "off", adcpaBar: 28,
+    adcpa: "$126", adcpaStatus: "off", adcpaBar: 24,
     act: "26%", actStatus: "off", actBar: 37,
     subr: "18%", subrStatus: "good", subrBar: 100,
     mix: '<span style="color:var(--close)">105</span> · <span style="color:var(--close)">9</span> · <span style="color:var(--off)">3</span>', mixStatus: "good", mixBar: 95,
@@ -703,7 +717,7 @@ const DATA = {
     ratio: "0.78", trend: "↘ -33% vs Jan", trendClass: "down",
     cac: "$227", ltvSolo: "$72", ltvTeam: "$105",
     org: "—", orgStatus: "off", orgBar: 0,
-    adcpa: "$227", adcpaStatus: "off", adcpaBar: 15,
+    adcpa: "$227", adcpaStatus: "off", adcpaBar: 13,
     act: "29%", actStatus: "off", actBar: 41,
     subr: "22%", subrStatus: "good", subrBar: 100,
     mix: '<span style="color:var(--close)">102</span> · <span style="color:var(--close)">12</span> · <span style="color:var(--off)">3</span>', mixStatus: "good", mixBar: 95,
@@ -711,8 +725,8 @@ const DATA = {
   mar: {
     ratio: "1.53", trend: "↗ +96% vs Feb · best month on record", trendClass: "",
     cac: "$70", ltvSolo: "$44", ltvTeam: "$63",
-    org: "+0.8%/wk", orgStatus: "off", orgBar: 16,
-    adcpa: "$70", adcpaStatus: "close", adcpaBar: 50,
+    org: "+0.8%<br>/wk", orgStatus: "off", orgBar: 16,
+    adcpa: "$70", adcpaStatus: "close", adcpaBar: 43,
     act: "44%", actStatus: "close", actBar: 63,
     subr: "13%", subrStatus: "good", subrBar: 100,
     mix: '<span style="color:var(--close)">98</span> · <span style="color:var(--close)">13</span> · <span style="color:var(--off)">3</span>', mixStatus: "good", mixBar: 95,
