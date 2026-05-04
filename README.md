@@ -37,22 +37,26 @@ Published at: https://strange-attractor.com/presentations/
 
 All customer/user full names must be redacted to initials (e.g. "J.S." not "John Smith") per company policy. Call recordings (MP3s) and unmasked phone numbers are not permitted in this public repo — strip before committing.
 
-## Roadmap — Phase 2: auth gating
+## Auth gating
 
-Current state: **public** (served by GitHub Pages, no auth).
+Cloudflare Access gates `/presentations/*` except pitch decks and the index.
 
-Planned: Cloudflare Access in front of `/presentations/*` so only authorized viewers can see content.
+| Path | Access |
+|---|---|
+| `/presentations/` (index) | Public |
+| `/presentations/customer-facing/pitch-decks/*` | Public |
+| `/presentations/customer-facing/qbrs/*` | Gated |
+| `/presentations/customer-facing/white-glove-playbooks/*` | Gated |
+| `/presentations/company-internal/*` | Gated |
 
-### Policy design
-- `@strange-attractor.com` and `@yousquared.ai` emails → automatic access (domain rule)
-- Individual YouSquared users granted ad-hoc → listed in `.auth/allowed.json` (emails)
-- Cohorts (e.g. All Access plan users) → resolved to emails via prod DB query, appended to list
-- Login via email one-time-PIN (no Google account required)
+Login: email one-time PIN. Allowed: anyone `@yousquared.ai`, anyone `@strange-attractor.com`, plus specific grants.
 
-### Tasks
-- [ ] Move `strange-attractor.com` DNS to Cloudflare
-- [ ] Create Zero Trust Access Application scoped to `/presentations/*`
-- [ ] Seed `.auth/allowed.json` with team emails + initial grants
-- [ ] Write `scripts/grant-access.sh <email-or-user>`
-- [ ] Write `scripts/revoke-access.sh <email>`
-- [ ] Document grant-by-cohort flow (e.g. "all All-Access users")
+**Setup runbook**: [.auth/RUNBOOK.md](.auth/RUNBOOK.md) (Cloudflare dashboard steps).
+
+**Manage grants**:
+```bash
+scripts/list-access.sh                    # show current rules
+scripts/grant-access.sh user@example.com  # add specific email
+scripts/revoke-access.sh user@example.com # remove specific email
+```
+Scripts read CF API credentials from `scripts/.env` (gitignored; template at `scripts/.env.example`).
