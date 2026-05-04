@@ -536,7 +536,7 @@
         <div class="ic" id="m-adcpa-ic">💵</div>
         <div>
           <div class="metric-name">Ad cost per activation</div>
-          <div class="metric-val"><span class="v" id="m-adcpa">$70</span><span class="goal">goal: ≤$25 · ad spend ÷ onboarded</span></div>
+          <div class="metric-val"><span class="v" id="m-adcpa">$70</span><span class="goal">goal: ≤$35 · ad spend ÷ onboarded</span></div>
         </div>
         <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill" id="m-adcpa-bar" style="width:36%"></div></div></div>
       </div>
@@ -660,7 +660,7 @@
         <div class="ic wash-close">⏱</div>
         <div>
           <div class="metric-name">Lifetime (Pro · Elite · Team)</div>
-          <div class="metric-val"><span class="v close">9 · 9 · 12 mo</span><span class="goal">goal: 12 · 12 · 36 mo · <a href="../subscriber-retention/" style="color:var(--terracotta);text-decoration:none;">details</a></span></div>
+          <div class="metric-val"><span class="v"><span style="color:var(--good)">9</span> · <span style="color:var(--good)">9</span> · <span style="color:var(--close)">12</span> mo</span><span class="goal">goal: 12 · 12 · 36 mo · <a href="../subscriber-retention/" style="color:var(--terracotta);text-decoration:none;">details</a></span></div>
         </div>
         <div class="bar-wrap"><div class="bar" style="flex:1"><div class="bar-fill close" style="width:67%"></div></div></div>
       </div>
@@ -685,37 +685,37 @@ const DATA = {
     ratio: "1.11", trend: "Dec 2025 · tracking begins", trendClass: "",
     cac: "$85", ltvSolo: "$35", ltvTeam: "$59",
     org: "—", orgStatus: "off", orgBar: 0,
-    adcpa: "$85", adcpaStatus: "off", adcpaBar: 29,
+    adcpa: "$85", adcpaStatus: "off", adcpaBar: 41,
     act: "33%", actStatus: "off", actBar: 47,
     subr: "12%", subrStatus: "good", subrBar: 100,
-    mix: "96 · 4 · 3", mixStatus: "good", mixBar: 90,
+    mix: '<span style="color:var(--close)">96</span> · <span style="color:var(--close)">4</span> · <span style="color:var(--off)">3</span>', mixStatus: "good", mixBar: 90,
   },
   jan: {
     ratio: "1.16", trend: "↗ +5% vs Dec", trendClass: "",
     cac: "$126", ltvSolo: "$58", ltvTeam: "$87",
     org: "—", orgStatus: "off", orgBar: 0,
-    adcpa: "$126", adcpaStatus: "off", adcpaBar: 20,
+    adcpa: "$126", adcpaStatus: "off", adcpaBar: 28,
     act: "26%", actStatus: "off", actBar: 37,
     subr: "18%", subrStatus: "good", subrBar: 100,
-    mix: "105 · 9 · 3", mixStatus: "good", mixBar: 95,
+    mix: '<span style="color:var(--close)">105</span> · <span style="color:var(--close)">9</span> · <span style="color:var(--off)">3</span>', mixStatus: "good", mixBar: 95,
   },
   feb: {
     ratio: "0.78", trend: "↘ -33% vs Jan", trendClass: "down",
     cac: "$227", ltvSolo: "$72", ltvTeam: "$105",
     org: "—", orgStatus: "off", orgBar: 0,
-    adcpa: "$227", adcpaStatus: "off", adcpaBar: 11,
+    adcpa: "$227", adcpaStatus: "off", adcpaBar: 15,
     act: "29%", actStatus: "off", actBar: 41,
     subr: "22%", subrStatus: "good", subrBar: 100,
-    mix: "102 · 12 · 3", mixStatus: "good", mixBar: 95,
+    mix: '<span style="color:var(--close)">102</span> · <span style="color:var(--close)">12</span> · <span style="color:var(--off)">3</span>', mixStatus: "good", mixBar: 95,
   },
   mar: {
     ratio: "1.53", trend: "↗ +96% vs Feb · best month on record", trendClass: "",
     cac: "$70", ltvSolo: "$44", ltvTeam: "$63",
     org: "+0.8%/wk", orgStatus: "off", orgBar: 16,
-    adcpa: "$70", adcpaStatus: "off", adcpaBar: 36,
-    act: "33%", actStatus: "off", actBar: 47,
+    adcpa: "$70", adcpaStatus: "close", adcpaBar: 50,
+    act: "44%", actStatus: "close", actBar: 63,
     subr: "13%", subrStatus: "good", subrBar: 100,
-    mix: "98 · 13 · 3", mixStatus: "good", mixBar: 95,
+    mix: '<span style="color:var(--close)">98</span> · <span style="color:var(--close)">13</span> · <span style="color:var(--off)">3</span>', mixStatus: "good", mixBar: 95,
   },
 };
 
@@ -738,7 +738,7 @@ function select(month) {
 
   const setStatus = (valId, barId, icId, value, status, barPct) => {
     const v = document.getElementById(valId);
-    v.textContent = value;
+    v.innerHTML = value;
     v.className = VALUE_CLASS[status];
     const bar = document.getElementById(barId);
     bar.className = BAR_CLASS[status];
