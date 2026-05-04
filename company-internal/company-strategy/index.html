@@ -996,11 +996,11 @@
               <button class="cell" type="button" data-key="calls-inbound"><div class="prog" style="--pct:75%"><span>75%</span></div></button>
               <button class="cell" type="button" data-key="calls-outbound"><div class="prog" style="--pct:25%"><span>25%</span></div></button>
               <div class="cell row-label">Texts</div>
-              <button class="cell" type="button" data-key="texts-inbound"><div class="prog" style="--pct:5%"><span>5%</span></div></button>
+              <button class="cell" type="button" data-key="texts-inbound"><div class="prog" style="--pct:10%"><span>10%</span></div></button>
               <button class="cell" type="button" data-key="texts-outbound"><div class="prog" style="--pct:50%"><span>50%</span></div></button>
               <div class="cell row-label">Events</div>
               <button class="cell" type="button" data-key="events-inbound"><div class="prog" style="--pct:25%"><span>25%</span></div></button>
-              <button class="cell" type="button" data-key="events-outbound"><div class="prog zero"><span>0%</span></div></button>
+              <button class="cell" type="button" data-key="events-outbound"><div class="prog" style="--pct:50%"><span>50%</span></div></button>
               <div class="cell row-label">Email</div>
               <button class="cell" type="button" data-key="email-inbound"><div class="prog zero"><span>0%</span></div></button>
               <button class="cell" type="button" data-key="email-outbound"><div class="prog zero"><span>0%</span></div></button>
@@ -1159,10 +1159,10 @@
   const channelTodos = {
     'calls-inbound':    { label: 'Inbound calls',    pct: 75, todos: ['SOTA latency', 'User-handled call recording'] },
     'calls-outbound':   { label: 'Outbound calls',   pct: 25, todos: ['Outbound scenarios', 'User-handled call recording'] },
-    'texts-inbound':    { label: 'Inbound texts',    pct: 5,  todos: ['Number porting'] },
+    'texts-inbound':    { label: 'Inbound texts',    pct: 10, todos: ['Number porting'] },
     'texts-outbound':   { label: 'Outbound texts',   pct: 50, todos: ['Outbound scenarios'] },
     'events-inbound':   { label: 'Inbound events',   pct: 25, todos: ['Log 3rd-party events'] },
-    'events-outbound':  { label: 'Outbound events',  pct: 0,  todos: ['Adoption', 'Scheduling glitches'] },
+    'events-outbound':  { label: 'Outbound events',  pct: 50, todos: ['Team scheduling', 'Service booking'] },
     'email-inbound':    { label: 'Inbound email',    pct: 0,  eta: 'Q3' },
     'email-outbound':   { label: 'Outbound email',   pct: 0,  eta: 'Q3' },
     'webchat-inbound':  { label: 'Inbound web chat', pct: 0,  eta: 'Q4' },
