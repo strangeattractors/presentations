@@ -437,6 +437,22 @@
   body.embed .page { padding: 0 !important; max-width: none !important; }
   body.embed .title-block,
   body.embed .foot { display: none !important; }
+  body.embed .headline {
+    grid-template-columns: minmax(150px, auto) minmax(190px, auto) minmax(240px, 1fr) !important;
+    gap: 18px !important;
+    padding: 22px 24px !important;
+    margin-bottom: 14px !important;
+  }
+  body.embed .headline-left .h-ratio { font-size: 5em !important; }
+  body.embed .headline-trend { height: 170px !important; }
+  body.embed .h-box { padding: 14px 16px !important; }
+  body.embed .h-box.cac .bv { font-size: 2.4em !important; }
+  body.embed .cols { grid-template-columns: 1fr 1fr !important; gap: 14px !important; }
+  body.embed .panel { padding: 20px 22px !important; }
+  @media (max-width: 700px) {
+    body.embed .headline { grid-template-columns: 1fr !important; }
+    body.embed .cols { grid-template-columns: 1fr !important; }
+  }
 </style>
 <script>
   if (new URLSearchParams(location.search).has("embed")) {
