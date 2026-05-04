@@ -31,7 +31,8 @@ Published at: https://strange-attractor.com/presentations/
 
 1. Create a subfolder under the right category: `<category>/<name>/` with `index.html`
 2. Add a link row to the parent category's `index.html` and the root `index.html`
-3. Commit + push to `gh-pages` — deploys automatically
+3. **If the page is password-gated, append `🔒` after the link text** in both index files so visitors see at a glance which decks need a password
+4. Commit + push to `gh-pages` — deploys automatically
 
 ## PII policy
 
