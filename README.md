@@ -70,7 +70,15 @@ A plaintext backup of the originals is stashed in `/tmp/presentations-plaintext-
 
 ### Open Graph / link previews
 
-Per-page OG meta tags are injected into the encrypted file's `<head>` after encrypting. **Re-encryption strips them** — re-add after any decrypt → encrypt cycle. See `company-internal/company-strategy/index.html` for the current pattern (og:title, og:description, og:image pointing to a public asset URL, twitter:card).
+Per-page OG/Twitter card metadata lives in `og-meta.json` at the repo root. After encrypting (which strips the tags), run:
+
+```bash
+python3 scripts/inject-og.py
+```
+
+The script is idempotent: it replaces an existing `<!-- OG-INJECT:START --> … <!-- OG-INJECT:END -->` block, or inserts one after `<title>` if missing.
+
+To add a new gated page, append an entry in `og-meta.json` keyed by relative path with `page_title`, `og_title`, `og_description`, `og_url`, and (optionally) custom image fields. Defaults to the YouSquared hero illustration if `og_image` is omitted.
 
 ### Changing the password
 

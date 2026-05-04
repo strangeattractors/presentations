@@ -1,0 +1,62 @@
+{
+  "_doc": "Per-page Open Graph + Twitter card metadata. After re-encrypting a gated page, run scripts/inject-og.py to restore these tags. Image URLs must be absolute https URLs to public assets.",
+  "_default_image": "https://strange-attractor.com/presentations/company-internal/company-strategy/assets/illu-hero-creator-economy-v2.png",
+  "_default_image_w": 1024,
+  "_default_image_h": 1536,
+  "_default_site_name": "YouSquared",
+
+  "company-internal/index.html": {
+    "page_title": "YouSquared — Internal",
+    "og_title": "YouSquared — Internal",
+    "og_description": "Company strategy, dashboards, and roadmap.",
+    "og_url": "https://strange-attractor.com/presentations/company-internal/"
+  },
+  "company-internal/company-strategy/index.html": {
+    "page_title": "YouSquared — Company Strategy",
+    "og_title": "YouSquared — We make services instantly available 24/7",
+    "og_description": "With industry expert AIs that handle communication & admin.",
+    "og_url": "https://strange-attractor.com/presentations/company-internal/company-strategy/"
+  },
+  "company-internal/dev-velocity/index.html": {
+    "page_title": "YouSquared — Dev velocity",
+    "og_title": "YouSquared — Dev velocity",
+    "og_description": "PR merge rate & review times.",
+    "og_url": "https://strange-attractor.com/presentations/company-internal/dev-velocity/"
+  },
+  "company-internal/ltv-cac/index.html": {
+    "page_title": "YouSquared — LTV:CAC dashboard",
+    "og_title": "YouSquared — LTV:CAC dashboard",
+    "og_description": "Lifetime value over acquisition cost — monthly trend.",
+    "og_url": "https://strange-attractor.com/presentations/company-internal/ltv-cac/"
+  },
+  "company-internal/roadmap/index.html": {
+    "page_title": "YouSquared — Roadmap",
+    "og_title": "YouSquared — Roadmap",
+    "og_description": "Ten features, shipping now.",
+    "og_url": "https://strange-attractor.com/presentations/company-internal/roadmap/"
+  },
+  "company-internal/subscriber-retention/index.html": {
+    "page_title": "YouSquared — Subscriber retention",
+    "og_title": "YouSquared — Subscriber retention",
+    "og_description": "Kaplan-Meier survival, stabilized-core LTV.",
+    "og_url": "https://strange-attractor.com/presentations/company-internal/subscriber-retention/"
+  },
+  "company-internal/who-gets-value/index.html": {
+    "page_title": "YouSquared — Who gets value",
+    "og_title": "YouSquared — Who gets value",
+    "og_description": "March 2026 value report.",
+    "og_url": "https://strange-attractor.com/presentations/company-internal/who-gets-value/"
+  },
+  "customer-facing/qbrs/hair-shunnarah-2026-04/index.html": {
+    "page_title": "Hair Shunnarah × YouSquared — Q1 2026 Business Review",
+    "og_title": "Hair Shunnarah × YouSquared — Q1 2026 Business Review",
+    "og_description": "Quarterly business review · April 2026.",
+    "og_url": "https://strange-attractor.com/presentations/customer-facing/qbrs/hair-shunnarah-2026-04/"
+  },
+  "customer-facing/white-glove-playbooks/seller-playbook/index.html": {
+    "page_title": "YouSquared — Proactive Support Playbook",
+    "og_title": "YouSquared — Proactive Support Playbook",
+    "og_description": "Support seller playbook.",
+    "og_url": "https://strange-attractor.com/presentations/customer-facing/white-glove-playbooks/seller-playbook/"
+  }
+}
