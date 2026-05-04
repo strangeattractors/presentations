@@ -618,7 +618,7 @@
     border-color: #E07A5F;
     box-shadow: 0 2px 16px rgba(224, 122, 95, 0.18);
   }
-  .ev-pretzel { width: 44px; height: 44px; color: #E07A5F; }
+  .ev-pretzel { width: 52px; height: 52px; border-radius: 10px; object-fit: cover; }
   .ev-tasks {
     position: absolute;
     top: -10px; left: 50%;
@@ -655,10 +655,10 @@
   .ev-mini-grid > div svg { width: 22px; height: 22px; }
   .ev-logos {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4px;
+    grid-template-columns: repeat(auto-fill, minmax(34px, 1fr));
+    gap: 3px;
     width: 80px;
-    height: 80px;
+    min-height: 36px;
   }
   .ev-logos > div {
     background: #F5F2EF;
@@ -982,9 +982,7 @@
                 <div class="ev-task-dot" title="Texts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
                 <div class="ev-task-dot" title="Events"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
               </div>
-              <svg class="ev-pretzel" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
-                <path d="M20 22 C12 22, 12 36, 22 36 C32 36, 32 22, 42 22 C52 22, 52 36, 44 38 C36 40, 30 32, 28 42 C26 52, 38 54, 40 46 C42 38, 30 36, 22 44 C14 52, 26 58, 32 50"/>
-              </svg>
+              <img class="ev-pretzel" src="assets/logo-yousquared-icon.png" alt="YouSquared">
             </div>
             <div class="ev-step-label">AI learns<br>the work</div>
           </summary>
@@ -1048,10 +1046,11 @@
         <div class="ev-step">
           <div class="ev-icon-box">
             <div class="ev-logos" id="ev-vertical-logos">
-              <div class="ev-logo-cell"><img src="assets/logo-pharmacy-hallandale.svg" alt="Hallandale Pharmacy"></div>
-              <div class="ev-logo-cell"><img src="assets/logo-pharmacy-strive.jpg" alt="Strive Pharmacy"></div>
-              <div class="ev-logo-cell"><img src="assets/logo-pharmacy-olympia.svg" alt="Olympia Pharmacy"></div>
-              <div class="ev-logo-cell"><img src="assets/logo-pharmacy-empower.webp" alt="Empower Pharmacy"></div>
+              <div class="ev-logo-cell"><img src="assets/logo-referral-ahava.png" alt="Ahava Medical"></div>
+              <div class="ev-logo-cell"><img src="assets/logo-referral-bmimd.svg" alt="BMI MD"></div>
+              <div class="ev-logo-cell"><img src="assets/logo-referral-chai.png" alt="Chai Urgent Care"></div>
+              <div class="ev-logo-cell"><img src="assets/logo-referral-healthmax.png" alt="HealthMax"></div>
+              <div class="ev-logo-cell"><img src="assets/logo-referral-nsipa.png" alt="NS IPA"></div>
             </div>
           </div>
           <div class="ev-step-label">Spreads<br>throughout vertical</div>
@@ -1067,7 +1066,7 @@
     <div class="distribution-text" style="margin-bottom:24px">
       <div class="section-label">Distribution</div>
       <h2 class="section-title">Scaling requires earning $3 for every $1 in acquisition</h2>
-      <p class="section-lead">By spreading organically &amp; selling Team plans · <a href="../ltv-cac/" target="_blank" rel="noopener" style="color:#E07A5F;text-decoration:none;font-weight:600">open dashboard ↗</a></p>
+      <p class="section-lead">By spreading organically &amp; selling Team plans</p>
     </div>
 
     <iframe id="ltv-cac-embed" src="../ltv-cac/?embed=1" loading="lazy"
@@ -1103,10 +1102,11 @@
       expert: 'Dr Yaakov Mavashev',
       photo: 'assets/headshot-mavashev.png',
       logos: [
-        '<img src="assets/logo-pharmacy-hallandale.svg" alt="Hallandale Pharmacy">',
-        '<img src="assets/logo-pharmacy-strive.jpg" alt="Strive Pharmacy">',
-        '<img src="assets/logo-pharmacy-olympia.svg" alt="Olympia Pharmacy">',
-        '<img src="assets/logo-pharmacy-empower.webp" alt="Empower Pharmacy">'
+        '<img src="assets/logo-referral-ahava.png" alt="Ahava Medical">',
+        '<img src="assets/logo-referral-bmimd.svg" alt="BMI MD">',
+        '<img src="assets/logo-referral-chai.png" alt="Chai Urgent Care">',
+        '<img src="assets/logo-referral-healthmax.png" alt="HealthMax">',
+        '<img src="assets/logo-referral-nsipa.png" alt="NS IPA">'
       ]
     },
     oncology: {
@@ -1135,9 +1135,8 @@
       photo.src = data.photo;
       photo.alt = data.expert;
       document.getElementById('ev-expert-name').textContent = data.expert;
-      document.querySelectorAll('.ev-logo-cell').forEach((cell, i) => {
-        cell.innerHTML = data.logos[i] || '';
-      });
+      const grid = document.getElementById('ev-vertical-logos');
+      grid.innerHTML = data.logos.map(l => '<div class="ev-logo-cell">' + l + '</div>').join('');
     });
   });
 
