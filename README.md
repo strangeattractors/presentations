@@ -68,6 +68,10 @@ staticrypt company-internal/ltv-cac/index.html -p <password> --short \
 
 A plaintext backup of the originals is stashed in `/tmp/presentations-plaintext-*` after each encrypt run on this machine — not in the repo.
 
+### Open Graph / link previews
+
+Per-page OG meta tags are injected into the encrypted file's `<head>` after encrypting. **Re-encryption strips them** — re-add after any decrypt → encrypt cycle. See `company-internal/company-strategy/index.html` for the current pattern (og:title, og:description, og:image pointing to a public asset URL, twitter:card).
+
 ### Changing the password
 
 Decrypt every gated file, then re-encrypt with the new password. Update `.staticrypt.json`'s salt only if you also want to invalidate existing browser remember-me sessions.
