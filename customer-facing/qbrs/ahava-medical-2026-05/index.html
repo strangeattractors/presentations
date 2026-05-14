@@ -129,7 +129,7 @@
   .road-sub { font-size:0.9em; color:var(--text2); line-height:1.5; }
 
   /* Team row */
-  .team-row { display:grid; grid-template-columns:repeat(6,1fr); gap:16px; margin:24px 0 32px 0; }
+  .team-row { display:grid; grid-template-columns:repeat(5,1fr); gap:16px; margin:24px 0 32px 0; }
   .team-card { text-align:center; }
   .team-card .avatar { width:84px; height:84px; border-radius:50%; object-fit:cover; margin:0 auto 10px auto; display:block; box-shadow:0 2px 12px rgba(45,42,38,0.12); }
   .team-card .name { font-weight:600; font-size:0.92em; }
@@ -313,7 +313,7 @@
 <div class="page">
   <div class="eyebrow">GLP-1 Programs</div>
   <h2>Competitive pricing. Transparent tiers. No surprises.</h2>
-  <p class="lead" style="max-width:760px;">Ahava&rsquo;s GLP-1 weight management programs are priced per month, with deeper discounts on longer commitments. Credit card processing fees are waived for patients who commit to 6 months or more.</p>
+  <p class="lead" style="max-width:760px;">Ahava&rsquo;s GLP-1 weight management programs are priced per month, with deeper discounts on longer commitments.</p>
 
   <table class="pricing-table">
     <thead>
@@ -321,7 +321,6 @@
         <th>Commitment</th>
         <th>Semaglutide</th>
         <th>Tirzepatide</th>
-        <th>CC Fee</th>
       </tr>
     </thead>
     <tbody>
@@ -329,43 +328,34 @@
         <td>1 month</td>
         <td><span class="price">$279</span><span style="font-size:0.72em; color:var(--text2);">/mo</span></td>
         <td><span class="price">$309</span><span style="font-size:0.72em; color:var(--text2);">/mo</span></td>
-        <td><span class="badge-cc yes">Applies</span></td>
       </tr>
       <tr>
         <td>3 months</td>
         <td><span class="price">$179</span><span style="font-size:0.72em; color:var(--text2);">/mo</span></td>
         <td><span class="price">$229</span><span style="font-size:0.72em; color:var(--text2);">/mo</span></td>
-        <td><span class="badge-cc yes">Applies</span></td>
       </tr>
       <tr>
         <td>6 months</td>
         <td><span class="price">$159</span><span style="font-size:0.72em; color:var(--text2);">/mo</span></td>
         <td><span class="price">$219</span><span style="font-size:0.72em; color:var(--text2);">/mo</span></td>
-        <td><span class="badge-cc no">Waived</span></td>
       </tr>
       <tr>
         <td>9 months</td>
         <td><span class="price">$129</span><span style="font-size:0.72em; color:var(--text2);">/mo</span></td>
         <td><span class="price">$209</span><span style="font-size:0.72em; color:var(--text2);">/mo</span></td>
-        <td><span class="badge-cc no">Waived</span></td>
       </tr>
       <tr class="best-value">
         <td>12 months</td>
         <td><span class="price" style="color:var(--ahava-green);">$99</span><span style="font-size:0.72em; color:var(--text2);">/mo</span></td>
         <td><span class="price" style="color:var(--ahava-green);">$199</span><span style="font-size:0.72em; color:var(--text2);">/mo</span></td>
-        <td><span class="badge-cc no">Waived</span></td>
       </tr>
     </tbody>
   </table>
 
-  <div class="fact-grid" style="grid-template-columns:1fr 1fr 1fr; margin-top:28px;">
+  <div class="fact-grid" style="grid-template-columns:1fr 1fr; margin-top:28px;">
     <div class="fact-card on-white" style="border-left:4px solid var(--ahava-green); padding:22px;">
       <div class="fact-num" style="font-size:1.5em;">$99</div>
       <div class="fact-label">Lowest Semaglutide price at 12-month commitment &mdash; well below market average.</div>
-    </div>
-    <div class="fact-card on-white" style="border-left:4px solid var(--ahava-green); padding:22px;">
-      <div class="fact-num" style="font-size:1.5em;">0%</div>
-      <div class="fact-label">CC processing fee on 6+ month commitments &mdash; patients pay exactly what they see.</div>
     </div>
     <div class="fact-card on-white" style="border-left:4px solid var(--ahava-green); padding:22px;">
       <div class="fact-num" style="font-size:1.5em;">~38K</div>
@@ -472,37 +462,32 @@
 
   <div class="sep"></div>
 
-  <h3 style="font-size:1.2em; margin-bottom:16px;">Your YouSquared team</h3>
+  <h3 style="font-size:1.2em; margin-bottom:16px;">Your Safer Pharmacy &amp; YouSquared team</h3>
   <div class="team-row">
+    <div class="team-card">
+      <img class="avatar" src="assets/team-yaakov.png" alt="Yaakov Mavashev">
+      <div class="name">Yaakov Mavashev</div>
+      <div class="role">Safer Pharmacy</div>
+    </div>
+    <div class="team-card">
+      <div class="avatar" style="width:84px;height:84px;border-radius:50%;margin:0 auto 10px auto;display:flex;align-items:center;justify-content:center;background:var(--ahava-green);color:#fff;font-family:'Lora',serif;font-size:1.6em;font-weight:700;box-shadow:0 2px 12px rgba(45,42,38,0.12);">HC</div>
+      <div class="name">Heather Crump</div>
+      <div class="role">Safer Pharmacy</div>
+    </div>
     <div class="team-card">
       <img class="avatar" src="assets/team-alex.jpg" alt="Alex Dalyac">
       <div class="name">Alex Dalyac</div>
-      <div class="role">Founder &amp; CEO</div>
+      <div class="role">Founder &amp; CEO, YouSquared</div>
     </div>
     <div class="team-card">
       <img class="avatar" src="assets/team-adb.jpg" alt="Alexandre de Brebisson">
       <div class="name">A. de Br&eacute;bisson</div>
-      <div class="role">Founder &amp; CTO</div>
-    </div>
-    <div class="team-card">
-      <img class="avatar" src="assets/team-jake.jpg" alt="Jake Albert">
-      <div class="name">Jake Albert</div>
-      <div class="role">Web app lead</div>
-    </div>
-    <div class="team-card">
-      <img class="avatar" src="assets/team-joris.jpg" alt="Joris Abalea">
-      <div class="name">Joris Abalea</div>
-      <div class="role">iOS + integrations</div>
+      <div class="role">Founder &amp; CTO, YouSquared</div>
     </div>
     <div class="team-card">
       <img class="avatar" src="assets/team-cheyney.jpg" alt="Cheyney McInerny">
       <div class="name">Cheyney McInerny</div>
-      <div class="role">Account mgmt</div>
-    </div>
-    <div class="team-card">
-      <img class="avatar" src="assets/team-lala.jpg" alt="Eleonora Lala">
-      <div class="name">Eleonora Lala</div>
-      <div class="role">Account mgmt</div>
+      <div class="role">Account mgmt, YouSquared</div>
     </div>
   </div>
 
