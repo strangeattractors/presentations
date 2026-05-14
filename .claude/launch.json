@@ -12,6 +12,18 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "4571", "--directory", "/Users/alexdalyac/git/presentations-repo/customer-facing/pitch-decks/verizon-onetalk"],
       "port": 4571
+    },
+    {
+      "name": "pharmacy-en",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "4572", "--directory", "/Users/alexdalyac/git/presentations-repo/customer-facing/pitch-decks/pharmacy-en"],
+      "port": 4572
+    },
+    {
+      "name": "ahava-qbr",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "4573", "--directory", "/Users/alexdalyac/git/presentations-repo/customer-facing/qbrs/ahava-medical-2026-05"],
+      "port": 4573
     }
   ]
 }
