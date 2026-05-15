@@ -159,6 +159,44 @@ nav {
 .contact-info .c-why { font-size: 0.7rem; color: var(--accent); font-style: italic; margin-top: 2px; }
 .contact-footnote { font-size: 0.68rem; color: var(--muted); line-height: 1.55; margin: 10px 14px 18px; padding-top: 10px; border-top: 1px dashed var(--rule); font-style: italic; }
 
+/* EXPANDABLE BIZ CASE */
+.biz-case-toggle { display: flex; align-items: center; gap: 10px; cursor: pointer; background: var(--accent-pale); border: 1px solid rgba(42,107,79,0.2); border-radius: 10px; padding: 14px 20px; margin-top: 28px; transition: background 0.2s; }
+.biz-case-toggle:hover { background: #c4e4d6; }
+.biz-case-toggle .chevron { width: 20px; height: 20px; transition: transform 0.3s; flex-shrink: 0; }
+.biz-case-toggle.open .chevron { transform: rotate(90deg); }
+.biz-case-toggle .toggle-label { font-family: 'Playfair Display', Georgia, serif; font-size: 0.95rem; font-weight: 700; color: var(--accent); }
+.biz-case-toggle .toggle-sub { font-size: 0.78rem; color: var(--text); margin-left: auto; }
+.biz-case-body { max-height: 0; overflow: hidden; transition: max-height 0.5s ease, padding 0.3s ease; padding: 0 20px; }
+.biz-case-body.open { max-height: 800px; padding: 24px 20px; }
+.biz-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 16px; }
+.biz-stat { background: #fff; border-radius: 12px; padding: 18px 16px; border: 1px solid var(--rule); }
+.biz-stat .bs-num { font-family: 'Playfair Display', Georgia, serif; font-size: 1.6rem; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 6px; }
+.biz-stat .bs-label { font-size: 0.76rem; color: var(--muted); line-height: 1.45; }
+.biz-stat .bs-source { font-size: 0.62rem; color: #bbb; display: block; margin-top: 4px; }
+.biz-case-real { background: var(--gold-pale); border-left: 3px solid var(--gold); border-radius: 0 10px 10px 0; padding: 16px 20px; margin-top: 16px; }
+.biz-case-real .real-label { font-family: 'DM Mono', Consolas, monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.biz-case-real p { font-size: 0.82rem; color: var(--text); line-height: 1.6; }
+
+/* USE CASE FEATURED */
+.use-case.featured { border: 2px solid var(--accent); background: linear-gradient(135deg, #fff 80%, var(--accent-pale) 100%); }
+.use-case.featured .use-case-icon { background: var(--accent); color: #fff; }
+
+/* ADOPTION SLIDE */
+#slide-adopt { background: var(--paper); }
+.adopt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.adopt-col { background: #fff; border-radius: 16px; border: 1px solid var(--rule); overflow: hidden; }
+.adopt-col-header { padding: 20px 24px; border-bottom: 1px solid var(--rule); display: flex; align-items: center; gap: 12px; }
+.adopt-col-header .col-num { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-pale); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 0.9rem; color: var(--accent); flex-shrink: 0; }
+.adopt-col-header .col-title { font-family: 'Playfair Display', Georgia, serif; font-size: 1.05rem; font-weight: 700; color: var(--ink); }
+.adopt-col-header .col-time { font-size: 0.7rem; color: var(--accent); font-weight: 600; margin-left: auto; }
+.adopt-col-body { padding: 20px 24px; }
+.adopt-step { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 18px; }
+.adopt-step:last-child { margin-bottom: 0; }
+.adopt-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+.adopt-step h4 { font-size: 0.88rem; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.adopt-step p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+.adopt-example { background: var(--cream); border-radius: 8px; padding: 12px 14px; margin-top: 14px; font-family: 'DM Mono', Consolas, monospace; font-size: 0.68rem; color: var(--muted); line-height: 1.55; overflow-x: auto; }
+
 /* PROGRESS */
 .slide-progress { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 99; }
 .progress-bar { width: 32px; height: 3px; border-radius: 2px; background: var(--rule); overflow: hidden; cursor: pointer; }
@@ -171,8 +209,10 @@ nav {
   nav { padding: 14px 20px; }
   .slide { padding: 90px 24px 60px; }
   #slide-1 .slide-inner, .problem-layout, .solution-grid, .results-layout, .next-steps-grid,
-  .team-grid, .hero-stats, .customers-grid { grid-template-columns: 1fr; }
+  .team-grid, .hero-stats, .customers-grid, .adopt-grid { grid-template-columns: 1fr; }
   .problem-facts { grid-template-columns: 1fr 1fr; }
+  .biz-stats { grid-template-columns: 1fr 1fr; }
+  .biz-case-toggle .toggle-sub { display: none; }
 }
 
 </style>
@@ -189,8 +229,8 @@ nav {
   <div class="slide-inner" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
     <div>
       <div class="hero-eyebrow">AI Secretary &mdash; Supportive Oncology &amp; Geriatric Medicine</div>
-      <h1 class="hero-title">Every patient heard.<br>Every call <em>answered.</em></h1>
-      <p class="hero-sub">YouSquared is a voice AI secretary that answers your patients' calls 24/7 &mdash; triaging emergencies, sharing updates, and giving families the feeling their doctor is always there.</p>
+      <h1 class="hero-title">Every patient heard.<br>Every call <em>handled.</em></h1>
+      <p class="hero-sub">YouSquared is a voice AI to reach every patient 24/7 &mdash; from intake &amp; side effect monitoring to after-hours triage and refills.</p>
       <div class="hero-badge"><span class="dot-pulse"></span> Available 24/7 &mdash; nights, weekends, holidays</div>
       <div class="hero-stats" style="max-width: 100%;">
         <div class="hero-stat"><span class="hero-stat-num">2M+</span><span class="hero-stat-label">Calls handled annualized</span></div>
@@ -285,6 +325,13 @@ nav {
 
     <div class="solution-grid">
 
+      <div class="use-case featured">
+        <div class="use-case-icon">&#128138;</div>
+        <h3>Start-of-Treatment Check-In</h3>
+        <p>AI calls the patient 1&ndash;2 weeks after starting a new medication. Asks about specific side effects &mdash; rash, fatigue, nausea, fever. Catches issues early, before they become ED visits or treatment abandonment.</p>
+        <div class="tag">Proactive outbound</div>
+      </div>
+
       <div class="use-case">
         <div class="use-case-icon">&#128680;</div>
         <h3>Emergency Triage</h3>
@@ -301,8 +348,8 @@ nav {
 
       <div class="use-case">
         <div class="use-case-icon">&#128203;</div>
-        <h3>Post-Treatment Check-Ins</h3>
-        <p>Outbound call after infusion or new medication: &ldquo;On a scale of 1&ndash;10, how are you feeling? Any nausea, fatigue, pain?&rdquo; &mdash; structured patient-reported outcomes for clinical trials.</p>
+        <h3>Ongoing Treatment Monitoring</h3>
+        <p>Scheduled outbound calls during treatment: &ldquo;On a scale of 1&ndash;10, how are you feeling? Any nausea, fatigue, pain?&rdquo; &mdash; structured patient-reported outcomes for clinical trials.</p>
         <div class="tag">Clinical trials / PRO</div>
       </div>
 
@@ -314,19 +361,55 @@ nav {
       </div>
 
       <div class="use-case">
-        <div class="use-case-icon">&#128197;</div>
-        <h3>Procedure Booking</h3>
-        <p>Inbound referral &rarr; AI intake (symptoms, meds, transport, preferred slot) &rarr; your review queue &rarr; you approve the slot &rarr; AI confirms with the patient. For infusions, scans, biopsies.</p>
-        <div class="tag">Triage-gated</div>
-      </div>
-
-      <div class="use-case">
         <div class="use-case-icon">&#128140;</div>
         <h3>Weekend Coverage</h3>
         <p>&ldquo;I'm the only doctor who gives his phone number out. People feel like &mdash; oh my God, I can reach my doctor anytime.&rdquo; &mdash; Dr.&nbsp;Ali</p>
         <div class="tag">Continuity of care</div>
       </div>
 
+    </div>
+
+    <!-- Expandable business case -->
+    <div class="biz-case-toggle" onclick="this.classList.toggle('open'); document.getElementById('bizBody').classList.toggle('open');">
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      <span class="toggle-label">Why this matters &mdash; the business case</span>
+      <span class="toggle-sub">Adherence &bull; Readmissions &bull; Treatment sophistication</span>
+    </div>
+    <div class="biz-case-body" id="bizBody">
+      <div class="biz-stats">
+        <div class="biz-stat">
+          <div class="bs-num">$26,868</div>
+          <div class="bs-label">Avg. cost of one febrile neutropenia hospitalization<span class="bs-source">Supportive Care in Cancer, 2024</span></div>
+        </div>
+        <div class="biz-stat">
+          <div class="bs-num">&minus;16%</div>
+          <div class="bs-label">Fewer ED visits with proactive symptom monitoring<span class="bs-source">PRO-TECT trial, Nature Medicine 2025</span></div>
+        </div>
+        <div class="biz-stat">
+          <div class="bs-num">+5 mo.</div>
+          <div class="bs-label">Median survival gain when patients report symptoms early<span class="bs-source">Basch et al., JAMA 2017</span></div>
+        </div>
+        <div class="biz-stat">
+          <div class="bs-num">$14K+</div>
+          <div class="bs-label">Monthly cost of oral oncology drugs &mdash; each month of retained adherence = revenue kept<span class="bs-source">Medicare Part D data</span></div>
+        </div>
+        <div class="biz-stat">
+          <div class="bs-num">2%</div>
+          <div class="bs-label">CMS Medicare reimbursement penalty (OP-35) for avoidable chemo-related visits<span class="bs-source">CMS QualityNet</span></div>
+        </div>
+        <div class="biz-stat">
+          <div class="bs-num">19&ndash;50%</div>
+          <div class="bs-label">Of cancer-related hospitalizations are potentially avoidable with better monitoring<span class="bs-source">Multiple studies incl. PMC 2019</span></div>
+        </div>
+      </div>
+      <div class="biz-case-real">
+        <div class="real-label">&#9679; Real call &mdash; MUHC Oncology</div>
+        <p>Patient with metastatic breast cancer started Xeloda one week ago. Developed a widespread, bright red rash. Oncology nurse called &mdash; AI gathered the clinical picture: diffuse redness with distinct circles, no blistering, no peeling, no fever. Medication was held before the rash could escalate to hospitalization.</p>
+      </div>
+      <div class="biz-case-real" style="margin-top: 10px;">
+        <div class="real-label">&#9679; Real call &mdash; MUHC Oncology</div>
+        <p>Patient on Folfox: fever 39&deg;C, neutrophils at 0.1. AI provided a written management plan &mdash; IV antibiotics, antiemetics, hydration &mdash; sent by text to the nurse for immediate action. Without early detection, febrile neutropenia means automatic hospitalization ($26,868 avg.).</p>
+      </div>
     </div>
   </div>
 </section>
@@ -440,6 +523,87 @@ nav {
         <div style="margin-top: 16px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); position: relative;">
           <video src="oncology_prez_assets/dr_ali_testimonial.mp4" controls preload="metadata" poster="oncology_prez_assets/headshot_ali.jpg" style="width: 100%; display: block; border-radius: 12px;"></video>
           <div style="position: absolute; top: 10px; left: 12px; font-family: 'DM Mono', Consolas, monospace; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-light); background: rgba(14,17,23,0.75); padding: 3px 8px; border-radius: 6px; backdrop-filter: blur(4px);">&#9654; Full video testimonial</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE: ADOPTION & INTEGRATION ==================== -->
+<section class="slide" id="slide-adopt">
+  <div class="slide-inner">
+    <div class="section-label">05 &mdash; Getting started</div>
+    <h2 class="section-title">Two paths to <em>go live</em></h2>
+    <p class="section-intro">Start without any integration in days. Add a full API connection when you&rsquo;re ready &mdash; entirely within your IT team&rsquo;s control, no EHR vendor involvement.</p>
+
+    <div class="adopt-grid">
+
+      <div class="adopt-col">
+        <div class="adopt-col-header">
+          <div class="col-num">1</div>
+          <div>
+            <div class="col-title">CSV Upload</div>
+          </div>
+          <span class="col-time">Live in days</span>
+        </div>
+        <div class="adopt-col-body">
+          <div class="adopt-step">
+            <div class="adopt-icon">&#127979;</div>
+            <div>
+              <h4>Export from your EHR / PMS</h4>
+              <p>Epic: Reporting Workbench &rarr; filter by clinic, provider panel, or diagnosis &rarr; Export (.xlsx). PrimeRx: Tools &rarr; Report Writer &rarr; select patient fields &rarr; Export.</p>
+            </div>
+          </div>
+          <div class="adopt-step">
+            <div class="adopt-icon">&#128196;</div>
+            <div>
+              <h4>Typical CSV columns</h4>
+              <p>MRN, first/last name, DOB, phone, preferred language, PCP, diagnosis, active medications, next appointment.</p>
+            </div>
+          </div>
+          <div class="adopt-step">
+            <div class="adopt-icon">&#128228;</div>
+            <div>
+              <h4>Upload to YouSquared</h4>
+              <p>Drag-and-drop the file into the YouSquared web app. Contacts are matched, de-duped, and ready for AI calls within minutes.</p>
+            </div>
+          </div>
+          <div class="adopt-example">No IT involvement needed. Clinic staff already export these files for compliance and inventory.</div>
+        </div>
+      </div>
+
+      <div class="adopt-col" style="border-color: var(--accent);">
+        <div class="adopt-col-header" style="background: var(--accent-pale);">
+          <div class="col-num">2</div>
+          <div>
+            <div class="col-title">API &amp; Webhooks</div>
+          </div>
+          <span class="col-time">2&ndash;4 weeks with IT</span>
+        </div>
+        <div class="adopt-col-body">
+          <div class="adopt-step">
+            <div class="adopt-icon">&#128272;</div>
+            <div>
+              <h4>FHIR R4 / REST API</h4>
+              <p>Epic: register via App Orchard, configure OAuth scopes, bulk export via <code>/Group/$export</code>. Your IT team owns the credentials &mdash; no Epic vendor ticket needed.</p>
+            </div>
+          </div>
+          <div class="adopt-step">
+            <div class="adopt-icon">&#128276;</div>
+            <div>
+              <h4>Real-time webhooks</h4>
+              <p>New patient registered, medication prescribed, appointment booked, ADT events &mdash; FHIR Subscriptions push to YouSquared in real time.</p>
+            </div>
+          </div>
+          <div class="adopt-step">
+            <div class="adopt-icon">&#128736;</div>
+            <div>
+              <h4>Your IT team controls it</h4>
+              <p>Scopes, credentials, endpoint allowlists &mdash; all managed internally. No third-party vendor involvement. Sandbox &rarr; production promotion in your standard change process.</p>
+            </div>
+          </div>
+          <div class="adopt-example">POST /webhooks/patient-event<br>{ "resourceType": "Patient",<br>&nbsp;&nbsp;"event": "medication-prescribed",<br>&nbsp;&nbsp;"medication": "Xeloda 500mg" }</div>
         </div>
       </div>
 
