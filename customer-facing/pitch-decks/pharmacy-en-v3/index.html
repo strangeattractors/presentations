@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouSquared — AI Secretary for Pharmacies</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #0e1117; --paper: #f7f4ef; --cream: #ede9e1;
+  --accent: #2a6b4f; --accent-light: #3d9970; --accent-pale: #d4ece3;
+  --gold: #c8963e; --gold-pale: #fdf3e3;
+  --text: #2c2c2c; --muted: #7a7a72; --rule: #d8d3ca;
+  --red: #c0392b;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--paper); color: var(--text); overflow-x: hidden; }
+
+/* NAV */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 16px 48px; background: rgba(247,244,239,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--rule); }
+.nav-logo { display: flex; align-items: center; gap: 8px; }
+.nav-logo img { height: 26px; }
+.nav-dots { display: flex; gap: 8px; }
+.nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--rule); border: none; cursor: pointer; transition: background 0.2s, transform 0.2s; }
+.nav-dot.active { background: var(--accent); transform: scale(1.3); }
+
+/* SLIDES */
+.slide { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 100px 48px 90px; opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; position: relative; }
+.slide.visible { opacity: 1; transform: translateY(0); }
+.slide-inner { max-width: 1060px; width: 100%; }
+.section-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); max-width: 80px; }
+.section-title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.8rem,3.5vw,2.6rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 16px; color: var(--ink); }
+.section-title em { font-style: italic; color: var(--accent); }
+.section-intro { font-size: 1rem; color: var(--muted); line-height: 1.7; max-width: 580px; margin-bottom: 32px; }
+
+/* ── HERO ── */
+#slide-hero { background: var(--ink); color: var(--paper); overflow: hidden; }
+#slide-hero::before { content:''; position:absolute; top:-200px; right:-200px; width:600px; height:600px; border-radius:50%; background:radial-gradient(circle,rgba(42,107,79,0.3)0%,transparent 70%); pointer-events:none; }
+#slide-hero::after { content:''; position:absolute; bottom:-100px; left:-100px; width:400px; height:400px; border-radius:50%; background:radial-gradient(circle,rgba(200,150,62,0.15)0%,transparent 70%); pointer-events:none; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.hero-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 32px; }
+.hero-logo img { height: 30px; filter: brightness(0) invert(1); }
+.hero-eyebrow { font-family:'DM Mono',monospace; font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent-light); margin-bottom:28px; }
+.hero-title { font-family:'Playfair Display',Georgia,serif; font-size:clamp(2.4rem,5vw,3.6rem); font-weight:700; line-height:1.12; color:#fff; margin-bottom:12px; letter-spacing:-0.02em; }
+.hero-title em { font-style:italic; color:var(--accent-light); }
+.hero-sub { font-size:1rem; color:rgba(247,244,239,0.65); margin-bottom:36px; font-weight:300; max-width:540px; line-height:1.65; }
+.hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(42,107,79,0.25); border:1px solid rgba(61,153,112,0.35); border-radius:20px; padding:8px 16px; font-size:0.8rem; color:var(--accent-light); margin-bottom:36px; }
+.dot-pulse { width:7px; height:7px; border-radius:50%; background:var(--accent-light); animation:pulse 1.8s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.85)} }
+.hero-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; border:1px solid rgba(255,255,255,0.1); border-radius:12px; overflow:hidden; }
+.hero-stat { background:rgba(255,255,255,0.04); padding:24px 20px; text-align:center; border-right:1px solid rgba(255,255,255,0.07); }
+.hero-stat:last-child { border-right:none; }
+.hero-stat-num { font-family:'Playfair Display',Georgia,serif; font-size:1.8rem; font-weight:700; color:#fff; display:block; margin-bottom:4px; }
+.hero-stat-label { font-size:0.7rem; color:rgba(247,244,239,0.45); letter-spacing:0.08em; text-transform:uppercase; }
+.hero-illustration { background:rgba(255,255,255,0.06); border-radius:20px; border:1px solid rgba(255,255,255,0.1); padding:14px 14px 8px; text-align:center; }
+.hero-illustration img { width:100%; border-radius:12px; display:block; }
+.hero-illustration .caption { font-size:0.65rem; color:rgba(247,244,239,0.35); margin-top:6px; font-family:'DM Mono',monospace; letter-spacing:0.06em; text-transform:uppercase; }
+
+/* ── PROBLEM ── */
+#slide-problem { background: var(--paper); }
+.problem-top { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; margin-bottom: 28px; }
+.problem-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.pc { background:#fff; border-radius:12px; padding:16px 18px; border:1px solid var(--rule); cursor:pointer; transition:box-shadow 0.25s,transform 0.25s; }
+.pc:hover { box-shadow:0 6px 20px rgba(0,0,0,0.07); transform:translateY(-1px); }
+.pc-top { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+.pc-top .pc-icon { font-size:1.1rem; flex-shrink:0; }
+.pc-top .pc-name { font-family:'Playfair Display',Georgia,serif; font-size:0.88rem; font-weight:700; color:var(--ink); }
+.pc-top .pc-stat-num { font-family:'Playfair Display',Georgia,serif; font-size:1.1rem; font-weight:700; color:var(--gold); margin-left:auto; }
+.pc-bottom { display:flex; align-items:center; gap:8px; }
+.pc-bottom .pc-desc { font-size:0.76rem; color:var(--muted); line-height:1.4; flex:1; }
+.pc-bottom .pc-chevron { width:14px; height:14px; flex-shrink:0; color:var(--muted); transition:transform 0.3s,color 0.3s; }
+.pc.open .pc-chevron { transform:rotate(90deg); color:var(--accent); }
+.pc-source { font-size:0.6rem; color:#bbb; margin-top:4px; }
+.pc-source a { color:var(--accent); text-decoration:none; }
+.pc-source a:hover { text-decoration:underline; }
+.pc-review { max-height:0; overflow:hidden; transition:max-height 0.4s ease,margin 0.3s,padding 0.3s; background:var(--gold-pale); border-left:3px solid var(--gold); border-radius:0 8px 8px 0; padding:0 12px; margin-top:0; }
+.pc.open .pc-review { max-height:180px; padding:12px; margin-top:10px; }
+.pc-review .stars { color:var(--gold); font-size:0.75rem; margin-bottom:4px; }
+.pc-review .review-text { font-size:0.76rem; color:var(--text); line-height:1.5; font-style:italic; }
+.pc-review .review-attr { font-size:0.6rem; color:var(--muted); margin-top:4px; }
+
+/* ── SOLUTION ── */
+#slide-solution { background:linear-gradient(160deg,#f7f4ef 60%,#e8f3ed 100%); align-items:flex-start; padding-top:80px; padding-bottom:60px; }
+.sol-header { display:grid; grid-template-columns:1fr auto; gap:24px; align-items:start; margin-bottom:8px; }
+.sol-illustration { width:180px; border-radius:16px; overflow:hidden; }
+.sol-illustration img { width:100%; display:block; border-radius:16px; }
+.sol-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:0; }
+.uc { background:#fff; border-radius:12px; padding:16px 18px; border:1px solid var(--rule); transition:box-shadow 0.25s; position:relative; }
+.uc:hover { box-shadow:0 6px 20px rgba(0,0,0,0.07); }
+.uc-head { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+.uc-head .uc-icon { font-size:1.1rem; flex-shrink:0; }
+.uc-head h3 { font-family:'Playfair Display',Georgia,serif; font-size:0.88rem; font-weight:700; color:var(--ink); }
+.uc-head .play-btn { margin-left:auto; width:28px; height:28px; border-radius:50%; border:1.5px solid var(--accent); background:none; color:var(--accent); font-size:0.7rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s,color 0.2s; flex-shrink:0; }
+.uc-head .play-btn:hover { background:var(--accent); color:#fff; }
+.uc-head .biz-num { font-family:'Playfair Display',Georgia,serif; font-size:0.95rem; font-weight:700; color:var(--accent); margin-left:auto; display:none; flex-shrink:0; }
+.sol-grid.bizmode .uc-head .biz-num { display:block; }
+.sol-grid.bizmode .uc-head .play-btn { display:none; }
+.uc p { font-size:0.8rem; color:var(--muted); line-height:1.5; }
+.uc-expand { max-height:0; overflow:hidden; transition:max-height 0.5s ease,padding 0.3s; padding:0; }
+.uc.expanded .uc-expand { max-height:400px; padding-top:12px; }
+.uc-expand audio { width:100%; height:32px; border-radius:6px; margin-bottom:8px; }
+.uc-expand .toggle-row { display:flex; align-items:center; gap:8px; font-size:0.72rem; margin-top:8px; }
+.uc-expand .toggle-label { color:var(--muted); }
+.toggle-switch { position:relative; width:36px; height:20px; background:var(--accent); border-radius:10px; cursor:pointer; transition:background 0.2s; flex-shrink:0; }
+.toggle-switch.off { background:var(--red); }
+.toggle-switch::after { content:''; position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%; background:#fff; transition:left 0.2s; }
+.toggle-switch.off::after { left:18px; }
+.toggle-state { font-weight:600; }
+.toggle-state.with { color:var(--accent); }
+.toggle-state.without { color:var(--red); }
+.uc-without-content { display:none; background:rgba(192,57,43,0.06); border-left:3px solid var(--red); border-radius:0 8px 8px 0; padding:10px 12px; margin-top:8px; }
+.uc-without-content.visible { display:block; }
+.uc-without-content p { font-size:0.76rem; color:var(--text); line-height:1.5; }
+/* Biz case bottom line */
+.biz-bottom { display:flex; align-items:center; gap:12px; cursor:pointer; background:var(--accent-pale); border:1px solid rgba(42,107,79,0.2); border-radius:10px; padding:14px 20px; margin-top:16px; transition:background 0.2s,box-shadow 0.2s; }
+.biz-bottom:hover { background:#c4e4d6; }
+.biz-bottom.pressed { background:var(--accent); box-shadow:inset 0 2px 6px rgba(0,0,0,0.2); }
+.biz-bottom .biz-title { font-family:'Playfair Display',Georgia,serif; font-size:0.95rem; font-weight:700; color:var(--accent); }
+.biz-bottom.pressed .biz-title { color:#fff; }
+
+/* ── PRODUCT ── */
+#slide-product { background:var(--cream); }
+.prod-top { display:grid; grid-template-columns:1fr auto; gap:24px; align-items:start; margin-bottom:20px; }
+.prod-photo { width:240px; border-radius:16px; overflow:hidden; border:1px solid var(--rule); box-shadow:0 8px 24px rgba(0,0,0,0.08); }
+.prod-photo img { width:100%; display:block; }
+.prod-controls { display:flex; align-items:center; gap:16px; margin-bottom:16px; flex-wrap:wrap; }
+.view-toggle { display:flex; gap:2px; background:var(--cream); border-radius:8px; padding:3px; border:1px solid var(--rule); }
+.view-btn { padding:6px 14px; border-radius:6px; border:none; background:none; font-family:'DM Sans',sans-serif; font-size:0.78rem; font-weight:500; color:var(--muted); cursor:pointer; transition:all 0.2s; }
+.view-btn.active { background:#fff; color:var(--ink); box-shadow:0 1px 3px rgba(0,0,0,0.1); font-weight:600; }
+.page-toggle { display:flex; gap:2px; background:var(--cream); border-radius:8px; padding:3px; border:1px solid var(--rule); }
+.filter-pills { display:flex; gap:6px; flex-wrap:wrap; }
+.filter-pill { display:flex; align-items:center; gap:5px; padding:5px 12px; border-radius:20px; border:1px solid var(--rule); background:#fff; font-size:0.75rem; color:var(--text); cursor:pointer; transition:all 0.2s; user-select:none; }
+.filter-pill.active { border-color:var(--accent); background:var(--accent-pale); color:var(--accent); font-weight:600; }
+.filter-pill .dot { width:8px; height:8px; border-radius:50%; border:2px solid var(--rule); }
+.filter-pill.active .dot { border-color:var(--accent); background:var(--accent); }
+.proto-frame { background:#fff; border-radius:16px; border:1px solid var(--rule); overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.06); height:480px; position:relative; }
+.proto-frame iframe { width:100%; height:100%; border:none; }
+.proto-frame .proto-placeholder { display:flex; align-items:center; justify-content:center; height:100%; color:var(--muted); font-size:0.9rem; }
+/* Bottom line */
+.prod-bottom { display:flex; align-items:center; gap:16px; margin-top:16px; padding:16px 20px; background:#fff; border-radius:12px; border:1px solid var(--rule); cursor:pointer; transition:box-shadow 0.2s; }
+.prod-bottom:hover { box-shadow:0 4px 12px rgba(0,0,0,0.06); }
+.prod-bottom .live-label { font-family:'Playfair Display',Georgia,serif; font-size:1rem; font-weight:700; color:var(--accent); }
+.prod-bottom .live-days { font-family:'DM Mono',monospace; font-size:0.78rem; color:var(--muted); }
+.callfw-panel { max-height:0; overflow:hidden; transition:max-height 0.5s ease,padding 0.3s; padding:0 20px; }
+.callfw-panel.open { max-height:500px; padding:20px; }
+.callfw-select { padding:6px 12px; border-radius:8px; border:1px solid var(--rule); font-family:'DM Sans',sans-serif; font-size:0.82rem; color:var(--ink); background:#fff; margin-bottom:12px; }
+.callfw-screenshot { background:#fff; border-radius:12px; border:1px solid var(--rule); overflow:hidden; }
+.callfw-screenshot img { width:100%; display:block; }
+.callfw-mockup { background:var(--cream); border-radius:12px; border:1px solid var(--rule); padding:20px; font-size:0.82rem; }
+.callfw-mockup .mock-header { font-weight:700; color:var(--ink); margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.callfw-mockup .mock-row { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--rule); }
+.callfw-mockup .mock-row:last-child { border-bottom:none; }
+.callfw-mockup .mock-label { color:var(--muted); min-width:120px; }
+.callfw-mockup .mock-value { font-weight:600; color:var(--ink); }
+.callfw-mockup .mock-value.green { color:var(--accent); }
+
+/* ── SECURITY (placeholder) ── */
+#slide-security { background:var(--paper); }
+
+/* ── LAUNCH ── */
+#slide-launch { background:var(--paper); }
+.launch-layout { display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:start; }
+.phase-list { display:flex; flex-direction:column; gap:12px; }
+.phase-card { background:#fff; border-radius:14px; border:1px solid var(--rule); overflow:hidden; cursor:pointer; transition:box-shadow 0.3s; }
+.phase-card:hover { box-shadow:0 4px 16px rgba(0,0,0,0.06); }
+.phase-card.active { border-color:var(--accent); box-shadow:0 4px 16px rgba(42,107,79,0.15); }
+.phase-header { display:flex; align-items:center; gap:14px; padding:18px 20px; }
+.phase-num { width:32px; height:32px; border-radius:50%; background:var(--accent-pale); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',Georgia,serif; font-weight:700; font-size:0.9rem; color:var(--accent); flex-shrink:0; }
+.phase-card.active .phase-num { background:var(--accent); color:#fff; }
+.phase-title { font-family:'Playfair Display',Georgia,serif; font-size:1rem; font-weight:700; color:var(--ink); }
+.phase-time { font-size:0.68rem; color:var(--accent); font-weight:600; margin-left:auto; }
+.phase-chevron { width:16px; height:16px; transition:transform 0.3s; color:var(--muted); flex-shrink:0; }
+.phase-card.active .phase-chevron { transform:rotate(90deg); color:var(--accent); }
+.phase-body { max-height:0; overflow:hidden; transition:max-height 0.5s ease,padding 0.3s; padding:0 20px; }
+.phase-card.active .phase-body { max-height:400px; padding:0 20px 20px; }
+.phase-step { display:flex; gap:12px; align-items:flex-start; margin-bottom:14px; }
+.phase-step:last-child { margin-bottom:0; }
+.phase-step-icon { font-size:1rem; flex-shrink:0; }
+.phase-step h4 { font-size:0.85rem; font-weight:600; color:var(--ink); margin-bottom:3px; }
+.phase-step p { font-size:0.78rem; color:var(--muted); line-height:1.5; }
+.proto-mockup { background:var(--ink); border-radius:20px; padding:16px; min-height:380px; }
+.proto-mock-header { display:flex; align-items:center; gap:10px; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.1); }
+.proto-mock-header .pm-logo { font-family:'Playfair Display',Georgia,serif; font-size:0.9rem; font-weight:700; color:#fff; }
+.proto-mock-header .pm-logo span { color:var(--accent-light); }
+.proto-mock-header .pm-badge { font-family:'DM Mono',monospace; font-size:0.58rem; color:var(--accent-light); letter-spacing:0.08em; text-transform:uppercase; margin-left:auto; }
+.proto-threads { display:flex; flex-direction:column; gap:8px; }
+.pt { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px 14px; display:flex; gap:12px; align-items:center; opacity:0; transform:translateX(40px); transition:opacity 0.5s ease,transform 0.5s ease; }
+.pt.visible { opacity:1; transform:translateX(0); }
+.pt-avatar { width:32px; height:32px; border-radius:50%; background:rgba(42,107,79,0.3); display:flex; align-items:center; justify-content:center; font-size:0.7rem; color:var(--accent-light); flex-shrink:0; }
+.pt-name { font-size:0.78rem; font-weight:600; color:#fff; }
+.pt-preview { font-size:0.68rem; color:rgba(247,244,239,0.45); }
+.pt-time { font-size:0.6rem; color:rgba(247,244,239,0.3); margin-left:auto; white-space:nowrap; }
+.pt.p2 { border-color:rgba(200,150,62,0.3); }
+.pt.p2 .pt-avatar { background:rgba(200,150,62,0.3); color:var(--gold); }
+.pt.p3 { border-color:rgba(91,33,182,0.3); }
+.pt.p3 .pt-avatar { background:rgba(91,33,182,0.3); color:#a78bfa; }
+
+/* ── PRICING ── */
+#slide-pricing { background:var(--paper); }
+.org-toggle { display:flex; gap:4px; background:var(--cream); border-radius:10px; padding:4px; margin-bottom:28px; width:fit-content; }
+.org-btn { padding:8px 20px; border-radius:8px; border:none; background:none; font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:500; color:var(--muted); cursor:pointer; transition:all 0.2s; }
+.org-btn.active { background:#fff; color:var(--ink); box-shadow:0 1px 4px rgba(0,0,0,0.1); font-weight:600; }
+.pop-row { display:flex; align-items:center; gap:16px; margin-bottom:32px; }
+.pop-label { font-size:0.82rem; color:var(--muted); white-space:nowrap; }
+.pop-slider { flex:1; -webkit-appearance:none; height:4px; background:var(--rule); border-radius:2px; outline:none; }
+.pop-slider::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--accent); cursor:pointer; }
+.pop-value { font-family:'DM Mono',monospace; font-size:1rem; font-weight:600; color:var(--ink); min-width:80px; text-align:right; }
+.calc-output { background:var(--accent-pale); border-radius:14px; padding:24px; margin-bottom:20px; }
+.calc-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.calc-item .calc-num { font-family:'Playfair Display',Georgia,serif; font-size:1.4rem; font-weight:700; color:var(--accent); line-height:1; margin-bottom:4px; }
+.calc-item .calc-label { font-size:0.72rem; color:var(--muted); line-height:1.4; }
+.pricing-plans { display:grid; grid-template-columns:1fr 48px 1fr; gap:0; align-items:stretch; margin-bottom:24px; }
+.pricing-col { border-radius:20px; padding:32px 28px; }
+.plan-or { background:var(--cream); border:1px solid var(--rule); }
+.plan-rec { background:var(--ink); border:2px solid var(--accent); color:var(--paper); position:relative; }
+.pricing-vs { display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',Georgia,serif; font-size:0.9rem; font-weight:700; color:var(--muted); }
+.plan-name-label { font-family:'Playfair Display',Georgia,serif; font-size:1.15rem; font-weight:700; margin-bottom:4px; }
+.plan-rec .plan-name-label { color:#fff; }
+.plan-price-big { font-family:'Playfair Display',Georgia,serif; font-size:2.6rem; font-weight:700; line-height:1; margin-bottom:4px; }
+.plan-rec .plan-price-big { color:#fff; }
+.plan-price-unit { font-size:1rem; font-weight:400; color:var(--muted); }
+.plan-rec .plan-price-unit { color:rgba(247,244,239,0.5); }
+.plan-price-sub { font-size:0.72rem; color:var(--muted); margin-bottom:20px; }
+.plan-rec .plan-price-sub { color:rgba(247,244,239,0.4); }
+.plan-features { display:flex; flex-direction:column; gap:10px; }
+.plan-feat { display:flex; align-items:flex-start; gap:10px; font-size:0.85rem; line-height:1.45; }
+.plan-feat .icon { color:var(--accent-light); font-weight:700; flex-shrink:0; }
+.plan-rec .plan-feat { color:rgba(247,244,239,0.7); }
+.pricing-badge { display:inline-block; margin-top:20px; background:var(--accent); color:#fff; font-size:0.72rem; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; border-radius:20px; padding:6px 16px; }
+.pricing-footnote { font-size:0.68rem; color:var(--muted); line-height:1.65; border-top:1px solid var(--rule); padding-top:14px; font-family:'DM Mono',monospace; }
+.trust-strip { display:flex; justify-content:center; gap:28px; margin-top:20px; padding-top:16px; border-top:1px solid var(--rule); flex-wrap:wrap; }
+.trust-strip span { font-family:'DM Mono',monospace; font-size:0.68rem; color:var(--muted); letter-spacing:0.06em; text-transform:uppercase; }
+
+/* ── WHO WE ARE ── */
+#slide-who { background:var(--cream); }
+.carousel-container { position:relative; overflow:hidden; margin-bottom:32px; }
+.carousel-track { display:flex; gap:24px; transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); }
+.carousel-track .team-card { min-width:calc((100% - 48px)/3); flex-shrink:0; }
+.team-card { background:#fff; border-radius:16px; padding:28px 22px; border:1px solid var(--rule); text-align:center; }
+.team-avatar { width:64px; height:64px; border-radius:50%; overflow:hidden; margin:0 auto 14px; background:var(--accent-pale); display:flex; align-items:center; justify-content:center; }
+.team-avatar img { width:100%; height:100%; object-fit:cover; }
+.team-avatar .initials { font-family:'Playfair Display',Georgia,serif; font-size:1.2rem; font-weight:700; color:var(--accent); }
+.team-name { font-family:'Playfair Display',Georgia,serif; font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:4px; }
+.team-role { font-size:0.72rem; color:var(--accent); font-weight:600; text-transform:uppercase; letter-spacing:0.07em; margin-bottom:10px; }
+.team-bio { font-size:0.8rem; color:var(--muted); line-height:1.55; }
+.carousel-arrow { position:absolute; top:50%; transform:translateY(-50%); z-index:5; width:36px; height:36px; border-radius:50%; border:1px solid var(--rule); background:#fff; color:var(--ink); font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.1); transition:opacity 0.2s,background 0.2s; }
+.carousel-arrow:hover { background:var(--accent-pale); }
+.carousel-arrow.left { left:-8px; }
+.carousel-arrow.right { right:-8px; }
+.carousel-arrow.hidden { opacity:0; pointer-events:none; }
+.trust-row { display:flex; align-items:center; justify-content:center; gap:24px; padding:20px 0; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); margin-bottom:28px; flex-wrap:wrap; }
+.trust-row img { height:26px; opacity:0.7; }
+.trust-row .divider { width:1px; height:24px; background:var(--rule); }
+.trust-row .stat-chip { font-family:'DM Mono',monospace; font-size:0.72rem; letter-spacing:0.06em; color:var(--accent); font-weight:600; }
+.customer-cards { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.customer-card { background:#fff; border-radius:12px; padding:20px 16px; border:1px solid var(--rule); text-align:center; display:flex; flex-direction:column; align-items:center; gap:8px; }
+.customer-card img { height:32px; object-fit:contain; }
+.customer-card .c-name { font-family:'Playfair Display',Georgia,serif; font-size:0.88rem; font-weight:700; color:var(--ink); }
+.customer-card .c-desc { font-size:0.75rem; color:var(--muted); line-height:1.45; }
+.hipaa-badge { display:inline-flex; align-items:center; gap:6px; font-size:0.72rem; font-weight:700; color:var(--accent); letter-spacing:0.06em; }
+.hipaa-badge svg { width:20px; height:20px; }
+
+/* ── CTA ── */
+#slide-cta { background:var(--accent); color:#fff; }
+.cta-inner { text-align:center; }
+.cta-title { font-family:'Playfair Display',Georgia,serif; font-size:clamp(2rem,4vw,3.2rem); font-weight:700; color:#fff; margin-bottom:16px; letter-spacing:-0.02em; line-height:1.15; }
+.cta-title em { font-style:italic; color:rgba(255,255,255,0.75); }
+.cta-sub { font-size:1rem; color:rgba(255,255,255,0.7); margin-bottom:48px; line-height:1.65; }
+.cta-box { background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2); border-radius:16px; padding:36px 48px; display:inline-block; backdrop-filter:blur(8px); }
+.cta-contact { font-family:'Playfair Display',Georgia,serif; font-size:1.5rem; font-weight:700; color:#fff; margin-bottom:6px; }
+.cta-email { font-size:1rem; color:rgba(255,255,255,0.75); text-decoration:none; }
+.cta-email:hover { color:#fff; text-decoration:underline; }
+.cta-website { display:block; font-family:'DM Mono',monospace; font-size:0.8rem; color:rgba(255,255,255,0.55); margin-top:4px; }
+
+/* PROGRESS */
+.slide-progress { position:fixed; bottom:28px; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:99; }
+.progress-bar { width:32px; height:3px; border-radius:2px; background:var(--rule); overflow:hidden; cursor:pointer; }
+.progress-fill { height:100%; width:0%; background:var(--accent); border-radius:2px; transition:width 0.6s ease; }
+.progress-bar.active .progress-fill { width:100%; }
+.progress-bar.done .progress-fill { width:100%; background:var(--rule); }
+
+@media(max-width:768px){
+  nav{padding:14px 20px} .slide{padding:90px 24px 60px}
+  .hero-grid,.problem-top,.sol-header,.prod-top,.launch-layout,.pricing-plans{grid-template-columns:1fr}
+  .problem-cards,.sol-grid{grid-template-columns:1fr 1fr}
+  .customer-cards,.calc-grid{grid-template-columns:1fr 1fr}
+  .carousel-track .team-card{min-width:calc(100% - 16px)}
+  .pricing-vs{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo"><img src="pharmacy_assets/logo_yousquared.png" alt="YouSquared"></div>
+  <div class="nav-dots" id="navDots"></div>
+</nav>
+
+<!-- ═══ SLIDE 0: HERO ═══ -->
+<section class="slide" id="slide-hero">
+  <div class="slide-inner">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-logo"><img src="pharmacy_assets/logo_yousquared.png" alt="YouSquared"></div>
+        <div class="hero-eyebrow">AI Secretary &mdash; Pharmacies</div>
+        <h1 class="hero-title"><em>Every patient heard.</em><br>Every call handled.</h1>
+        <p class="hero-sub">YouSquared AI gives pharmacy patients instant access over the phone: orders, referrals, updates, adherence &amp; refills.</p>
+        <div class="hero-badge"><span class="dot-pulse"></span> Available 24/7 &mdash; nights, weekends, holidays</div>
+        <div class="hero-stats">
+          <div class="hero-stat"><span class="hero-stat-num">2M+</span><span class="hero-stat-label">Calls handled annualized</span></div>
+          <div class="hero-stat"><span class="hero-stat-num">+20%</span><span class="hero-stat-label">Revenue uplift</span></div>
+          <div class="hero-stat"><span class="hero-stat-num">4.6&#9733;</span><span class="hero-stat-label">App Store iOS</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="hero-illustration">
+          <img src="pharmacy_assets/img-000.png" alt="Pharmacy AI assistant" onerror="this.parentElement.innerHTML='<div style=&quot;padding:60px 20px;color:rgba(247,244,239,0.3);text-align:center;font-style:italic&quot;>Pharmacy illustration</div>'">
+          <div class="caption">With YouSquared</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 1: PROBLEM ═══ -->
+<section class="slide" id="slide-problem">
+  <div class="slide-inner">
+    <div class="problem-top">
+      <div>
+        <div class="section-label">01 &mdash; The problem</div>
+        <h2 class="section-title">Patients find it hard to access <em>pharmacy services</em></h2>
+      </div>
+      <div style="width:220px;">
+        <img src="pharmacy_assets/illustration_problem.png" alt="Pharmacy staff overwhelmed" style="width:100%;border-radius:16px;" onerror="this.outerHTML='<div style=&quot;background:var(--gold-pale);border-radius:16px;padding:32px 20px;text-align:center;color:var(--gold);font-style:italic;font-size:0.82rem&quot;>Problem illustration<br><span style=font-size:0.65rem;color:var(--muted)>Generate via DALL-E</span></div>'">
+      </div>
+    </div>
+    <div class="problem-cards">
+      <div class="pc" onclick="this.classList.toggle('open')">
+        <div class="pc-top"><span class="pc-icon">&#128230;</span><span class="pc-name">Orders</span><span class="pc-stat-num">30%</span></div>
+        <div class="pc-bottom">
+          <span class="pc-desc">of new Rx calls go unanswered or to voicemail at peak hours</span>
+          <svg class="pc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="pc-source"><a href="https://ncpa.org/newsroom/sro/2023/ncpa-digest" target="_blank" rel="noopener">NCPA Digest, 2023</a></div>
+        <div class="pc-review"><div class="stars">&#9733;&#9733;&#9734;&#9734;&#9734;</div><div class="review-text">&ldquo;Called three times to place a new prescription. 15 min hold, then voicemail, then busy. Had to drive there in person.&rdquo;</div><div class="review-attr">&mdash; Health system pharmacy, Google Reviews</div></div>
+      </div>
+      <div class="pc" onclick="this.classList.toggle('open')">
+        <div class="pc-top"><span class="pc-icon">&#128203;</span><span class="pc-name">Referrals</span><span class="pc-stat-num">42%</span></div>
+        <div class="pc-bottom">
+          <span class="pc-desc">of specialty Rx referrals require 3+ follow-up calls to resolve</span>
+          <svg class="pc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="pc-source"><a href="https://academic.oup.com/ajhp" target="_blank" rel="noopener">Am J Health-Syst Pharm, 2022</a></div>
+        <div class="pc-review"><div class="stars">&#9733;&#9734;&#9734;&#9734;&#9734;</div><div class="review-text">&ldquo;Doctor sent a referral for a specialty med weeks ago. Pharmacy says they never got it. Nobody helps over the phone.&rdquo;</div><div class="review-attr">&mdash; Specialty pharmacy patient</div></div>
+      </div>
+      <div class="pc" onclick="this.classList.toggle('open')">
+        <div class="pc-top"><span class="pc-icon">&#128276;</span><span class="pc-name">Updates</span><span class="pc-stat-num">#1</span></div>
+        <div class="pc-bottom">
+          <span class="pc-desc">Rx status calls are the single largest driver of inbound phone volume</span>
+          <svg class="pc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="pc-source"><a href="https://ncpa.org/newsroom/sro/2023/ncpa-digest" target="_blank" rel="noopener">NCPA Digest, 2023</a></div>
+        <div class="pc-review"><div class="stars">&#9733;&#9733;&#9734;&#9734;&#9734;</div><div class="review-text">&ldquo;Waiting two days for a status update. Every call, a different answer or nobody picks up.&rdquo;</div><div class="review-attr">&mdash; Hospital outpatient pharmacy</div></div>
+      </div>
+      <div class="pc" onclick="this.classList.toggle('open')">
+        <div class="pc-top"><span class="pc-icon">&#128138;</span><span class="pc-name">Adherence</span><span class="pc-stat-num">50%</span></div>
+        <div class="pc-bottom">
+          <span class="pc-desc">of patients non-adherent within 6 months of starting a chronic medication</span>
+          <svg class="pc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="pc-source"><a href="https://www.who.int/chp/knowledge/publications/adherence_report/en/" target="_blank" rel="noopener">WHO Adherence Report</a></div>
+        <div class="pc-review"><div class="stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div><div class="review-text">&ldquo;Ran out of blood pressure meds last week. Nobody called to remind me. Doctor says my readings are dangerously high.&rdquo;</div><div class="review-attr">&mdash; Community pharmacy patient</div></div>
+      </div>
+      <div class="pc" onclick="this.classList.toggle('open')">
+        <div class="pc-top"><span class="pc-icon">&#128260;</span><span class="pc-name">Refills</span><span class="pc-stat-num">18%</span></div>
+        <div class="pc-bottom">
+          <span class="pc-desc">of patients consider switching pharmacies &mdash; phone wait is a top reason</span>
+          <svg class="pc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="pc-source"><a href="https://www.jdpower.com/business/press-releases/2023-us-pharmacy-study" target="_blank" rel="noopener">J.D. Power, 2023</a></div>
+        <div class="pc-review"><div class="stars">&#9733;&#9733;&#9734;&#9734;&#9734;</div><div class="review-text">&ldquo;Every month, 10&ndash;15 minutes on hold for a refill. Considered switching just for the wait.&rdquo;</div><div class="review-attr">&mdash; Health system pharmacy</div></div>
+      </div>
+      <div class="pc" onclick="this.classList.toggle('open')">
+        <div class="pc-top"><span class="pc-icon">&#127760;</span><span class="pc-name">Language barriers</span><span class="pc-stat-num">25%</span></div>
+        <div class="pc-bottom">
+          <span class="pc-desc">of LEP patients report medication errors linked to language gaps</span>
+          <svg class="pc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="pc-source"><a href="https://link.springer.com/journal/11606" target="_blank" rel="noopener">J Gen Intern Med, 2021</a></div>
+        <div class="pc-review"><div class="stars">&#9733;&#9734;&#9734;&#9734;&#9734;</div><div class="review-text">&ldquo;Grandmother speaks only Mandarin. Can never understand the pharmacist on the phone. Missed medication instructions twice.&rdquo;</div><div class="review-attr">&mdash; Family member, hospital pharmacy</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 2: SOLUTION ═══ -->
+<section class="slide" id="slide-solution">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="section-label">02 &mdash; The solution</div>
+        <h2 class="section-title">An AI pharmacy tech gives patients <em>24/7 instant access</em></h2>
+        <p class="section-intro" style="margin-bottom:16px;">Orders, referrals, updates, adherence &amp; refills.</p>
+      </div>
+      <div class="sol-illustration">
+        <img src="pharmacy_assets/img-000.png" alt="AI pharmacy" style="border-radius:16px;">
+      </div>
+    </div>
+    <div class="sol-grid" id="solGrid">
+      <div class="uc" data-uplift="+5%">
+        <div class="uc-head"><span class="uc-icon">&#128230;</span><h3>Orders</h3><span class="biz-num">+5%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
+        <p>AI answers instantly, captures new Rx requests, confirms via text.</p>
+        <div class="uc-expand">
+          <audio controls preload="none"><source src="pharmacy_assets/glp1-call-624326.ogg" type="audio/ogg"></audio>
+          <div class="toggle-row">
+            <span class="toggle-label">Experience:</span>
+            <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
+            <span class="toggle-state with">With YouSquared</span>
+          </div>
+          <div class="uc-without-content"><p>Patient calls 3 times, gets voicemail twice, gives up. New Rx order lost to a competitor pharmacy.</p></div>
+        </div>
+      </div>
+      <div class="uc" data-uplift="+6%">
+        <div class="uc-head"><span class="uc-icon">&#128203;</span><h3>Referrals</h3><span class="biz-num">+6%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
+        <p>AI calls physicians for specialty consultations, follows up on pending scripts.</p>
+        <div class="uc-expand">
+          <audio controls preload="none"><source src="pharmacy_assets/glp1-call-617601.ogg" type="audio/ogg"></audio>
+          <div class="toggle-row">
+            <span class="toggle-label">Experience:</span>
+            <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
+            <span class="toggle-state with">With YouSquared</span>
+          </div>
+          <div class="uc-without-content"><p>Referral sits in queue for weeks. Staff too busy with inbound to call out. $14K+/month specialty Rx revenue walks away.</p></div>
+        </div>
+      </div>
+      <div class="uc" data-uplift="+2%">
+        <div class="uc-head"><span class="uc-icon">&#128276;</span><h3>Updates</h3><span class="biz-num">+2%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
+        <p>Proactive Rx status, delivery &amp; prior auth updates before patients call.</p>
+        <div class="uc-expand">
+          <div style="padding:12px;background:var(--cream);border-radius:8px;font-size:0.78rem;color:var(--muted);text-align:center;">Audio coming soon</div>
+          <div class="toggle-row">
+            <span class="toggle-label">Experience:</span>
+            <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
+            <span class="toggle-state with">With YouSquared</span>
+          </div>
+          <div class="uc-without-content"><p>Patient calls 4 times for status. Each call takes staff 3 minutes. 12 minutes wasted on a single check.</p></div>
+        </div>
+      </div>
+      <div class="uc" data-uplift="+4%">
+        <div class="uc-head"><span class="uc-icon">&#128138;</span><h3>Adherence</h3><span class="biz-num">+4%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
+        <p>AI checks in 1&ndash;2 weeks after new medication &mdash; catches issues early.</p>
+        <div class="uc-expand">
+          <div style="padding:12px;background:var(--cream);border-radius:8px;font-size:0.78rem;color:var(--muted);text-align:center;">Audio coming soon</div>
+          <div class="toggle-row">
+            <span class="toggle-label">Experience:</span>
+            <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
+            <span class="toggle-state with">With YouSquared</span>
+          </div>
+          <div class="uc-without-content"><p>Patient silently stops medication due to side effects. 3 months later: ED visit. Pharmacy never knew.</p></div>
+        </div>
+      </div>
+      <div class="uc" data-uplift="+2%">
+        <div class="uc-head"><span class="uc-icon">&#128260;</span><h3>Refills</h3><span class="biz-num">+2%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
+        <p>Automated refill reminders by text and voice &mdash; one tap to confirm.</p>
+        <div class="uc-expand">
+          <div style="padding:12px;background:var(--cream);border-radius:8px;font-size:0.78rem;color:var(--muted);text-align:center;">Audio coming soon</div>
+          <div class="toggle-row">
+            <span class="toggle-label">Experience:</span>
+            <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
+            <span class="toggle-state with">With YouSquared</span>
+          </div>
+          <div class="uc-without-content"><p>10&ndash;15 min hold every month for a refill. Patient eventually switches to a pharmacy with a better digital experience.</p></div>
+        </div>
+      </div>
+      <div class="uc" data-uplift="+1%">
+        <div class="uc-head"><span class="uc-icon">&#127760;</span><h3>Multilingual</h3><span class="biz-num">+1%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
+        <p>11+ languages, instant detection &mdash; no interpreter line needed.</p>
+        <div class="uc-expand">
+          <div style="padding:12px;background:var(--cream);border-radius:8px;font-size:0.78rem;color:var(--muted);text-align:center;">Audio coming soon</div>
+          <div class="toggle-row">
+            <span class="toggle-label">Experience:</span>
+            <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
+            <span class="toggle-state with">With YouSquared</span>
+          </div>
+          <div class="uc-without-content"><p>Mandarin-speaking patient can't communicate. 20-minute interpreter call, or gives up entirely.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="biz-bottom" id="bizBottom" onclick="toggleBizCase()">
+      <span class="biz-title">Results: 20%+ revenue uplift</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 3: PRODUCT ═══ -->
+<section class="slide" id="slide-product">
+  <div class="slide-inner">
+    <div class="prod-top">
+      <div>
+        <div class="section-label">03 &mdash; The product</div>
+        <h2 class="section-title">Operational control <em>at your fingertips</em></h2>
+      </div>
+      <div class="prod-photo">
+        <img src="pharmacy_assets/bianca_pharmacy.jpg" alt="Bianca using YouSquared on iPad at pharmacy counter" onerror="this.outerHTML='<div style=&quot;padding:40px 20px;background:var(--cream);text-align:center;color:var(--muted);font-style:italic;font-size:0.82rem&quot;>Bianca photo<br><span style=font-size:0.65rem>Add bianca_pharmacy.jpg to assets</span></div>'">
+      </div>
+    </div>
+    <div class="prod-controls">
+      <div class="view-toggle">
+        <button class="view-btn active" onclick="setView('web')">Web</button>
+        <button class="view-btn" onclick="setView('ios')">iOS</button>
+      </div>
+      <div class="page-toggle">
+        <button class="view-btn active" onclick="setPage('contacts')">Contacts</button>
+        <button class="view-btn" onclick="setPage('stats')">Stats</button>
+      </div>
+      <div class="filter-pills" id="filterPills">
+        <div class="filter-pill active" onclick="toggleFilter(this)" data-filter="orders"><span class="dot"></span> Orders</div>
+        <div class="filter-pill active" onclick="toggleFilter(this)" data-filter="referrals"><span class="dot"></span> Referrals</div>
+        <div class="filter-pill active" onclick="toggleFilter(this)" data-filter="updates"><span class="dot"></span> Updates, adherence &amp; refills</div>
+      </div>
+    </div>
+    <div class="proto-frame" id="protoFrame">
+      <iframe id="protoIframe" src="https://strange-attractor.com/prototypes/scheduled-outbound/" title="YouSquared Prototype"></iframe>
+    </div>
+    <div class="prod-bottom" onclick="document.getElementById('callfwPanel').classList.toggle('open')">
+      <span class="live-label" id="liveLabel">Live in one day</span>
+      <span class="live-days">&mdash; click for setup details</span>
+    </div>
+    <div class="callfw-panel" id="callfwPanel">
+      <select class="callfw-select" id="callfwSelect" onchange="updateCallFw()">
+        <option value="verizon" selected>Verizon One Talk</option>
+        <option value="cisco">Cisco Webex Calling</option>
+        <option value="teams">Microsoft Teams Phone</option>
+        <option value="ringcentral">RingCentral</option>
+        <option value="avaya">Avaya Cloud Office</option>
+      </select>
+      <div id="callfwContent">
+        <div class="callfw-screenshot"><img src="pharmacy_assets/illustration_setup.png" alt="Verizon One Talk call forwarding admin"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 4: SECURITY (placeholder) ═══ -->
+<section class="slide" id="slide-security">
+  <div class="slide-inner">
+    <div class="section-label">04 &mdash; Security &amp; Compliance</div>
+    <h2 class="section-title">Enterprise-grade <em>security</em></h2>
+    <p class="section-intro">More details coming soon.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+      <div style="background:#fff;border-radius:14px;padding:24px;border:1px solid var(--rule);text-align:center;">
+        <div style="font-size:1.5rem;margin-bottom:8px;">&#128274;</div>
+        <div style="font-family:'Playfair Display',Georgia,serif;font-weight:700;color:var(--ink);margin-bottom:4px;">HIPAA Compliant</div>
+        <div style="font-size:0.78rem;color:var(--muted);">Approved by Mount Sinai institutional leadership</div>
+      </div>
+      <div style="background:#fff;border-radius:14px;padding:24px;border:1px solid var(--rule);text-align:center;">
+        <div style="font-size:1.5rem;margin-bottom:8px;">&#128737;&#65039;</div>
+        <div style="font-family:'Playfair Display',Georgia,serif;font-weight:700;color:var(--ink);margin-bottom:4px;">SOC 2</div>
+        <div style="font-size:0.78rem;color:var(--muted);">Type II in progress</div>
+      </div>
+      <div style="background:#fff;border-radius:14px;padding:24px;border:1px solid var(--rule);text-align:center;">
+        <div style="font-size:1.5rem;margin-bottom:8px;">&#128272;</div>
+        <div style="font-family:'Playfair Display',Georgia,serif;font-weight:700;color:var(--ink);margin-bottom:4px;">End-to-End Encryption</div>
+        <div style="font-size:0.78rem;color:var(--muted);">All data encrypted at rest and in transit</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 5: SIMPLE TO LAUNCH ═══ -->
+<section class="slide" id="slide-launch">
+  <div class="slide-inner">
+    <div class="section-label">05 &mdash; Getting started</div>
+    <h2 class="section-title">Simple to <em>launch</em></h2>
+    <p class="section-intro">Three phases, each unlocking more value.</p>
+    <div class="launch-layout">
+      <div class="phase-list">
+        <div class="phase-card active" onclick="activatePhase(1)">
+          <div class="phase-header">
+            <div class="phase-num">1</div>
+            <div><div class="phase-title">Orders</div></div>
+            <span class="phase-time">Live in days</span>
+            <svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+          <div class="phase-body">
+            <div class="phase-step"><div class="phase-step-icon">&#128222;</div><div><h4>Forward your pharmacy line</h4><p>Set call forwarding from your PBX or carrier admin. 5 minutes, no IT ticket.</p></div></div>
+            <div class="phase-step"><div class="phase-step-icon">&#9881;&#65039;</div><div><h4>Configure your AI</h4><p>We train on your hours, formulary basics, and greeting. Live same week.</p></div></div>
+          </div>
+        </div>
+        <div class="phase-card" onclick="activatePhase(2)">
+          <div class="phase-header">
+            <div class="phase-num">2</div>
+            <div><div class="phase-title">Referrals</div></div>
+            <span class="phase-time">Week 2&ndash;4</span>
+            <svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+          <div class="phase-body">
+            <div class="phase-step"><div class="phase-step-icon">&#128196;</div><div><h4>Secure CSV export</h4><p>Export patient lists from Epic or PrimeRx. Drag-and-drop into YouSquared.</p></div></div>
+            <div class="phase-step"><div class="phase-step-icon">&#128138;</div><div><h4>Enable outbound</h4><p>AI proactively reaches physicians for specialty consultations.</p></div></div>
+          </div>
+        </div>
+        <div class="phase-card" onclick="activatePhase(3)">
+          <div class="phase-header">
+            <div class="phase-num">3</div>
+            <div><div class="phase-title">End-to-End</div></div>
+            <span class="phase-time">Month 2+</span>
+            <svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+          <div class="phase-body">
+            <div class="phase-step"><div class="phase-step-icon">&#128272;</div><div><h4>FHIR R4 API</h4><p>Your IT registers via App Orchard, configures OAuth scopes. Sandbox to production.</p></div></div>
+            <div class="phase-step"><div class="phase-step-icon">&#128276;</div><div><h4>Real-time webhooks</h4><p>Rx status, delivery, appointments &mdash; FHIR Subscriptions push in real time.</p></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="proto-mockup">
+        <div class="proto-mock-header"><div class="pm-logo">You<span>&sup2;</span></div><div class="pm-badge">Pharmacy &mdash; AI Threads</div></div>
+        <div class="proto-threads" id="protoThreads">
+          <div class="pt visible" data-phase="1"><div class="pt-avatar">NP</div><div><div class="pt-name">Maria Santos &mdash; New Rx</div><div class="pt-preview">New patient, Zepbound QuickPen 2.5mg&hellip;</div></div><div class="pt-time">2m ago</div></div>
+          <div class="pt visible" data-phase="1"><div class="pt-avatar">RF</div><div><div class="pt-name">James Wilson &mdash; Refill</div><div class="pt-preview">Existing patient, lisinopril 10mg&hellip;</div></div><div class="pt-time">8m ago</div></div>
+          <div class="pt p2" data-phase="2"><div class="pt-avatar">DR</div><div><div class="pt-name">Dr. Patel &mdash; Consult (Ozempic)</div><div class="pt-preview">Outbound: specialty med consultation&hellip;</div></div><div class="pt-time">1h ago</div></div>
+          <div class="pt p2" data-phase="2"><div class="pt-avatar">DR</div><div><div class="pt-name">Dr. Chen &mdash; Consult (Humira)</div><div class="pt-preview">Outbound: biosimilar switch&hellip;</div></div><div class="pt-time">2h ago</div></div>
+          <div class="pt p2" data-phase="2"><div class="pt-avatar">WI</div><div><div class="pt-name">Emily Tran &mdash; Walk-in</div><div class="pt-preview">No Rx, new patient inquiry&hellip;</div></div><div class="pt-time">3h ago</div></div>
+          <div class="pt p3" data-phase="3"><div class="pt-avatar">RX</div><div><div class="pt-name">David Kim &mdash; Rx Status</div><div class="pt-preview">Prior auth approved, ready for pickup&hellip;</div></div><div class="pt-time">Today</div></div>
+          <div class="pt p3" data-phase="3"><div class="pt-avatar">DL</div><div><div class="pt-name">Sarah Johnson &mdash; Delivery</div><div class="pt-preview">En route, ETA 2:30 PM&hellip;</div></div><div class="pt-time">Today</div></div>
+          <div class="pt p3" data-phase="3"><div class="pt-avatar">CI</div><div><div class="pt-name">Robert Lee &mdash; Check-in + Refill</div><div class="pt-preview">Week 2 metformin: no side effects&hellip;</div></div><div class="pt-time">Today</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 6: PRICING ═══ -->
+<section class="slide" id="slide-pricing">
+  <div class="slide-inner">
+    <div class="section-label">06 &mdash; Pricing</div>
+    <h2 class="section-title">No-brainer pricing: <em>1/3 of a pharmacy tech</em></h2>
+    <p class="section-intro">Select your organization profile and patient population.</p>
+    <div class="org-toggle" id="orgToggle">
+      <button class="org-btn active" onclick="setOrg('independent',10000)">Independent</button>
+      <button class="org-btn" onclick="setOrg('health-system',100000)">Health System</button>
+      <button class="org-btn" onclick="setOrg('chain',500000)">Chain</button>
+    </div>
+    <div class="pop-row">
+      <span class="pop-label">Patient population</span>
+      <input type="range" class="pop-slider" id="popSlider" min="1000" max="1000000" step="1000" value="10000" oninput="updatePricing()">
+      <span class="pop-value" id="popValue">10,000</span>
+    </div>
+    <div class="calc-output">
+      <div class="calc-grid">
+        <div class="calc-item"><div class="calc-num" id="calcCalls">20K</div><div class="calc-label">AI-handled calls / year</div></div>
+        <div class="calc-item"><div class="calc-num" id="calcTexts">100K</div><div class="calc-label">AI-handled texts / year</div></div>
+        <div class="calc-item"><div class="calc-num" id="calcConsults">5K</div><div class="calc-label">AI-scheduled consults / year</div></div>
+        <div class="calc-item"><div class="calc-num" id="calcUplift">$2M</div><div class="calc-label">Estimated revenue uplift (20%)</div></div>
+      </div>
+    </div>
+    <div class="pricing-plans">
+      <div class="pricing-col plan-or">
+        <div class="plan-name-label">Orders &amp; Referrals</div>
+        <div class="plan-price-big" id="planOrPrice">$2,500<span class="plan-price-unit">/mo</span></div>
+        <div class="plan-price-sub" id="planOrSub">$0.25 per patient / month</div>
+        <div class="plan-features">
+          <div class="plan-feat"><span class="icon on">&#10003;</span> AI handles all inbound calls</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> New order capture &amp; confirmation</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> Outbound physician referral calls</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> Multilingual (11+ languages)</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> Dashboard &amp; call summaries</div>
+        </div>
+      </div>
+      <div class="pricing-vs">vs</div>
+      <div class="pricing-col plan-rec">
+        <div class="pricing-badge">Recommended</div>
+        <div class="plan-name-label" style="margin-top:12px;">End-to-End</div>
+        <div class="plan-price-big" id="planE2ePrice" style="color:#fff;">$3,500<span class="plan-price-unit" style="color:rgba(247,244,239,0.5);">/mo</span></div>
+        <div class="plan-price-sub" id="planE2eSub" style="color:rgba(247,244,239,0.4);">$0.35 per patient / month</div>
+        <div class="plan-features">
+          <div class="plan-feat"><span class="icon on">&#10003;</span> Everything in Orders &amp; Referrals</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> Proactive adherence check-ins</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> Automated refill reminders</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> Rx status &amp; delivery updates</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> FHIR API integration</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> White-glove onboarding</div>
+        </div>
+      </div>
+    </div>
+    <div class="pricing-footnote">Pricing scales with patient population. Volume discounts above 50K patients. 14-day pilot included. Anchor: Safer Pharmacy NYC (10K patients, $40K/year E2E).</div>
+    <div class="trust-strip"><span>HIPAA compliant</span><span>SOC 2 in progress</span><span>2M+ calls handled</span><span>4.6&#9733; App Store</span></div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 7: WHO WE ARE ═══ -->
+<section class="slide" id="slide-who">
+  <div class="slide-inner">
+    <div class="section-label">07 &mdash; Who we are</div>
+    <h2 class="section-title">Built by <em>healthcare AI pioneers</em></h2>
+    <div class="carousel-container" id="peopleCarousel">
+      <div class="carousel-track" id="peopleTrack">
+        <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/headshot_ad.jpg" alt="Alexandre Dalyac"></div><div class="team-name">Alexandre Dalyac</div><div class="team-role">CEO &amp; Co-founder</div><div class="team-bio">Founded Tractable, AI unicorn valued at $1B+, serving Fortune 500.</div></div>
+        <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/headshot_adb.png" alt="Alexandre de Br&eacute;bisson"></div><div class="team-name">Alexandre de Br&eacute;bisson</div><div class="team-role">CTO &amp; Co-founder</div><div class="team-bio">PhD supervised by Yoshua Bengio (Mila Montreal), inventor of voice cloning.</div></div>
+        <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/headshot_bessissow.jpg" alt="Dr Talat Bessissow"></div><div class="team-name">Dr Talat Bessissow</div><div class="team-role">Medical Advisor</div><div class="team-bio">Associate Professor of Medicine, Gastroenterology at MUHC / McGill.</div></div>
+        <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/headshot-asselah.png" alt="Dr Tarik Asselah"></div><div class="team-name">Dr Tarik Asselah</div><div class="team-role">Medical Advisor</div><div class="team-bio">Professor of Hepatology at Beaujon Hospital, global KOL in liver disease.</div></div>
+        <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/headshot_ali.jpg" alt="Dr Ramy Ali"></div><div class="team-name">Dr Ramy Ali</div><div class="team-role">Clinical Partner</div><div class="team-bio">Director of Geriatric Oncology at Mount Sinai / TNJH, daily active user.</div></div>
+        <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/team-joris.jpg" alt="Joris Abalea"></div><div class="team-name">Joris Abalea</div><div class="team-role">Engineering Lead</div><div class="team-bio">Full-stack engineer specializing in iOS and real-time voice AI.</div></div>
+        <div class="team-card"><div class="team-avatar"><span class="initials">AC</span></div><div class="team-name">Anthony Chansavang</div><div class="team-role">Engineer</div><div class="team-bio">Healthcare-grade voice AI infrastructure.</div></div>
+        <div class="team-card"><div class="team-avatar"><span class="initials">TT</span></div><div class="team-name">Tomohiro Takesako</div><div class="team-role">Engineer</div><div class="team-bio">Prompt optimization and evaluation frameworks.</div></div>
+        <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/team-jake.jpg" alt="Jake Albert"></div><div class="team-name">Jake Albert</div><div class="team-role">Engineer</div><div class="team-bio">Web app and customer-facing platforms.</div></div>
+      </div>
+      <button class="carousel-arrow left hidden" onclick="slideCarousel('people',-1)">&larr;</button>
+      <button class="carousel-arrow right" onclick="slideCarousel('people',1)">&rarr;</button>
+    </div>
+    <div class="trust-row">
+      <img src="pharmacy_assets/logo_airstreet.png" alt="Air Street Capital" style="height:28px">
+      <div class="divider"></div>
+      <img src="pharmacy_assets/logo_zetta.png" alt="Zetta Venture Partners" style="height:24px">
+      <div class="divider"></div>
+      <img src="pharmacy_assets/logo_k5global.svg" alt="K5 Global" style="height:24px">
+      <div class="divider"></div>
+      <img src="pharmacy_assets/logo_verizon.png" alt="Verizon" style="height:22px">
+      <div class="divider"></div>
+      <span class="stat-chip">2M+ calls handled</span>
+      <div class="divider"></div>
+      <span class="stat-chip">4.6&#9733; App Store</span>
+    </div>
+    <div class="customer-cards">
+      <div class="customer-card"><img src="pharmacy_assets/logo_mountsinai.svg" alt="Mount Sinai"><div class="c-name">Mount Sinai / TNJH</div><div class="c-desc">Geriatric oncology &mdash; daily active deployment</div></div>
+      <div class="customer-card"><img src="pharmacy_assets/logo_muhc.svg" alt="MUHC"><div class="c-name">MUHC Gastro</div><div class="c-desc">Automated nurse line at McGill University Health Centre</div></div>
+      <div class="customer-card"><img src="pharmacy_assets/logo_safer.png" alt="Safer Pharmacy"><div class="c-name">Safer Pharmacy</div><div class="c-desc">NYC pharmacy &mdash; active call handling deployment</div></div>
+      <div class="customer-card"><div class="hipaa-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>HIPAA</div><div class="c-name">HIPAA Compliant</div><div class="c-desc">Approved by Mount Sinai institutional leadership</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 8: CTA ═══ -->
+<section class="slide" id="slide-cta">
+  <div class="slide-inner">
+    <div class="cta-inner">
+      <h2 class="cta-title">Ready to give every patient <em>instant access?</em></h2>
+      <p class="cta-sub">Start with Phase 1 in days. No integration, no IT ticket.</p>
+      <div class="cta-box">
+        <div class="cta-contact">Alexandre Dalyac</div>
+        <a class="cta-email" href="mailto:ad@yousquared.ai">ad@yousquared.ai</a>
+        <span class="cta-website">yousquared.ai</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="slide-progress" id="slideProgress"></div>
+
+<script>
+/* ── NAV & PROGRESS ── */
+const slides = document.querySelectorAll('.slide');
+const navDots = document.getElementById('navDots');
+const progressEl = document.getElementById('slideProgress');
+const N = slides.length;
+for(let i=0;i<N;i++){
+  const dot=document.createElement('button');dot.className='nav-dot';
+  dot.onclick=()=>slides[i].scrollIntoView({behavior:'smooth'});navDots.appendChild(dot);
+  const bar=document.createElement('div');bar.className='progress-bar';
+  bar.innerHTML='<div class="progress-fill"></div>';
+  bar.onclick=()=>slides[i].scrollIntoView({behavior:'smooth'});progressEl.appendChild(bar);
+}
+const dots=navDots.querySelectorAll('.nav-dot');
+const bars=progressEl.querySelectorAll('.progress-bar');
+function updateActive(idx){
+  dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+  bars.forEach((b,i)=>{b.classList.toggle('active',i===idx);b.classList.toggle('done',i<idx);});
+}
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');updateActive(Array.from(slides).indexOf(e.target));}});
+},{threshold:0.35});
+slides.forEach(s=>io.observe(s));
+updateActive(0);
+
+/* ── CAROUSELS ── */
+const carouselState={people:0};
+function slideCarousel(name,dir){
+  const track=document.getElementById(name+'Track');
+  const cards=track.children;const gap=24;const vis=3;
+  const maxIdx=cards.length-vis;
+  carouselState[name]=Math.max(0,Math.min(maxIdx,carouselState[name]+dir));
+  const cw=cards[0].offsetWidth+gap;
+  track.style.transform='translateX(-'+(carouselState[name]*cw)+'px)';
+  const c=track.parentElement;
+  const la=c.querySelector('.carousel-arrow.left');
+  const ra=c.querySelector('.carousel-arrow.right');
+  if(la)la.classList.toggle('hidden',carouselState[name]===0);
+  if(ra)ra.classList.toggle('hidden',carouselState[name]>=maxIdx);
+}
+
+/* ── SOLUTION: expand card ── */
+function toggleUcExpand(card){card.classList.toggle('expanded');}
+function toggleWithWithout(sw){
+  sw.classList.toggle('off');
+  const row=sw.closest('.uc-expand');
+  const stateEl=row.querySelector('.toggle-state');
+  const wc=row.querySelector('.uc-without-content');
+  if(sw.classList.contains('off')){
+    stateEl.textContent='Without YouSquared';stateEl.className='toggle-state without';
+    wc.classList.add('visible');
+  }else{
+    stateEl.textContent='With YouSquared';stateEl.className='toggle-state with';
+    wc.classList.remove('visible');
+  }
+}
+
+/* ── BIZ CASE TOGGLE ── */
+let bizOn=false;
+function toggleBizCase(){
+  bizOn=!bizOn;
+  document.getElementById('bizBottom').classList.toggle('pressed',bizOn);
+  document.getElementById('solGrid').classList.toggle('bizmode',bizOn);
+}
+
+/* ── PRODUCT: view/page toggle ── */
+function setView(v){
+  document.querySelectorAll('.view-toggle .view-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+function setPage(p){
+  document.querySelectorAll('.page-toggle .view-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  const iframe=document.getElementById('protoIframe');
+  if(p==='stats') iframe.src='https://strange-attractor.com/prototypes/stats-web/';
+  else iframe.src='https://strange-attractor.com/prototypes/scheduled-outbound/';
+}
+function toggleFilter(pill){
+  pill.classList.toggle('active');
+  updateLiveLabel();
+}
+function updateLiveLabel(){
+  const pills=document.querySelectorAll('.filter-pill');
+  const active=document.querySelectorAll('.filter-pill.active');
+  const total=pills.length;const on=active.length;
+  const label=document.getElementById('liveLabel');
+  if(on===0){label.textContent='Select capabilities above';}
+  else if(on===1&&active[0].dataset.filter==='orders'){label.textContent='Live in one day';}
+  else if(on===1){label.textContent='Live in 2 weeks';}
+  else if(on===2){label.textContent='Live in 2–4 weeks';}
+  else{label.textContent='Live in 6–8 weeks (full integration)';}
+}
+
+/* ── PRODUCT: call fw ── */
+const callfwMockups={
+  cisco:{name:'Cisco Webex Calling',nav:'Webex Control Hub › Calling › Call Routing',field:'Always Forward',value:'+1 (212) 555-0134 → YouSquared AI'},
+  teams:{name:'Microsoft Teams Phone',nav:'Teams Admin Center › Voice › Call Policies',field:'Call Forwarding',value:'Forward to +1 (212) 555-0134 (YouSquared)'},
+  ringcentral:{name:'RingCentral',nav:'Admin Portal › Phone System › Call Handling',field:'Always Forward',value:'+1 (212) 555-0134 — YouSquared AI'},
+  avaya:{name:'Avaya Cloud Office',nav:'Admin Portal › Users › Call Forwarding Rules',field:'Unconditional Forward',value:'+1 (212) 555-0134 (YouSquared)'}
+};
+function updateCallFw(){
+  const v=document.getElementById('callfwSelect').value;
+  const c=document.getElementById('callfwContent');
+  if(v==='verizon'){c.innerHTML='<div class="callfw-screenshot"><img src="pharmacy_assets/illustration_setup.png" alt="Verizon One Talk"></div>';return;}
+  const m=callfwMockups[v];
+  c.innerHTML='<div class="callfw-mockup"><div class="mock-header">'+m.name+'</div><div style="font-size:0.72rem;color:var(--muted);margin-bottom:12px;">'+m.nav+'</div><div class="mock-row"><span class="mock-label">Rule</span><span class="mock-value green">'+m.field+' ✔</span></div><div class="mock-row"><span class="mock-label">Destination</span><span class="mock-value">'+m.value+'</span></div><div class="mock-row"><span class="mock-label">Status</span><span class="mock-value green">Active</span></div></div>';
+}
+
+/* ── PHASE EXPANSION ── */
+let currentPhase=1;
+function activatePhase(p){
+  currentPhase=p;
+  document.querySelectorAll('.phase-card').forEach((c,i)=>c.classList.toggle('active',i+1===p));
+  document.querySelectorAll('.pt').forEach(t=>{
+    const tp=parseInt(t.dataset.phase);
+    if(tp<=p)setTimeout(()=>t.classList.add('visible'),(tp-1)*100);
+    else t.classList.remove('visible');
+  });
+}
+
+/* ── PRICING ── */
+const ANCHOR={patients:10000,calls:20000,texts:100000,consults:5000,revPerPat:1000,uplift:0.20,orRate:0.25,e2eRate:0.35,orMin:1000,e2eMin:1500};
+function setOrg(type,pop){
+  document.querySelectorAll('.org-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('popSlider').value=pop;updatePricing();
+}
+function fmtN(n){if(n>=1e6)return'$'+(n/1e6).toFixed(1)+'M';if(n>=1e3)return'$'+Math.round(n/1e3)+'K';return'$'+n;}
+function fmtC(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return Math.round(n/1e3)+'K';return n;}
+function fmtComma(n){return n.toLocaleString('en-US');}
+function updatePricing(){
+  const pop=parseInt(document.getElementById('popSlider').value);
+  const r=pop/ANCHOR.patients;const disc=pop>=50000?0.8:1;
+  document.getElementById('popValue').textContent=fmtComma(pop);
+  document.getElementById('calcCalls').textContent=fmtC(Math.round(ANCHOR.calls*r));
+  document.getElementById('calcTexts').textContent=fmtC(Math.round(ANCHOR.texts*r));
+  document.getElementById('calcConsults').textContent=fmtC(Math.round(ANCHOR.consults*r));
+  document.getElementById('calcUplift').textContent=fmtN(pop*ANCHOR.revPerPat*ANCHOR.uplift);
+  const orP=Math.max(ANCHOR.orMin,Math.round(pop*ANCHOR.orRate*disc));
+  const e2eP=Math.max(ANCHOR.e2eMin,Math.round(pop*ANCHOR.e2eRate*disc));
+  document.getElementById('planOrPrice').innerHTML='$'+fmtComma(orP)+'<span class="plan-price-unit">/mo</span>';
+  document.getElementById('planE2ePrice').innerHTML='$'+fmtComma(e2eP)+'<span class="plan-price-unit" style="color:rgba(247,244,239,0.5);">/mo</span>';
+  document.getElementById('planOrSub').textContent='$'+(orP/pop).toFixed(2)+' per patient / month';
+  document.getElementById('planE2eSub').textContent='$'+(e2eP/pop).toFixed(2)+' per patient / month';
+}
+updatePricing();activatePhase(1);
+</script>
+</body>
+</html>
