@@ -502,7 +502,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
       <div>
         <div class="section-label">03 &mdash; The product</div>
         <h2 class="section-title">Operational control<br><em>at your fingertips</em></h2>
-        <p class="section-intro" style="margin-bottom:16px;">Live order-taking in one day.</p>
+        <p class="section-intro" style="margin-bottom:16px;">Order request-taking live in one day.</p>
       </div>
       <div class="prod-photo">
         <img src="pharmacy_assets/bianca_pharmacy.png" alt="Bianca using YouSquared on iPad at pharmacy counter" onerror="this.outerHTML='<div style=&quot;padding:40px 20px;background:var(--cream);text-align:center;color:var(--muted);font-style:italic;font-size:0.82rem&quot;>Bianca photo<br><span style=font-size:0.65rem>Add bianca_pharmacy.jpg to assets</span></div>'">
@@ -628,8 +628,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
     <h2 class="section-title">No-brainer pricing:<br><em>1/3 of a pharmacy tech</em></h2>
     <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap;">
       <div class="org-toggle" style="margin-bottom:0;">
-        <button class="org-btn active" id="modeAH" onclick="setMode('ah')">After Hours</button>
-        <button class="org-btn" id="modeFL" onclick="setMode('fl')">Front Line</button>
+        <button class="org-btn active" id="modeFL" onclick="setMode('fl')">Front Line</button>
+        <button class="org-btn" id="modeAH" onclick="setMode('ah')">After Hours</button>
       </div>
       <div class="org-toggle" id="orgToggle" style="margin-bottom:0;">
         <button class="org-btn active" onclick="setOrg('independent',10000)">Independent</button>
@@ -647,7 +647,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
         <div class="calc-item"><div class="calc-num" id="calcCalls">20K</div><div class="calc-label">AI-handled calls / year</div></div>
         <div class="calc-item"><div class="calc-num" id="calcTexts">100K</div><div class="calc-label">AI-handled texts / year</div></div>
         <div class="calc-item"><div class="calc-num" id="calcConsults">5K</div><div class="calc-label">AI-scheduled consults / year</div></div>
-        <div class="calc-item"><div class="calc-num" id="calcUplift">$2M</div><div class="calc-label">Estimated revenue uplift (20%)</div></div>
+        <div class="calc-item"><div class="calc-num" id="calcUplift">20%</div><div class="calc-label" id="calcUpliftLabel">Estimated revenue uplift</div></div>
       </div>
     </div>
     <div class="pricing-plans" style="margin-bottom:0;">
@@ -657,24 +657,24 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
           <div style="text-align:right;"><span class="plan-price-big" id="planOrPrice" style="font-size:1.8rem;">$2,500<span class="plan-price-unit">/mo</span></span><div class="plan-price-sub" id="planOrSub" style="margin-bottom:0;">$0.25 per patient / month</div></div>
         </div>
         <div class="plan-features" style="gap:6px;">
-          <div class="plan-feat"><span class="icon on">&#10003;</span> AI handles all inbound calls</div>
-          <div class="plan-feat"><span class="icon on">&#10003;</span> New order capture &amp; confirmation</div>
-          <div class="plan-feat"><span class="icon on">&#10003;</span> Outbound physician referral calls</div>
+          <div class="plan-feat" id="featCallsLine"><span class="icon on">&#10003;</span> AI handles all inbound calls</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> Order request intake</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> Outbound physician referral campaigns</div>
           <div class="plan-feat"><span class="icon on">&#10003;</span> Multilingual (11+ languages)</div>
-          <div class="plan-feat"><span class="icon on">&#10003;</span> Dashboard &amp; call summaries</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> All calls transcribed, summarized &amp; sentiment scored</div>
         </div>
       </div>
       <div class="pricing-vs">vs</div>
       <div class="pricing-col plan-rec" style="padding:22px 24px;">
         <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;">
           <div class="plan-name-label" style="margin-bottom:0;color:#fff;">End-to-End</div>
-          <div style="text-align:right;"><span class="plan-price-big" id="planE2ePrice" style="font-size:1.8rem;color:#fff;">$3,500<span class="plan-price-unit" style="color:rgba(247,244,239,0.5);">/mo</span></span><div class="plan-price-sub" id="planE2eSub" style="margin-bottom:0;color:rgba(247,244,239,0.4);">$0.35 per patient / month</div></div>
+          <div style="text-align:right;"><span class="plan-price-big" id="planE2ePrice" style="font-size:1.8rem;color:#fff;">$7,500<span class="plan-price-unit" style="color:rgba(247,244,239,0.5);">/mo</span></span><div class="plan-price-sub" id="planE2eSub" style="margin-bottom:0;color:rgba(247,244,239,0.4);">$0.75 per patient / month</div></div>
         </div>
         <div class="plan-features" style="gap:6px;">
           <div class="plan-feat"><span class="icon on">&#10003;</span> Everything in Orders &amp; Referrals</div>
-          <div class="plan-feat"><span class="icon on">&#10003;</span> Proactive adherence check-ins</div>
-          <div class="plan-feat"><span class="icon on">&#10003;</span> Automated refill reminders</div>
           <div class="plan-feat"><span class="icon on">&#10003;</span> Rx status &amp; delivery updates</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> Automated refill reminders</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> Proactive adherence check-ins</div>
           <div class="plan-feat"><span class="icon on">&#10003;</span> FHIR API integration</div>
         </div>
       </div>
@@ -858,13 +858,14 @@ function activatePhase(p){
 }
 
 /* ── PRICING ── */
-let pricingMode='ah';
-const ANCHOR={patients:10000,calls:20000,texts:100000,consults:5000,revPerPat:1000,uplift:0.20,orRate:0.25,e2eRate:0.35,orMin:1000,e2eMin:1500};
+let pricingMode='fl';
+const ANCHOR={patients:10000,calls:20000,texts:100000,consults:5000,orRate:0.25,orMin:1000,e2eMin:3000};
 const AH_MULT=0.4;
 function setMode(m){
   pricingMode=m;
   document.getElementById('modeAH').classList.toggle('active',m==='ah');
   document.getElementById('modeFL').classList.toggle('active',m==='fl');
+  document.getElementById('featCallsLine').innerHTML='<span class="icon on">&#10003;</span> '+(m==='ah'?'AI handles after-hour calls':'AI handles all inbound calls');
   updatePricing();
 }
 function setOrg(type,pop){
@@ -872,20 +873,20 @@ function setOrg(type,pop){
   event.target.classList.add('active');
   document.getElementById('popSlider').value=pop;updatePricing();
 }
-function fmtN(n){if(n>=1e6)return'$'+(n/1e6).toFixed(1)+'M';if(n>=1e3)return'$'+Math.round(n/1e3)+'K';return'$'+n;}
 function fmtC(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return Math.round(n/1e3)+'K';return n;}
 function fmtComma(n){return n.toLocaleString('en-US');}
 function updatePricing(){
   const pop=parseInt(document.getElementById('popSlider').value);
   const r=pop/ANCHOR.patients;const disc=pop>=50000?0.8:1;
   const mm=pricingMode==='ah'?AH_MULT:1;
+  const upliftPct=pricingMode==='ah'?5:20;
   document.getElementById('popValue').textContent=fmtComma(pop);
   document.getElementById('calcCalls').textContent=fmtC(Math.round(ANCHOR.calls*r*mm));
   document.getElementById('calcTexts').textContent=fmtC(Math.round(ANCHOR.texts*r*mm));
   document.getElementById('calcConsults').textContent=fmtC(Math.round(ANCHOR.consults*r*mm));
-  document.getElementById('calcUplift').textContent=fmtN(pop*ANCHOR.revPerPat*ANCHOR.uplift*mm);
+  document.getElementById('calcUplift').textContent=upliftPct+'%';
   const orP=Math.max(ANCHOR.orMin,Math.round(pop*ANCHOR.orRate*disc*mm));
-  const e2eP=Math.max(ANCHOR.e2eMin,Math.round(pop*ANCHOR.e2eRate*disc*mm));
+  const e2eP=Math.max(ANCHOR.e2eMin,orP*3);
   document.getElementById('planOrPrice').innerHTML='$'+fmtComma(orP)+'<span class="plan-price-unit">/mo</span>';
   document.getElementById('planE2ePrice').innerHTML='$'+fmtComma(e2eP)+'<span class="plan-price-unit" style="color:rgba(247,244,239,0.5);">/mo</span>';
   document.getElementById('planOrSub').textContent='$'+(orP/pop).toFixed(2)+' per patient / month';
