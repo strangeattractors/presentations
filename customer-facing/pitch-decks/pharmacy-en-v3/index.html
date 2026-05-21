@@ -115,6 +115,9 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .call-transcript::-webkit-scrollbar { width:4px; } .call-transcript::-webkit-scrollbar-thumb { background:var(--rule); border-radius:2px; }
 .ct-line { max-width:85%; padding:6px 10px; border-radius:12px; font-size:0.65rem; line-height:1.4; word-wrap:break-word; }
 .ct-line.ai { align-self:flex-end; background:var(--accent); color:#fff; border-bottom-right-radius:4px; }
+.share-btn { display:inline-flex; align-items:center; gap:3px; padding:3px 8px; border-radius:5px; border:1px solid var(--rule); background:#fff; font-family:'DM Sans',sans-serif; font-size:0.6rem; font-weight:600; color:var(--muted); cursor:pointer; transition:all 0.2s; }
+.share-btn:hover { border-color:var(--accent); color:var(--accent); }
+.share-btn.copied { border-color:var(--accent); color:var(--accent); }
 .ct-line.caller { align-self:flex-start; background:#fff; color:var(--text); border:1px solid var(--rule); border-bottom-left-radius:4px; }
 .uc-expand .toggle-row { display:flex; align-items:center; gap:8px; font-size:0.72rem; margin-top:8px; }
 .uc-expand .toggle-label { color:var(--muted); }
@@ -440,8 +443,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
       </div>
     </div>
     <div class="sol-grid" id="solGrid">
-      <div class="uc" data-uplift="+5%">
-        <div class="uc-head"><span class="uc-icon">&#128230;</span><h3>Orders</h3><span class="biz-num">+5%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
+      <div class="uc" id="call-orders" data-uplift="+5%">
+        <div class="uc-head"><span class="uc-icon">&#128230;</span><h3>Orders</h3><button class="share-btn" onclick="event.stopPropagation();copyCallLink(this,'call-orders')" title="Copy link to this call">&#128279; Share</button><span class="biz-num">+5%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
         <p class="uc-with-desc">AI answers instantly, captures new Rx requests, confirms via text.</p>
         <p class="uc-without-desc"><strong>30%</strong> of peak hour new Rx calls go unanswered or to voicemail</p>
         <div class="uc-expand">
@@ -467,8 +470,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
           <div class="uc-without-content"><div class="uc-wo-review">&ldquo;They didn&rsquo;t enter any of my information so I could get my prescription. For three days I had to call [...] and no one I spoke to could help me.&rdquo;<span class="uc-wo-attr">&mdash; Reed H., <a href="https://www.yelp.com/biz/the-mount-sinai-hospital-new-york-10?q=prescription" target="_blank">Yelp</a></span></div></div>
         </div>
       </div>
-      <div class="uc" data-uplift="+6%">
-        <div class="uc-head"><span class="uc-icon">&#128203;</span><h3>Referrals</h3><span class="biz-num">+6%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
+      <div class="uc" id="call-referrals" data-uplift="+6%">
+        <div class="uc-head"><span class="uc-icon">&#128203;</span><h3>Referrals</h3><button class="share-btn" onclick="event.stopPropagation();copyCallLink(this,'call-referrals')" title="Copy link to this call">&#128279; Share</button><span class="biz-num">+6%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
         <p class="uc-with-desc">AI texts patients from outreach campaigns, qualifies leads &amp; books consults.</p>
         <p class="uc-without-desc"><strong>68%</strong> of eligible patients never start treatment when a new therapy becomes available</p>
         <div class="uc-expand">
@@ -492,8 +495,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
           <div class="uc-without-content"><div class="uc-wo-review">&ldquo;I wish we had known that chemo was not the only option.&rdquo;<span class="uc-wo-attr">&mdash; Alicia, <a href="https://pancan.org/news/11-things-patients-caregivers-wish-they-knew-sooner/" target="_blank">Pancreatic Cancer Action Network</a></span></div></div>
         </div>
       </div>
-      <div class="uc" data-uplift="+2%">
-        <div class="uc-head"><span class="uc-icon">&#128276;</span><h3>Updates</h3><span class="biz-num">+2%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
+      <div class="uc" id="call-updates" data-uplift="+2%">
+        <div class="uc-head"><span class="uc-icon">&#128276;</span><h3>Updates</h3><button class="share-btn" onclick="event.stopPropagation();copyCallLink(this,'call-updates')" title="Copy link to this call">&#128279; Share</button><span class="biz-num">+2%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
         <p class="uc-with-desc">Patient calls to check medication pickup status. AI verifies identity, takes detailed list, checks with team.</p>
         <p class="uc-without-desc"><strong>#1</strong> Rx status calls are the single largest driver of inbound phone volume</p>
         <div class="uc-expand">
@@ -520,8 +523,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
           <div class="uc-without-content"><div class="uc-wo-review">&ldquo;Needed a prescription for a rescue inhaler as mine had expired. It took two days and sleepless nights [...]. They didn&rsquo;t respond, then didn&rsquo;t respond again while I kept sending messages.&rdquo;<span class="uc-wo-attr">&mdash; Nan P., <a href="https://www.yelp.com/biz/the-mount-sinai-hospital-new-york-10?q=prescription" target="_blank">Yelp</a></span></div></div>
         </div>
       </div>
-      <div class="uc" data-uplift="+2%">
-        <div class="uc-head"><span class="uc-icon">&#128260;</span><h3>Refills</h3><span class="biz-num">+2%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
+      <div class="uc" id="call-refills" data-uplift="+2%">
+        <div class="uc-head"><span class="uc-icon">&#128260;</span><h3>Refills</h3><button class="share-btn" onclick="event.stopPropagation();copyCallLink(this,'call-refills')" title="Copy link to this call">&#128279; Share</button><span class="biz-num">+2%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
         <p class="uc-with-desc">Patient calls to renew prescription. AI collects RX number, DOB, delivery preference &amp; card confirmation.</p>
         <p class="uc-without-desc"><strong>18%</strong> of patients consider switching pharmacies &mdash; phone wait is a top reason</p>
         <div class="uc-expand">
@@ -553,8 +556,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
           <div class="uc-without-content"><div class="uc-wo-review">&ldquo;If you need to refill prescriptions on a regular basis [...] the process is extremely poor and results in a lot of time and phone calls to get any result.&rdquo;<span class="uc-wo-attr">&mdash; S&eacute;an P., <a href="https://www.yelp.com/biz/the-mount-sinai-hospital-new-york-10?q=prescription" target="_blank">Yelp</a></span></div></div>
         </div>
       </div>
-      <div class="uc" data-uplift="+4%">
-        <div class="uc-head"><span class="uc-icon">&#128138;</span><h3>Adherence</h3><span class="biz-num">+4%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
+      <div class="uc" id="call-adherence" data-uplift="+4%">
+        <div class="uc-head"><span class="uc-icon">&#128138;</span><h3>Adherence</h3><button class="share-btn" onclick="event.stopPropagation();copyCallLink(this,'call-adherence')" title="Copy link to this call">&#128279; Share</button><span class="biz-num">+4%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
         <p class="uc-with-desc">Patient reports side effects from new medication. AI documents symptoms, forwards urgently to doctor.</p>
         <p class="uc-without-desc"><strong>50%</strong> of patients non-adherent within 6 months of starting a chronic medication</p>
         <div class="uc-expand">
@@ -586,8 +589,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
           <div class="uc-without-content"><div class="uc-wo-review">&ldquo;I had my first chemo treatment a little over a week ago and had a nightmare acute reaction to the treatment. I ended up in an ambulance later that night and spent three more days in the hospital.&rdquo;<span class="uc-wo-attr">&mdash; Louise50, <a href="https://csn.cancer.org/discussion/162842/has-anyone-had-care-at-cancer-treatment-centers-of-america" target="_blank">Cancer Survivors Network</a></span></div></div>
         </div>
       </div>
-      <div class="uc" data-uplift="+1%">
-        <div class="uc-head"><span class="uc-icon">&#127760;</span><h3>Multilingual</h3><span class="biz-num">+1%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
+      <div class="uc" id="call-multilingual" data-uplift="+1%">
+        <div class="uc-head"><span class="uc-icon">&#127760;</span><h3>Multilingual</h3><button class="share-btn" onclick="event.stopPropagation();copyCallLink(this,'call-multilingual')" title="Copy link to this call">&#128279; Share</button><span class="biz-num">+1%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
         <p class="uc-with-desc">Spanish-speaking patient calls, AI switches to Spanish instantly. Verifies DOB, handles full interaction.</p>
         <p class="uc-without-desc"><strong>25%</strong> of LEP patients report medication errors linked to language gaps</p>
         <div class="uc-expand">
@@ -942,6 +945,27 @@ function toggleTranscript(btn){
   const panel=btn.nextElementSibling;
   panel.classList.toggle('visible');
 }
+function copyCallLink(btn,id){
+  const url=window.location.origin+window.location.pathname+'#'+id;
+  navigator.clipboard.writeText(url).then(()=>{
+    const orig=btn.innerHTML;
+    btn.innerHTML='&#10003; Copied';btn.classList.add('copied');
+    setTimeout(()=>{btn.innerHTML=orig;btn.classList.remove('copied');},1800);
+  });
+}
+/* Deep-link: auto-expand card when URL has #call-xxx */
+(function(){
+  const h=window.location.hash.replace('#','');
+  if(!h||!h.startsWith('call-'))return;
+  const el=document.getElementById(h);
+  if(!el)return;
+  setTimeout(()=>{
+    el.classList.add('expanded');
+    el.scrollIntoView({behavior:'smooth',block:'center'});
+    el.style.boxShadow='0 0 0 3px var(--accent-light)';
+    setTimeout(()=>{el.style.boxShadow='';},2500);
+  },600);
+})();
 function toggleWithWithout(sw){
   sw.classList.toggle('off');
   const row=sw.closest('.uc-expand');
