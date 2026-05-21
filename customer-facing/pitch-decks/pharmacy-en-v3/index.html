@@ -115,6 +115,11 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .uc-link:hover { color:var(--accent); }
 .uc-link.copied { color:var(--accent); }
 .uc audio { width:100%; height:32px; border-radius:6px; margin:10px 0; }
+.sms-preview { display:flex; flex-direction:column; gap:3px; padding:5px 6px; background:#f0ece6; border-radius:8px; margin:10px 0 17px; height:32px; overflow:hidden; cursor:pointer; position:relative; }
+.sms-preview::after { content:''; position:absolute; bottom:0; left:0; right:0; height:16px; background:linear-gradient(transparent,#f0ece6); pointer-events:none; }
+.sms-preview .sms-b { max-width:85%; padding:4px 8px; border-radius:10px; font-size:0.58rem; line-height:1.35; word-wrap:break-word; }
+.sms-preview .sms-b.out { align-self:flex-end; background:var(--accent); color:#fff; border-bottom-right-radius:3px; }
+.sms-preview .sms-b.in { align-self:flex-start; background:#fff; color:var(--text); border:1px solid var(--rule); border-bottom-left-radius:3px; }
 .uc audio::-webkit-media-controls-enclosure { overflow:hidden; }
 .uc audio::-webkit-media-controls-panel { background:#f0ece6; }
 .uc-actions { display:flex; align-items:center; gap:8px; margin-top:2px; }
@@ -475,7 +480,14 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
         <div class="uc-head"><span class="uc-icon">&#128203;</span><h3>Referrals</h3><button class="uc-link" onclick="event.stopPropagation();copyCallLink(this,'call-referrals')" title="Copy link to this call">&#128279; Share</button><span class="biz-num">+6%</span></div>
         <p class="uc-with-desc">AI texts patients from outreach campaigns, qualifies leads &amp; books consults.</p>
         <p class="uc-without-desc"><strong>68%</strong> of eligible patients never start treatment when a new therapy becomes available</p>
+        <div class="sms-preview" onclick="this.closest('.uc').classList.add('expanded')">
+          <div class="sms-b out">Hi M____, we&rsquo;re now offering a GLP-1 weight loss program. Would you like to see if you qualify?</div>
+          <div class="sms-b in">I would like to see if I qualify.</div>
+          <div class="sms-b out">Great! The first step is a consultation. What day/time works?</div>
+          <div class="sms-b in">Tomorrow 10am?</div>
+        </div>
         <div class="uc-actions">
+          <button class="transcript-btn" onclick="event.stopPropagation();this.closest('.uc').classList.toggle('expanded')">&#128172; Text thread</button>
           <div class="toggle-row">
             <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
             <span class="toggle-state with">With YouSquared</span>
