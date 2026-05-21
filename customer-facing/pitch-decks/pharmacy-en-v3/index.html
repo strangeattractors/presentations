@@ -977,10 +977,10 @@ function copyCallLink(btn,id){
 })();
 function toggleWithWithout(sw){
   sw.classList.toggle('off');
-  const row=sw.closest('.uc-expand');
   const uc=sw.closest('.uc');
-  const stateEl=row.querySelector('.toggle-state');
-  const wc=row.querySelector('.uc-without-content');
+  const stateEl=uc.querySelector('.toggle-state');
+  const wc=uc.querySelector('.uc-without-content');
+  uc.classList.add('expanded');
   if(sw.classList.contains('off')){
     uc.classList.add('without-mode');
     stateEl.textContent='Without YouSquared';stateEl.className='toggle-state without';
