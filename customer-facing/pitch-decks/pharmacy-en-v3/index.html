@@ -92,8 +92,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .uc-head { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
 .uc-head .uc-icon { font-size:1.1rem; flex-shrink:0; }
 .uc-head h3 { font-family:'Playfair Display',Georgia,serif; font-size:0.88rem; font-weight:700; color:var(--ink); }
-.uc-head .play-btn { margin-left:auto; width:28px; height:28px; border-radius:50%; border:1.5px solid var(--accent); background:none; color:var(--accent); font-size:0.7rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s,color 0.2s; flex-shrink:0; }
-.uc-head .play-btn:hover { background:var(--accent); color:#fff; }
+.uc-head .play-btn { margin-left:auto; width:28px; height:28px; border-radius:50%; border:1.5px solid var(--accent); background:var(--accent); color:#fff; font-size:0.7rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s,color 0.2s,border-color 0.2s,transform 0.15s; flex-shrink:0; }
+.uc-head .play-btn:hover { transform:scale(1.08); }
 .uc-head .biz-num { font-family:'Playfair Display',Georgia,serif; font-size:0.95rem; font-weight:700; color:var(--accent); margin-left:auto; display:none; flex-shrink:0; }
 .sol-grid.bizmode .uc-head .biz-num { display:block; }
 .sol-grid.bizmode .uc-head .play-btn { display:none; }
@@ -119,6 +119,16 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .uc-without-content { display:none; background:rgba(192,57,43,0.06); border-left:3px solid var(--red); border-radius:0 8px 8px 0; padding:10px 12px; margin-top:8px; }
 .uc-without-content.visible { display:block; }
 .uc-without-content p { font-size:0.76rem; color:var(--text); line-height:1.5; }
+.uc > .uc-with-desc { color:var(--accent); }
+.uc > .uc-without-desc { display:none; }
+.uc > .uc-without-desc strong { font-family:'Playfair Display',Georgia,serif; font-size:1.05rem; color:var(--red); }
+.uc.without-mode > .uc-with-desc { display:none; }
+.uc.without-mode > .uc-without-desc { display:block; }
+.uc.without-mode .play-btn { background:none !important; color:var(--red) !important; border-color:var(--red) !important; }
+.uc.without-mode .uc-expand audio, .uc.without-mode .uc-expand .sms-thread { display:none; }
+.uc-wo-review { font-size:0.72rem; font-style:italic; color:var(--muted); line-height:1.45; }
+.uc-wo-attr { display:block; font-style:normal; font-size:0.63rem; margin-top:3px; }
+.uc-wo-attr a { color:var(--muted); text-decoration:underline; }
 /* Biz case bottom line */
 .biz-bottom { display:flex; align-items:center; gap:12px; cursor:pointer; background:var(--accent-pale); border:1px solid rgba(42,107,79,0.2); border-radius:10px; padding:14px 20px; margin-top:16px; transition:background 0.2s,box-shadow 0.2s; }
 .biz-bottom:hover { background:#c4e4d6; }
@@ -419,7 +429,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
     <div class="sol-grid" id="solGrid">
       <div class="uc" data-uplift="+5%">
         <div class="uc-head"><span class="uc-icon">&#128230;</span><h3>Orders</h3><span class="biz-num">+5%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
-        <p>AI answers instantly, captures new Rx requests, confirms via text.</p>
+        <p class="uc-with-desc">AI answers instantly, captures new Rx requests, confirms via text.</p>
+        <p class="uc-without-desc"><strong>30%</strong> of peak hour new Rx calls go unanswered or to voicemail</p>
         <div class="uc-expand">
           <audio controls preload="none"><source src="pharmacy_assets/glp1-call-624326.ogg" type="audio/ogg"></audio>
           <div class="toggle-row">
@@ -427,12 +438,13 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
             <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
             <span class="toggle-state with">With YouSquared</span>
           </div>
-          <div class="uc-without-content"><p>Patient calls 3 times, gets voicemail twice, gives up. New Rx order lost to a competitor pharmacy.</p></div>
+          <div class="uc-without-content"><div class="uc-wo-review">&ldquo;They didn&rsquo;t actually enter any of my information so I could get my prescription. For three days I had to call everyone under the sun and EVERYONE I spoke to on the phone was mean, didn&rsquo;t believe me, or hung up on me.&rdquo;<span class="uc-wo-attr">&mdash; Reed H., <a href="https://www.yelp.com/biz/the-mount-sinai-hospital-new-york-10?q=prescription" target="_blank">Mount Sinai Hospital, Yelp</a></span></div></div>
         </div>
       </div>
       <div class="uc" data-uplift="+6%">
         <div class="uc-head"><span class="uc-icon">&#128203;</span><h3>Referrals</h3><span class="biz-num">+6%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
-        <p>AI texts patients from outreach campaigns, qualifies leads &amp; books consults.</p>
+        <p class="uc-with-desc">AI texts patients from outreach campaigns, qualifies leads &amp; books consults.</p>
+        <p class="uc-without-desc"><strong>68%</strong> of eligible patients never start treatment when a new therapy becomes available</p>
         <div class="uc-expand">
           <div class="sms-thread">
             <div class="sms-ts">Mon 4:05 PM</div>
@@ -451,12 +463,13 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
             <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
             <span class="toggle-state with">With YouSquared</span>
           </div>
-          <div class="uc-without-content"><p>Referral sits in queue for weeks. Staff too busy with inbound to call out. $14K+/month specialty Rx revenue walks away.</p></div>
+          <div class="uc-without-content"><div class="uc-wo-review">&ldquo;I wish we had known that chemo was not the only option.&rdquo;<span class="uc-wo-attr">&mdash; Alicia, <a href="https://pancan.org/news/11-things-patients-caregivers-wish-they-knew-sooner/" target="_blank">Pancreatic Cancer Action Network</a></span></div></div>
         </div>
       </div>
       <div class="uc" data-uplift="+2%">
         <div class="uc-head"><span class="uc-icon">&#128276;</span><h3>Updates</h3><span class="biz-num">+2%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
-        <p>Patient calls to check medication pickup status. AI verifies identity, takes detailed list, checks with team.</p>
+        <p class="uc-with-desc">Patient calls to check medication pickup status. AI verifies identity, takes detailed list, checks with team.</p>
+        <p class="uc-without-desc"><strong>#1</strong> Rx status calls are the single largest driver of inbound phone volume</p>
         <div class="uc-expand">
           <audio controls preload="none"><source src="pharmacy_assets/updates-call-479557.ogg" type="audio/ogg"></audio>
           <div class="toggle-row">
@@ -464,12 +477,13 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
             <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
             <span class="toggle-state with">With YouSquared</span>
           </div>
-          <div class="uc-without-content"><p>Patient calls 4 times for status. Each call takes staff 3 minutes. 12 minutes wasted on a single check.</p></div>
+          <div class="uc-without-content"><div class="uc-wo-review">&ldquo;Needed a prescription for a rescue inhaler as mine expired and I was whizzing quite bad. It took two days and sleepless nights to get the prescription!!! First they didn&rsquo;t respond, then they didn&rsquo;t respond again while I kept sending desperate messages.&rdquo;<span class="uc-wo-attr">&mdash; Nan P., <a href="https://www.yelp.com/biz/the-mount-sinai-hospital-new-york-10?q=prescription" target="_blank">Mount Sinai Hospital, Yelp</a></span></div></div>
         </div>
       </div>
       <div class="uc" data-uplift="+4%">
         <div class="uc-head"><span class="uc-icon">&#128138;</span><h3>Adherence</h3><span class="biz-num">+4%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
-        <p>Patient reports side effects from new medication. AI documents symptoms, forwards urgently to doctor.</p>
+        <p class="uc-with-desc">Patient reports side effects from new medication. AI documents symptoms, forwards urgently to doctor.</p>
+        <p class="uc-without-desc"><strong>50%</strong> of patients non-adherent within 6 months of starting a chronic medication</p>
         <div class="uc-expand">
           <audio controls preload="none"><source src="pharmacy_assets/adherence-call-217137.mp3" type="audio/mpeg"></audio>
           <div class="toggle-row">
@@ -477,12 +491,13 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
             <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
             <span class="toggle-state with">With YouSquared</span>
           </div>
-          <div class="uc-without-content"><p>Patient silently stops medication due to side effects. 3 months later: ED visit. Pharmacy never knew.</p></div>
+          <div class="uc-without-content"><div class="uc-wo-review">&ldquo;I had my first chemo treatment a little over a week ago and had a nightmare acute reaction to the treatment. I ended up in an ambulance later that night and spent three more days in the hospital.&rdquo;<span class="uc-wo-attr">&mdash; Louise50, <a href="https://csn.cancer.org/discussion/162842/has-anyone-had-care-at-cancer-treatment-centers-of-america" target="_blank">Cancer Survivors Network</a></span></div></div>
         </div>
       </div>
       <div class="uc" data-uplift="+2%">
         <div class="uc-head"><span class="uc-icon">&#128260;</span><h3>Refills</h3><span class="biz-num">+2%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
-        <p>Patient calls to renew prescription. AI collects RX number, DOB, delivery preference &amp; card confirmation.</p>
+        <p class="uc-with-desc">Patient calls to renew prescription. AI collects RX number, DOB, delivery preference &amp; card confirmation.</p>
+        <p class="uc-without-desc"><strong>18%</strong> of patients consider switching pharmacies &mdash; phone wait is a top reason</p>
         <div class="uc-expand">
           <audio controls preload="none"><source src="pharmacy_assets/refill-call-726530.ogg" type="audio/ogg"></audio>
           <div class="toggle-row">
@@ -490,12 +505,13 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
             <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
             <span class="toggle-state with">With YouSquared</span>
           </div>
-          <div class="uc-without-content"><p>10&ndash;15 min hold every month for a refill. Patient eventually switches to a pharmacy with a better digital experience.</p></div>
+          <div class="uc-without-content"><div class="uc-wo-review">&ldquo;If you need to refill prescriptions on a regular basis, go elsewhere. Their process for refilling requests is extremely poor and results in a lot of time and phone calls in order to get any type of result.&rdquo;<span class="uc-wo-attr">&mdash; S&eacute;an P., <a href="https://www.yelp.com/biz/the-mount-sinai-hospital-new-york-10?q=prescription" target="_blank">Mount Sinai Hospital, Yelp</a></span></div></div>
         </div>
       </div>
       <div class="uc" data-uplift="+1%">
         <div class="uc-head"><span class="uc-icon">&#127760;</span><h3>Multilingual</h3><span class="biz-num">+1%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
-        <p>Spanish-speaking patient calls, AI switches to Spanish instantly. Verifies DOB, handles full interaction.</p>
+        <p class="uc-with-desc">Spanish-speaking patient calls, AI switches to Spanish instantly. Verifies DOB, handles full interaction.</p>
+        <p class="uc-without-desc"><strong>25%</strong> of LEP patients report medication errors linked to language gaps</p>
         <div class="uc-expand">
           <audio controls preload="none"><source src="pharmacy_assets/multilingual-call-537109.ogg" type="audio/ogg"></audio>
           <div class="toggle-row">
@@ -503,7 +519,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
             <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
             <span class="toggle-state with">With YouSquared</span>
           </div>
-          <div class="uc-without-content"><p>Mandarin-speaking patient can't communicate. 20-minute interpreter call, or gives up entirely.</p></div>
+          <div class="uc-without-content"><div class="uc-wo-review">&ldquo;A 13-year-old boy came back to the pharmacy: &lsquo;This isn&rsquo;t my mom&rsquo;s medicine.&rsquo; His mother had said &lsquo;yes&rsquo; to everything because she was afraid to speak English.&rdquo;<span class="uc-wo-attr">&mdash; <a href="https://www.safemedication.com/pharmacist-insights/2021/04/26/how-language-barriers-can-affect-safe-medication-use" target="_blank">SafeMedication.com (ASHP)</a></span></div></div>
         </div>
       </div>
     </div>
@@ -704,10 +720,10 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
     <div class="carousel-container" id="peopleCarousel">
       <div class="carousel-track" id="peopleTrack">
         <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/headshot_ad.jpg" alt="Alexandre Dalyac"></div><div class="team-name">Alexandre Dalyac</div><div class="team-role">CEO &amp; Co-founder</div><div class="team-bio">Founded Tractable, AI unicorn valued at $1B+, serving Fortune 500.</div></div>
-        <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/headshot_adb.png" alt="Alexandre de Br&eacute;bisson"></div><div class="team-name">Alexandre de Br&eacute;bisson</div><div class="team-role">CTO &amp; Co-founder</div><div class="team-bio">PhD supervised by Yoshua Bengio (Mila Montreal), inventor of voice cloning.</div></div>
+        <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/headshot_adb.png" alt="Alexandre de Br&eacute;bisson"></div><div class="team-name">Alexandre de Br&eacute;bisson</div><div class="team-role">CTO &amp; Co-founder</div><div class="team-bio">PhD under Yoshua Bengio (Mila), co-founded Lyrebird &mdash; pioneered AI voice cloning.</div></div>
         <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/headshot_bessissow.jpg" alt="Dr Talat Bessissow"></div><div class="team-name">Dr Talat Bessissow</div><div class="team-role">Medical Advisor</div><div class="team-bio">Associate Professor of Medicine, Gastroenterology at MUHC / McGill.</div></div>
         <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/headshot-asselah.png" alt="Dr Tarik Asselah"></div><div class="team-name">Dr Tarik Asselah</div><div class="team-role">Medical Advisor</div><div class="team-bio">Professor of Hepatology at Beaujon Hospital, global KOL in liver disease.</div></div>
-        <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/headshot_ali.jpg" alt="Dr Ramy Ali"></div><div class="team-name">Dr Ramy Ali</div><div class="team-role">Clinical Partner</div><div class="team-bio">Director of Geriatric Oncology at Mount Sinai / TNJH, daily active user.</div></div>
+        <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/headshot_ali.jpg" alt="Dr Imran Ali"></div><div class="team-name">Dr Imran Ali</div><div class="team-role">Medical Advisor</div><div class="team-bio">Geriatrician in Supportive Oncology at Mount Sinai / The New Jewish Home.</div></div>
         <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/team-joris.jpg" alt="Joris Abalea"></div><div class="team-name">Joris Abalea</div><div class="team-role">Engineering Lead</div><div class="team-bio">Full-stack engineer specializing in iOS and real-time voice AI.</div></div>
         <div class="team-card"><div class="team-avatar"><span class="initials">AC</span></div><div class="team-name">Anthony Chansavang</div><div class="team-role">Engineer</div><div class="team-bio">Healthcare-grade voice AI infrastructure.</div></div>
         <div class="team-card"><div class="team-avatar"><span class="initials">TT</span></div><div class="team-name">Tomohiro Takesako</div><div class="team-role">Engineer</div><div class="team-bio">Prompt optimization and evaluation frameworks.</div></div>
@@ -821,12 +837,15 @@ function toggleUcExpand(card){card.classList.toggle('expanded');}
 function toggleWithWithout(sw){
   sw.classList.toggle('off');
   const row=sw.closest('.uc-expand');
+  const uc=sw.closest('.uc');
   const stateEl=row.querySelector('.toggle-state');
   const wc=row.querySelector('.uc-without-content');
   if(sw.classList.contains('off')){
+    uc.classList.add('without-mode');
     stateEl.textContent='Without YouSquared';stateEl.className='toggle-state without';
     wc.classList.add('visible');
   }else{
+    uc.classList.remove('without-mode');
     stateEl.textContent='With YouSquared';stateEl.className='toggle-state with';
     wc.classList.remove('visible');
   }
