@@ -99,7 +99,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .sol-grid.bizmode .uc-head .play-btn { display:none; }
 .uc p { font-size:0.8rem; color:var(--muted); line-height:1.5; }
 .uc-expand { max-height:0; overflow:hidden; transition:max-height 0.5s ease,padding 0.3s; padding:0; }
-.uc.expanded .uc-expand { max-height:500px; padding-top:12px; }
+.uc.expanded .uc-expand { max-height:800px; padding-top:12px; }
 .uc-expand audio { width:100%; height:32px; border-radius:6px; margin-bottom:8px; }
 .sms-thread { display:flex; flex-direction:column; gap:4px; max-height:220px; overflow-y:auto; padding:8px 6px; background:#f0ece6; border-radius:10px; margin-bottom:8px; scrollbar-width:thin; }
 .sms-thread::-webkit-scrollbar { width:4px; } .sms-thread::-webkit-scrollbar-thumb { background:var(--rule); border-radius:2px; }
@@ -498,6 +498,20 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
         <p class="uc-without-desc"><strong>#1</strong> Rx status calls are the single largest driver of inbound phone volume</p>
         <div class="uc-expand">
           <audio controls preload="none"><source src="pharmacy_assets/multilingual-call-537109-trimmed.m4a" type="audio/mp4"></audio>
+          <button class="transcript-btn" onclick="event.stopPropagation();toggleTranscript(this)">&#128172; Transcript <span style="font-weight:400;opacity:0.7">(translated)</span></button>
+          <div class="call-transcript">
+            <div class="ct-line ai">The Safer Pharmacy, this is Noah. How can I help you today?</div>
+            <div class="ct-line caller">Uh, hi. Do you speak Spanish?</div>
+            <div class="ct-line ai">Yes, I can help you in Spanish. How can I help you today?</div>
+            <div class="ct-line caller">I would like to know if my medications have arrived.</div>
+            <div class="ct-line ai">Of course. Can you tell me your date of birth, please?</div>
+            <div class="ct-line caller">February 9, 2001.</div>
+            <div class="ct-line ai">Thank you. One moment. Yes, your famotidine is ready to be picked up. Do you want to come by today?</div>
+            <div class="ct-line caller">Yes, I&rsquo;m going to stop by today.</div>
+            <div class="ct-line ai">Perfect. We are open 9&ndash;5, Monday through Friday. When you arrive, just say your name at the window.</div>
+            <div class="ct-line caller">No, thank you.</div>
+            <div class="ct-line ai">You&rsquo;re welcome. Have an excellent day!</div>
+          </div>
           <div class="toggle-row">
             <span class="toggle-label">Experience:</span>
             <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
@@ -545,6 +559,25 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
         <p class="uc-without-desc"><strong>50%</strong> of patients non-adherent within 6 months of starting a chronic medication</p>
         <div class="uc-expand">
           <audio controls preload="none"><source src="pharmacy_assets/adherence-call-541578-edited.m4a" type="audio/mp4"></audio>
+          <button class="transcript-btn" onclick="event.stopPropagation();toggleTranscript(this)">&#128172; Transcript</button>
+          <div class="call-transcript">
+            <div class="ct-line ai">The Safer Pharmacy, this is Noah. How can I help you?</div>
+            <div class="ct-line caller">Hello? Yes, good morning. I&rsquo;m calling because this is Miss Barry. I need some things to stick me with and the one that put in my machine.</div>
+            <div class="ct-line ai">Hi, Ms. Barry. Good morning. I can help. Before we go further, what&rsquo;s your date of birth?</div>
+            <div class="ct-line caller">July 1st, 1957.</div>
+            <div class="ct-line ai">When you say things to stick you with and one for the machine, do you mean needles and test strips for your glucose meter?</div>
+            <div class="ct-line caller">Yeah, test strips.</div>
+            <div class="ct-line ai">Got it. Test strips. Do you need lancets too for the finger stick?</div>
+            <div class="ct-line caller">Yeah, yeah, yeah, that too.</div>
+            <div class="ct-line caller">And you know what? Them antibiotics they gave me, I really don&rsquo;t like them. The one that my doctor gave me.</div>
+            <div class="ct-line ai">I hear you. Tell me which antibiotic.</div>
+            <div class="ct-line caller">It start with A-M-O-X-I-C-I-L-L-I-N.</div>
+            <div class="ct-line ai">Amoxicillin clavulanate. Got it. Are you having nausea or vomiting with it?</div>
+            <div class="ct-line caller">No, it just make me feel dizzy and stuff.</div>
+            <div class="ct-line ai">I&rsquo;m sorry. Feeling dizzy from an antibiotic is really uncomfortable. Do you want to speak with the pharmacist about switching it?</div>
+            <div class="ct-line caller">Yeah, can they switch it?</div>
+            <div class="ct-line ai">Okay, give me just a moment.</div>
+          </div>
           <div class="toggle-row">
             <span class="toggle-label">Experience:</span>
             <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
@@ -559,6 +592,22 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
         <p class="uc-without-desc"><strong>25%</strong> of LEP patients report medication errors linked to language gaps</p>
         <div class="uc-expand">
           <audio controls preload="none"><source src="pharmacy_assets/multilingual-call-537109-trimmed.m4a" type="audio/mp4"></audio>
+          <button class="transcript-btn" onclick="event.stopPropagation();toggleTranscript(this)">&#128172; Transcript <span style="font-weight:400;opacity:0.7">(translated)</span></button>
+          <div class="call-transcript">
+            <div class="ct-line ai">The Safer Pharmacy, this is Noah. How can I help you today?</div>
+            <div class="ct-line caller">Uh, hi. Do you speak Spanish?</div>
+            <div class="ct-line ai">Yes, I can help you in Spanish. How can I help you today?</div>
+            <div class="ct-line caller">I would like to know if my medications have arrived.</div>
+            <div class="ct-line ai">Of course. Can you tell me your date of birth, please?</div>
+            <div class="ct-line caller">February 9, 2001.</div>
+            <div class="ct-line ai">Thank you. One moment. Yes, your famotidine is ready to be picked up at the pharmacy. Do you want to come by today or do you prefer another day?</div>
+            <div class="ct-line caller">Yes, I&rsquo;m going to stop by today.</div>
+            <div class="ct-line ai">Perfect. We are open from 9:00&thinsp;a.m. to 5:00&thinsp;p.m., Monday through Friday. When you arrive, just say your name at the window.</div>
+            <div class="ct-line caller">No, thank you.</div>
+            <div class="ct-line ai">You&rsquo;re welcome. Have an excellent day and we&rsquo;ll see you today.</div>
+            <div class="ct-line caller">Thank you.</div>
+            <div class="ct-line ai">You&rsquo;re welcome. Goodbye.</div>
+          </div>
           <div class="toggle-row">
             <span class="toggle-label">Experience:</span>
             <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
