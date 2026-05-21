@@ -212,6 +212,10 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 
 /* ── PRICING ── */
 #slide-pricing { background:var(--paper); }
+.pricing-body { max-height:0; overflow:hidden; opacity:0; transition:max-height 0.5s ease, opacity 0.4s ease; }
+.pricing-body.open { max-height:1200px; opacity:1; }
+.pricing-expand-hint { font-size:0.82rem; color:var(--muted); cursor:pointer; margin-top:8px; transition:opacity 0.3s; }
+.pricing-body.open ~ .pricing-expand-hint { opacity:0; pointer-events:none; }
 .org-toggle { display:flex; gap:4px; background:var(--cream); border-radius:10px; padding:4px; margin-bottom:28px; width:fit-content; }
 .org-btn { padding:8px 20px; border-radius:8px; border:none; background:none; font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:500; color:var(--muted); cursor:pointer; transition:all 0.2s; }
 .org-btn.active { background:#fff; color:var(--ink); box-shadow:0 1px 4px rgba(0,0,0,0.1); font-weight:600; }
@@ -448,10 +452,10 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
         <div class="uc-expand">
           <div class="sms-thread">
             <div class="sms-ts">Mon 4:05 PM</div>
-            <div class="sms-b out">Hi Moshe, this is Heather from Ahava Medical. We&rsquo;re now offering a GLP-1 medical weight loss program to help support your weight loss goals. Would you like to see if you qualify? Plans starting as low as $0. Call or text today.</div>
+            <div class="sms-b out">Hi M____, this is H______ from Ahava Medical. We&rsquo;re now offering a GLP-1 medical weight loss program to help support your weight loss goals. Would you like to see if you qualify? Call or text today.</div>
             <div class="sms-ts">Tue 1:00 PM</div>
             <div class="sms-b in">I would like to see if I qualify.</div>
-            <div class="sms-b out">Hi Moshe, thanks for your interest. To see if you qualify, the first step is a consultation with one of our providers. What&rsquo;s a good day/time to schedule?</div>
+            <div class="sms-b out">Hi M____, thanks for your interest. To see if you qualify, the first step is a consultation with one of our providers. What&rsquo;s a good day/time to schedule?</div>
             <div class="sms-b in">Do you have around 10:00 tomorrow morning available? Or maybe Monday afternoon around 1:00?</div>
             <div class="sms-b out">Would you like to do a Telehealth at 10am tomorrow with Dr. Amsel?</div>
             <div class="sms-b in">Yes, please!</div>
@@ -662,16 +666,18 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <section class="slide" id="slide-pricing">
   <div class="slide-inner">
     <div class="section-label">04 &mdash; Pricing</div>
-    <h2 class="section-title">No-brainer pricing:<br><em>1/3 of a pharmacy tech</em></h2>
+    <h2 class="section-title" style="cursor:pointer;" onclick="togglePricingBody()">No-brainer pricing:<br><em>1/3 of a pharmacy tech</em></h2>
+    <div class="pricing-expand-hint" onclick="togglePricingBody()">&#9662; Click to explore pricing</div>
+    <div class="pricing-body" id="pricingBody">
     <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap;">
       <div class="org-toggle" style="margin-bottom:0;">
         <button class="org-btn active" id="modeFL" onclick="setMode('fl')">Front Line</button>
         <button class="org-btn" id="modeAH" onclick="setMode('ah')">Peak / After Hours</button>
       </div>
       <div class="org-toggle" id="orgToggle" style="margin-bottom:0;">
-        <button class="org-btn active" onclick="setOrg('independent',10000)">Independent</button>
-        <button class="org-btn" onclick="setOrg('health-system',100000)">Health System</button>
-        <button class="org-btn" onclick="setOrg('chain',500000)">Chain</button>
+        <button class="org-btn" onclick="setOrg('independent',10000,this)">Independent</button>
+        <button class="org-btn active" onclick="setOrg('health-system',100000,this)">Health System</button>
+        <button class="org-btn" onclick="setOrg('chain',500000,this)">Chain</button>
       </div>
       <div style="display:flex;align-items:center;gap:10px;margin-left:auto;">
         <span class="pop-label" style="font-size:0.78rem;color:var(--muted);white-space:nowrap;">Patients</span>
@@ -715,6 +721,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
           <div class="plan-feat"><span class="icon on">&#10003;</span> FHIR API integration</div>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </section>
@@ -928,10 +935,13 @@ function setMode(m){
   document.getElementById('featCallsLine').innerHTML='<span class="icon on">&#10003;</span> '+(m==='ah'?'AI handles peak &amp; after-hour calls':'AI handles all inbound calls');
   updatePricing();
 }
-function setOrg(type,pop){
+function setOrg(type,pop,btn){
   document.querySelectorAll('#orgToggle .org-btn').forEach(b=>b.classList.remove('active'));
-  event.target.classList.add('active');
+  (btn||event.target).classList.add('active');
   document.getElementById('popSlider').value=pop;updatePricing();
+}
+function togglePricingBody(){
+  document.getElementById('pricingBody').classList.toggle('open');
 }
 function fmtC(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return Math.round(n/1e3)+'K';return n;}
 function fmtComma(n){return n.toLocaleString('en-US');}
@@ -952,7 +962,7 @@ function updatePricing(){
   document.getElementById('planOrSub').textContent='$'+(orP/pop).toFixed(2)+' per patient / month';
   document.getElementById('planE2eSub').textContent='$'+(e2eP/pop).toFixed(2)+' per patient / month';
 }
-updatePricing();activatePhase(1);
+setOrg('health-system',100000,document.querySelectorAll('#orgToggle .org-btn')[1]);activatePhase(1);
 </script>
 </body>
 </html>
