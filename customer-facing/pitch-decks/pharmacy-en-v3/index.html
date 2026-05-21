@@ -539,29 +539,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
     <div class="callfw-panel" id="setupPanel">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
         <div>
-          <div class="phase-card active" onclick="activatePhase(1)" style="margin-bottom:8px;">
-            <div class="phase-header"><div class="phase-num">1</div><div><div class="phase-title">Orders</div></div><span class="phase-time">Live in days</span><svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
-            <div class="phase-body">
-              <div class="phase-step"><div class="phase-step-icon">&#128222;</div><div><h4>Forward your pharmacy line</h4><p>Set call forwarding from your PBX or carrier admin. 5 minutes, no IT ticket.</p></div></div>
-              <div class="phase-step"><div class="phase-step-icon">&#9881;&#65039;</div><div><h4>Configure your AI</h4><p>We train on your hours, formulary basics, and greeting. Live same week.</p></div></div>
-            </div>
-          </div>
-          <div class="phase-card" onclick="activatePhase(2)" style="margin-bottom:8px;">
-            <div class="phase-header"><div class="phase-num">2</div><div><div class="phase-title">Referrals</div></div><span class="phase-time">Week 2&ndash;4</span><svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
-            <div class="phase-body">
-              <div class="phase-step"><div class="phase-step-icon">&#128196;</div><div><h4>Secure CSV export</h4><p>Export patient lists from Epic or PrimeRx. Drag-and-drop into YouSquared.</p></div></div>
-              <div class="phase-step"><div class="phase-step-icon">&#128138;</div><div><h4>Enable outbound</h4><p>AI proactively reaches physicians for specialty consultations.</p></div></div>
-            </div>
-          </div>
-          <div class="phase-card" onclick="activatePhase(3)">
-            <div class="phase-header"><div class="phase-num">3</div><div><div class="phase-title">End-to-End</div></div><span class="phase-time">Month 2+</span><svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
-            <div class="phase-body">
-              <div class="phase-step"><div class="phase-step-icon">&#128272;</div><div><h4>FHIR R4 API</h4><p>Your IT registers via App Orchard, configures OAuth scopes.</p></div></div>
-              <div class="phase-step"><div class="phase-step-icon">&#128276;</div><div><h4>Real-time webhooks</h4><p>Rx status, delivery, appointments &mdash; push in real time.</p></div></div>
-            </div>
-          </div>
-        </div>
-        <div>
           <div style="font-size:0.78rem;font-weight:600;color:var(--ink);margin-bottom:8px;">Call forwarding setup</div>
           <select class="callfw-select" id="callfwSelect" onchange="updateCallFw()">
             <option value="verizon" selected>Verizon One Talk</option>
@@ -572,6 +549,29 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
           </select>
           <div id="callfwContent">
             <div class="callfw-screenshot"><img src="pharmacy_assets/illustration_setup.png" alt="Verizon One Talk call forwarding admin"></div>
+          </div>
+        </div>
+        <div>
+          <div class="phase-card active" onclick="activatePhase(1)" style="margin-bottom:8px;">
+            <div class="phase-header"><div class="phase-num">1</div><div><div class="phase-title">Orders</div></div><span class="phase-time">Live in days</span><svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+            <div class="phase-body">
+              <div class="phase-step"><div class="phase-step-icon">&#128222;</div><div><h4>Forward your pharmacy line</h4><p>Set call forwarding from your PBX or carrier admin. 5 minutes, no IT ticket.</p></div></div>
+              <div class="phase-step"><div class="phase-step-icon">&#9881;&#65039;</div><div><h4>Configure your AI</h4><p>We train on your hours, formulary basics, and greeting. Live same week.</p></div></div>
+            </div>
+          </div>
+          <div class="phase-card" onclick="activatePhase(2)" style="margin-bottom:8px;">
+            <div class="phase-header"><div class="phase-num">2</div><div><div class="phase-title">Referrals</div></div><span class="phase-time">Week 2&ndash;4</span><svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+            <div class="phase-body">
+              <div class="phase-step"><div class="phase-step-icon">&#128196;</div><div><h4>Secure CSV export</h4><p>Export patient reports from EHR / PMF. Secure manual import into YouSquared.</p></div></div>
+              <div class="phase-step"><div class="phase-step-icon">&#128138;</div><div><h4>Enable outbound</h4><p>AI proactively reaches physicians for specialty consultations.</p></div></div>
+            </div>
+          </div>
+          <div class="phase-card" onclick="activatePhase(3)">
+            <div class="phase-header"><div class="phase-num">3</div><div><div class="phase-title">End-to-End</div></div><span class="phase-time">Month 2+</span><svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+            <div class="phase-body">
+              <div class="phase-step"><div class="phase-step-icon">&#128272;</div><div><h4>FHIR R4 API</h4><p>Pharmacy IT registers &amp; configures OAuth scopes.</p></div></div>
+              <div class="phase-step"><div class="phase-step-icon">&#128276;</div><div><h4>Real-time webhooks</h4><p>Rx status, delivery, appointments &mdash; push in real time.</p></div></div>
+            </div>
           </div>
         </div>
       </div>
