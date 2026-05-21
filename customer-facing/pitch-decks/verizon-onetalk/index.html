@@ -178,6 +178,39 @@ nav {
 .industry-card .sub-chip { font-size: 0.7rem; background: var(--cream); border: 1px solid var(--rule); border-radius: 14px; padding: 3px 9px; color: var(--muted); }
 .industry-footnote { margin-top: 22px; font-size: 0.78rem; color: var(--muted); text-align: center; font-style: italic; }
 
+/* ============ SLIDE VC — VERIZON CONNECT ============ */
+#slide-vc { background: linear-gradient(160deg, #1A2332 0%, #2D2A26 100%); color: var(--paper); }
+#slide-vc .section-label { color: rgba(255,255,255,0.5); }
+#slide-vc .section-label::after { background: rgba(255,255,255,0.14); }
+#slide-vc .section-title { color: #fff; }
+#slide-vc .section-title em { color: var(--accent-light); }
+#slide-vc .section-intro { color: rgba(255,255,255,0.55); }
+.vc-cobrand { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+.vc-cobrand img.ys { height: 20px; filter: brightness(0) invert(1); }
+.vc-cobrand .plus { color: rgba(255,255,255,0.3); font-family: 'Lora',serif; font-size: 1.1rem; font-weight: 300; }
+.vc-cobrand .vc-brand { font-family: 'Inter',sans-serif; font-weight: 600; font-size: 0.88rem; color: rgba(255,255,255,0.7); letter-spacing: 0.02em; }
+.vc-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 28px; }
+.vc-before, .vc-after { border-radius: 14px; padding: 22px 24px; }
+.vc-before { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
+.vc-after { background: rgba(224,122,95,0.08); border: 1px solid rgba(255,131,112,0.25); }
+.vc-tag { font-family: 'Inter',monospace; font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; margin-bottom: 12px; }
+.vc-before .vc-tag { color: rgba(255,255,255,0.4); }
+.vc-after .vc-tag { color: var(--accent-light); }
+.vc-bubble { font-family: 'Lora',Georgia,serif; font-style: italic; font-size: 1.02rem; line-height: 1.55; margin-bottom: 14px; padding: 14px 18px; border-radius: 12px; }
+.vc-before .vc-bubble { color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.1); }
+.vc-after .vc-bubble { color: #fff; background: rgba(255,131,112,0.1); border: 1px solid rgba(255,131,112,0.2); }
+.vc-result { font-size: 0.82rem; line-height: 1.55; }
+.vc-before .vc-result { color: rgba(255,255,255,0.35); }
+.vc-after .vc-result { color: rgba(255,255,255,0.65); }
+.vc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.vc-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 18px 16px; display: flex; flex-direction: column; gap: 8px; transition: border-color 0.2s; }
+.vc-card:hover { border-color: rgba(255,131,112,0.35); }
+.vc-icon { font-size: 1.3rem; }
+.vc-vertical { font-family: 'Lora',serif; font-size: 0.88rem; font-weight: 700; color: #fff; }
+.vc-query { font-family: 'Lora',serif; font-style: italic; font-size: 0.86rem; color: var(--accent-light); line-height: 1.4; }
+.vc-data { font-size: 0.72rem; color: rgba(255,255,255,0.45); line-height: 1.45; }
+.vc-footnote { margin-top: 22px; font-size: 0.72rem; color: rgba(255,255,255,0.35); text-align: center; font-style: italic; }
+
 /* ============ SLIDE 6 — TEAM · BACKERS ============ */
 #slide-6 { background: var(--paper); }
 .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-bottom: 32px; }
@@ -279,7 +312,7 @@ nav {
   nav { padding: 12px 20px; }
   .slide { padding: 80px 22px 60px; }
   #slide-1 .slide-inner, .problem-layout, .calls-grid, .industries-grid, .team-grid,
-    .plan-grid, .testimonials-grid, .metric-strip, .setup-layout { grid-template-columns: 1fr; }
+    .plan-grid, .testimonials-grid, .metric-strip, .setup-layout, .vc-compare, .vc-grid { grid-template-columns: 1fr; }
   .problem-facts { grid-template-columns: 1fr 1fr; }
 }
 </style>
@@ -510,10 +543,66 @@ nav {
   </div>
 </section>
 
+<!-- ============ SLIDE VC — VERIZON CONNECT ============ -->
+<section class="slide" id="slide-vc">
+  <div class="slide-inner">
+    <div class="vc-cobrand">
+      <img class="ys" src="assets/logo_yousquared.png" alt="YouSquared">
+      <span class="plus">+</span>
+      <span class="vc-brand">Verizon Connect</span>
+    </div>
+    <div class="section-label">05 — Verizon Connect</div>
+    <h2 class="section-title">Real-time answers for every <em>"where's my…?"</em> call</h2>
+    <p class="section-intro">When vehicles and equipment are tracked in Verizon Connect, the AI answers with live location, ETA, and status — instantly, 24/7.</p>
+
+    <div class="vc-compare">
+      <div class="vc-before">
+        <div class="vc-tag">Today — without integration</div>
+        <div class="vc-bubble">"I'm sorry, I don't have that information. Let me take your number and have dispatch call you back."</div>
+        <div class="vc-result">Caller waits · staff interrupted · second call needed</div>
+      </div>
+      <div class="vc-after">
+        <div class="vc-tag">With Verizon Connect</div>
+        <div class="vc-bubble">"Your boom lift is on the way — the delivery truck left our yard 15 minutes ago. ETA to your job site is around 10:30 AM."</div>
+        <div class="vc-result">Instant answer · no callback needed · staff stay focused</div>
+      </div>
+    </div>
+
+    <div class="vc-grid">
+      <div class="vc-card">
+        <span class="vc-icon">🏗️</span>
+        <span class="vc-vertical">Equipment Rental</span>
+        <span class="vc-query">"Where's my scissor lift?"</span>
+        <span class="vc-data">Delivery truck GPS · ETA to job site</span>
+      </div>
+      <div class="vc-card">
+        <span class="vc-icon">💊</span>
+        <span class="vc-vertical">Pharmacy Delivery</span>
+        <span class="vc-query">"Has my prescription left yet?"</span>
+        <span class="vc-data">Courier location · delivery window</span>
+      </div>
+      <div class="vc-card">
+        <span class="vc-icon">🚧</span>
+        <span class="vc-vertical">Construction</span>
+        <span class="vc-query">"When's the concrete truck coming?"</span>
+        <span class="vc-data">Vehicle ETA · route progress · geofence</span>
+      </div>
+      <div class="vc-card">
+        <span class="vc-icon">🏥</span>
+        <span class="vc-vertical">Medical Supplies</span>
+        <span class="vc-query">"Where's the oxygen concentrator?"</span>
+        <span class="vc-data">Delivery van location · arrival window</span>
+      </div>
+    </div>
+
+    <div class="vc-footnote">Integration with Verizon Connect fleet and asset tracking — near real-time GPS for any vehicle, trailer, or powered equipment on the platform.</div>
+  </div>
+</section>
+
 <!-- ============ SLIDE 6 — TEAM · BACKERS · CUSTOMERS ============ -->
 <section class="slide" id="slide-6">
   <div class="slide-inner">
-    <div class="section-label">05 — Who we are</div>
+    <div class="section-label">06 — Who we are</div>
     <h2 class="section-title">Built by <em>AI pioneers</em>, trusted across industries</h2>
     <div class="team-grid">
       <div class="team-card">
@@ -561,7 +650,7 @@ nav {
 <!-- ============ SLIDE 7 — RESULTS + TESTIMONIALS ============ -->
 <section class="slide" id="slide-7">
   <div class="slide-inner">
-    <div class="section-label">06 — Results</div>
+    <div class="section-label">07 — Results</div>
     <h2 class="section-title">Measurable impact <em>across verticals</em></h2>
     <div class="metric-strip">
       <div class="metric-card">
@@ -648,7 +737,7 @@ nav {
 <!-- ============ SLIDE 8 — GET STARTED ============ -->
 <section class="slide" id="slide-8">
   <div class="slide-inner">
-    <div class="section-label">07 — Get started</div>
+    <div class="section-label">08 — Get started</div>
     <h2 class="section-title">Get YouSquared on the <em>Verizon Business Marketplace</em></h2>
     <p class="section-intro">Buy through your Verizon account and get the <strong style="color:var(--accent);">exclusive launch offer</strong>: Pro at <strong style="color:var(--accent);">$15/month for the first 3 months</strong>, then $30/month. Setup in 3 minutes — first 20 AI calls free, no credit card.</p>
 

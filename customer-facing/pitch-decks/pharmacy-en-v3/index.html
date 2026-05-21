@@ -251,7 +251,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .trust-row img { height:26px; opacity:0.7; }
 .trust-row .divider { width:1px; height:24px; background:var(--rule); }
 .trust-row .stat-chip { font-family:'DM Mono',monospace; font-size:0.72rem; letter-spacing:0.06em; color:var(--accent); font-weight:600; }
-.customer-cards { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.carousel-track .customer-card { min-width:calc((100% - 48px)/3); flex-shrink:0; }
 .customer-card { background:#fff; border-radius:12px; padding:20px 16px; border:1px solid var(--rule); text-align:center; display:flex; flex-direction:column; align-items:center; gap:8px; }
 .customer-card img { height:32px; object-fit:contain; }
 .customer-card .c-name { font-family:'Playfair Display',Georgia,serif; font-size:0.88rem; font-weight:700; color:var(--ink); }
@@ -282,8 +282,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
   nav{padding:14px 20px} .slide{padding:90px 24px 60px}
   .hero-grid,.problem-top,.sol-header,.prod-top,.launch-layout,.pricing-plans{grid-template-columns:1fr}
   .problem-cards,.sol-grid{grid-template-columns:1fr 1fr}
-  .customer-cards,.calc-grid{grid-template-columns:1fr 1fr}
-  .carousel-track .team-card{min-width:calc(100% - 16px)}
+  .calc-grid{grid-template-columns:1fr 1fr}
+  .carousel-track .team-card,.carousel-track .customer-card{min-width:calc(100% - 16px)}
   .pricing-vs{display:none}
 }
 </style>
@@ -366,15 +366,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
         <div class="pc-review"><div class="stars">&#9733;&#9733;&#9734;&#9734;&#9734;</div><div class="review-text">&ldquo;Waiting two days for a status update. Every call, a different answer or nobody picks up.&rdquo;</div><div class="review-attr">&mdash; Hospital outpatient pharmacy</div></div>
       </div>
       <div class="pc" onclick="this.classList.toggle('open')">
-        <div class="pc-top"><span class="pc-icon">&#128138;</span><span class="pc-name">Adherence</span><span class="pc-stat-num">50%</span></div>
-        <div class="pc-bottom">
-          <span class="pc-desc">of patients non-adherent within 6 months of starting a chronic medication</span>
-          <svg class="pc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-        </div>
-        <div class="pc-source"><a href="https://www.who.int/news/item/01-07-2003-failure-to-take-prescribed-medicine-for-chronic-diseases-is-a-massive-world-wide-problem" target="_blank" rel="noopener">WHO Adherence Report</a></div>
-        <div class="pc-review"><div class="stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div><div class="review-text">&ldquo;Ran out of blood pressure meds last week. Nobody called to remind me. Doctor says my readings are dangerously high.&rdquo;</div><div class="review-attr">&mdash; Community pharmacy patient</div></div>
-      </div>
-      <div class="pc" onclick="this.classList.toggle('open')">
         <div class="pc-top"><span class="pc-icon">&#128260;</span><span class="pc-name">Refills</span><span class="pc-stat-num">18%</span></div>
         <div class="pc-bottom">
           <span class="pc-desc">of patients consider switching pharmacies &mdash; phone wait is a top reason</span>
@@ -382,6 +373,15 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
         </div>
         <div class="pc-source"><a href="https://www.jdpower.com/business/press-releases/2023-us-pharmacy-study" target="_blank" rel="noopener">J.D. Power, 2023</a></div>
         <div class="pc-review"><div class="stars">&#9733;&#9733;&#9734;&#9734;&#9734;</div><div class="review-text">&ldquo;Every month, 10&ndash;15 minutes on hold for a refill. Considered switching just for the wait.&rdquo;</div><div class="review-attr">&mdash; Health system pharmacy</div></div>
+      </div>
+      <div class="pc" onclick="this.classList.toggle('open')">
+        <div class="pc-top"><span class="pc-icon">&#128138;</span><span class="pc-name">Adherence</span><span class="pc-stat-num">50%</span></div>
+        <div class="pc-bottom">
+          <span class="pc-desc">of patients non-adherent within 6 months of starting a chronic medication</span>
+          <svg class="pc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="pc-source"><a href="https://www.who.int/news/item/01-07-2003-failure-to-take-prescribed-medicine-for-chronic-diseases-is-a-massive-world-wide-problem" target="_blank" rel="noopener">WHO Adherence Report</a></div>
+        <div class="pc-review"><div class="stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div><div class="review-text">&ldquo;Ran out of blood pressure meds last week. Nobody called to remind me. Doctor says my readings are dangerously high.&rdquo;</div><div class="review-attr">&mdash; Community pharmacy patient</div></div>
       </div>
       <div class="pc" onclick="this.classList.toggle('open')">
         <div class="pc-top"><span class="pc-icon">&#127760;</span><span class="pc-name">Language barriers</span><span class="pc-stat-num">25%</span></div>
@@ -629,7 +629,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
     <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap;">
       <div class="org-toggle" style="margin-bottom:0;">
         <button class="org-btn active" id="modeFL" onclick="setMode('fl')">Front Line</button>
-        <button class="org-btn" id="modeAH" onclick="setMode('ah')">After Hours</button>
+        <button class="org-btn" id="modeAH" onclick="setMode('ah')">Peak / After Hours</button>
       </div>
       <div class="org-toggle" id="orgToggle" style="margin-bottom:0;">
         <button class="org-btn active" onclick="setOrg('independent',10000)">Independent</button>
@@ -709,17 +709,23 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
       <div class="divider"></div>
       <img src="pharmacy_assets/logo_k5global.svg" alt="K5 Global" style="height:24px">
       <div class="divider"></div>
-      <img src="pharmacy_assets/logo_verizon.png" alt="Verizon" style="height:22px">
-      <div class="divider"></div>
       <span class="stat-chip">2M+ calls handled</span>
       <div class="divider"></div>
       <span class="stat-chip">4.6&#9733; App Store</span>
+      <div class="divider"></div>
+      <span class="stat-chip"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>HIPAA Compliant</span>
     </div>
-    <div class="customer-cards">
-      <div class="customer-card"><img src="pharmacy_assets/logo_mountsinai.svg" alt="Mount Sinai"><div class="c-name">Mount Sinai / TNJH</div><div class="c-desc">Geriatric oncology &mdash; daily active deployment</div></div>
-      <div class="customer-card"><img src="pharmacy_assets/logo_muhc.svg" alt="MUHC"><div class="c-name">MUHC Gastro</div><div class="c-desc">Automated nurse line at McGill University Health Centre</div></div>
-      <div class="customer-card"><img src="pharmacy_assets/logo_safer.png" alt="Safer Pharmacy"><div class="c-name">Safer Pharmacy</div><div class="c-desc">NYC pharmacy &mdash; active call handling deployment</div></div>
-      <div class="customer-card"><div class="hipaa-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>HIPAA</div><div class="c-name">HIPAA Compliant</div><div class="c-desc">Approved by Mount Sinai institutional leadership</div></div>
+    <div class="carousel-container" id="customerCarousel">
+      <div class="carousel-track" id="customerTrack">
+        <div class="customer-card"><img src="pharmacy_assets/logo_mountsinai.svg" alt="Mount Sinai"><div class="c-name">Mount Sinai / TNJH</div><div class="c-desc">Geriatric oncology &mdash; daily active deployment</div></div>
+        <div class="customer-card"><img src="pharmacy_assets/logo_muhc.svg" alt="MUHC"><div class="c-name">MUHC Gastro</div><div class="c-desc">Automated nurse line at McGill University Health Centre</div></div>
+        <div class="customer-card"><img src="pharmacy_assets/logo_safer.png" alt="Safer Pharmacy"><div class="c-name">Safer Pharmacy</div><div class="c-desc">NYC pharmacy &mdash; active call handling deployment</div></div>
+        <div class="customer-card"><img src="pharmacy_assets/logo_verizon.png" alt="Verizon"><div class="c-name">Verizon</div><div class="c-desc">Enterprise partnership &mdash; OneTalk integration</div></div>
+        <div class="customer-card"><img src="pharmacy_assets/logo_ahava.png" alt="Ahava Medical"><div class="c-name">Ahava Medical</div><div class="c-desc">Multi-specialty clinic &mdash; active call handling</div></div>
+        <div class="customer-card"><div class="hipaa-badge" style="width:44px;height:44px;"><span style="font-weight:700;font-size:0.82rem;letter-spacing:0.5px;">MS</span></div><div class="c-name">McPeak Sirois</div><div class="c-desc">Pharmacy group &mdash; active deployment</div></div>
+      </div>
+      <button class="carousel-arrow left hidden" onclick="slideCarousel('customer',-1)">&larr;</button>
+      <button class="carousel-arrow right" onclick="slideCarousel('customer',1)">&rarr;</button>
     </div>
   </div>
 </section>
@@ -767,7 +773,7 @@ slides.forEach(s=>io.observe(s));
 updateActive(0);
 
 /* ── CAROUSELS ── */
-const carouselState={people:0};
+const carouselState={people:0,customer:0};
 function slideCarousel(name,dir){
   const track=document.getElementById(name+'Track');
   const cards=track.children;const gap=24;const vis=3;
@@ -860,12 +866,12 @@ function activatePhase(p){
 /* ── PRICING ── */
 let pricingMode='fl';
 const ANCHOR={patients:10000,calls:20000,texts:100000,consults:5000,orRate:0.25,orMin:1000,e2eMin:3000};
-const AH_MULT=0.4;
+const AH_MULT=0.3;
 function setMode(m){
   pricingMode=m;
   document.getElementById('modeAH').classList.toggle('active',m==='ah');
   document.getElementById('modeFL').classList.toggle('active',m==='fl');
-  document.getElementById('featCallsLine').innerHTML='<span class="icon on">&#10003;</span> '+(m==='ah'?'AI handles after-hour calls':'AI handles all inbound calls');
+  document.getElementById('featCallsLine').innerHTML='<span class="icon on">&#10003;</span> '+(m==='ah'?'AI handles peak &amp; after-hour calls':'AI handles all inbound calls');
   updatePricing();
 }
 function setOrg(type,pop){
