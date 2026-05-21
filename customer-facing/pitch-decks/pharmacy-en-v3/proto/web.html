@@ -92,6 +92,11 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 
 /* Primary button */
 .btn-primary{padding:0 20px;height:var(--btn-h);border-radius:var(--r-xxl);background:var(--accent);color:#fff;border:none;font-weight:600;cursor:pointer;font-family:inherit;font-size:16px;display:flex;align-items:center;justify-content:center;gap:6px}
+
+/* Industry switcher */
+.industry-switcher{display:flex;margin:0 12px 8px;background:#f0f0f0;border-radius:8px;padding:2px;gap:2px}
+.industry-switcher button{flex:1;padding:5px 0;font-size:12px;font-weight:500;border:none;border-radius:6px;cursor:pointer;font-family:inherit;transition:all .15s;background:transparent;color:#737373}
+.industry-switcher button.active{background:#fff;color:#171717;box-shadow:0 1px 3px rgba(0,0,0,.08)}
 </style>
 </head>
 <body>
@@ -118,6 +123,7 @@ const I={
   idCard:({s=16,c='currentColor'}={})=><svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="9" cy="12" r="2"/><path d="M15 10h2M15 14h2"/><path d="M6 19c0-1.7 1.3-3 3-3s3 1.3 3 3"/></svg>,
   building:({s=16,c='currentColor'}={})=><svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22V12h6v10"/><path d="M8 6h.01M16 6h.01M12 6h.01M8 10h.01M16 10h.01M12 10h.01"/></svg>,
   messageSquare:({s=20,c='currentColor'}={})=><svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>,
+  missedCall:({s=20,c='currentColor'}={})=><svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/><path d="M23 1l-5 5M18 1l5 5"/></svg>,
 };
 
 // ── Helpers ──
@@ -138,36 +144,78 @@ function TagDot({color,size=10}){
   return <span style={{display:'inline-block',width:size,height:size,borderRadius:size/2,background:color,flexShrink:0}}/>;
 }
 
-// ── Data (primary_care only) ──
+// ── Industry data ──
 const SCENARIO_TYPE_ORDER=['close','prep','adopt','fit','renew','refer','other'];
-const TODO_TYPES={7:'fit',9:'adopt',10:'renew',32:'prep',33:'refer',50:'close'};
-
 const TAG_PALETTE=['#ef4444','#f97316','#facc15','#22c55e','#14b8a6','#3b82f6','#6366f1','#a855f7','#ec4899','#9ca3af'];
-const FILTER_LABELS=[
+
+// ── PHARMACY data ──
+const PHARMACY_FILTER_LABELS=[
   {id:'patient',label:'Patients',color:'#3b82f6',hasSubtags:true},
-  {id:'doctor',label:'Doctors',color:'#a855f7'},
+  {id:'prescriber',label:'Prescribers',color:'#a855f7'},
   {id:'nurse',label:'Nurses',color:'#14b8a6'},
-  {id:'medical_assistant',label:'Medical Assistants',color:'#22c55e'},
+  {id:'pharm_tech',label:'Pharmacy Technicians',color:'#22c55e'},
   {id:'admin_staff',label:'Administrative Staff',color:'#9ca3af'},
   {id:'pharmacist',label:'Pharmacists',color:'#6366f1'},
   {id:'insurance',label:'Insurance Providers',color:'#f97316'},
 ];
-const FILTER_COUNTS={patient:47,doctor:8,nurse:12,medical_assistant:6,admin_staff:4,pharmacist:3,insurance:5};
-const SUBTAGS=['New Inquiry','Active Treatment','Follow-up Care','Wellness Recall','Chronic Care','Inactive'];
-const SUBTAG_COUNTS={'New Inquiry':4,'Active Treatment':8,'Follow-up Care':12,'Wellness Recall':15,'Chronic Care':6,'Inactive':2};
-const MOCK_CONTACTS=[
-  {name:'David R.',subtag:'Wellness Recall'},{name:'Rachel K.',subtag:'Wellness Recall'},
-  {name:'James T.',subtag:'Chronic Care'},{name:'Sandra B.',subtag:'Wellness Recall'},
-  {name:'Henry M.',subtag:'Follow-up Care'},{name:'Elena M.',subtag:'New Inquiry'},
+const PHARMACY_FILTER_COUNTS={patient:47,prescriber:8,nurse:12,pharm_tech:6,admin_staff:4,pharmacist:3,insurance:5};
+const PHARMACY_SUBTAGS=['New Rx','Active Therapy','Refill Due','Adherence Alert','Chronic Care','Inactive'];
+const PHARMACY_SUBTAG_COUNTS={'New Rx':5,'Active Therapy':10,'Refill Due':14,'Adherence Alert':8,'Chronic Care':7,'Inactive':3};
+const PHARMACY_MOCK_CONTACTS=[
+  {name:'Margaret T.',subtag:'Refill Due'},{name:'Robert C.',subtag:'Chronic Care'},
+  {name:'Linda W.',subtag:'Active Therapy'},{name:'James P.',subtag:'Adherence Alert'},
+  {name:'Dorothy H.',subtag:'New Rx'},{name:'Frank G.',subtag:'Refill Due'},
 ];
 
-const TODOS=[
-  {id:50,notifTitle:'Inquiry F/U attempt 2 of 3: Elena M.',contact:'Elena M.',rel:'Prospect',type:'follow-up',summary:'Inquired 1 day ago about new-patient appt, hasn\'t booked: attempt 2 of 3.',callDraft:'Call Elena — inquired Apr 27 about new-patient annual physical.',textDraft:'Hi Elena, Dr. Kim\'s office. Quick update: your BCBS coverage is verified. I have new-patient slots Wed 9am, Thu 4pm, or next Mon 10am. Reply with your pick.',due:'Today',sendAs:'text',earlierItems:[{type:'sms',direction:'in',time:'Apr 27, 11:14a',text:'Online inquiry: "Looking for a new PCP. Have BCBS PPO. Need annual physical."'},{type:'sms',direction:'out',time:'Apr 27, 11:18a',text:'Hi Elena! Thanks for reaching out. Verifying your BCBS now — usually takes 24h. I\'ll text once cleared with available appointment slots.'}],serviceEvent:{title:'New-patient inquiry Apr 27 — insurance now verified, no appt booked',scheduled:'Inquiry F/U attempt 2 of 3 (cadence: same day, +1d, +2d)',date:'Apr 27'}},
-  {id:32,notifTitle:'Fasting labs prep: Sandra B.',contact:'Sandra B.',rel:'Patient',type:'check-in',summary:'Annual physical with fasting labs tomorrow 8am: NPO after midnight, bring meds + insurance card.',callDraft:'Confirm Sandra is set for tomorrow\'s annual physical at 8am with Dr. Kim.',textDraft:'Hi Sandra, this is Dr. Kim\'s office. Quick reminder for tomorrow 8am: NO food after midnight (water is fine), bring all your meds in their bottles, and your insurance card. Reply YES if all set.',due:'Today',sendAs:'text',earlierItems:[{type:'call',direction:'in',time:'Mar 22',summary:'Sandra called to schedule her overdue annual. Last visit Aug 2024.'},{type:'sms',direction:'out',time:'Mar 22',text:'Annual physical with Dr. Kim scheduled Apr 30, 8am. Fasting labs included.'},{type:'sms',direction:'out',time:'Apr 27',text:'Reminder: annual physical Wed 4/30 at 8am. NPO after midnight Tuesday.'}],serviceEvent:{title:'Annual physical Apr 30, 8am with Dr. Kim — fasting labs (lipid + glucose)',scheduled:'Scheduled for Apr 29: 24h fasting labs prep confirmation',date:'Apr 30'}},
-  {id:9,notifTitle:'Wellness check-in: Rachel K.',contact:'Rachel K.',rel:'Patient',type:'check-in',summary:'Last visit 60 days ago, mentioned wanting to get healthier: preventive care check-in.',callDraft:'Check in with Rachel. Last visit was Feb 3 with Dr. Fakheri — mild hypertension 138/86, BMI 31, stress and sleep issues, prescribed melatonin.',textDraft:'Hi Rachel, this is Dr. Fakheri\'s office with Ahava Medical. It\'s been a while since your last visit (Feb 3). We\'d love to check in — can you call us back?',due:'May 4',sendAs:'call',earlierItems:[{type:'call',direction:'in',time:'Jan 15',summary:'Well-child visit for her son (age 8) with Dr. Kabariti. Child healthy, routine vaccines administered.'},{type:'call',direction:'in',time:'Feb 3',summary:'Rachel\'s own visit with Dr. Fakheri. Routine check-up — BMI 31, mild hypertension (138/86), discussed stress and sleep issues, prescribed melatonin. Patient mentioned wanting to get healthier for her kids.'}],serviceEvent:{title:'Last visit Feb 3, 2026 with Dr. Fakheri — BMI 31, mild hypertension',scheduled:'Scheduled for May 4: wellness check-in (90 days, patient expressed health goals)',date:'Feb 3'}},
-  {id:7,notifTitle:'Wellness check-in: David R.',contact:'David R.',rel:'Patient',type:'check-in',summary:'Last visit >90 days ago, no communication in 30+ days: preventive care check-in.',callDraft:'Check in with David. Last visit was Nov 12 with Dr. Hoch — elevated A1C (6.1), elevated BP. Ask how lifestyle modifications are going.',textDraft:'Hi David, this is Dr. Hoch\'s office with Ahava Medical. It\'s been a while since your last visit (Nov 12). We\'d love to check in — can you call us back?',due:'Today',sendAs:'call',earlierItems:[{type:'call',direction:'in',time:'Nov 12',summary:'Routine annual physical with Dr. Hoch. Elevated A1C (6.1, prediabetic range), elevated BP 142/88, BMI 33. Discussed lifestyle modifications.'},{type:'call',direction:'in',time:'Nov 18',summary:'Patient called to ask about lab results, spoke with front desk.'}],serviceEvent:{title:'Last visit Nov 12, 2025 with Dr. Hoch — A1C 6.1, BP 142/88',scheduled:'Scheduled for Feb 10: wellness check-in (>90 days, no communication in 30+)',date:'Nov 12'}},
-  {id:10,notifTitle:'Rx renewal + visit: James T.',contact:'James T.',rel:'Patient',type:'renewal',summary:'Rx renewal overdue and lab follow-up needed: refill reminder + wellness check-in.',callDraft:'Call James about his overdue prescription renewal — Metformin 1000mg and Amlodipine 5mg due for refill in Feb.',textDraft:'Hi James, this is Dr. Hoch\'s office with Ahava Medical. You have a prescription renewal coming due and we\'d like to schedule a follow-up. Can you call us back?',due:'Today',sendAs:'call',earlierItems:[{type:'call',direction:'in',time:'Aug 20',summary:'Routine visit with Dr. Hoch. Type 2 diabetes (managed, A1C 7.2), hypertension, BMI 36. On Metformin 1000mg and Amlodipine 5mg.'},{type:'sms',direction:'out',time:'Feb 10',text:'Rx renewal reminder. No response.'}],serviceEvent:{title:'Rx refill overdue since Feb 2026 — Metformin 1000mg, Amlodipine 5mg',scheduled:'Scheduled for Apr 1: Rx renewal reminder + wellness check-in (>180 days)',date:'Feb 10'}},
-  {id:33,notifTitle:'Cardiology referral: Henry M.',contact:'Henry M.',rel:'Patient',type:'follow-up',summary:'Referred to cardiology 2 weeks ago for new-onset atrial fibrillation: follow up did consult book?',callDraft:'Follow up with Henry — referred to Dr. Singh (cardiology) on Apr 14 for new-onset paroxysmal afib.',textDraft:'Hi Henry, this is Dr. Kim\'s office. Quick check — were you able to schedule with Dr. Singh for the heart consult? We sent records Apr 14. Reply if any trouble.',due:'Today',sendAs:'text',earlierItems:[{type:'call',direction:'in',time:'Apr 1',summary:'Annual physical. Reported episodes of palpitations. EKG normal at rest. Holter monitor placed.'},{type:'call',direction:'in',time:'Apr 12',summary:'Holter results showed paroxysmal afib (3 episodes >30 sec). Started on apixaban. Cardiology referral discussed.'},{type:'sms',direction:'out',time:'Apr 14',text:'Referral sent to Dr. Singh at Austin Cardiology. They\'ll reach out within a week.'}],serviceEvent:{title:'Cardiology referral to Dr. Singh sent Apr 14 after Holter showed afib',scheduled:'Scheduled for Apr 28: 14-day post-referral follow-up',date:'Apr 14'}},
+const PHARMACY_TODOS=[
+  {id:50,notifTitle:'Refill reminder: Margaret T.',contact:'Margaret T.',rel:'Patient',type:'refill',summary:'Metformin 500mg refill due in 3 days. Patient has been on this medication 2+ years for type 2 diabetes management.',callDraft:'Call Margaret about her upcoming Metformin 500mg refill. Last filled Apr 22, 90-day supply running out May 21.',textDraft:'Hi Margaret, this is Safer Pharmacy. Your Metformin 500mg prescription is due for refill in 3 days. We can have it ready for pickup tomorrow. Reply YES to confirm or call us at (718) 888-8880.',due:'Today',sendAs:'text',earlierItems:[{type:'sms',direction:'out',time:'Jan 22',text:'Your Metformin 500mg refill is ready for pickup.'},{type:'call',direction:'in',time:'Jan 23',summary:'Margaret picked up refill. Asked about generic pricing for her Lisinopril as well.'},{type:'sms',direction:'out',time:'Apr 22',text:'Your Metformin 500mg refill is ready for pickup.'}],serviceEvent:{title:'Metformin 500mg 90-day supply due May 24 — auto-refill eligible',scheduled:'Scheduled for May 21: 3-day advance refill reminder',date:'Apr 22'}},
+  {id:32,notifTitle:'Order status update: Robert C.',contact:'Robert C.',rel:'Patient',type:'order-status',summary:'Specialty Rx (Humira) has been processing for 4 days. Patient called yesterday asking for update.',callDraft:'Update Robert on his Humira order status. Specialty distributor confirmed shipment arrives tomorrow.',textDraft:'Hi Robert, this is Safer Pharmacy with an update on your Humira prescription. Your order shipped today and will arrive at our pharmacy tomorrow morning. We’ll text you as soon as it’s ready for pickup.',due:'Today',sendAs:'text',earlierItems:[{type:'call',direction:'in',time:'May 14',summary:'Dr. Patel’s office called in new Humira Rx for Robert. Specialty order initiated with distributor.'},{type:'call',direction:'in',time:'May 18',summary:'Robert called asking about his Humira order status. Told him we’re waiting on specialty shipment, expected within 48 hours.'},{type:'sms',direction:'out',time:'May 18',text:'Hi Robert, your Humira order is being processed with our specialty distributor. We expect it within 48 hours and will notify you when ready.'}],serviceEvent:{title:'Humira specialty order placed May 14 — shipment confirmed for May 20',scheduled:'Scheduled for May 19: order status follow-up (patient inquired)',date:'May 14'}},
+  {id:9,notifTitle:'Adherence check-in: James P.',contact:'James P.',rel:'Patient',type:'adherence',summary:'Filled Lisinopril 10mg + Atorvastatin 20mg 7 days ago, hasn’t picked up. Chronic cardiac patient.',callDraft:'Call James about his Lisinopril and Atorvastatin prescriptions that have been ready for pickup since May 12. Important for blood pressure and cholesterol management.',textDraft:'Hi James, this is Safer Pharmacy. Your Lisinopril and Atorvastatin prescriptions have been ready since May 12. These are important for your heart health — can you pick them up today? Call us at (718) 888-8880 if you need delivery.',due:'Today',sendAs:'call',earlierItems:[{type:'sms',direction:'out',time:'May 12',text:'Your prescriptions (Lisinopril 10mg, Atorvastatin 20mg) are ready for pickup.'},{type:'sms',direction:'out',time:'May 15',text:'Reminder: Your prescriptions are still waiting for pickup at Safer Pharmacy.'}],serviceEvent:{title:'Lisinopril 10mg + Atorvastatin 20mg filled May 12 — not picked up',scheduled:'Scheduled for May 19: 7-day adherence check-in call',date:'May 12'}},
+  {id:7,notifTitle:'New Rx intake: Dorothy H.',contact:'Dorothy H.',rel:'Patient',type:'new-rx',summary:'Dr. Okafor faxed new Rx for Amoxicillin 500mg (10-day course). Patient hasn’t been notified yet.',callDraft:'Notify Dorothy that her new Amoxicillin prescription from Dr. Okafor is ready. 500mg three times daily for 10 days.',textDraft:'Hi Dorothy, this is Safer Pharmacy. We received a new prescription from Dr. Okafor for Amoxicillin 500mg. It’s ready for pickup. Take 1 capsule 3x daily with food for 10 days. Reply with questions or call (718) 888-8880.',due:'Today',sendAs:'text',earlierItems:[{type:'call',direction:'in',time:'May 19, 2:30p',summary:'Dr. Okafor’s office faxed new Rx: Amoxicillin 500mg #30, Sig: 1 cap TID x 10 days. Diagnosis: acute sinusitis.'},{type:'call',direction:'in',time:'Mar 8',summary:'Dorothy picked up Flonase refill. Mentioned recurring sinus issues.'}],serviceEvent:{title:'New Rx from Dr. Okafor — Amoxicillin 500mg #30, faxed May 19',scheduled:'Scheduled for May 19: new Rx notification to patient',date:'May 19'}},
+  {id:10,notifTitle:'Prior auth follow-up: Linda W.',contact:'Linda W.',rel:'Patient',type:'prior-auth',summary:'Prior auth pending 5 days for Eliquis 5mg. Insurance requires step therapy documentation from prescriber.',callDraft:'Call United Healthcare about Linda’s Eliquis prior auth (ref# PA-2026-88431). Then text Linda with update.',textDraft:'Hi Linda, this is Safer Pharmacy. We’re still working on insurance approval for your Eliquis prescription. We’ve contacted your insurance and Dr. Marsh’s office to expedite. We’ll update you as soon as it’s approved.',due:'Today',sendAs:'call',earlierItems:[{type:'call',direction:'in',time:'May 14',summary:'Dr. Marsh called in Eliquis 5mg BID for Linda. Insurance rejected — prior auth required.'},{type:'sms',direction:'out',time:'May 14',text:'Hi Linda, your Eliquis Rx needs insurance pre-approval. We’ve started the process and will keep you updated.'},{type:'call',direction:'out',time:'May 16',summary:'Called UHC prior auth line. Submitted clinical docs. Rep said 3–5 business days for review.'}],serviceEvent:{title:'Eliquis 5mg prior auth submitted May 16 — UHC ref# PA-2026-88431',scheduled:'Scheduled for May 19: 5-day follow-up call to insurance + patient update',date:'May 14'}},
+  {id:33,notifTitle:'Compound Rx referral: Frank G.',contact:'Frank G.',rel:'Patient',type:'referral',summary:'Needs custom testosterone cream compound — we don’t compound. Refer to Bay Ridge Compounding Pharmacy.',callDraft:'Call Frank about his testosterone cream Rx. We can’t fill compound prescriptions — refer to Bay Ridge Compounding Pharmacy on 86th St.',textDraft:'Hi Frank, this is Safer Pharmacy. Your testosterone cream prescription requires compounding, which we don’t offer. We’ve arranged a transfer to Bay Ridge Compounding Pharmacy (718-555-0192) on 86th St. They’ll have it ready by Thursday. Call them or us with any questions.',due:'May 22',sendAs:'text',earlierItems:[{type:'call',direction:'in',time:'May 18',summary:'Dr. Stein’s office called in compound Rx: Testosterone cream 10% in PLO gel, 60g. We don’t have compounding capability.'},{type:'call',direction:'in',time:'May 19',summary:'Frank called asking when his testosterone cream would be ready. Explained we need to transfer to a compounding pharmacy.'}],serviceEvent:{title:'Compound Rx transfer — Testosterone cream 10% to Bay Ridge Compounding',scheduled:'Scheduled for May 20: referral notification + transfer confirmation',date:'May 18'}},
+];
+
+const PHARMACY_MISSED_CALLS=[
+  {id:'m1',contact:'William K.',rel:'Patient',time:'Today, 10:42a',summary:'Called about Metoprolol refill — says he’s running low and needs it by Friday.',type:'missed'},
+  {id:'m2',contact:'Dr. Navarro',rel:'Prescriber',time:'Today, 9:15a',summary:'Called regarding dosage change for patient Susan L. — Warfarin from 5mg to 7.5mg.',type:'missed'},
+  {id:'m3',contact:'Patricia M.',rel:'Patient',time:'Yesterday, 4:50p',summary:'Left voicemail asking if her Lantus insulin is covered under her new Medicaid plan.',type:'missed'},
+  {id:'m4',contact:'Nurse Chen',rel:'Nurse',time:'Yesterday, 2:20p',summary:'Called from Dr. Park’s office about a clarification on a Gabapentin Rx — quantity unclear on fax.',type:'missed'},
+];
+
+// ── ONCOLOGY data ──
+const ONCOLOGY_FILTER_LABELS=[
+  {id:'patient',label:'Patients',color:'#3b82f6',hasSubtags:true},
+  {id:'oncologist',label:'Oncologists',color:'#a855f7'},
+  {id:'nurse',label:'Nurses',color:'#14b8a6'},
+  {id:'research_coord',label:'Research Coordinators',color:'#22c55e'},
+  {id:'admin_staff',label:'Administrative Staff',color:'#9ca3af'},
+  {id:'pharmacist',label:'Pharmacists',color:'#6366f1'},
+  {id:'insurance',label:'Insurance Providers',color:'#f97316'},
+];
+const ONCOLOGY_FILTER_COUNTS={patient:32,oncologist:6,nurse:8,research_coord:3,admin_staff:4,pharmacist:2,insurance:4};
+const ONCOLOGY_SUBTAGS=['New Referral','Active Treatment','Post-Treatment','Surveillance','Clinical Trial','Palliative'];
+const ONCOLOGY_SUBTAG_COUNTS={'New Referral':4,'Active Treatment':9,'Post-Treatment':7,'Surveillance':6,'Clinical Trial':3,'Palliative':3};
+const ONCOLOGY_MOCK_CONTACTS=[
+  {name:'Helen R.',subtag:'Active Treatment'},{name:'George M.',subtag:'New Referral'},
+  {name:'Barbara S.',subtag:'Post-Treatment'},{name:'Thomas D.',subtag:'Clinical Trial'},
+  {name:'Carol J.',subtag:'Surveillance'},{name:'Richard P.',subtag:'Active Treatment'},
+];
+
+const ONCOLOGY_TODOS=[
+  {id:50,notifTitle:'Chemo prep reminder: Helen R.',contact:'Helen R.',rel:'Patient',type:'chemo-prep',summary:'Cycle 4 of FOLFOX infusion scheduled tomorrow at 9am. Needs pre-hydration and anti-nausea protocol reminder.',callDraft:'Call Helen to confirm her FOLFOX cycle 4 infusion tomorrow at 9am. Remind her about pre-hydration protocol and to take Ondansetron tonight.',textDraft:'Hi Helen, this is Dr. Amir’s office. Reminder: your chemo infusion (cycle 4) is tomorrow at 9am. Please drink 8+ glasses of water today, take your Ondansetron at 8pm tonight, and eat a light breakfast before coming in. Bring a blanket and someone to drive you home.',due:'Today',sendAs:'text',earlierItems:[{type:'call',direction:'in',time:'Apr 28',summary:'Cycle 3 infusion completed. Tolerated well with mild nausea. Labs stable — ANC 1.8, platelets 145k.'},{type:'sms',direction:'out',time:'May 12',text:'Your cycle 4 FOLFOX infusion is scheduled for May 20 at 9am. We’ll send a prep reminder the day before.'}],serviceEvent:{title:'FOLFOX Cycle 4 — May 20, 9am — pre-hydration + anti-emetic protocol',scheduled:'Scheduled for May 19: 24h chemo prep reminder',date:'May 12'}},
+  {id:32,notifTitle:'Lab results follow-up: Richard P.',contact:'Richard P.',rel:'Patient',type:'lab-results',summary:'Post-chemo CBC came back — ANC is 1.2 (borderline low). Needs nurse review call to discuss precautions.',callDraft:'Call Richard about his post-chemo labs. ANC 1.2 is borderline — discuss neutropenic precautions, fever monitoring, and when to go to ER.',textDraft:'Hi Richard, this is the oncology team at Dr. Amir’s office. Your blood work is back and we’d like to discuss the results with you. Please expect a call from Nurse Williams today. If you develop a fever above 100.4°F before then, go to the ER immediately.',due:'Today',sendAs:'call',earlierItems:[{type:'call',direction:'in',time:'May 15',summary:'Cycle 2 Carboplatin/Taxol completed. Patient reported increased fatigue. Labs drawn for 5-day post-chemo check.'},{type:'sms',direction:'out',time:'May 17',text:'Lab results are expected within 48 hours. We’ll contact you once reviewed by the care team.'}],serviceEvent:{title:'Post-chemo CBC May 17 — ANC 1.2 (borderline), Hgb 10.8, Plt 132k',scheduled:'Scheduled for May 19: nurse review call for borderline ANC',date:'May 17'}},
+  {id:9,notifTitle:'Treatment plan discussion: George M.',contact:'George M.',rel:'Patient',type:'treatment-plan',summary:'Newly diagnosed stage II colon cancer. Needs to schedule oncology consult for treatment planning.',callDraft:'Call George to schedule his initial oncology consultation with Dr. Amir. Diagnosis: stage II colon adenocarcinoma, post-surgical. Need to discuss adjuvant chemo options.',textDraft:'Hi George, this is Dr. Amir’s oncology office. We’ve received your records from Dr. Tanaka regarding your recent diagnosis. We’d like to schedule a consultation to discuss your treatment plan. Available slots: Wed 2pm, Thu 10am, or Fri 3pm. Reply or call (555) 234-5678.',due:'Today',sendAs:'text',earlierItems:[{type:'call',direction:'in',time:'May 16',summary:'Referral received from Dr. Tanaka (surgery). Stage II colon adenocarcinoma, post-hemicolectomy. Path: T3N0M0, no LVI, MSI-stable.'},{type:'sms',direction:'out',time:'May 16',text:'We’ve received your referral from Dr. Tanaka. Our team is reviewing your records and will reach out to schedule a consultation.'}],serviceEvent:{title:'New patient referral May 16 — Stage II colon ca, post-hemicolectomy',scheduled:'Scheduled for May 19: initial consult scheduling outreach',date:'May 16'}},
+  {id:7,notifTitle:'Side effect check-in: Barbara S.',contact:'Barbara S.',rel:'Patient',type:'side-effect',summary:'5 days post Cycle 3 AC chemo. Automated wellness check — common window for nadir symptoms.',callDraft:'Wellness check-in with Barbara — 5 days post AC cycle 3. Ask about nausea, fatigue, mouth sores, fever, and appetite. Remind her about neutropenic precautions.',textDraft:'Hi Barbara, this is Dr. Amir’s office checking in after your chemo last week. How are you feeling? Any fever, mouth sores, unusual fatigue, or nausea? Reply or call us at (555) 234-5678. If fever is above 100.4°F, please go to the ER right away.',due:'Today',sendAs:'text',earlierItems:[{type:'call',direction:'in',time:'May 14',summary:'Cycle 3 AC (doxorubicin/cyclophosphamide) infusion completed. Tolerated with grade 1 nausea. Pre-meds given.'},{type:'sms',direction:'out',time:'May 14',text:'Your cycle 3 chemo is complete. Remember to stay hydrated and take anti-nausea meds as directed. We’ll check in at day 5.'}],serviceEvent:{title:'AC Cycle 3 completed May 14 — day 5 post-chemo wellness check',scheduled:'Scheduled for May 19: day-5 automated wellness check',date:'May 14'}},
+  {id:10,notifTitle:'Clinical trial eligibility: Thomas D.',contact:'Thomas D.',rel:'Patient',type:'clinical-trial',summary:'Matches criteria for KEYNOTE-789 (pembrolizumab + chemo for NSCLC). Suggest discussion with patient.',callDraft:'Call Thomas to discuss clinical trial eligibility. He matches criteria for KEYNOTE-789 study — pembrolizumab plus chemo for advanced NSCLC, PD-L1 negative.',textDraft:'Hi Thomas, this is Dr. Amir’s office. We’ve identified a clinical trial that you may be eligible for based on your treatment history. We’d like to discuss this option with you at your next visit. Can you call us at (555) 234-5678 to schedule?',due:'May 22',sendAs:'call',earlierItems:[{type:'call',direction:'in',time:'Apr 20',summary:'Progression on first-line carboplatin/pemetrexed after 4 cycles. PD-L1 TPS <1%. ECOG 1. Discussing second-line options.'},{type:'call',direction:'in',time:'May 10',summary:'Thomas called about next steps. Expressed interest in clinical trials. Research coordinator flagged KEYNOTE-789 match.'}],serviceEvent:{title:'KEYNOTE-789 eligibility match — Stage IV NSCLC, PD-L1 neg, ECOG 1',scheduled:'Scheduled for May 20: trial discussion outreach',date:'May 10'}},
+  {id:33,notifTitle:'PCP referral intake: Carol J.',contact:'Carol J.',rel:'Patient',type:'referral',summary:'Received referral from Dr. Huang (PCP) for suspicious lung nodule found on CT. Need to schedule initial consult.',callDraft:'Call Carol to schedule her initial oncology consultation. Referral from Dr. Huang for 1.8cm spiculated RUL nodule on CT. PET scan may be needed.',textDraft:'Hi Carol, this is Dr. Amir’s oncology office. Dr. Huang referred you to us for further evaluation. We’d like to schedule a consultation at your earliest convenience. Available times: Mon 11am, Wed 9am, or Thu 2pm. Reply or call (555) 234-5678.',due:'May 22',sendAs:'text',earlierItems:[{type:'call',direction:'in',time:'May 17',summary:'Referral from Dr. Huang (PCP). CT chest showed 1.8cm spiculated nodule in RUL. Patient is 62F, former smoker (30 pack-years, quit 5 years ago). No symptoms.'},{type:'sms',direction:'out',time:'May 17',text:'We’ve received your referral from Dr. Huang. Our scheduling team will reach out within 48 hours.'}],serviceEvent:{title:'Referral from Dr. Huang — 1.8cm RUL lung nodule, needs PET + consult',scheduled:'Scheduled for May 19: initial consult scheduling outreach',date:'May 17'}},
+];
+
+const ONCOLOGY_MISSED_CALLS=[
+  {id:'m1',contact:'Richard P.',rel:'Patient',time:'Today, 11:15a',summary:'Called about increased fatigue and tingling in fingers after last chemo cycle.',type:'missed'},
+  {id:'m2',contact:'Dr. Tanaka',rel:'Oncologist',time:'Today, 9:45a',summary:'Called regarding George M.’s post-surgical pathology addendum — perineural invasion noted.',type:'missed'},
+  {id:'m3',contact:'Barbara S.',rel:'Patient',time:'Yesterday, 5:10p',summary:'Left voicemail — running a low-grade fever of 99.8°F, asking if she should be concerned.',type:'missed'},
+  {id:'m4',contact:'Research Coord. Davis',rel:'Research Coordinator',time:'Yesterday, 3:00p',summary:'Called about KEYNOTE-789 enrollment window closing May 30 — needs Thomas D.’s consent form status.',type:'missed'},
 ];
 
 // ── Tag management modal ──
@@ -249,38 +297,182 @@ function TagManagementModal({tags,setTags,onClose}){
   );
 }
 
+// ── Static panels ──
+function AboutYouPanel(){
+  return(
+    <div style={{flex:1,display:'flex',alignItems:'flex-start',justifyContent:'center',padding:'48px 40px'}}>
+      <div style={{width:'100%',maxWidth:480}}>
+        <h2 style={{fontSize:20,fontWeight:700,color:'#171717',marginBottom:4}}>About You</h2>
+        <p style={{fontSize:13,color:'#a3a3a3',marginBottom:24}}>Your profile information used by the AI secretary.</p>
+        {[
+          ['Name','Alex Dalyac'],
+          ['Role','Pharmacist / Owner'],
+          ['Phone','(555) 123-4567'],
+          ['Email','alex@saferpharmacy.com'],
+        ].map(([label,value])=>(
+          <div key={label} style={{marginBottom:16}}>
+            <div style={{fontSize:11,fontWeight:600,color:'#a3a3a3',textTransform:'uppercase',letterSpacing:'.5px',marginBottom:4}}>{label}</div>
+            <div style={{fontSize:15,color:'#171717',padding:'10px 14px',background:'#f5f5f5',borderRadius:8,border:'1px solid #e5e5e5'}}>{value}</div>
+          </div>
+        ))}
+        <div style={{marginTop:20,padding:'12px 16px',background:'#FFF7ED',borderRadius:8,border:'1px solid #FED7AA',fontSize:13,color:'#9A3412'}}>Edit in iOS app for full profile</div>
+      </div>
+    </div>
+  );
+}
+
+function CompanyInfoPanel(){
+  return(
+    <div style={{flex:1,display:'flex',alignItems:'flex-start',justifyContent:'center',padding:'48px 40px'}}>
+      <div style={{width:'100%',maxWidth:480}}>
+        <h2 style={{fontSize:20,fontWeight:700,color:'#171717',marginBottom:4}}>Company Info</h2>
+        <p style={{fontSize:13,color:'#a3a3a3',marginBottom:24}}>Business details your AI secretary uses when answering.</p>
+        {[
+          ['Business','Safer Pharmacy'],
+          ['Address','123 Main St, Brooklyn, NY'],
+          ['Hours','Mon–Sat 9am–7pm'],
+          ['Phone Line','(718) 888-8880'],
+        ].map(([label,value])=>(
+          <div key={label} style={{marginBottom:16}}>
+            <div style={{fontSize:11,fontWeight:600,color:'#a3a3a3',textTransform:'uppercase',letterSpacing:'.5px',marginBottom:4}}>{label}</div>
+            <div style={{fontSize:15,color:'#171717',padding:'10px 14px',background:'#f5f5f5',borderRadius:8,border:'1px solid #e5e5e5'}}>{value}</div>
+          </div>
+        ))}
+        <div style={{marginTop:20,padding:'12px 16px',background:'#FFF7ED',borderRadius:8,border:'1px solid #FED7AA',fontSize:13,color:'#9A3412'}}>Edit in iOS app for full details</div>
+      </div>
+    </div>
+  );
+}
+
+function SecretarySettingsPanel(){
+  const[aiActive,setAiActive]=useState(true);
+  return(
+    <div style={{flex:1,display:'flex',alignItems:'flex-start',justifyContent:'center',padding:'48px 40px'}}>
+      <div style={{width:'100%',maxWidth:480}}>
+        <h2 style={{fontSize:20,fontWeight:700,color:'#171717',marginBottom:4}}>Secretary Settings</h2>
+        <p style={{fontSize:13,color:'#a3a3a3',marginBottom:24}}>Configure your AI secretary behavior.</p>
+        <div style={{marginBottom:16,display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 16px',background:'#f5f5f5',borderRadius:8,border:'1px solid #e5e5e5'}}>
+          <div>
+            <div style={{fontSize:14,fontWeight:600,color:'#171717'}}>AI Secretary</div>
+            <div style={{fontSize:12,color:'#737373'}}>Answers calls and manages follow-ups</div>
+          </div>
+          <div onClick={()=>setAiActive(!aiActive)} style={{width:44,height:24,borderRadius:12,background:aiActive?'#FF8370':'#d4d4d4',cursor:'pointer',position:'relative',transition:'background .2s'}}>
+            <div style={{width:20,height:20,borderRadius:10,background:'#fff',position:'absolute',top:2,left:aiActive?22:2,transition:'left .2s',boxShadow:'0 1px 3px rgba(0,0,0,.15)'}}/>
+          </div>
+        </div>
+        {[
+          ['Language','English, Spanish'],
+          ['After-hours','Voicemail with callback scheduling'],
+          ['Call Transfer','Enabled for urgent Rx issues'],
+        ].map(([label,value])=>(
+          <div key={label} style={{marginBottom:16}}>
+            <div style={{fontSize:11,fontWeight:600,color:'#a3a3a3',textTransform:'uppercase',letterSpacing:'.5px',marginBottom:4}}>{label}</div>
+            <div style={{fontSize:15,color:'#171717',padding:'10px 14px',background:'#f5f5f5',borderRadius:8,border:'1px solid #e5e5e5'}}>{value}</div>
+          </div>
+        ))}
+        <div style={{marginTop:20,padding:'12px 16px',background:'#FFF7ED',borderRadius:8,border:'1px solid #FED7AA',fontSize:13,color:'#9A3412'}}>Full configuration in iOS app</div>
+      </div>
+    </div>
+  );
+}
+
 // ── Web Inbox Screen ──
-function WebInboxScreen({tags,setTags,onManageTags}){
+function WebInboxScreen({tags,setTags,onManageTags,industry,setIndustry}){
   const[filter,setFilter]=useState('todo');
-  const[openThread,setOpenThread]=useState(TODOS[1]); // default: Sandra B. selected
+  const[openThread,setOpenThread]=useState(null);
   const[activeLabels,setActiveLabels]=useState([]);
   const[activeSubtags,setActiveSubtags]=useState([]);
   const[expandedLabel,setExpandedLabel]=useState(null);
   const[showContacts,setShowContacts]=useState(false);
   const[removedContacts,setRemovedContacts]=useState([]);
   const[sentIds,setSentIds]=useState([]);
+  const[sidePanel,setSidePanel]=useState(null); // 'about','company','secretary' or null
 
-  const industryTodos=TODOS.slice().sort((a,b)=>{
-    const ai=SCENARIO_TYPE_ORDER.indexOf(TODO_TYPES[a.id]||'other');
-    const bi=SCENARIO_TYPE_ORDER.indexOf(TODO_TYPES[b.id]||'other');
+  // Select data based on industry
+  const isPharmacy=industry==='pharmacy';
+  const currentTodos=isPharmacy?PHARMACY_TODOS:ONCOLOGY_TODOS;
+  const currentFilterLabels=isPharmacy?PHARMACY_FILTER_LABELS:ONCOLOGY_FILTER_LABELS;
+  const currentFilterCounts=isPharmacy?PHARMACY_FILTER_COUNTS:ONCOLOGY_FILTER_COUNTS;
+  const currentSubtags=isPharmacy?PHARMACY_SUBTAGS:ONCOLOGY_SUBTAGS;
+  const currentSubtagCounts=isPharmacy?PHARMACY_SUBTAG_COUNTS:ONCOLOGY_SUBTAG_COUNTS;
+  const currentMockContacts=isPharmacy?PHARMACY_MOCK_CONTACTS:ONCOLOGY_MOCK_CONTACTS;
+  const currentMissedCalls=isPharmacy?PHARMACY_MISSED_CALLS:ONCOLOGY_MISSED_CALLS;
+
+  const industryTodos=currentTodos.slice().sort((a,b)=>{
+    const ai=SCENARIO_TYPE_ORDER.indexOf(a.type||'other');
+    const bi=SCENARIO_TYPE_ORDER.indexOf(b.type||'other');
     return (ai<0?999:ai)-(bi<0?999:bi);
   });
   const labels=tags;
-  const counts=FILTER_COUNTS;
-  const stCounts=SUBTAG_COUNTS;
-  const contacts=MOCK_CONTACTS;
+  const counts=currentFilterCounts;
+  const stCounts=currentSubtagCounts;
+  const contacts=currentMockContacts;
   const pending=industryTodos.filter(t=>!sentIds.includes(t.id));
   const visibleContacts=contacts.filter(c=>!removedContacts.includes(c.name)&&(activeSubtags.length===0||activeSubtags.includes(c.subtag)));
   const toggleLabel=id=>setActiveLabels(p=>p.includes(id)?p.filter(l=>l!==id):[...p,id]);
   const toggleSubtag=st=>setActiveSubtags(p=>p.includes(st)?p.filter(s=>s!==st):[...p,st]);
 
+  // Compute list items based on filter
+  const getListItems=()=>{
+    switch(filter){
+      case 'todo': return pending;
+      case 'inbox': return industryTodos;
+      case 'urgent': return industryTodos.filter(t=>t.due==='Today');
+      case 'unread': return industryTodos.slice(0,4);
+      case 'missed': return [];
+      default: return pending;
+    }
+  };
+  const listItems=getListItems();
+
   const tabs=[
-    {k:'inbox',l:'Inbox',badge:12,icon:true},
+    {k:'inbox',l:'Inbox',badge:industryTodos.length,icon:true},
     {k:'todo',l:'Suggested to-dos',badge:pending.length},
-    {k:'urgent',l:'Urgent',badge:4},
-    {k:'unread',l:'Unread',badge:13},
-    {k:'missed',l:'Missed',badge:13,muted:true}
+    {k:'urgent',l:'Urgent',badge:industryTodos.filter(t=>t.due==='Today').length},
+    {k:'unread',l:'Unread',badge:4},
+    {k:'missed',l:'Missed',badge:currentMissedCalls.length,muted:true}
   ];
+
+  // Handle nav clicks
+  const handleNavClick=(key)=>{
+    setSidePanel(null);
+    setFilter(key);
+    setOpenThread(null);
+  };
+  const handlePanelClick=(panel)=>{
+    setFilter(null);
+    setSidePanel(panel);
+    setOpenThread(null);
+  };
+
+  // Render todo/inbox item
+  const renderItem=(todo,isMissed=false)=>{
+    const isUrgent=todo.due==='Today';
+    const isSelected=openThread&&openThread.id===todo.id;
+    const isSent=sentIds.includes(todo.id);
+    return(
+      <button type="button" key={todo.id} onClick={()=>{if(!isMissed)setOpenThread(todo)}} className={`web-inbox-item ${isSelected?'selected':''}`}>
+        <div style={{width:36,height:36,borderRadius:18,background:isMissed?'#FEE2E2':'#f5f5f5',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,marginTop:2}}>
+          {isMissed?I.missedCall({s:16,c:'#ef4444'}):I.outbound({s:16,c:'#737373'})}
+        </div>
+        <div style={{flex:1,minWidth:0}}>
+          <div style={{display:'flex',alignItems:'center',gap:6}}>
+            <span style={{fontSize:14,fontWeight:600,color:'#171717'}}>{todo.contact}</span>
+            {isUrgent&&!isMissed&&<span style={{display:'flex'}}>{I.bell({s:12,c:'#ef4444'})}</span>}
+            {isMissed?
+              <span style={{fontSize:10,fontWeight:700,background:'#ef4444',color:'#fff',padding:'1px 6px',borderRadius:4,lineHeight:'16px'}}>Missed</span>
+            :isSent?
+              <span style={{fontSize:10,fontWeight:700,background:'#22c55e',color:'#fff',padding:'1px 6px',borderRadius:4,lineHeight:'16px'}}>Sent</span>
+            :
+              <span style={{fontSize:10,fontWeight:700,background:'#FF8370',color:'#fff',padding:'1px 6px',borderRadius:4,lineHeight:'16px'}}>To-Do</span>
+            }
+            <span style={{marginLeft:'auto',flexShrink:0,fontSize:12,color:isUrgent?'#171717':'#737373',fontWeight:isUrgent?600:400}}>{todo.due||todo.time}</span>
+          </div>
+          <p style={{fontSize:13,color:'#737373',lineHeight:1.4,overflow:'hidden',textOverflow:'ellipsis',display:'-webkit-box',WebkitLineClamp:2,WebkitBoxOrient:'vertical',marginTop:2,margin:0}}>{todo.summary}</p>
+        </div>
+      </button>
+    );
+  };
 
   return(
     <div className="web-frame">
@@ -294,10 +486,17 @@ function WebInboxScreen({tags,setTags,onManageTags}){
           <span className="web-switcher-name">Alex Dalyac</span>
           <span style={{display:'flex'}}>{I.chevronDown({s:12,c:'#a3a3a3'})}</span>
         </div>
+
+        {/* Industry switcher */}
+        <div className="industry-switcher">
+          <button className={industry==='pharmacy'?'active':''} onClick={()=>{setIndustry('pharmacy');setOpenThread(null);setSidePanel(null);setFilter('todo');setSentIds([]);setActiveLabels([]);setActiveSubtags([])}}>Pharmacy</button>
+          <button className={industry==='oncology'?'active':''} onClick={()=>{setIndustry('oncology');setOpenThread(null);setSidePanel(null);setFilter('todo');setSentIds([]);setActiveLabels([]);setActiveSubtags([])}}>Oncology</button>
+        </div>
+
         <nav className="web-sidebar-nav">
           {tabs.map(tab=>(
-            <div key={tab.k} className={`web-nav-item ${filter===tab.k?'active':''}`} onClick={()=>{setFilter(tab.k);setOpenThread(null)}}>
-              {tab.icon&&<span style={{display:'flex'}}>{I.inbox({s:16,c:filter===tab.k?'#171717':'#737373'})}</span>}
+            <div key={tab.k} className={`web-nav-item ${filter===tab.k&&!sidePanel?'active':''}`} onClick={()=>handleNavClick(tab.k)}>
+              {tab.icon&&<span style={{display:'flex'}}>{I.inbox({s:16,c:filter===tab.k&&!sidePanel?'#171717':'#737373'})}</span>}
               <span>{tab.l}</span>
               {tab.badge>0&&<span className={`web-nav-badge ${tab.muted?'muted':''}`}>{tab.badge}</span>}
             </div>
@@ -321,7 +520,7 @@ function WebInboxScreen({tags,setTags,onManageTags}){
                   <TagDot color={label.color||'#9ca3af'} size={8}/>
                   <span style={{flex:1,fontSize:13,color:isActive?'#171717':'#737373'}}>{label.label}</span>
                   <span style={{fontSize:11,color:'#a3a3a3'}}>{count}</span>
-                  {label.hasSubtags&&SUBTAGS.length>0&&(
+                  {label.hasSubtags&&currentSubtags.length>0&&(
                     <span onClick={e=>{e.stopPropagation();setExpandedLabel(isExpanded?null:label.id);setShowContacts(false)}} className={`filter-row-expand ${isExpanded?'open':''}`} style={{padding:6,margin:-4}}>
                       {I.chevronDown({s:10,c:'#a3a3a3'})}
                     </span>
@@ -330,7 +529,7 @@ function WebInboxScreen({tags,setTags,onManageTags}){
                 {label.hasSubtags&&isExpanded&&(
                   <div style={{paddingLeft:36}}>
                     <div style={{display:'flex',flexWrap:'wrap',gap:4,padding:'2px 8px 8px 0'}}>
-                      {SUBTAGS.map(st=>(
+                      {currentSubtags.map(st=>(
                         <span key={st} className={`subtag-chip ${activeSubtags.includes(st)?'active':''}`} onClick={()=>toggleSubtag(st)} style={{fontSize:10,padding:'2px 7px'}}>
                           {st} <span style={{opacity:.6}}>{stCounts[st]||0}</span>
                         </span>
@@ -366,16 +565,16 @@ function WebInboxScreen({tags,setTags,onManageTags}){
           </div>
 
           <div className="web-nav-section">AI Personalization</div>
-          <div className="web-nav-item">
-            <span style={{display:'flex'}}>{I.idCard({s:16,c:'#737373'})}</span>
+          <div className={`web-nav-item ${sidePanel==='about'?'active':''}`} onClick={()=>handlePanelClick('about')}>
+            <span style={{display:'flex'}}>{I.idCard({s:16,c:sidePanel==='about'?'#171717':'#737373'})}</span>
             <span>About You</span>
           </div>
-          <div className="web-nav-item">
-            <span style={{display:'flex'}}>{I.building({s:16,c:'#737373'})}</span>
+          <div className={`web-nav-item ${sidePanel==='company'?'active':''}`} onClick={()=>handlePanelClick('company')}>
+            <span style={{display:'flex'}}>{I.building({s:16,c:sidePanel==='company'?'#171717':'#737373'})}</span>
             <span>Company Info</span>
           </div>
-          <div className="web-nav-item">
-            <span style={{display:'flex'}}>{I.spark({s:16,c:'#737373'})}</span>
+          <div className={`web-nav-item ${sidePanel==='secretary'?'active':''}`} onClick={()=>handlePanelClick('secretary')}>
+            <span style={{display:'flex'}}>{I.spark({s:16,c:sidePanel==='secretary'?'#171717':'#737373'})}</span>
             <span>Secretary Settings</span>
           </div>
         </nav>
@@ -391,6 +590,11 @@ function WebInboxScreen({tags,setTags,onManageTags}){
       </aside>
 
       <div className="web-main">
+        {/* Side panels replace both columns */}
+        {sidePanel==='about'?<AboutYouPanel/>:
+         sidePanel==='company'?<CompanyInfoPanel/>:
+         sidePanel==='secretary'?<SecretarySettingsPanel/>:
+        <>
         <div className="web-list-col">
           <div className="web-list-header">
             <div className="web-search-input">
@@ -399,31 +603,14 @@ function WebInboxScreen({tags,setTags,onManageTags}){
             </div>
           </div>
           <div className="web-inbox-list">
-            {filter==='todo'&&pending.map(todo=>{
-              const isUrgent=todo.due==='Today';
-              const isSelected=openThread&&openThread.id===todo.id;
-              return(
-                <button type="button" key={todo.id} onClick={()=>setOpenThread(todo)} className={`web-inbox-item ${isSelected?'selected':''}`}>
-                  <div style={{width:36,height:36,borderRadius:18,background:'#f5f5f5',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,marginTop:2}}>
-                    {I.outbound({s:16,c:'#737373'})}
-                  </div>
-                  <div style={{flex:1,minWidth:0}}>
-                    <div style={{display:'flex',alignItems:'center',gap:6}}>
-                      <span style={{fontSize:14,fontWeight:600,color:'#171717'}}>{todo.displayContact||todo.contact}</span>
-                      {isUrgent&&<span style={{display:'flex'}}>{I.bell({s:12,c:'#ef4444'})}</span>}
-                      <span style={{fontSize:10,fontWeight:700,background:'#FF8370',color:'#fff',padding:'1px 6px',borderRadius:4,lineHeight:'16px'}}>To-Do</span>
-                      <span style={{marginLeft:'auto',flexShrink:0,fontSize:12,color:isUrgent?'#171717':'#737373',fontWeight:isUrgent?600:400}}>{todo.due}</span>
-                    </div>
-                    <p style={{fontSize:13,color:'#737373',lineHeight:1.4,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',marginTop:2,margin:0}}>{todo.summary}</p>
-                  </div>
-                </button>
-              );
-            })}
-            {filter==='todo'&&pending.length===0&&(
-              <div style={{padding:'60px 24px',textAlign:'center',color:'#a3a3a3',fontSize:14}}>All to-dos completed.</div>
-            )}
-            {filter!=='todo'&&(
-              <div style={{padding:'60px 24px',textAlign:'center',color:'#a3a3a3',fontSize:14}}>Select "Suggested to-dos" to view outbound items.</div>
+            {filter==='missed'?(
+              currentMissedCalls.length>0?currentMissedCalls.map(mc=>renderItem(mc,true)):(
+                <div style={{padding:'60px 24px',textAlign:'center',color:'#a3a3a3',fontSize:14}}>No missed calls.</div>
+              )
+            ):listItems.length>0?listItems.map(todo=>renderItem(todo)):(
+              <div style={{padding:'60px 24px',textAlign:'center',color:'#a3a3a3',fontSize:14}}>
+                {filter==='todo'?'All to-dos completed.':'No items to display.'}
+              </div>
             )}
           </div>
         </div>
@@ -434,7 +621,7 @@ function WebInboxScreen({tags,setTags,onManageTags}){
               <div style={{display:'flex',alignItems:'center',padding:'12px 16px',gap:12,borderBottom:'1px solid #e5e5e5',flexShrink:0}}>
                 <Avatar name={openThread.contact} size={36}/>
                 <div style={{flex:1}}>
-                  <div style={{fontSize:16,fontWeight:600,color:'#171717'}}>{openThread.displayContact||openThread.contact}</div>
+                  <div style={{fontSize:16,fontWeight:600,color:'#171717'}}>{openThread.contact}</div>
                   <div style={{fontSize:12,color:'#737373'}}>{openThread.rel}</div>
                 </div>
                 <Tag text={openThread.rel}/>
@@ -497,6 +684,7 @@ function WebInboxScreen({tags,setTags,onManageTags}){
             </div>
           )}
         </div>
+        </>}
       </div>
     </div>
   );
@@ -504,11 +692,27 @@ function WebInboxScreen({tags,setTags,onManageTags}){
 
 // ── App (embed) ──
 function App(){
-  const[tags,setTags]=useState(FILTER_LABELS);
+  const[industry,setIndustry]=useState('pharmacy');
+  const isPharmacy=industry==='pharmacy';
+  const[tags,setTags]=useState(isPharmacy?PHARMACY_FILTER_LABELS:ONCOLOGY_FILTER_LABELS);
   const[showTagsModal,setShowTagsModal]=useState(false);
+
+  // Sync tags when industry changes
+  const prevIndustry=useRef(industry);
+  if(prevIndustry.current!==industry){
+    prevIndustry.current=industry;
+    // We handle this via a key on WebInboxScreen instead
+  }
+
+  // Reset tags when industry changes
+  const handleSetIndustry=(ind)=>{
+    setIndustry(ind);
+    setTags(ind==='pharmacy'?PHARMACY_FILTER_LABELS:ONCOLOGY_FILTER_LABELS);
+  };
+
   return(
     <>
-      <WebInboxScreen tags={tags} setTags={setTags} onManageTags={()=>setShowTagsModal(true)}/>
+      <WebInboxScreen key={industry} tags={tags} setTags={setTags} onManageTags={()=>setShowTagsModal(true)} industry={industry} setIndustry={handleSetIndustry}/>
       {showTagsModal&&<TagManagementModal tags={tags} setTags={setTags} onClose={()=>setShowTagsModal(false)}/>}
     </>
   );

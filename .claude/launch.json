@@ -2,9 +2,9 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "pharmacy-prez",
+      "name": "pharmacy-v3",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8791", "--directory", "/Users/alexdalyac/git/presentations-repo/customer-facing/pitch-decks/pharmacy-en"],
+      "runtimeArgs": ["-m", "http.server", "8791", "--directory", "/Users/alexdalyac/git/presentations/customer-facing/pitch-decks/pharmacy-en-v3"],
       "port": 8791
     }
   ]
