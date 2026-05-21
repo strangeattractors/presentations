@@ -527,58 +527,56 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
       <iframe id="protoIframe" src="https://strange-attractor.com/prototypes/scheduled-outbound/" title="YouSquared Prototype"></iframe>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
-      <div>
-        <div class="prod-bottom" onclick="document.getElementById('setupPanel').classList.toggle('open')">
-          <span class="live-label">Easy set-up</span>
-          <svg class="setup-chevron" style="width:16px;height:16px;margin-left:auto;transition:transform 0.3s;color:var(--muted);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-        </div>
-        <div class="callfw-panel" id="setupPanel">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-            <div>
-              <div class="phase-card active" onclick="activatePhase(1)" style="margin-bottom:8px;">
-                <div class="phase-header"><div class="phase-num">1</div><div><div class="phase-title">Orders</div></div><span class="phase-time">Live in days</span><svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
-                <div class="phase-body">
-                  <div class="phase-step"><div class="phase-step-icon">&#128222;</div><div><h4>Forward your pharmacy line</h4><p>Set call forwarding from your PBX or carrier admin. 5 minutes, no IT ticket.</p></div></div>
-                  <div class="phase-step"><div class="phase-step-icon">&#9881;&#65039;</div><div><h4>Configure your AI</h4><p>We train on your hours, formulary basics, and greeting. Live same week.</p></div></div>
-                </div>
-              </div>
-              <div class="phase-card" onclick="activatePhase(2)" style="margin-bottom:8px;">
-                <div class="phase-header"><div class="phase-num">2</div><div><div class="phase-title">Referrals</div></div><span class="phase-time">Week 2&ndash;4</span><svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
-                <div class="phase-body">
-                  <div class="phase-step"><div class="phase-step-icon">&#128196;</div><div><h4>Secure CSV export</h4><p>Export patient lists from Epic or PrimeRx. Drag-and-drop into YouSquared.</p></div></div>
-                  <div class="phase-step"><div class="phase-step-icon">&#128138;</div><div><h4>Enable outbound</h4><p>AI proactively reaches physicians for specialty consultations.</p></div></div>
-                </div>
-              </div>
-              <div class="phase-card" onclick="activatePhase(3)">
-                <div class="phase-header"><div class="phase-num">3</div><div><div class="phase-title">End-to-End</div></div><span class="phase-time">Month 2+</span><svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
-                <div class="phase-body">
-                  <div class="phase-step"><div class="phase-step-icon">&#128272;</div><div><h4>FHIR R4 API</h4><p>Your IT registers via App Orchard, configures OAuth scopes.</p></div></div>
-                  <div class="phase-step"><div class="phase-step-icon">&#128276;</div><div><h4>Real-time webhooks</h4><p>Rx status, delivery, appointments &mdash; push in real time.</p></div></div>
-                </div>
-              </div>
+      <div class="prod-bottom" onclick="toggleProdPanel('setup')">
+        <span class="live-label">Easy set-up</span>
+        <svg style="width:16px;height:16px;margin-left:auto;transition:transform 0.3s;color:var(--muted);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <div class="prod-bottom" onclick="toggleProdPanel('hipaa')">
+        <span style="font-family:'Playfair Display',Georgia,serif;font-size:1rem;font-weight:700;color:var(--accent);">HIPAA-compliant</span>
+        <svg style="width:16px;height:16px;margin-left:auto;transition:transform 0.3s;color:var(--muted);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
+    <div class="callfw-panel" id="setupPanel">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div>
+          <div class="phase-card active" onclick="activatePhase(1)" style="margin-bottom:8px;">
+            <div class="phase-header"><div class="phase-num">1</div><div><div class="phase-title">Orders</div></div><span class="phase-time">Live in days</span><svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+            <div class="phase-body">
+              <div class="phase-step"><div class="phase-step-icon">&#128222;</div><div><h4>Forward your pharmacy line</h4><p>Set call forwarding from your PBX or carrier admin. 5 minutes, no IT ticket.</p></div></div>
+              <div class="phase-step"><div class="phase-step-icon">&#9881;&#65039;</div><div><h4>Configure your AI</h4><p>We train on your hours, formulary basics, and greeting. Live same week.</p></div></div>
             </div>
-            <div>
-              <div style="font-size:0.78rem;font-weight:600;color:var(--ink);margin-bottom:8px;">Call forwarding setup</div>
-              <select class="callfw-select" id="callfwSelect" onchange="updateCallFw()">
-                <option value="verizon" selected>Verizon One Talk</option>
-                <option value="cisco">Cisco Webex Calling</option>
-                <option value="teams">Microsoft Teams Phone</option>
-                <option value="ringcentral">RingCentral</option>
-                <option value="avaya">Avaya Cloud Office</option>
-              </select>
-              <div id="callfwContent">
-                <div class="callfw-screenshot"><img src="pharmacy_assets/illustration_setup.png" alt="Verizon One Talk call forwarding admin"></div>
-              </div>
+          </div>
+          <div class="phase-card" onclick="activatePhase(2)" style="margin-bottom:8px;">
+            <div class="phase-header"><div class="phase-num">2</div><div><div class="phase-title">Referrals</div></div><span class="phase-time">Week 2&ndash;4</span><svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+            <div class="phase-body">
+              <div class="phase-step"><div class="phase-step-icon">&#128196;</div><div><h4>Secure CSV export</h4><p>Export patient lists from Epic or PrimeRx. Drag-and-drop into YouSquared.</p></div></div>
+              <div class="phase-step"><div class="phase-step-icon">&#128138;</div><div><h4>Enable outbound</h4><p>AI proactively reaches physicians for specialty consultations.</p></div></div>
+            </div>
+          </div>
+          <div class="phase-card" onclick="activatePhase(3)">
+            <div class="phase-header"><div class="phase-num">3</div><div><div class="phase-title">End-to-End</div></div><span class="phase-time">Month 2+</span><svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+            <div class="phase-body">
+              <div class="phase-step"><div class="phase-step-icon">&#128272;</div><div><h4>FHIR R4 API</h4><p>Your IT registers via App Orchard, configures OAuth scopes.</p></div></div>
+              <div class="phase-step"><div class="phase-step-icon">&#128276;</div><div><h4>Real-time webhooks</h4><p>Rx status, delivery, appointments &mdash; push in real time.</p></div></div>
             </div>
           </div>
         </div>
-      </div>
-      <div>
-        <div class="prod-bottom" onclick="document.getElementById('hipaaPanel').classList.toggle('open')">
-          <span style="font-family:'Playfair Display',Georgia,serif;font-size:1rem;font-weight:700;color:var(--accent);">HIPAA-compliant</span>
-          <svg style="width:16px;height:16px;margin-left:auto;transition:transform 0.3s;color:var(--muted);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        <div>
+          <div style="font-size:0.78rem;font-weight:600;color:var(--ink);margin-bottom:8px;">Call forwarding setup</div>
+          <select class="callfw-select" id="callfwSelect" onchange="updateCallFw()">
+            <option value="verizon" selected>Verizon One Talk</option>
+            <option value="cisco">Cisco Webex Calling</option>
+            <option value="teams">Microsoft Teams Phone</option>
+            <option value="ringcentral">RingCentral</option>
+            <option value="avaya">Avaya Cloud Office</option>
+          </select>
+          <div id="callfwContent">
+            <div class="callfw-screenshot"><img src="pharmacy_assets/illustration_setup.png" alt="Verizon One Talk call forwarding admin"></div>
+          </div>
         </div>
-        <div class="callfw-panel" id="hipaaPanel">
+      </div>
+    </div>
+    <div class="callfw-panel" id="hipaaPanel">
           <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
             <div style="background:#fff;border-radius:14px;padding:20px 16px;border:1px solid var(--rule);">
               <div style="width:40px;height:40px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
@@ -621,8 +619,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
       </div>
     </div>
   </div>
+  </div>
 </section>
-
 <!-- ═══ SLIDE 4: PRICING ═══ -->
 <section class="slide" id="slide-pricing">
   <div class="slide-inner">
@@ -806,6 +804,14 @@ function toggleBizCase(){
   bizOn=!bizOn;
   document.getElementById('bizBottom').classList.toggle('pressed',bizOn);
   document.getElementById('solGrid').classList.toggle('bizmode',bizOn);
+}
+
+/* ── PRODUCT: bottom panels (exclusive) ── */
+function toggleProdPanel(which){
+  const setup=document.getElementById('setupPanel');
+  const hipaa=document.getElementById('hipaaPanel');
+  if(which==='setup'){hipaa.classList.remove('open');setup.classList.toggle('open');}
+  else{setup.classList.remove('open');hipaa.classList.toggle('open');}
 }
 
 /* ── PRODUCT: view/page toggle ── */
