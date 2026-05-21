@@ -528,20 +528,48 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
       <div>
-        <div class="prod-bottom" onclick="document.getElementById('callfwPanel').classList.toggle('open')">
-          <span class="live-label" id="liveLabel">Easy set-up</span>
-          <svg style="width:16px;height:16px;margin-left:auto;transition:transform 0.3s;color:var(--muted);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        <div class="prod-bottom" onclick="document.getElementById('setupPanel').classList.toggle('open')">
+          <span class="live-label">Easy set-up</span>
+          <svg class="setup-chevron" style="width:16px;height:16px;margin-left:auto;transition:transform 0.3s;color:var(--muted);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
-        <div class="callfw-panel" id="callfwPanel">
-          <select class="callfw-select" id="callfwSelect" onchange="updateCallFw()">
-            <option value="verizon" selected>Verizon One Talk</option>
-            <option value="cisco">Cisco Webex Calling</option>
-            <option value="teams">Microsoft Teams Phone</option>
-            <option value="ringcentral">RingCentral</option>
-            <option value="avaya">Avaya Cloud Office</option>
-          </select>
-          <div id="callfwContent">
-            <div class="callfw-screenshot"><img src="pharmacy_assets/illustration_setup.png" alt="Verizon One Talk call forwarding admin"></div>
+        <div class="callfw-panel" id="setupPanel">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+            <div>
+              <div class="phase-card active" onclick="activatePhase(1)" style="margin-bottom:8px;">
+                <div class="phase-header"><div class="phase-num">1</div><div><div class="phase-title">Orders</div></div><span class="phase-time">Live in days</span><svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+                <div class="phase-body">
+                  <div class="phase-step"><div class="phase-step-icon">&#128222;</div><div><h4>Forward your pharmacy line</h4><p>Set call forwarding from your PBX or carrier admin. 5 minutes, no IT ticket.</p></div></div>
+                  <div class="phase-step"><div class="phase-step-icon">&#9881;&#65039;</div><div><h4>Configure your AI</h4><p>We train on your hours, formulary basics, and greeting. Live same week.</p></div></div>
+                </div>
+              </div>
+              <div class="phase-card" onclick="activatePhase(2)" style="margin-bottom:8px;">
+                <div class="phase-header"><div class="phase-num">2</div><div><div class="phase-title">Referrals</div></div><span class="phase-time">Week 2&ndash;4</span><svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+                <div class="phase-body">
+                  <div class="phase-step"><div class="phase-step-icon">&#128196;</div><div><h4>Secure CSV export</h4><p>Export patient lists from Epic or PrimeRx. Drag-and-drop into YouSquared.</p></div></div>
+                  <div class="phase-step"><div class="phase-step-icon">&#128138;</div><div><h4>Enable outbound</h4><p>AI proactively reaches physicians for specialty consultations.</p></div></div>
+                </div>
+              </div>
+              <div class="phase-card" onclick="activatePhase(3)">
+                <div class="phase-header"><div class="phase-num">3</div><div><div class="phase-title">End-to-End</div></div><span class="phase-time">Month 2+</span><svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+                <div class="phase-body">
+                  <div class="phase-step"><div class="phase-step-icon">&#128272;</div><div><h4>FHIR R4 API</h4><p>Your IT registers via App Orchard, configures OAuth scopes.</p></div></div>
+                  <div class="phase-step"><div class="phase-step-icon">&#128276;</div><div><h4>Real-time webhooks</h4><p>Rx status, delivery, appointments &mdash; push in real time.</p></div></div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:0.78rem;font-weight:600;color:var(--ink);margin-bottom:8px;">Call forwarding setup</div>
+              <select class="callfw-select" id="callfwSelect" onchange="updateCallFw()">
+                <option value="verizon" selected>Verizon One Talk</option>
+                <option value="cisco">Cisco Webex Calling</option>
+                <option value="teams">Microsoft Teams Phone</option>
+                <option value="ringcentral">RingCentral</option>
+                <option value="avaya">Avaya Cloud Office</option>
+              </select>
+              <div id="callfwContent">
+                <div class="callfw-screenshot"><img src="pharmacy_assets/illustration_setup.png" alt="Verizon One Talk call forwarding admin"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -595,85 +623,28 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
   </div>
 </section>
 
-<!-- ═══ SLIDE 4: SIMPLE TO LAUNCH ═══ -->
-<section class="slide" id="slide-launch">
-  <div class="slide-inner">
-    <div class="section-label">04 &mdash; Getting started</div>
-    <h2 class="section-title">Simple to <em>launch</em></h2>
-    <p class="section-intro">Three phases, each unlocking more value.</p>
-    <div class="launch-layout">
-      <div class="phase-list">
-        <div class="phase-card active" onclick="activatePhase(1)">
-          <div class="phase-header">
-            <div class="phase-num">1</div>
-            <div><div class="phase-title">Orders</div></div>
-            <span class="phase-time">Live in days</span>
-            <svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-          </div>
-          <div class="phase-body">
-            <div class="phase-step"><div class="phase-step-icon">&#128222;</div><div><h4>Forward your pharmacy line</h4><p>Set call forwarding from your PBX or carrier admin. 5 minutes, no IT ticket.</p></div></div>
-            <div class="phase-step"><div class="phase-step-icon">&#9881;&#65039;</div><div><h4>Configure your AI</h4><p>We train on your hours, formulary basics, and greeting. Live same week.</p></div></div>
-          </div>
-        </div>
-        <div class="phase-card" onclick="activatePhase(2)">
-          <div class="phase-header">
-            <div class="phase-num">2</div>
-            <div><div class="phase-title">Referrals</div></div>
-            <span class="phase-time">Week 2&ndash;4</span>
-            <svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-          </div>
-          <div class="phase-body">
-            <div class="phase-step"><div class="phase-step-icon">&#128196;</div><div><h4>Secure CSV export</h4><p>Export patient lists from Epic or PrimeRx. Drag-and-drop into YouSquared.</p></div></div>
-            <div class="phase-step"><div class="phase-step-icon">&#128138;</div><div><h4>Enable outbound</h4><p>AI proactively reaches physicians for specialty consultations.</p></div></div>
-          </div>
-        </div>
-        <div class="phase-card" onclick="activatePhase(3)">
-          <div class="phase-header">
-            <div class="phase-num">3</div>
-            <div><div class="phase-title">End-to-End</div></div>
-            <span class="phase-time">Month 2+</span>
-            <svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-          </div>
-          <div class="phase-body">
-            <div class="phase-step"><div class="phase-step-icon">&#128272;</div><div><h4>FHIR R4 API</h4><p>Your IT registers via App Orchard, configures OAuth scopes. Sandbox to production.</p></div></div>
-            <div class="phase-step"><div class="phase-step-icon">&#128276;</div><div><h4>Real-time webhooks</h4><p>Rx status, delivery, appointments &mdash; FHIR Subscriptions push in real time.</p></div></div>
-          </div>
-        </div>
-      </div>
-      <div class="proto-mockup">
-        <div class="proto-mock-header"><div class="pm-logo">You<span>&sup2;</span></div><div class="pm-badge">Pharmacy &mdash; AI Threads</div></div>
-        <div class="proto-threads" id="protoThreads">
-          <div class="pt visible" data-phase="1"><div class="pt-avatar">NP</div><div><div class="pt-name">Maria Santos &mdash; New Rx</div><div class="pt-preview">New patient, Zepbound QuickPen 2.5mg&hellip;</div></div><div class="pt-time">2m ago</div></div>
-          <div class="pt visible" data-phase="1"><div class="pt-avatar">RF</div><div><div class="pt-name">James Wilson &mdash; Refill</div><div class="pt-preview">Existing patient, lisinopril 10mg&hellip;</div></div><div class="pt-time">8m ago</div></div>
-          <div class="pt p2" data-phase="2"><div class="pt-avatar">DR</div><div><div class="pt-name">Dr. Patel &mdash; Consult (Ozempic)</div><div class="pt-preview">Outbound: specialty med consultation&hellip;</div></div><div class="pt-time">1h ago</div></div>
-          <div class="pt p2" data-phase="2"><div class="pt-avatar">DR</div><div><div class="pt-name">Dr. Chen &mdash; Consult (Humira)</div><div class="pt-preview">Outbound: biosimilar switch&hellip;</div></div><div class="pt-time">2h ago</div></div>
-          <div class="pt p2" data-phase="2"><div class="pt-avatar">WI</div><div><div class="pt-name">Emily Tran &mdash; Walk-in</div><div class="pt-preview">No Rx, new patient inquiry&hellip;</div></div><div class="pt-time">3h ago</div></div>
-          <div class="pt p3" data-phase="3"><div class="pt-avatar">RX</div><div><div class="pt-name">David Kim &mdash; Rx Status</div><div class="pt-preview">Prior auth approved, ready for pickup&hellip;</div></div><div class="pt-time">Today</div></div>
-          <div class="pt p3" data-phase="3"><div class="pt-avatar">DL</div><div><div class="pt-name">Sarah Johnson &mdash; Delivery</div><div class="pt-preview">En route, ETA 2:30 PM&hellip;</div></div><div class="pt-time">Today</div></div>
-          <div class="pt p3" data-phase="3"><div class="pt-avatar">CI</div><div><div class="pt-name">Robert Lee &mdash; Check-in + Refill</div><div class="pt-preview">Week 2 metformin: no side effects&hellip;</div></div><div class="pt-time">Today</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ SLIDE 6: PRICING ═══ -->
+<!-- ═══ SLIDE 4: PRICING ═══ -->
 <section class="slide" id="slide-pricing">
   <div class="slide-inner">
-    <div class="section-label">05 &mdash; Pricing</div>
-    <h2 class="section-title">No-brainer pricing: <em>1/3 of a pharmacy tech</em></h2>
-    <p class="section-intro">Select your organization profile and patient population.</p>
-    <div class="org-toggle" id="orgToggle">
-      <button class="org-btn active" onclick="setOrg('independent',10000)">Independent</button>
-      <button class="org-btn" onclick="setOrg('health-system',100000)">Health System</button>
-      <button class="org-btn" onclick="setOrg('chain',500000)">Chain</button>
+    <div class="section-label">04 &mdash; Pricing</div>
+    <h2 class="section-title">No-brainer pricing:<br><em>1/3 of a pharmacy tech</em></h2>
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap;">
+      <div class="org-toggle" style="margin-bottom:0;">
+        <button class="org-btn active" id="modeAH" onclick="setMode('ah')">After Hours</button>
+        <button class="org-btn" id="modeFL" onclick="setMode('fl')">Front Line</button>
+      </div>
+      <div class="org-toggle" id="orgToggle" style="margin-bottom:0;">
+        <button class="org-btn active" onclick="setOrg('independent',10000)">Independent</button>
+        <button class="org-btn" onclick="setOrg('health-system',100000)">Health System</button>
+        <button class="org-btn" onclick="setOrg('chain',500000)">Chain</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-left:auto;">
+        <span class="pop-label" style="font-size:0.78rem;color:var(--muted);white-space:nowrap;">Patients</span>
+        <input type="range" class="pop-slider" id="popSlider" min="1000" max="1000000" step="1000" value="10000" oninput="updatePricing()" style="width:140px;">
+        <span class="pop-value" id="popValue" style="font-family:'DM Mono',monospace;font-size:0.88rem;font-weight:600;color:var(--ink);min-width:60px;text-align:right;">10,000</span>
+      </div>
     </div>
-    <div class="pop-row">
-      <span class="pop-label">Patient population</span>
-      <input type="range" class="pop-slider" id="popSlider" min="1000" max="1000000" step="1000" value="10000" oninput="updatePricing()">
-      <span class="pop-value" id="popValue">10,000</span>
-    </div>
-    <div class="calc-output">
+    <div class="calc-output" style="padding:16px 24px;margin-bottom:16px;">
       <div class="calc-grid">
         <div class="calc-item"><div class="calc-num" id="calcCalls">20K</div><div class="calc-label">AI-handled calls / year</div></div>
         <div class="calc-item"><div class="calc-num" id="calcTexts">100K</div><div class="calc-label">AI-handled texts / year</div></div>
@@ -681,12 +652,13 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
         <div class="calc-item"><div class="calc-num" id="calcUplift">$2M</div><div class="calc-label">Estimated revenue uplift (20%)</div></div>
       </div>
     </div>
-    <div class="pricing-plans">
-      <div class="pricing-col plan-or">
-        <div class="plan-name-label">Orders &amp; Referrals</div>
-        <div class="plan-price-big" id="planOrPrice">$2,500<span class="plan-price-unit">/mo</span></div>
-        <div class="plan-price-sub" id="planOrSub">$0.25 per patient / month</div>
-        <div class="plan-features">
+    <div class="pricing-plans" style="margin-bottom:0;">
+      <div class="pricing-col plan-or" style="padding:22px 24px;">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;">
+          <div class="plan-name-label" style="margin-bottom:0;">Orders &amp; Referrals</div>
+          <div style="text-align:right;"><span class="plan-price-big" id="planOrPrice" style="font-size:1.8rem;">$2,500<span class="plan-price-unit">/mo</span></span><div class="plan-price-sub" id="planOrSub" style="margin-bottom:0;">$0.25 per patient / month</div></div>
+        </div>
+        <div class="plan-features" style="gap:6px;">
           <div class="plan-feat"><span class="icon on">&#10003;</span> AI handles all inbound calls</div>
           <div class="plan-feat"><span class="icon on">&#10003;</span> New order capture &amp; confirmation</div>
           <div class="plan-feat"><span class="icon on">&#10003;</span> Outbound physician referral calls</div>
@@ -695,30 +667,27 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
         </div>
       </div>
       <div class="pricing-vs">vs</div>
-      <div class="pricing-col plan-rec">
-        <div class="pricing-badge">Recommended</div>
-        <div class="plan-name-label" style="margin-top:12px;">End-to-End</div>
-        <div class="plan-price-big" id="planE2ePrice" style="color:#fff;">$3,500<span class="plan-price-unit" style="color:rgba(247,244,239,0.5);">/mo</span></div>
-        <div class="plan-price-sub" id="planE2eSub" style="color:rgba(247,244,239,0.4);">$0.35 per patient / month</div>
-        <div class="plan-features">
+      <div class="pricing-col plan-rec" style="padding:22px 24px;">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;">
+          <div class="plan-name-label" style="margin-bottom:0;color:#fff;">End-to-End</div>
+          <div style="text-align:right;"><span class="plan-price-big" id="planE2ePrice" style="font-size:1.8rem;color:#fff;">$3,500<span class="plan-price-unit" style="color:rgba(247,244,239,0.5);">/mo</span></span><div class="plan-price-sub" id="planE2eSub" style="margin-bottom:0;color:rgba(247,244,239,0.4);">$0.35 per patient / month</div></div>
+        </div>
+        <div class="plan-features" style="gap:6px;">
           <div class="plan-feat"><span class="icon on">&#10003;</span> Everything in Orders &amp; Referrals</div>
           <div class="plan-feat"><span class="icon on">&#10003;</span> Proactive adherence check-ins</div>
           <div class="plan-feat"><span class="icon on">&#10003;</span> Automated refill reminders</div>
           <div class="plan-feat"><span class="icon on">&#10003;</span> Rx status &amp; delivery updates</div>
           <div class="plan-feat"><span class="icon on">&#10003;</span> FHIR API integration</div>
-          <div class="plan-feat"><span class="icon on">&#10003;</span> White-glove onboarding</div>
         </div>
       </div>
     </div>
-    <div class="pricing-footnote">Pricing scales with patient population. Volume discounts above 50K patients. 14-day pilot included. Anchor: Safer Pharmacy NYC (10K patients, $40K/year E2E).</div>
-    <div class="trust-strip"><span>HIPAA compliant</span><span>SOC 2 in progress</span><span>2M+ calls handled</span><span>4.6&#9733; App Store</span></div>
   </div>
 </section>
 
 <!-- ═══ SLIDE 7: WHO WE ARE ═══ -->
 <section class="slide" id="slide-who">
   <div class="slide-inner">
-    <div class="section-label">06 &mdash; Who we are</div>
+    <div class="section-label">05 &mdash; Who we are</div>
     <h2 class="section-title">Built by <em>healthcare AI pioneers</em></h2>
     <div class="carousel-container" id="peopleCarousel">
       <div class="carousel-track" id="peopleTrack">
@@ -761,7 +730,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <section class="slide" id="slide-cta">
   <div class="slide-inner">
     <div class="cta-inner">
-      <h2 class="cta-title">Ready to give every patient <em>instant access?</em></h2>
+      <h2 class="cta-title">Ready to give patients <em>instant access?</em></h2>
       <p class="cta-sub">Start with order-taking in one day. No integration.</p>
       <div class="cta-box">
         <div class="cta-contact">Alexandre Dalyac</div>
@@ -883,9 +852,17 @@ function activatePhase(p){
 }
 
 /* ── PRICING ── */
+let pricingMode='ah';
 const ANCHOR={patients:10000,calls:20000,texts:100000,consults:5000,revPerPat:1000,uplift:0.20,orRate:0.25,e2eRate:0.35,orMin:1000,e2eMin:1500};
+const AH_MULT=0.4;
+function setMode(m){
+  pricingMode=m;
+  document.getElementById('modeAH').classList.toggle('active',m==='ah');
+  document.getElementById('modeFL').classList.toggle('active',m==='fl');
+  updatePricing();
+}
 function setOrg(type,pop){
-  document.querySelectorAll('.org-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('#orgToggle .org-btn').forEach(b=>b.classList.remove('active'));
   event.target.classList.add('active');
   document.getElementById('popSlider').value=pop;updatePricing();
 }
@@ -895,13 +872,14 @@ function fmtComma(n){return n.toLocaleString('en-US');}
 function updatePricing(){
   const pop=parseInt(document.getElementById('popSlider').value);
   const r=pop/ANCHOR.patients;const disc=pop>=50000?0.8:1;
+  const mm=pricingMode==='ah'?AH_MULT:1;
   document.getElementById('popValue').textContent=fmtComma(pop);
-  document.getElementById('calcCalls').textContent=fmtC(Math.round(ANCHOR.calls*r));
-  document.getElementById('calcTexts').textContent=fmtC(Math.round(ANCHOR.texts*r));
-  document.getElementById('calcConsults').textContent=fmtC(Math.round(ANCHOR.consults*r));
-  document.getElementById('calcUplift').textContent=fmtN(pop*ANCHOR.revPerPat*ANCHOR.uplift);
-  const orP=Math.max(ANCHOR.orMin,Math.round(pop*ANCHOR.orRate*disc));
-  const e2eP=Math.max(ANCHOR.e2eMin,Math.round(pop*ANCHOR.e2eRate*disc));
+  document.getElementById('calcCalls').textContent=fmtC(Math.round(ANCHOR.calls*r*mm));
+  document.getElementById('calcTexts').textContent=fmtC(Math.round(ANCHOR.texts*r*mm));
+  document.getElementById('calcConsults').textContent=fmtC(Math.round(ANCHOR.consults*r*mm));
+  document.getElementById('calcUplift').textContent=fmtN(pop*ANCHOR.revPerPat*ANCHOR.uplift*mm);
+  const orP=Math.max(ANCHOR.orMin,Math.round(pop*ANCHOR.orRate*disc*mm));
+  const e2eP=Math.max(ANCHOR.e2eMin,Math.round(pop*ANCHOR.e2eRate*disc*mm));
   document.getElementById('planOrPrice').innerHTML='$'+fmtComma(orP)+'<span class="plan-price-unit">/mo</span>';
   document.getElementById('planE2ePrice').innerHTML='$'+fmtComma(e2eP)+'<span class="plan-price-unit" style="color:rgba(247,244,239,0.5);">/mo</span>';
   document.getElementById('planOrSub').textContent='$'+(orP/pop).toFixed(2)+' per patient / month';
