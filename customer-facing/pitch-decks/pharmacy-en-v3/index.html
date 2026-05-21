@@ -92,15 +92,11 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .uc-head { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
 .uc-head .uc-icon { font-size:1.1rem; flex-shrink:0; }
 .uc-head h3 { font-family:'Playfair Display',Georgia,serif; font-size:0.88rem; font-weight:700; color:var(--ink); }
-.uc-head .play-btn { margin-left:auto; width:28px; height:28px; border-radius:50%; border:1.5px solid var(--accent); background:var(--accent); color:#fff; font-size:0.7rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s,color 0.2s,border-color 0.2s,transform 0.15s; flex-shrink:0; }
-.uc-head .play-btn:hover { transform:scale(1.08); }
 .uc-head .biz-num { font-family:'Playfair Display',Georgia,serif; font-size:0.95rem; font-weight:700; color:var(--accent); margin-left:auto; display:none; flex-shrink:0; }
 .sol-grid.bizmode .uc-head .biz-num { display:block; }
-.sol-grid.bizmode .uc-head .play-btn { display:none; }
 .uc p { font-size:0.8rem; color:var(--muted); line-height:1.5; }
 .uc-expand { max-height:0; overflow:hidden; transition:max-height 0.5s ease,padding 0.3s; padding:0; }
 .uc.expanded .uc-expand { max-height:800px; padding-top:12px; }
-.uc-expand audio { width:100%; height:32px; border-radius:6px; margin-bottom:8px; }
 .sms-thread { display:flex; flex-direction:column; gap:4px; max-height:220px; overflow-y:auto; padding:8px 6px; background:#f0ece6; border-radius:10px; margin-bottom:8px; scrollbar-width:thin; }
 .sms-thread::-webkit-scrollbar { width:4px; } .sms-thread::-webkit-scrollbar-thumb { background:var(--rule); border-radius:2px; }
 .sms-b { max-width:82%; padding:7px 10px; border-radius:14px; font-size:0.68rem; line-height:1.45; word-wrap:break-word; }
@@ -115,11 +111,15 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .call-transcript::-webkit-scrollbar { width:4px; } .call-transcript::-webkit-scrollbar-thumb { background:var(--rule); border-radius:2px; }
 .ct-line { max-width:85%; padding:6px 10px; border-radius:12px; font-size:0.65rem; line-height:1.4; word-wrap:break-word; }
 .ct-line.ai { align-self:flex-end; background:var(--accent); color:#fff; border-bottom-right-radius:4px; }
-.uc-link { display:inline-flex; align-items:center; gap:3px; padding:3px 8px; border-radius:5px; border:1px solid var(--rule); background:#fff; font-family:'DM Sans',sans-serif; font-size:0.6rem; font-weight:600; color:var(--muted); cursor:pointer; transition:all 0.2s; }
-.uc-link:hover { border-color:var(--accent); color:var(--accent); }
-.uc-link.copied { border-color:var(--accent); color:var(--accent); }
+.uc-link { display:inline-flex; align-items:center; gap:3px; padding:0; border:none; background:none; font-family:'DM Sans',sans-serif; font-size:0.6rem; font-weight:600; color:var(--muted); cursor:pointer; transition:color 0.2s; margin-left:auto; flex-shrink:0; }
+.uc-link:hover { color:var(--accent); }
+.uc-link.copied { color:var(--accent); }
+.uc audio { width:100%; height:32px; border-radius:6px; margin:8px 0; }
+.uc audio::-webkit-media-controls-enclosure { overflow:hidden; }
+.uc audio::-webkit-media-controls-panel { background:#f0ece6; }
+.uc-actions { display:flex; align-items:center; gap:8px; margin-top:4px; }
 .ct-line.caller { align-self:flex-start; background:#fff; color:var(--text); border:1px solid var(--rule); border-bottom-left-radius:4px; }
-.uc-expand .toggle-row { display:flex; align-items:center; gap:8px; font-size:0.72rem; margin-top:8px; }
+.uc-expand .toggle-row { display:flex; align-items:center; gap:8px; font-size:0.72rem; margin-left:auto; }
 .uc-expand .toggle-label { color:var(--muted); }
 .toggle-switch { position:relative; width:36px; height:20px; background:var(--accent); border-radius:10px; cursor:pointer; transition:background 0.2s; flex-shrink:0; }
 .toggle-switch.off { background:var(--red); }
@@ -444,12 +444,13 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
     </div>
     <div class="sol-grid" id="solGrid">
       <div class="uc" id="call-orders" data-uplift="+5%">
-        <div class="uc-head"><span class="uc-icon">&#128230;</span><h3>Orders</h3><button class="uc-link" onclick="event.stopPropagation();copyCallLink(this,'call-orders')" title="Copy link to this call">&#128279; Share</button><span class="biz-num">+5%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
+        <div class="uc-head"><span class="uc-icon">&#128230;</span><h3>Orders</h3><button class="uc-link" onclick="event.stopPropagation();copyCallLink(this,'call-orders')" title="Copy link to this call">&#128279; Share</button><span class="biz-num">+5%</span></div>
         <p class="uc-with-desc">AI answers instantly, captures new Rx requests, confirms via text.</p>
         <p class="uc-without-desc"><strong>30%</strong> of peak hour new Rx calls go unanswered or to voicemail</p>
+        <audio controls controlslist="nodownload" preload="metadata"><source src="pharmacy_assets/orders-call-edited.m4a" type="audio/mp4"></audio>
         <div class="uc-expand">
-          <audio controls preload="none"><source src="pharmacy_assets/orders-call-edited.m4a" type="audio/mp4"></audio>
-          <button class="transcript-btn" onclick="event.stopPropagation();toggleTranscript(this)">&#128172; Transcript</button>
+          <div class="uc-actions">
+            <button class="transcript-btn" onclick="event.stopPropagation();toggleTranscript(this)">&#128172; Transcript</button>
           <div class="call-transcript">
             <div class="ct-line ai">Noah, how can I help you?</div>
             <div class="ct-line caller">Yes. Hi. Do you carry Zepbound Quick Pen?</div>
@@ -462,16 +463,16 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
             <div class="ct-line ai">It&rsquo;s two point five milligrams. Got it. Zepbound 2.5&thinsp;mg. We&rsquo;ll pass this to the team and they&rsquo;ll be in touch shortly with next steps. Anything else I can help with?</div>
             <div class="ct-line caller">No.</div>
           </div>
-          <div class="toggle-row">
-            <span class="toggle-label">Experience:</span>
-            <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
-            <span class="toggle-state with">With YouSquared</span>
+            <div class="toggle-row">
+              <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
+              <span class="toggle-state with">With YouSquared</span>
+            </div>
           </div>
           <div class="uc-without-content"><div class="uc-wo-review">&ldquo;They didn&rsquo;t enter any of my information so I could get my prescription. For three days I had to call [...] and no one I spoke to could help me.&rdquo;<span class="uc-wo-attr">&mdash; Reed H., <a href="https://www.yelp.com/biz/the-mount-sinai-hospital-new-york-10?q=prescription" target="_blank">Yelp</a></span></div></div>
         </div>
       </div>
       <div class="uc" id="call-referrals" data-uplift="+6%">
-        <div class="uc-head"><span class="uc-icon">&#128203;</span><h3>Referrals</h3><button class="uc-link" onclick="event.stopPropagation();copyCallLink(this,'call-referrals')" title="Copy link to this call">&#128279; Share</button><span class="biz-num">+6%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
+        <div class="uc-head"><span class="uc-icon">&#128203;</span><h3>Referrals</h3><button class="uc-link" onclick="event.stopPropagation();copyCallLink(this,'call-referrals')" title="Copy link to this call">&#128279; Share</button><span class="biz-num">+6%</span></div>
         <p class="uc-with-desc">AI texts patients from outreach campaigns, qualifies leads &amp; books consults.</p>
         <p class="uc-without-desc"><strong>68%</strong> of eligible patients never start treatment when a new therapy becomes available</p>
         <div class="uc-expand">
@@ -487,21 +488,23 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
             <div class="sms-b out">Perfect, I&rsquo;ve confirmed your Telehealth appointment with Dr. Amsel for tomorrow at 10am. You will receive a call.</div>
             <div class="sms-b in">Okay, thank you</div>
           </div>
-          <div class="toggle-row">
-            <span class="toggle-label">Experience:</span>
-            <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
-            <span class="toggle-state with">With YouSquared</span>
+          <div class="uc-actions">
+            <div class="toggle-row">
+              <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
+              <span class="toggle-state with">With YouSquared</span>
+            </div>
           </div>
           <div class="uc-without-content"><div class="uc-wo-review">&ldquo;I wish we had known that chemo was not the only option.&rdquo;<span class="uc-wo-attr">&mdash; Alicia, <a href="https://pancan.org/news/11-things-patients-caregivers-wish-they-knew-sooner/" target="_blank">Pancreatic Cancer Action Network</a></span></div></div>
         </div>
       </div>
       <div class="uc" id="call-updates" data-uplift="+2%">
-        <div class="uc-head"><span class="uc-icon">&#128276;</span><h3>Updates</h3><button class="uc-link" onclick="event.stopPropagation();copyCallLink(this,'call-updates')" title="Copy link to this call">&#128279; Share</button><span class="biz-num">+2%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
+        <div class="uc-head"><span class="uc-icon">&#128276;</span><h3>Updates</h3><button class="uc-link" onclick="event.stopPropagation();copyCallLink(this,'call-updates')" title="Copy link to this call">&#128279; Share</button><span class="biz-num">+2%</span></div>
         <p class="uc-with-desc">Patient calls to check medication pickup status. AI verifies identity, takes detailed list, checks with team.</p>
         <p class="uc-without-desc"><strong>#1</strong> Rx status calls are the single largest driver of inbound phone volume</p>
+        <audio controls controlslist="nodownload" preload="metadata"><source src="pharmacy_assets/multilingual-call-537109-trimmed.m4a" type="audio/mp4"></audio>
         <div class="uc-expand">
-          <audio controls preload="none"><source src="pharmacy_assets/multilingual-call-537109-trimmed.m4a" type="audio/mp4"></audio>
-          <button class="transcript-btn" onclick="event.stopPropagation();toggleTranscript(this)">&#128172; Transcript <span style="font-weight:400;opacity:0.7">(translated)</span></button>
+          <div class="uc-actions">
+            <button class="transcript-btn" onclick="event.stopPropagation();toggleTranscript(this)">&#128172; Transcript <span style="font-weight:400;opacity:0.7">(translated)</span></button>
           <div class="call-transcript">
             <div class="ct-line ai">The Safer Pharmacy, this is Noah. How can I help you today?</div>
             <div class="ct-line caller">Uh, hi. Do you speak Spanish?</div>
@@ -515,21 +518,22 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
             <div class="ct-line caller">No, thank you.</div>
             <div class="ct-line ai">You&rsquo;re welcome. Have an excellent day!</div>
           </div>
-          <div class="toggle-row">
-            <span class="toggle-label">Experience:</span>
-            <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
-            <span class="toggle-state with">With YouSquared</span>
+            <div class="toggle-row">
+              <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
+              <span class="toggle-state with">With YouSquared</span>
+            </div>
           </div>
           <div class="uc-without-content"><div class="uc-wo-review">&ldquo;Needed a prescription for a rescue inhaler as mine had expired. It took two days and sleepless nights [...]. They didn&rsquo;t respond, then didn&rsquo;t respond again while I kept sending messages.&rdquo;<span class="uc-wo-attr">&mdash; Nan P., <a href="https://www.yelp.com/biz/the-mount-sinai-hospital-new-york-10?q=prescription" target="_blank">Yelp</a></span></div></div>
         </div>
       </div>
       <div class="uc" id="call-refills" data-uplift="+2%">
-        <div class="uc-head"><span class="uc-icon">&#128260;</span><h3>Refills</h3><button class="uc-link" onclick="event.stopPropagation();copyCallLink(this,'call-refills')" title="Copy link to this call">&#128279; Share</button><span class="biz-num">+2%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
+        <div class="uc-head"><span class="uc-icon">&#128260;</span><h3>Refills</h3><button class="uc-link" onclick="event.stopPropagation();copyCallLink(this,'call-refills')" title="Copy link to this call">&#128279; Share</button><span class="biz-num">+2%</span></div>
         <p class="uc-with-desc">Patient calls to renew prescription. AI collects RX number, DOB, delivery preference &amp; card confirmation.</p>
         <p class="uc-without-desc"><strong>18%</strong> of patients consider switching pharmacies &mdash; phone wait is a top reason</p>
+        <audio controls controlslist="nodownload" preload="metadata"><source src="pharmacy_assets/refill-call-726530-trimmed.m4a" type="audio/mp4"></audio>
         <div class="uc-expand">
-          <audio controls preload="none"><source src="pharmacy_assets/refill-call-726530-trimmed.m4a" type="audio/mp4"></audio>
-          <button class="transcript-btn" onclick="event.stopPropagation();toggleTranscript(this)">&#128172; Transcript</button>
+          <div class="uc-actions">
+            <button class="transcript-btn" onclick="event.stopPropagation();toggleTranscript(this)">&#128172; Transcript</button>
           <div class="call-transcript">
             <div class="ct-line ai">The Safer Pharmacy, this is Noah. How can I help you?</div>
             <div class="ct-line caller">I&rsquo;d like to renew my prescription.</div>
@@ -548,21 +552,22 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
             <div class="ct-line ai">You&rsquo;re very welcome. Have a wonderful day.</div>
             <div class="ct-line caller">Bye-bye.</div>
           </div>
-          <div class="toggle-row">
-            <span class="toggle-label">Experience:</span>
-            <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
-            <span class="toggle-state with">With YouSquared</span>
+            <div class="toggle-row">
+              <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
+              <span class="toggle-state with">With YouSquared</span>
+            </div>
           </div>
           <div class="uc-without-content"><div class="uc-wo-review">&ldquo;If you need to refill prescriptions on a regular basis [...] the process is extremely poor and results in a lot of time and phone calls to get any result.&rdquo;<span class="uc-wo-attr">&mdash; S&eacute;an P., <a href="https://www.yelp.com/biz/the-mount-sinai-hospital-new-york-10?q=prescription" target="_blank">Yelp</a></span></div></div>
         </div>
       </div>
       <div class="uc" id="call-adherence" data-uplift="+4%">
-        <div class="uc-head"><span class="uc-icon">&#128138;</span><h3>Adherence</h3><button class="uc-link" onclick="event.stopPropagation();copyCallLink(this,'call-adherence')" title="Copy link to this call">&#128279; Share</button><span class="biz-num">+4%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
+        <div class="uc-head"><span class="uc-icon">&#128138;</span><h3>Adherence</h3><button class="uc-link" onclick="event.stopPropagation();copyCallLink(this,'call-adherence')" title="Copy link to this call">&#128279; Share</button><span class="biz-num">+4%</span></div>
         <p class="uc-with-desc">Patient reports side effects from new medication. AI documents symptoms, forwards urgently to doctor.</p>
         <p class="uc-without-desc"><strong>50%</strong> of patients non-adherent within 6 months of starting a chronic medication</p>
+        <audio controls controlslist="nodownload" preload="metadata"><source src="pharmacy_assets/adherence-call-541578-edited.m4a" type="audio/mp4"></audio>
         <div class="uc-expand">
-          <audio controls preload="none"><source src="pharmacy_assets/adherence-call-541578-edited.m4a" type="audio/mp4"></audio>
-          <button class="transcript-btn" onclick="event.stopPropagation();toggleTranscript(this)">&#128172; Transcript</button>
+          <div class="uc-actions">
+            <button class="transcript-btn" onclick="event.stopPropagation();toggleTranscript(this)">&#128172; Transcript</button>
           <div class="call-transcript">
             <div class="ct-line ai">The Safer Pharmacy, this is Noah. How can I help you?</div>
             <div class="ct-line caller">Hello? Yes, good morning. I&rsquo;m calling because this is Miss Barry. I need some things to stick me with and the one that put in my machine.</div>
@@ -581,21 +586,22 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
             <div class="ct-line caller">Yeah, can they switch it?</div>
             <div class="ct-line ai">Okay, give me just a moment.</div>
           </div>
-          <div class="toggle-row">
-            <span class="toggle-label">Experience:</span>
-            <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
-            <span class="toggle-state with">With YouSquared</span>
+            <div class="toggle-row">
+              <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
+              <span class="toggle-state with">With YouSquared</span>
+            </div>
           </div>
           <div class="uc-without-content"><div class="uc-wo-review">&ldquo;I had my first chemo treatment a little over a week ago and had a nightmare acute reaction to the treatment. I ended up in an ambulance later that night and spent three more days in the hospital.&rdquo;<span class="uc-wo-attr">&mdash; Louise50, <a href="https://csn.cancer.org/discussion/162842/has-anyone-had-care-at-cancer-treatment-centers-of-america" target="_blank">Cancer Survivors Network</a></span></div></div>
         </div>
       </div>
       <div class="uc" id="call-multilingual" data-uplift="+1%">
-        <div class="uc-head"><span class="uc-icon">&#127760;</span><h3>Multilingual</h3><button class="uc-link" onclick="event.stopPropagation();copyCallLink(this,'call-multilingual')" title="Copy link to this call">&#128279; Share</button><span class="biz-num">+1%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
+        <div class="uc-head"><span class="uc-icon">&#127760;</span><h3>Multilingual</h3><button class="uc-link" onclick="event.stopPropagation();copyCallLink(this,'call-multilingual')" title="Copy link to this call">&#128279; Share</button><span class="biz-num">+1%</span></div>
         <p class="uc-with-desc">Spanish-speaking patient calls, AI switches to Spanish instantly. Verifies DOB, handles full interaction.</p>
         <p class="uc-without-desc"><strong>25%</strong> of LEP patients report medication errors linked to language gaps</p>
+        <audio controls controlslist="nodownload" preload="metadata"><source src="pharmacy_assets/multilingual-call-537109-trimmed.m4a" type="audio/mp4"></audio>
         <div class="uc-expand">
-          <audio controls preload="none"><source src="pharmacy_assets/multilingual-call-537109-trimmed.m4a" type="audio/mp4"></audio>
-          <button class="transcript-btn" onclick="event.stopPropagation();toggleTranscript(this)">&#128172; Transcript <span style="font-weight:400;opacity:0.7">(translated)</span></button>
+          <div class="uc-actions">
+            <button class="transcript-btn" onclick="event.stopPropagation();toggleTranscript(this)">&#128172; Transcript <span style="font-weight:400;opacity:0.7">(translated)</span></button>
           <div class="call-transcript">
             <div class="ct-line ai">The Safer Pharmacy, this is Noah. How can I help you today?</div>
             <div class="ct-line caller">Uh, hi. Do you speak Spanish?</div>
@@ -611,10 +617,10 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
             <div class="ct-line caller">Thank you.</div>
             <div class="ct-line ai">You&rsquo;re welcome. Goodbye.</div>
           </div>
-          <div class="toggle-row">
-            <span class="toggle-label">Experience:</span>
-            <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
-            <span class="toggle-state with">With YouSquared</span>
+            <div class="toggle-row">
+              <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
+              <span class="toggle-state with">With YouSquared</span>
+            </div>
           </div>
           <div class="uc-without-content"><div class="uc-wo-review">&ldquo;A 13-year-old boy came back to the pharmacy: &lsquo;This isn&rsquo;t my mom&rsquo;s medicine.&rsquo; His mother had said &lsquo;yes&rsquo; to everything because she was afraid to speak English.&rdquo;<span class="uc-wo-attr">&mdash; <a href="https://www.safemedication.com/pharmacist-insights/2021/04/26/how-language-barriers-can-affect-safe-medication-use" target="_blank">SafeMedication.com (ASHP)</a></span></div></div>
         </div>
@@ -940,6 +946,7 @@ function slideCarousel(name,dir){
 
 /* ── SOLUTION: expand card ── */
 function toggleUcExpand(card){card.classList.toggle('expanded');}
+document.querySelectorAll('.uc').forEach(uc=>{uc.style.cursor='pointer';uc.addEventListener('click',()=>toggleUcExpand(uc));});
 function toggleTranscript(btn){
   btn.classList.toggle('active');
   const panel=btn.nextElementSibling;
