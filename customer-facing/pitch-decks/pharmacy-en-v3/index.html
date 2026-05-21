@@ -156,9 +156,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .callfw-mockup .mock-value { font-weight:600; color:var(--ink); }
 .callfw-mockup .mock-value.green { color:var(--accent); }
 
-/* ── SECURITY (placeholder) ── */
-#slide-security { background:var(--paper); }
-
 /* ── LAUNCH ── */
 #slide-launch { background:var(--paper); }
 .launch-layout { display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:start; }
@@ -303,21 +300,25 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
   <div class="slide-inner">
     <div class="hero-grid">
       <div>
-        <div class="hero-logo"><img src="pharmacy_assets/logo_yousquared.png" alt="YouSquared"></div>
         <div class="hero-eyebrow">AI Secretary &mdash; Pharmacies</div>
         <h1 class="hero-title"><em>Every patient heard.</em><br>Every call handled.</h1>
         <p class="hero-sub">YouSquared AI gives pharmacy patients instant access over the phone: orders, referrals, updates, adherence &amp; refills.</p>
         <div class="hero-badge"><span class="dot-pulse"></span> Available 24/7 &mdash; nights, weekends, holidays</div>
         <div class="hero-stats">
-          <div class="hero-stat"><span class="hero-stat-num">2M+</span><span class="hero-stat-label">Calls handled annualized</span></div>
           <div class="hero-stat"><span class="hero-stat-num">+20%</span><span class="hero-stat-label">Revenue uplift</span></div>
           <div class="hero-stat"><span class="hero-stat-num">4.6&#9733;</span><span class="hero-stat-label">App Store iOS</span></div>
+          <div class="hero-stat"><span class="hero-stat-num">2M+</span><span class="hero-stat-label">Calls handled annualized</span></div>
         </div>
       </div>
       <div>
         <div class="hero-illustration">
           <img src="pharmacy_assets/img-000.png" alt="Pharmacy AI assistant" onerror="this.parentElement.innerHTML='<div style=&quot;padding:60px 20px;color:rgba(247,244,239,0.3);text-align:center;font-style:italic&quot;>Pharmacy illustration</div>'">
           <div class="caption">With YouSquared</div>
+        </div>
+        <div class="hero-badges" style="display:flex;gap:12px;margin-top:16px;justify-content:center;">
+          <span style="font-family:'DM Mono',monospace;font-size:0.62rem;color:rgba(247,244,239,0.45);letter-spacing:0.08em;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:5px 10px;">HIPAA</span>
+          <span style="font-family:'DM Mono',monospace;font-size:0.62rem;color:rgba(247,244,239,0.45);letter-spacing:0.08em;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:5px 10px;">SOC 2</span>
+          <span style="font-family:'DM Mono',monospace;font-size:0.62rem;color:rgba(247,244,239,0.45);letter-spacing:0.08em;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:5px 10px;">PIPEDA</span>
         </div>
       </div>
     </div>
@@ -330,7 +331,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
     <div class="problem-top">
       <div>
         <div class="section-label">01 &mdash; The problem</div>
-        <h2 class="section-title">Patients find it hard to access <em>pharmacy services</em></h2>
+        <h2 class="section-title">Patients find it hard to<br><em>access pharmacy services</em></h2>
       </div>
       <div style="width:220px;">
         <img src="pharmacy_assets/illustration_problem.png" alt="Pharmacy staff overwhelmed" style="width:100%;border-radius:16px;" onerror="this.outerHTML='<div style=&quot;background:var(--gold-pale);border-radius:16px;padding:32px 20px;text-align:center;color:var(--gold);font-style:italic;font-size:0.82rem&quot;>Problem illustration<br><span style=font-size:0.65rem;color:var(--muted)>Generate via DALL-E</span></div>'">
@@ -401,8 +402,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
     <div class="sol-header">
       <div>
         <div class="section-label">02 &mdash; The solution</div>
-        <h2 class="section-title">An AI pharmacy tech gives patients <em>24/7 instant access</em></h2>
-        <p class="section-intro" style="margin-bottom:16px;">Orders, referrals, updates, adherence &amp; refills.</p>
+        <h2 class="section-title">AI pharmacy techs give<br>patients <em>instant access</em></h2>
+        <p class="section-intro" style="margin-bottom:16px;">Orders, referrals, updates, adherence &amp; refills, 24/7.</p>
       </div>
       <div class="sol-illustration">
         <img src="pharmacy_assets/img-000.png" alt="AI pharmacy" style="border-radius:16px;">
@@ -500,7 +501,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
     <div class="prod-top">
       <div>
         <div class="section-label">03 &mdash; The product</div>
-        <h2 class="section-title">Operational control <em>at your fingertips</em></h2>
+        <h2 class="section-title">Operational control<br><em>at your fingertips</em></h2>
+        <p class="section-intro" style="margin-bottom:16px;">Live order-taking in one day.</p>
       </div>
       <div class="prod-photo">
         <img src="pharmacy_assets/bianca_pharmacy.png" alt="Bianca using YouSquared on iPad at pharmacy counter" onerror="this.outerHTML='<div style=&quot;padding:40px 20px;background:var(--cream);text-align:center;color:var(--muted);font-style:italic;font-size:0.82rem&quot;>Bianca photo<br><span style=font-size:0.65rem>Add bianca_pharmacy.jpg to assets</span></div>'">
@@ -524,55 +526,79 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
     <div class="proto-frame" id="protoFrame">
       <iframe id="protoIframe" src="https://strange-attractor.com/prototypes/scheduled-outbound/" title="YouSquared Prototype"></iframe>
     </div>
-    <div class="prod-bottom" onclick="document.getElementById('callfwPanel').classList.toggle('open')">
-      <span class="live-label" id="liveLabel">Live in one day</span>
-      <span class="live-days">&mdash; click for setup details</span>
-    </div>
-    <div class="callfw-panel" id="callfwPanel">
-      <select class="callfw-select" id="callfwSelect" onchange="updateCallFw()">
-        <option value="verizon" selected>Verizon One Talk</option>
-        <option value="cisco">Cisco Webex Calling</option>
-        <option value="teams">Microsoft Teams Phone</option>
-        <option value="ringcentral">RingCentral</option>
-        <option value="avaya">Avaya Cloud Office</option>
-      </select>
-      <div id="callfwContent">
-        <div class="callfw-screenshot"><img src="pharmacy_assets/illustration_setup.png" alt="Verizon One Talk call forwarding admin"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
+      <div>
+        <div class="prod-bottom" onclick="document.getElementById('callfwPanel').classList.toggle('open')">
+          <span class="live-label" id="liveLabel">Easy set-up</span>
+          <svg style="width:16px;height:16px;margin-left:auto;transition:transform 0.3s;color:var(--muted);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="callfw-panel" id="callfwPanel">
+          <select class="callfw-select" id="callfwSelect" onchange="updateCallFw()">
+            <option value="verizon" selected>Verizon One Talk</option>
+            <option value="cisco">Cisco Webex Calling</option>
+            <option value="teams">Microsoft Teams Phone</option>
+            <option value="ringcentral">RingCentral</option>
+            <option value="avaya">Avaya Cloud Office</option>
+          </select>
+          <div id="callfwContent">
+            <div class="callfw-screenshot"><img src="pharmacy_assets/illustration_setup.png" alt="Verizon One Talk call forwarding admin"></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="prod-bottom" onclick="document.getElementById('hipaaPanel').classList.toggle('open')">
+          <span style="font-family:'Playfair Display',Georgia,serif;font-size:1rem;font-weight:700;color:var(--accent);">HIPAA-compliant</span>
+          <svg style="width:16px;height:16px;margin-left:auto;transition:transform 0.3s;color:var(--muted);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="callfw-panel" id="hipaaPanel">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+            <div style="background:#fff;border-radius:14px;padding:20px 16px;border:1px solid var(--rule);">
+              <div style="width:40px;height:40px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+              <div style="font-family:'Playfair Display',Georgia,serif;font-weight:700;color:var(--ink);font-size:0.92rem;margin-bottom:10px;">HIPAA Compliant</div>
+              <ul style="list-style:none;padding:0;margin:0;">
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Full encryption</li>
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>BAA provided</li>
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Audit trails</li>
+              </ul>
+            </div>
+            <div style="background:#fff;border-radius:14px;padding:20px 16px;border:1px solid var(--rule);">
+              <div style="width:40px;height:40px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+              <div style="font-family:'Playfair Display',Georgia,serif;font-weight:700;color:var(--ink);font-size:0.92rem;margin-bottom:10px;">SOC 2 Type II</div>
+              <ul style="list-style:none;padding:0;margin:0;">
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Annual audits</li>
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Security controls</li>
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Verified processes</li>
+              </ul>
+            </div>
+            <div style="background:#fff;border-radius:14px;padding:20px 16px;border:1px solid var(--rule);">
+              <div style="width:40px;height:40px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+              <div style="font-family:'Playfair Display',Georgia,serif;font-weight:700;color:var(--ink);font-size:0.92rem;margin-bottom:10px;">Data Residency</div>
+              <ul style="list-style:none;padding:0;margin:0;">
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Choose your region</li>
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Never leaves jurisdiction</li>
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Full data control</li>
+              </ul>
+            </div>
+            <div style="background:#fff;border-radius:14px;padding:20px 16px;border:1px solid var(--rule);">
+              <div style="width:40px;height:40px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg></div>
+              <div style="font-family:'Playfair Display',Georgia,serif;font-weight:700;color:var(--ink);font-size:0.92rem;margin-bottom:10px;">99.9% Uptime</div>
+              <ul style="list-style:none;padding:0;margin:0;">
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Redundant systems</li>
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Instant failover</li>
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>SLA guaranteed</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ SLIDE 4: SECURITY (placeholder) ═══ -->
-<section class="slide" id="slide-security">
-  <div class="slide-inner">
-    <div class="section-label">04 &mdash; Security &amp; Compliance</div>
-    <h2 class="section-title">Enterprise-grade <em>security</em></h2>
-    <p class="section-intro">More details coming soon.</p>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
-      <div style="background:#fff;border-radius:14px;padding:24px;border:1px solid var(--rule);text-align:center;">
-        <div style="font-size:1.5rem;margin-bottom:8px;">&#128274;</div>
-        <div style="font-family:'Playfair Display',Georgia,serif;font-weight:700;color:var(--ink);margin-bottom:4px;">HIPAA Compliant</div>
-        <div style="font-size:0.78rem;color:var(--muted);">Approved by Mount Sinai institutional leadership</div>
-      </div>
-      <div style="background:#fff;border-radius:14px;padding:24px;border:1px solid var(--rule);text-align:center;">
-        <div style="font-size:1.5rem;margin-bottom:8px;">&#128737;&#65039;</div>
-        <div style="font-family:'Playfair Display',Georgia,serif;font-weight:700;color:var(--ink);margin-bottom:4px;">SOC 2</div>
-        <div style="font-size:0.78rem;color:var(--muted);">Type II in progress</div>
-      </div>
-      <div style="background:#fff;border-radius:14px;padding:24px;border:1px solid var(--rule);text-align:center;">
-        <div style="font-size:1.5rem;margin-bottom:8px;">&#128272;</div>
-        <div style="font-family:'Playfair Display',Georgia,serif;font-weight:700;color:var(--ink);margin-bottom:4px;">End-to-End Encryption</div>
-        <div style="font-size:0.78rem;color:var(--muted);">All data encrypted at rest and in transit</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ SLIDE 5: SIMPLE TO LAUNCH ═══ -->
+<!-- ═══ SLIDE 4: SIMPLE TO LAUNCH ═══ -->
 <section class="slide" id="slide-launch">
   <div class="slide-inner">
-    <div class="section-label">05 &mdash; Getting started</div>
+    <div class="section-label">04 &mdash; Getting started</div>
     <h2 class="section-title">Simple to <em>launch</em></h2>
     <p class="section-intro">Three phases, each unlocking more value.</p>
     <div class="launch-layout">
@@ -634,7 +660,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <!-- ═══ SLIDE 6: PRICING ═══ -->
 <section class="slide" id="slide-pricing">
   <div class="slide-inner">
-    <div class="section-label">06 &mdash; Pricing</div>
+    <div class="section-label">05 &mdash; Pricing</div>
     <h2 class="section-title">No-brainer pricing: <em>1/3 of a pharmacy tech</em></h2>
     <p class="section-intro">Select your organization profile and patient population.</p>
     <div class="org-toggle" id="orgToggle">
@@ -692,7 +718,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <!-- ═══ SLIDE 7: WHO WE ARE ═══ -->
 <section class="slide" id="slide-who">
   <div class="slide-inner">
-    <div class="section-label">07 &mdash; Who we are</div>
+    <div class="section-label">06 &mdash; Who we are</div>
     <h2 class="section-title">Built by <em>healthcare AI pioneers</em></h2>
     <div class="carousel-container" id="peopleCarousel">
       <div class="carousel-track" id="peopleTrack">
@@ -736,7 +762,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
   <div class="slide-inner">
     <div class="cta-inner">
       <h2 class="cta-title">Ready to give every patient <em>instant access?</em></h2>
-      <p class="cta-sub">Start with Phase 1 in days. No integration, no IT ticket.</p>
+      <p class="cta-sub">Start with order-taking in one day. No integration.</p>
       <div class="cta-box">
         <div class="cta-contact">Alexandre Dalyac</div>
         <a class="cta-email" href="mailto:ad@yousquared.ai">ad@yousquared.ai</a>
@@ -827,18 +853,6 @@ function setPage(p){
 }
 function toggleFilter(pill){
   pill.classList.toggle('active');
-  updateLiveLabel();
-}
-function updateLiveLabel(){
-  const pills=document.querySelectorAll('.filter-pill');
-  const active=document.querySelectorAll('.filter-pill.active');
-  const total=pills.length;const on=active.length;
-  const label=document.getElementById('liveLabel');
-  if(on===0){label.textContent='Select capabilities above';}
-  else if(on===1&&active[0].dataset.filter==='orders'){label.textContent='Live in one day';}
-  else if(on===1){label.textContent='Live in 2 weeks';}
-  else if(on===2){label.textContent='Live in 2–4 weeks';}
-  else{label.textContent='Live in 6–8 weeks (full integration)';}
 }
 
 /* ── PRODUCT: call fw ── */
