@@ -240,7 +240,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 #slide-who { background:var(--cream); }
 .carousel-container { position:relative; overflow:hidden; margin-bottom:32px; }
 .carousel-track { display:flex; gap:24px; transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); }
-.carousel-track .team-card { min-width:calc((100% - 48px)/3); flex-shrink:0; position:relative; }
+.carousel-track .team-card { flex:0 0 calc((100% - 48px)/3); position:relative; }
 .team-card { background:#fff; border-radius:16px; padding:28px 22px; border:1px solid var(--rule); text-align:center; }
 .team-avatar { width:64px; height:64px; border-radius:50%; overflow:hidden; margin:0 auto 14px; background:var(--accent-pale); display:flex; align-items:center; justify-content:center; }
 .team-avatar img { width:100%; height:100%; object-fit:cover; }
@@ -257,7 +257,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .trust-row img { height:26px; opacity:0.7; }
 .trust-row .divider { width:1px; height:24px; background:var(--rule); }
 .trust-row .stat-chip { font-family:'DM Mono',monospace; font-size:0.72rem; letter-spacing:0.06em; color:var(--accent); font-weight:600; }
-.carousel-track .customer-card { min-width:calc((100% - 72px)/4); flex-shrink:0; }
+.carousel-track .customer-card { flex:0 0 calc((100% - 72px)/4); }
 .customer-card { background:#fff; border-radius:12px; padding:20px 16px; border:1px solid var(--rule); text-align:center; display:flex; flex-direction:column; align-items:center; gap:8px; position:relative; }
 .customer-card .c-type-icon { position:absolute; top:10px; right:10px; width:22px; height:22px; color:var(--muted); opacity:0.5; }
 .customer-card img { height:32px; object-fit:contain; }
@@ -290,7 +290,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
   .hero-grid,.problem-top,.sol-header,.prod-top,.launch-layout,.pricing-plans{grid-template-columns:1fr}
   .problem-cards,.sol-grid{grid-template-columns:1fr 1fr}
   .calc-grid{grid-template-columns:1fr 1fr}
-  .carousel-track .team-card,.carousel-track .customer-card{min-width:calc(100% - 16px)}
+  .carousel-track .team-card,.carousel-track .customer-card{flex:0 0 calc(100% - 16px)}
   .pricing-vs{display:none}
 }
 </style>
