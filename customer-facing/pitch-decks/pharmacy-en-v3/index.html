@@ -138,10 +138,10 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 
 /* ── PRODUCT ── */
 #slide-product { background:var(--cream); }
-.prod-top { display:grid; grid-template-columns:1fr auto; gap:24px; align-items:start; margin-bottom:20px; }
-.prod-photo { width:240px; border-radius:16px; overflow:hidden; border:1px solid var(--rule); box-shadow:0 8px 24px rgba(0,0,0,0.08); }
+.prod-top { display:grid; grid-template-columns:1fr auto auto; gap:24px; align-items:start; margin-bottom:20px; }
+.prod-photo { width:180px; border-radius:16px; overflow:hidden; border:1px solid var(--rule); box-shadow:0 8px 24px rgba(0,0,0,0.08); }
 .prod-photo img { width:100%; display:block; }
-.prod-controls { display:flex; align-items:center; gap:16px; margin-bottom:16px; flex-wrap:wrap; }
+.prod-controls { display:flex; flex-direction:column; align-items:flex-start; gap:10px; align-self:center; }
 .view-toggle { display:flex; gap:2px; background:var(--cream); border-radius:8px; padding:3px; border:1px solid var(--rule); }
 .view-btn { padding:6px 14px; border-radius:6px; border:none; background:none; font-family:'DM Sans',sans-serif; font-size:0.78rem; font-weight:500; color:var(--muted); cursor:pointer; transition:all 0.2s; }
 .view-btn.active { background:#fff; color:var(--ink); box-shadow:0 1px 3px rgba(0,0,0,0.1); font-weight:600; }
@@ -541,19 +541,19 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
         <h2 class="section-title">Operational control<br><em>at your fingertips</em></h2>
         <p class="section-intro" style="margin-bottom:16px;">Order request-taking live in one day.</p>
       </div>
+      <div class="prod-controls">
+        <div class="view-toggle">
+          <button class="view-btn active" onclick="setView('web')">Web</button>
+          <button class="view-btn" onclick="setView('ios')">iOS</button>
+        </div>
+        <div class="filter-pills" id="filterPills">
+          <div class="filter-pill active" onclick="toggleFilter(this)" data-filter="orders"><span class="dot"></span> Orders</div>
+          <div class="filter-pill active" onclick="toggleFilter(this)" data-filter="referrals"><span class="dot"></span> Referrals</div>
+          <div class="filter-pill active" onclick="toggleFilter(this)" data-filter="updates"><span class="dot"></span> Updates, adherence &amp; refills</div>
+        </div>
+      </div>
       <div class="prod-photo">
         <img src="pharmacy_assets/bianca_pharmacy.png" alt="Bianca using YouSquared on iPad at pharmacy counter" onerror="this.outerHTML='<div style=&quot;padding:40px 20px;background:var(--cream);text-align:center;color:var(--muted);font-style:italic;font-size:0.82rem&quot;>Bianca photo<br><span style=font-size:0.65rem>Add bianca_pharmacy.jpg to assets</span></div>'">
-      </div>
-    </div>
-    <div class="prod-controls">
-      <div class="view-toggle">
-        <button class="view-btn active" onclick="setView('web')">Web</button>
-        <button class="view-btn" onclick="setView('ios')">iOS</button>
-      </div>
-      <div class="filter-pills" id="filterPills">
-        <div class="filter-pill active" onclick="toggleFilter(this)" data-filter="orders"><span class="dot"></span> Orders</div>
-        <div class="filter-pill active" onclick="toggleFilter(this)" data-filter="referrals"><span class="dot"></span> Referrals</div>
-        <div class="filter-pill active" onclick="toggleFilter(this)" data-filter="updates"><span class="dot"></span> Updates, adherence &amp; refills</div>
       </div>
     </div>
     <div class="proto-frame" id="protoFrame">
@@ -615,35 +615,39 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
               <div style="width:40px;height:40px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
               <div style="font-family:'Playfair Display',Georgia,serif;font-weight:700;color:var(--ink);font-size:0.92rem;margin-bottom:10px;">HIPAA Compliant</div>
               <ul style="list-style:none;padding:0;margin:0;">
-                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Full encryption</li>
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>End-to-end encryption</li>
                 <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>BAA provided</li>
-                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Audit trails</li>
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>PHI auto-redacted in logs</li>
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Biometric lock on mobile</li>
               </ul>
             </div>
             <div style="background:#fff;border-radius:14px;padding:20px 16px;border:1px solid var(--rule);">
               <div style="width:40px;height:40px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
               <div style="font-family:'Playfair Display',Georgia,serif;font-weight:700;color:var(--ink);font-size:0.92rem;margin-bottom:10px;">SOC 2 Type II</div>
               <ul style="list-style:none;padding:0;margin:0;">
-                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Annual audits</li>
-                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Security controls</li>
-                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Verified processes</li>
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Annual third-party audits</li>
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Role-based access controls</li>
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Secrets vaulted (GCP)</li>
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Security alert monitoring</li>
               </ul>
             </div>
             <div style="background:#fff;border-radius:14px;padding:20px 16px;border:1px solid var(--rule);">
-              <div style="width:40px;height:40px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
-              <div style="font-family:'Playfair Display',Georgia,serif;font-weight:700;color:var(--ink);font-size:0.92rem;margin-bottom:10px;">Data Residency</div>
+              <div style="width:40px;height:40px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M5 20a7 7 0 0114 0"/></svg></div>
+              <div style="font-family:'Playfair Display',Georgia,serif;font-weight:700;color:var(--ink);font-size:0.92rem;margin-bottom:10px;">Data Privacy</div>
               <ul style="list-style:none;padding:0;margin:0;">
-                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Choose your region</li>
-                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Never leaves jurisdiction</li>
-                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Full data control</li>
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>PII auto-detected &amp; redacted</li>
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>No PHI in patient texts</li>
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Full data deletion on request</li>
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>2-min inactivity timeout</li>
               </ul>
             </div>
             <div style="background:#fff;border-radius:14px;padding:20px 16px;border:1px solid var(--rule);">
               <div style="width:40px;height:40px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg></div>
               <div style="font-family:'Playfair Display',Georgia,serif;font-weight:700;color:var(--ink);font-size:0.92rem;margin-bottom:10px;">99.9% Uptime</div>
               <ul style="list-style:none;padding:0;margin:0;">
-                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Redundant systems</li>
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Private cloud infrastructure</li>
                 <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Instant failover</li>
+                <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Auto-scaling clusters</li>
                 <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>SLA guaranteed</li>
               </ul>
             </div>
@@ -728,8 +732,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
         <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/headshot-asselah.png" alt="Dr Jamil Asselah"></div><div class="team-name">Dr Jamil Asselah</div><div class="team-role">Medical Advisor</div><div class="team-bio">Medical Oncologist &amp; Associate Professor of Oncology at MUHC / McGill.</div></div>
         <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/headshot_ali.jpg" alt="Dr Imran Ali"></div><div class="team-name">Dr Imran Ali</div><div class="team-role">Medical Advisor</div><div class="team-bio">Asst. Prof. of Medicine, Icahn School of Medicine at Mount Sinai. The New Jewish Home. Yale-New Haven Health.</div></div>
         <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/team-joris.jpg" alt="Joris Abalea"></div><div class="team-name">Joris Abalea</div><div class="team-role">Mobile Lead</div><div class="team-bio">Former Staff Engineer at GitHub (Actions &amp; Copilot). Creator of Avocards, 1M+ downloads.</div></div>
-        <div class="team-card"><div class="team-avatar"><span class="initials">AC</span></div><div class="team-name">Anthony Chansavang</div><div class="team-role">Engineer</div><div class="team-bio">Healthcare-grade voice AI infrastructure.</div></div>
-        <div class="team-card"><div class="team-avatar"><span class="initials">TT</span></div><div class="team-name">Tomohiro Takesako, PhD</div><div class="team-role">Science</div><div class="team-bio">Kaggle Grandmaster (global #16). PhD in theoretical physics, University of Tokyo.</div></div>
+        <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/team-anthony.png" alt="Anthony Chansavang"></div><div class="team-name">Anthony Chansavang</div><div class="team-role">Engineer</div><div class="team-bio">Former Amazon Alexa engineer. Healthcare-grade voice AI infrastructure.</div></div>
+        <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/team-tomohiro.png" alt="Tomohiro Takesako"></div><div class="team-name">Tomohiro Takesako, PhD</div><div class="team-role">Science</div><div class="team-bio">Kaggle Grandmaster (global #16). PhD in theoretical physics, University of Tokyo.</div></div>
         <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/team-jake.jpg" alt="Jake Albert"></div><div class="team-name">Jake Albert</div><div class="team-role">Engineer</div><div class="team-bio">Web app and customer-facing platforms.</div></div>
         <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/team-alina.png" alt="Alina Mashtalier"></div><div class="team-name">Alina Mashtalier</div><div class="team-role">Senior Key Account Manager</div><div class="team-bio">Client relationships, goal alignment, and long-term collaboration.</div></div>
         <div class="team-card"><div class="team-avatar"><img src="pharmacy_assets/team-mykhailo.png" alt="Mykhailo Pashynskyi"></div><div class="team-name">Mykhailo Pashynskyi</div><div class="team-role">Lead UI/UX Designer</div><div class="team-bio">Visual direction and interaction patterns for AI-powered communication tools.</div></div>
