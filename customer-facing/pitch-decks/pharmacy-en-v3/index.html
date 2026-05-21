@@ -537,7 +537,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
       </div>
     </div>
     <div class="proto-frame" id="protoFrame">
-      <iframe id="protoIframe" src="proto/web.html" title="YouSquared Prototype"></iframe>
+      <iframe id="protoIframe" src="proto/web.html?v=6" title="YouSquared Prototype"></iframe>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
       <div class="prod-bottom" onclick="toggleProdPanel('setup')">
@@ -852,8 +852,9 @@ function setView(v){
     b.classList.toggle('active',b.textContent.toLowerCase()===v);
   });
   const iframe=document.getElementById('protoIframe');
-  if(v==='ios') iframe.src='proto/ios.html';
-  else iframe.src='proto/web.html';
+  const cb='?v='+Date.now();
+  if(v==='ios') iframe.src='proto/ios.html'+cb;
+  else iframe.src='proto/web.html'+cb;
 }
 function toggleFilter(pill){
   pill.classList.toggle('active');
