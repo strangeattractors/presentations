@@ -99,8 +99,14 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .sol-grid.bizmode .uc-head .play-btn { display:none; }
 .uc p { font-size:0.8rem; color:var(--muted); line-height:1.5; }
 .uc-expand { max-height:0; overflow:hidden; transition:max-height 0.5s ease,padding 0.3s; padding:0; }
-.uc.expanded .uc-expand { max-height:400px; padding-top:12px; }
+.uc.expanded .uc-expand { max-height:500px; padding-top:12px; }
 .uc-expand audio { width:100%; height:32px; border-radius:6px; margin-bottom:8px; }
+.sms-thread { display:flex; flex-direction:column; gap:4px; max-height:220px; overflow-y:auto; padding:8px 6px; background:#f0ece6; border-radius:10px; margin-bottom:8px; scrollbar-width:thin; }
+.sms-thread::-webkit-scrollbar { width:4px; } .sms-thread::-webkit-scrollbar-thumb { background:var(--rule); border-radius:2px; }
+.sms-b { max-width:82%; padding:7px 10px; border-radius:14px; font-size:0.68rem; line-height:1.45; word-wrap:break-word; }
+.sms-b.out { align-self:flex-end; background:var(--accent); color:#fff; border-bottom-right-radius:4px; }
+.sms-b.in { align-self:flex-start; background:#fff; color:var(--text); border:1px solid var(--rule); border-bottom-left-radius:4px; }
+.sms-ts { font-size:0.52rem; color:var(--muted); text-align:center; margin:2px 0; }
 .uc-expand .toggle-row { display:flex; align-items:center; gap:8px; font-size:0.72rem; margin-top:8px; }
 .uc-expand .toggle-label { color:var(--muted); }
 .toggle-switch { position:relative; width:36px; height:20px; background:var(--accent); border-radius:10px; cursor:pointer; transition:background 0.2s; flex-shrink:0; }
@@ -425,9 +431,20 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
       </div>
       <div class="uc" data-uplift="+6%">
         <div class="uc-head"><span class="uc-icon">&#128203;</span><h3>Referrals</h3><span class="biz-num">+6%</span><button class="play-btn" onclick="event.stopPropagation();toggleUcExpand(this.closest('.uc'))">&#9654;</button></div>
-        <p>AI calls physicians for specialty consultations, follows up on pending scripts.</p>
+        <p>AI texts patients from outreach campaigns, qualifies leads &amp; books consults.</p>
         <div class="uc-expand">
-          <audio controls preload="none"><source src="pharmacy_assets/glp1-call-617601.ogg" type="audio/ogg"></audio>
+          <div class="sms-thread">
+            <div class="sms-ts">Mon 4:05 PM</div>
+            <div class="sms-b out">Hi Moshe, this is Heather from Ahava Medical. We&rsquo;re now offering a GLP-1 medical weight loss program to help support your weight loss goals. Would you like to see if you qualify? Plans starting as low as $0. Call or text today.</div>
+            <div class="sms-ts">Tue 1:00 PM</div>
+            <div class="sms-b in">I would like to see if I qualify.</div>
+            <div class="sms-b out">Hi Moshe, thanks for your interest. To see if you qualify, the first step is a consultation with one of our providers. What&rsquo;s a good day/time to schedule?</div>
+            <div class="sms-b in">Do you have around 10:00 tomorrow morning available? Or maybe Monday afternoon around 1:00?</div>
+            <div class="sms-b out">Would you like to do a Telehealth at 10am tomorrow with Dr. Amsel?</div>
+            <div class="sms-b in">Yes, please!</div>
+            <div class="sms-b out">Perfect, I&rsquo;ve confirmed your Telehealth appointment with Dr. Amsel for tomorrow at 10am. You will receive a call.</div>
+            <div class="sms-b in">Okay, thank you</div>
+          </div>
           <div class="toggle-row">
             <span class="toggle-label">Experience:</span>
             <div class="toggle-switch" onclick="event.stopPropagation();toggleWithWithout(this)"></div>
