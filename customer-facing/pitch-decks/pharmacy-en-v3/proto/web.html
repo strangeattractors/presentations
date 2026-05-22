@@ -211,11 +211,255 @@ const ONCOLOGY_TODOS=[
 ];
 
 const ONCOLOGY_MISSED_CALLS=[
-  {id:'m1',contact:'Richard P.',rel:'Patient',time:'Today, 11:15a',summary:'Called about increased fatigue and tingling in fingers after last chemo cycle.',type:'missed'},
-  {id:'m2',contact:'Dr. Tanaka',rel:'Oncologist',time:'Today, 9:45a',summary:'Called regarding George M.’s post-surgical pathology addendum — perineural invasion noted.',type:'missed'},
-  {id:'m3',contact:'Barbara S.',rel:'Patient',time:'Yesterday, 5:10p',summary:'Left voicemail — running a low-grade fever of 99.8°F, asking if she should be concerned.',type:'missed'},
-  {id:'m4',contact:'Research Coord. Davis',rel:'Research Coordinator',time:'Yesterday, 3:00p',summary:'Called about KEYNOTE-789 enrollment window closing May 30 — needs Thomas D.’s consent form status.',type:'missed'},
+  {id:’m1’,contact:’Richard P.’,rel:’Patient’,time:’Today, 11:15a’,summary:’Called about increased fatigue and tingling in fingers after last chemo cycle.’,type:’missed’},
+  {id:’m2’,contact:’Dr. Tanaka’,rel:’Oncologist’,time:’Today, 9:45a’,summary:’Called regarding George M.’s post-surgical pathology addendum — perineural invasion noted.’,type:’missed’},
+  {id:’m3’,contact:’Barbara S.’,rel:’Patient’,time:’Yesterday, 5:10p’,summary:’Left voicemail — running a low-grade fever of 99.8°F, asking if she should be concerned.’,type:’missed’},
+  {id:’m4’,contact:’Research Coord. Davis’,rel:’Research Coordinator’,time:’Yesterday, 3:00p’,summary:’Called about KEYNOTE-789 enrollment window closing May 30 — needs Thomas D.’s consent form status.’,type:’missed’},
 ];
+
+// ── PRIMARY CARE data ──
+const PRIMARY_CARE_FILTER_LABELS=[
+  {id:’patient’,label:’Patients’,color:’#3b82f6’,hasSubtags:true},
+  {id:’physician’,label:’Physicians’,color:’#a855f7’},
+  {id:’nurse’,label:’Nurses’,color:’#14b8a6’},
+  {id:’med_assistant’,label:’Medical Assistants’,color:’#22c55e’},
+  {id:’admin_staff’,label:’Administrative Staff’,color:’#9ca3af’},
+  {id:’specialist’,label:’Specialists’,color:’#6366f1’},
+  {id:’insurance’,label:’Insurance’,color:’#f97316’},
+];
+const PRIMARY_CARE_FILTER_COUNTS={patient:38,physician:5,nurse:9,med_assistant:6,admin_staff:4,specialist:7,insurance:4};
+const PRIMARY_CARE_SUBTAGS=[‘New Patient’,’Active Care’,’Chronic Disease’,’Wellness Check’,’Rx Renewal’,’Inactive’];
+const PRIMARY_CARE_SUBTAG_COUNTS={‘New Patient’:6,’Active Care’:12,’Chronic Disease’:8,’Wellness Check’:5,’Rx Renewal’:4,’Inactive’:3};
+const PRIMARY_CARE_MOCK_CONTACTS=[
+  {name:’David R.’,subtag:’Chronic Disease’},{name:’Rachel K.’,subtag:’Wellness Check’},
+  {name:’James T.’,subtag:’Rx Renewal’},{name:’Sandra B.’,subtag:’New Patient’},
+  {name:’Henry M.’,subtag:’Active Care’},{name:’Elena M.’,subtag:’New Patient’},
+];
+const PRIMARY_CARE_TODOS=[
+  {id:7,notifTitle:’Wellness check-in: David R.’,contact:’David R.’,rel:’Patient’,type:’check-in’,summary:’Last visit >90 days ago, no communication in 30+ days: preventive care check-in.’,callDraft:’Authenticate (DoB) & check in with David. Last visit was Nov 12 with Dr. Hoch — elevated A1C (6.1), elevated BP. Ask how lifestyle modifications are going, any concerns. Offer to schedule a follow-up.’,textDraft:’Hi David, this is Dr. Hoch\’s office with Ahava Medical. It\’s been a while since your last visit (Nov 12). We\’d love to check in — can you call us back on this number please?’,due:’Today’,sendAs:’call’,earlierItems:[{type:’call’,direction:’in’,time:’Nov 12’,summary:’Routine annual physical with Dr. Hoch. Elevated A1C (6.1, prediabetic range), elevated BP 142/88, BMI 33. Discussed lifestyle modifications.’},{type:’call’,direction:’in’,time:’Nov 18’,summary:’Patient called to ask about lab results, spoke with front desk.’}],serviceEvent:{title:’Last visit Nov 12, 2025 with Dr. Hoch — A1C 6.1, BP 142/88’,scheduled:’Scheduled for Feb 10: wellness check-in (>90 days)’,date:’Nov 12’}},
+  {id:9,notifTitle:’Wellness check-in: Rachel K.’,contact:’Rachel K.’,rel:’Patient’,type:’check-in’,summary:’Last visit 60 days ago, mentioned wanting to get healthier: preventive care check-in.’,callDraft:’Authenticate (DoB) & check in with Rachel. Last visit was Feb 3 with Dr. Fakheri — mild hypertension 138/86, BMI 31, stress and sleep issues, prescribed melatonin.’,textDraft:’Hi Rachel, this is Dr. Fakheri\’s office with Ahava Medical. It\’s been a while since your last visit (Feb 3). We\’d love to check in — can you call us back on this number please?’,due:’May 4’,sendAs:’call’,earlierItems:[{type:’call’,direction:’in’,time:’Jan 15’,summary:’Well-child visit for her son (age 8) with Dr. Kabariti. Child healthy, routine vaccines.’},{type:’call’,direction:’in’,time:’Feb 3’,summary:’Rachel\’s own visit with Dr. Fakheri. BMI 31, mild hypertension (138/86), prescribed melatonin.’}],serviceEvent:{title:’Last visit Feb 3, 2026 with Dr. Fakheri — BMI 31, mild hypertension’,scheduled:’Scheduled for May 4: wellness check-in (90 days)’,date:’Feb 3’}},
+  {id:10,notifTitle:’Rx renewal + visit: James T.’,contact:’James T.’,rel:’Patient’,type:’renewal’,summary:’Rx renewal overdue and lab follow-up needed: refill reminder + wellness check-in.’,callDraft:’Authenticate (DoB) & call James about his overdue Metformin 1000mg and Amlodipine 5mg. Last visit was Aug 20 with Dr. Hoch, A1C was 7.2.’,textDraft:’Hi James, this is Dr. Hoch\’s office with Ahava Medical. You have a prescription renewal coming due and we\’d like to schedule a follow-up. Can you call us back on this number please?’,due:’Today’,sendAs:’call’,earlierItems:[{type:’call’,direction:’in’,time:’Aug 20’,summary:’Routine visit with Dr. Hoch. Type 2 diabetes (A1C 7.2), hypertension, BMI 36. On Metformin 1000mg and Amlodipine 5mg.’},{type:’sms’,direction:’out’,time:’Feb 10’,text:’Rx renewal reminder. No response.’}],serviceEvent:{title:’Rx refill overdue since Feb 2026 — Metformin 1000mg, Amlodipine 5mg’,scheduled:’Scheduled for Apr 1: Rx renewal + wellness check-in’,date:’Feb 10’}},
+  {id:32,notifTitle:’Fasting labs prep: Sandra B.’,contact:’Sandra B.’,rel:’Patient’,type:’check-in’,summary:’Annual physical with fasting labs tomorrow 8am: NPO after midnight, bring meds + insurance card.’,callDraft:’Authenticate (DoB) & confirm Sandra for tomorrow\’s annual physical at 8am with Dr. Kim. NPO after midnight for fasting glucose + lipid panel.’,textDraft:’Hi Sandra, this is Dr. Kim\’s office. Quick reminder for tomorrow 8am: NO food after midnight (water is fine), bring all your meds in their bottles, and your insurance card. Reply YES if all set.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Mar 22’,summary:’Sandra called to schedule her overdue annual. Last visit Aug 2024.’},{type:’sms’,direction:’out’,time:’Mar 22’,text:’Annual physical with Dr. Kim scheduled Apr 30, 8am. Fasting labs included.’},{type:’sms’,direction:’out’,time:’Apr 27’,text:’Reminder: annual physical Wed 4/30 at 8am. NPO after midnight Tuesday.’}],serviceEvent:{title:’Annual physical Apr 30, 8am with Dr. Kim — fasting labs’,scheduled:’Scheduled for Apr 29: 24h fasting labs prep confirmation’,date:’Apr 30’}},
+  {id:33,notifTitle:’Cardiology referral: Henry M.’,contact:’Henry M.’,rel:’Patient’,type:’follow-up’,summary:’Referred to cardiology 2 weeks ago for new-onset atrial fibrillation: follow up did consult book?’,callDraft:’Follow up with Henry — referred to Dr. Singh (cardiology) on Apr 14 for paroxysmal afib on Holter. He\’s on apixaban. Confirm consult booked.’,textDraft:’Hi Henry, this is Dr. Kim\’s office. Quick check — were you able to schedule with Dr. Singh for the heart consult? We sent records Apr 14. Reply if any trouble.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Apr 1’,summary:’Annual physical. Reported palpitations. EKG normal. Holter monitor placed.’},{type:’call’,direction:’in’,time:’Apr 12’,summary:’Holter showed paroxysmal afib. Started apixaban. Cardiology referral discussed.’},{type:’sms’,direction:’out’,time:’Apr 14’,text:’Referral sent to Dr. Singh at Austin Cardiology. They\’ll reach out within a week.’}],serviceEvent:{title:’Cardiology referral to Dr. Singh sent Apr 14 after Holter showed afib’,scheduled:’Scheduled for Apr 28: 14-day post-referral follow-up’,date:’Apr 14’}},
+  {id:50,notifTitle:’Inquiry F/U: Elena M.’,contact:’Elena M.’,rel:’Prospect’,type:’follow-up’,summary:’Inquired 1 day ago about new-patient appt, hasn\’t booked: insurance now verified.’,callDraft:’Call Elena — inquired Apr 27 about new-patient annual physical. BCBS verified. Offer 3 slots this week + next.’,textDraft:’Hi Elena, Dr. Kim\’s office. Quick update: your BCBS coverage is verified. I have new-patient slots Wed 9am, Thu 4pm, or next Mon 10am. Same-day fasting labs available. Reply with your pick.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’sms’,direction:’in’,time:’Apr 27, 11:14a’,text:’Online inquiry: "Looking for a new PCP. Have BCBS PPO. Need annual physical."’},{type:’sms’,direction:’out’,time:’Apr 27, 11:18a’,text:’Hi Elena! Thanks for reaching out. Verifying your BCBS now — usually takes 24h.’}],serviceEvent:{title:’New-patient inquiry Apr 27 — insurance now verified, no appt booked’,scheduled:’Inquiry F/U attempt 2 of 3’,date:’Apr 27’}},
+];
+const PRIMARY_CARE_MISSED_CALLS=[
+  {id:’m1’,contact:’David R.’,rel:’Patient’,time:’Today, 10:20a’,summary:’Called asking about lab results from his last visit — A1C recheck.’,type:’missed’},
+  {id:’m2’,contact:’Dr. Singh’,rel:’Specialist’,time:’Today, 9:30a’,summary:’Called regarding Henry M.\’s Holter results — wants to discuss anticoagulation strategy.’,type:’missed’},
+  {id:’m3’,contact:’Rachel K.’,rel:’Patient’,time:’Yesterday, 4:15p’,summary:’Left voicemail asking if melatonin dosage can be increased — still having trouble sleeping.’,type:’missed’},
+  {id:’m4’,contact:’Nurse Alvarez’,rel:’Nurse’,time:’Yesterday, 2:45p’,summary:’Called about Sandra B.\’s pre-visit labs — needs to confirm fasting glucose add-on.’,type:’missed’},
+];
+
+// ── DENTAL data ──
+const DENTAL_FILTER_LABELS=[
+  {id:’patient’,label:’Patients’,color:’#3b82f6’,hasSubtags:true},
+  {id:’dentist’,label:’Dentists’,color:’#a855f7’},
+  {id:’hygienist’,label:’Hygienists’,color:’#14b8a6’},
+  {id:’dental_asst’,label:’Dental Assistants’,color:’#22c55e’},
+  {id:’admin_staff’,label:’Administrative Staff’,color:’#9ca3af’},
+  {id:’specialist’,label:’Specialists’,color:’#6366f1’},
+  {id:’insurance’,label:’Insurance’,color:’#f97316’},
+];
+const DENTAL_FILTER_COUNTS={patient:42,dentist:4,hygienist:6,dental_asst:5,admin_staff:3,specialist:4,insurance:5};
+const DENTAL_SUBTAGS=[‘New Patient’,’Active Treatment’,’Perio Care’,’Recall Due’,’Referral’,’Inactive’];
+const DENTAL_SUBTAG_COUNTS={‘New Patient’:5,’Active Treatment’:8,’Perio Care’:6,’Recall Due’:12,’Referral’:4,’Inactive’:7};
+const DENTAL_MOCK_CONTACTS=[
+  {name:’Emma R.’,subtag:’Recall Due’},{name:’Tom B.’,subtag:’Active Treatment’},
+  {name:’Sophie L.’,subtag:’New Patient’},{name:’Renee P.’,subtag:’Perio Care’},
+  {name:’Marcus J.’,subtag:’Referral’},{name:’Aaron M.’,subtag:’New Patient’},
+];
+const DENTAL_TODOS=[
+  {id:16,notifTitle:’6-month cleaning: Emma R.’,contact:’Emma R.’,rel:’Patient’,type:’renewal’,summary:’6 months since last cleaning: text reminder and offer next available slot.’,callDraft:’Call Emma to schedule her routine 6-month cleaning. Offer Tue 10am or Thu 2pm. Confirm Delta Dental PPO.’,textDraft:’Hi Emma, this is Lakeside Dental. It\’s been 6 months since your last cleaning — time to schedule! I have Tue at 10am or Thu at 2pm. Reply with what works.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Aug 14’,summary:’Routine prophylaxis cleaning + exam with Dr. Martinez. No new caries. Mild gingivitis on lower molars.’},{type:’sms’,direction:’out’,time:’Aug 16’,text:’Thanks for visiting Lakeside Dental! See you in 6 months.’}],serviceEvent:{title:’Last cleaning Aug 14 with Hygienist Sara · Delta Dental PPO on file’,scheduled:’Scheduled for Apr 28: 6-month cleaning reminder’,date:’Aug 14’}},
+  {id:17,notifTitle:’Post-crown check-in: Tom B.’,contact:’Tom B.’,rel:’Patient’,type:’check-in’,summary:’48h after porcelain crown #14: sensitivity check and bite confirmation.’,callDraft:’Check in on Tom 48h after porcelain crown on tooth #14. Ask about hot/cold sensitivity, bite alignment, pain on chewing.’,textDraft:’Hi Tom, this is Lakeside Dental. Hope your new crown is settling in well. Any sensitivity or bite issues? Mild sensitivity for a few days is normal. Reply or call us if anything feels off.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Apr 14’,summary:’Routine cleaning. Dr. Martinez identified large filling on #14 with crack — recommended porcelain crown.’},{type:’sms’,direction:’out’,time:’Apr 18’,text:’Crown prep + temp scheduled Apr 24, 10am. Final crown seat Apr 28, 9am.’},{type:’call’,direction:’in’,time:’Apr 24’,summary:’Crown prep visit. Temporary crown placed. No issues.’}],serviceEvent:{title:’Porcelain crown #14 seated Apr 28 with Dr. Martinez’,scheduled:’Scheduled for Apr 30: 48h post-procedure check-in’,date:’Apr 28’}},
+  {id:20,notifTitle:’Pre-op confirmation: Sophie L.’,contact:’Sophie L.’,rel:’Patient’,type:’check-in’,summary:’4 wisdom teeth extraction with IV sedation tomorrow 9am: confirm NPO, ride, pre-meds picked up.’,callDraft:’Confirm Sophie for tomorrow\’s wisdom tooth extraction at 9am with IV sedation. Verify NPO, no aspirin/NSAIDs since Apr 25, ride confirmed, prescriptions picked up.’,textDraft:’Hi Sophie, this is Lakeside Dental. Quick checklist for tomorrow 9am: NPO after midnight, no Advil/aspirin since Friday, ride confirmed, meds picked up. Reply YES if all set.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Apr 14’,summary:’Initial consult with Dr. Martinez. All 4 wisdom teeth impacted. IV sedation recommended.’},{type:’sms’,direction:’out’,time:’Apr 16’,text:’Sedation consent signed. Surgery scheduled Apr 30, 9am.’},{type:’call’,direction:’in’,time:’Apr 24’,summary:’Sophie called to ask about NPO timing. Confirmed nothing by mouth after midnight.’}],serviceEvent:{title:’Wisdom tooth extraction with IV sedation on Apr 30, 9am’,scheduled:’Scheduled for Apr 29: 24h pre-op confirmation’,date:’Apr 30’}},
+  {id:21,notifTitle:’Perio re-eval: Renee P.’,contact:’Renee P.’,rel:’Patient’,type:’check-in’,summary:’3 months post-SRP: re-eval visit due to re-measure pocket depths.’,callDraft:’Call Renee for her 3-month perio re-eval. Last SRP Jan 28 — pocket depths 5-6mm at #24-26.’,textDraft:’Hi Renee, this is Lakeside Dental. Time for your 3-month perio re-eval. I have Tue 11am or Thu 3pm. Reply with what works.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Jan 14’,summary:’Routine cleaning. 5-6mm pockets at lower premolars/molars. SRP recommended.’},{type:’call’,direction:’in’,time:’Jan 28’,summary:’SRP performed lower right quadrant. Re-eval in 3 months.’},{type:’sms’,direction:’out’,time:’Feb 1’,text:’How\’s healing going? Reply if any unusual sensitivity.’}],serviceEvent:{title:’SRP Jan 28 — pocket depths 5-6mm at #24-26’,scheduled:’Scheduled for Apr 28: 3-month perio re-evaluation’,date:’Jan 28’}},
+  {id:22,notifTitle:’OS referral follow-up: Marcus J.’,contact:’Marcus J.’,rel:’Patient’,type:’follow-up’,summary:’Referred to Dr. Patel (Austin Oral Surgery) 2.5 weeks ago for impacted #1: follow up did consult book?’,callDraft:’Check with Marcus — referred to Dr. Patel at Austin Oral Surgery on Apr 10 for impacted upper-right wisdom tooth. Confirm consult scheduled.’,textDraft:’Hi Marcus, this is Lakeside Dental. Quick check — were you able to schedule with Dr. Patel\’s office for the wisdom tooth consult? Let us know if any trouble.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Apr 9’,summary:’Routine cleaning. X-ray showed impacted #1 with periapical lesion. OS referral recommended.’},{type:’sms’,direction:’out’,time:’Apr 10’,text:’Referral sent to Dr. Patel at Austin Oral Surgery.’},{type:’sms’,direction:’out’,time:’Apr 21’,text:’Just checking — were you able to schedule with Dr. Patel\’s office?’}],serviceEvent:{title:’Referral to Dr. Patel (Austin Oral Surgery) sent Apr 10’,scheduled:’Scheduled for Apr 28: 18-day post-referral follow-up’,date:’Apr 10’}},
+  {id:46,notifTitle:’Inquiry F/U: Aaron M.’,contact:’Aaron M.’,rel:’Prospect’,type:’follow-up’,summary:’Inquired about Invisalign 2 days ago, hasn\’t booked consult: attempt 3 of 3.’,callDraft:’Call Aaron — inquired about Invisalign Apr 26. Hasn\’t booked consult. Offer $99 scan-and-plan special + 0% Sunbit financing.’,textDraft:’Hi Aaron, James at Lakeside Dental. 3rd and final ping on the Invisalign consult — the $99 scan-and-plan offer is good through Friday. Still want to lock it in? Reply YES.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’sms’,direction:’in’,time:’Apr 26, 2:18p’,text:’Online inquiry: "Wondering about Invisalign cost and timeline."’},{type:’sms’,direction:’out’,time:’Apr 26, 2:19p’,text:’Hi Aaron! Free 30-min Invisalign consult includes 3D scan + cost breakdown. Tue 10am or Thu 2pm work?’},{type:’sms’,direction:’out’,time:’Apr 27, 10:00a’,text:’Quick follow-up. Still keen on the consult?’}],serviceEvent:{title:’Invisalign inquiry from website Apr 26 — no consult booked’,scheduled:’Inquiry F/U attempt 3 of 3’,date:’Apr 26’}},
+];
+const DENTAL_MISSED_CALLS=[
+  {id:’m1’,contact:’Tom B.’,rel:’Patient’,time:’Today, 11:30a’,summary:’Called about sharp pain when biting on new crown — worried it\’s too high.’,type:’missed’},
+  {id:’m2’,contact:’Dr. Patel’,rel:’Specialist’,time:’Today, 9:00a’,summary:’Called about Marcus J.\’s impacted #1 — wants to discuss surgical approach.’,type:’missed’},
+  {id:’m3’,contact:’Renee P.’,rel:’Patient’,time:’Yesterday, 4:30p’,summary:’Left voicemail asking if bleeding during flossing is normal after SRP.’,type:’missed’},
+  {id:’m4’,contact:’Hygienist Sara’,rel:’Hygienist’,time:’Yesterday, 2:00p’,summary:’Called about Emma R.\’s x-rays — noticed possible interproximal caries on #19.’,type:’missed’},
+];
+
+// ── MENTAL HEALTH data ──
+const MENTAL_HEALTH_FILTER_LABELS=[
+  {id:’client’,label:’Clients’,color:’#3b82f6’,hasSubtags:true},
+  {id:’therapist’,label:’Therapists’,color:’#a855f7’},
+  {id:’psychiatrist’,label:’Psychiatrists’,color:’#14b8a6’},
+  {id:’case_manager’,label:’Case Managers’,color:’#22c55e’},
+  {id:’admin_staff’,label:’Administrative Staff’,color:’#9ca3af’},
+  {id:’referral_partner’,label:’Referral Partners’,color:’#6366f1’},
+  {id:’insurance’,label:’Insurance’,color:’#f97316’},
+];
+const MENTAL_HEALTH_FILTER_COUNTS={client:28,therapist:4,psychiatrist:2,case_manager:3,admin_staff:3,referral_partner:5,insurance:4};
+const MENTAL_HEALTH_SUBTAGS=[‘New Client’,’Active Therapy’,’Between Sessions’,’Medication Eval’,’Re-engagement’,’Inactive’];
+const MENTAL_HEALTH_SUBTAG_COUNTS={‘New Client’:4,’Active Therapy’:8,’Between Sessions’:6,’Medication Eval’:3,’Re-engagement’:4,’Inactive’:3};
+const MENTAL_HEALTH_MOCK_CONTACTS=[
+  {name:’Alex M.’,subtag:’Between Sessions’},{name:’Jamie L.’,subtag:’Re-engagement’},
+  {name:’Carla S.’,subtag:’New Client’},{name:’Felix N.’,subtag:’Active Therapy’},
+  {name:’Lana W.’,subtag:’Medication Eval’},{name:’Priya R.’,subtag:’New Client’},
+];
+const MENTAL_HEALTH_TODOS=[
+  {id:18,notifTitle:’Between-session check-in: Alex M.’,contact:’Alex M.’,rel:’Client’,type:’check-in’,summary:’Bi-weekly client between sessions: brief supportive check-in, no clinical content.’,callDraft:’Brief, warm check-in with Alex between sessions. Just ask how the week is going. If clinical, route to Dr. Lee.’,textDraft:’Hi Alex, this is Lakeside Counseling. Just checking in between sessions — how\’s your week going? No need to reply if you\’re busy. We\’re here when you need us.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Feb 4’,summary:’Initial intake evaluation with Dr. Lee. Bi-weekly cadence. Anxiety + work stress focus.’},{type:’call’,direction:’in’,time:’Mar 4’,summary:’Session 2. Discussed coping strategies and journaling.’},{type:’call’,direction:’in’,time:’Apr 1’,summary:’Session 3. Reported improvement using grounding exercises.’}],serviceEvent:{title:’Last session Apr 15 with Dr. Lee · Next session Apr 29’,scheduled:’Scheduled for Apr 22: between-session check-in’,date:’Apr 15’}},
+  {id:19,notifTitle:’Re-engagement: Jamie L.’,contact:’Jamie L.’,rel:’Client’,type:’follow-up’,summary:’Missed last session 14 days ago: gentle re-engagement, easy rebooking.’,callDraft:’Reach out gently to Jamie — no-showed 2 weeks ago. Acknowledge it can be hard to come back. Offer easy rebooking.’,textDraft:’Hi Jamie, this is Lakeside Counseling. Just wanted to let you know we\’re here whenever you\’re ready. Coming back can be hard — no judgment. If you\’d like to reschedule, reply BOOK.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Jan 8’,summary:’Initial intake with Dr. Lee. Weekly cadence. Depression focus.’},{type:’call’,direction:’in’,time:’Apr 8’,summary:’Most recent session. Rough week reported.’},{type:’sms’,direction:’out’,time:’Apr 14’,text:’Confirming your appointment tomorrow at 10am.’},{type:’sms’,direction:’out’,time:’Apr 15’,text:’Sorry we missed you today. Reply if you\’d like to reschedule.’}],serviceEvent:{title:’No-show on Apr 15 · 14 days since last contact’,scheduled:’Scheduled for Apr 29: gentle re-engagement’,date:’Apr 15’}},
+  {id:26,notifTitle:’First-session prep: Carla S.’,contact:’Carla S.’,rel:’Client’,type:’check-in’,summary:’First therapy session tomorrow at 4pm: confirm telehealth link, intake forms submitted.’,callDraft:’Reach out to Carla — first session with Dr. Lee tomorrow at 4pm. Confirm telehealth link tested and PHQ-9, GAD-7 forms completed.’,textDraft:’Hi Carla, this is Lakeside Counseling. Quick check before your first session tomorrow at 4pm: (1) telehealth link tested? (2) intake forms completed? Reply YES if all set.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Apr 21’,summary:’Initial inquiry. Looking for therapy — anxiety, work stress. Insurance: Aetna PPO. Booked first session with Dr. Lee.’},{type:’sms’,direction:’out’,time:’Apr 21’,text:’Welcome! Telehealth link emailed. Please complete PHQ-9, GAD-7, and history forms before our session.’}],serviceEvent:{title:’First session with Dr. Lee on Apr 30, 4pm (telehealth)’,scheduled:’Scheduled for Apr 29: 24h first-session prep’,date:’Apr 30’}},
+  {id:27,notifTitle:’First-session fit: Felix N.’,contact:’Felix N.’,rel:’Client’,type:’check-in’,summary:’48h after first session with Dr. Lee: did the modality and therapist feel like a good fit?’,callDraft:’Reach out to Felix 48h after first session. Ask if Dr. Lee felt like a good fit. No pressure.’,textDraft:’Hi Felix, this is Lakeside Counseling. Just checking in after your first session with Dr. Lee. How did it feel? If something\’s off — fit, schedule, anything — please tell us.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Apr 21’,summary:’Initial inquiry. ADHD diagnosis follow-up. Booked first session with Dr. Lee.’},{type:’sms’,direction:’out’,time:’Apr 27’,text:’Quick reminder — first session tomorrow 11am via telehealth.’},{type:’call’,direction:’in’,time:’Apr 28’,summary:’First session with Dr. Lee. Treatment goals around routines and time management.’}],serviceEvent:{title:’First session with Dr. Lee completed Apr 28’,scheduled:’Scheduled for Apr 30: 48h first-session fit check’,date:’Apr 28’}},
+  {id:28,notifTitle:’Psychiatry referral: Lana W.’,contact:’Lana W.’,rel:’Client’,type:’follow-up’,summary:’Referred to Dr. Roberts (psychiatry) 2 weeks ago for SSRI evaluation: follow up did appt book?’,callDraft:’Follow up with Lana — Dr. Lee referred to Dr. Roberts on Apr 14 for SSRI evaluation. Confirm she scheduled.’,textDraft:’Hi Lana, this is Lakeside Counseling. Just checking in — were you able to schedule with Dr. Roberts for the medication eval? We sent the referral Apr 14. Reply if any trouble.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Mar 17’,summary:’Session 8 with Dr. Lee. Persistent depressive symptoms despite weekly CBT. PHQ-9 stuck at 14-16.’},{type:’call’,direction:’in’,time:’Apr 14’,summary:’Session 12. Lana agreed to SSRI eval. Referral to Dr. Roberts sent.’},{type:’sms’,direction:’out’,time:’Apr 14’,text:’Referral sent to Dr. Roberts at Westside Psychiatry.’}],serviceEvent:{title:’Psychiatry referral to Dr. Roberts sent Apr 14 for SSRI evaluation’,scheduled:’Scheduled for Apr 28: 14-day post-referral follow-up’,date:’Apr 14’}},
+  {id:48,notifTitle:’Inquiry F/U: Priya R.’,contact:’Priya R.’,rel:’Prospect’,type:’follow-up’,summary:’Inquired 3 days ago re: anxiety + work stress, hasn\’t booked first session.’,callDraft:’Reach Priya gently — inquired Apr 25 re anxiety + work stress. BCBS PPO. Hasn\’t booked. No pressure.’,textDraft:’Hi Priya, this is Lakeside Counseling. Just a gentle follow-up — no pressure. Happy to chat through what a first session looks like. We\’re here when you\’re ready.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’sms’,direction:’in’,time:’Apr 25, 7:42p’,text:’Online inquiry: "Looking for therapy for anxiety and work stress. BCBS PPO."’},{type:’sms’,direction:’out’,time:’Apr 25, 7:45p’,text:’Hi Priya, thanks for reaching out. Dr. Lee specializes in anxiety + CBT and has telehealth slots open.’}],serviceEvent:{title:’Therapy inquiry Apr 25 — no first session booked’,scheduled:’Inquiry F/U attempt 2 of 3’,date:’Apr 25’}},
+];
+const MENTAL_HEALTH_MISSED_CALLS=[
+  {id:’m1’,contact:’Alex M.’,rel:’Client’,time:’Today, 11:00a’,summary:’Called asking about switching from bi-weekly to weekly sessions.’,type:’missed’},
+  {id:’m2’,contact:’Dr. Roberts’,rel:’Psychiatrist’,time:’Today, 9:15a’,summary:’Called regarding Lana W.\’s SSRI evaluation — wants therapy notes before first visit.’,type:’missed’},
+  {id:’m3’,contact:’Jamie L.’,rel:’Client’,time:’Yesterday, 5:30p’,summary:’Left voicemail — wants to reschedule but is anxious about coming back.’,type:’missed’},
+  {id:’m4’,contact:’Case Mgr. Torres’,rel:’Case Manager’,time:’Yesterday, 3:15p’,summary:’Called about a new referral from court-mandated counseling program.’,type:’missed’},
+];
+
+// ── GASTROENTEROLOGY data ──
+const GASTRO_FILTER_LABELS=[
+  {id:’patient’,label:’Patients’,color:’#3b82f6’,hasSubtags:true},
+  {id:’gastro’,label:’Gastroenterologists’,color:’#a855f7’},
+  {id:’nurse’,label:’Nurses’,color:’#14b8a6’},
+  {id:’research_coord’,label:’Research Coordinators’,color:’#22c55e’},
+  {id:’admin_staff’,label:’Administrative Staff’,color:’#9ca3af’},
+  {id:’pathologist’,label:’Pathologists’,color:’#6366f1’},
+  {id:’insurance’,label:’Insurance’,color:’#f97316’},
+];
+const GASTRO_FILTER_COUNTS={patient:35,gastro:4,nurse:7,research_coord:2,admin_staff:3,pathologist:3,insurance:4};
+const GASTRO_SUBTAGS=[‘New Referral’,’Active Treatment’,’Post-Procedure’,’Surveillance’,’IBD Management’,’Inactive’];
+const GASTRO_SUBTAG_COUNTS={‘New Referral’:5,’Active Treatment’:7,’Post-Procedure’:6,’Surveillance’:8,’IBD Management’:5,’Inactive’:4};
+const GASTRO_MOCK_CONTACTS=[
+  {name:’Patricia M.’,subtag:’Post-Procedure’},{name:’Thomas G.’,subtag:’Surveillance’},
+  {name:’Helen K.’,subtag:’Post-Procedure’},{name:’Eli S.’,subtag:’IBD Management’},
+  {name:’Lila J.’,subtag:’Active Treatment’},{name:’Marcus B.’,subtag:’New Referral’},
+];
+const GASTRO_TODOS=[
+  {id:14,notifTitle:’Pre-op confirmation: Patricia M.’,contact:’Patricia M.’,rel:’Patient’,type:’check-in’,summary:’Colonoscopy in 48h: confirm bowel prep, anticoagulant hold, NPO, transport escort.’,callDraft:’Confirm Patricia for screening colonoscopy Apr 30. Verify bowel prep tonight, warfarin held since Apr 23, NPO after midnight, escort confirmed.’,textDraft:’Hi Patricia, this is Dr. Chen\’s office. Colonoscopy in 48h. Quick confirm: bowel prep tonight, NPO after midnight, warfarin held since Apr 23, escort confirmed. Reply YES if all set.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Mar 4’,summary:’Referral from PCP — screening colonoscopy at age 50. Family history of colon cancer.’},{type:’call’,direction:’in’,time:’Mar 18’,summary:’Pre-procedure consult with Dr. Chen. Prep, anticoag hold, transport discussed.’},{type:’sms’,direction:’out’,time:’Apr 23’,text:’Reminder: stop warfarin today per Dr. Chen. Continue your other meds.’}],serviceEvent:{title:’Screening colonoscopy on Apr 30 with Dr. Chen’,scheduled:’Scheduled for Apr 28: 48h pre-op confirmation’,date:’Apr 30’}},
+  {id:15,notifTitle:’Open slot: Thomas G.’,contact:’Thomas G.’,rel:’Patient’,type:’follow-up’,summary:’Cancellation backfill: surveillance colonoscopy slot opened in 48h — text waitlist priority #1.’,callDraft:’Offer Thomas the 9am slot Apr 30 (cancellation). Overdue for surveillance after polypectomy 3 years ago.’,textDraft:’Hi Thomas, this is Dr. Chen\’s office. A surveillance colonoscopy slot just opened: Apr 30 at 9am. Want it? Reply YES and we\’ll call to confirm.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Mar 14, 2023’,summary:’Surveillance colonoscopy — 2 tubular adenomas removed, 3-year follow-up recommended.’},{type:’sms’,direction:’out’,time:’Mar 1’,text:’Surveillance colonoscopy due. Reply BOOK to schedule.’},{type:’sms’,direction:’in’,time:’Mar 1’,text:’Yes book me, but wait list me for anything sooner.’}],serviceEvent:{title:’Open slot: Apr 30, 9am (cancellation backfill)’,scheduled:’Scheduled for Apr 28: waitlist offer’,date:’Apr 28’}},
+  {id:23,notifTitle:’Post-scope check-in: Helen K.’,contact:’Helen K.’,rel:’Patient’,type:’check-in’,summary:’7 days post-screening colonoscopy: pathology back, bowel function normal?’,callDraft:’Check on Helen 7 days after screening colonoscopy. Pathology: 2 tubular adenomas, recommend 5-year surveillance.’,textDraft:’Hi Helen, this is Dr. Chen\’s office. Hope you\’re back to normal after your scope. Pathology is in — all looks good with a 5-year follow-up plan. Want to chat? Reply or call.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Mar 4’,summary:’Referral from PCP for screening colonoscopy at age 50.’},{type:’call’,direction:’in’,time:’Apr 23’,summary:’Screening colonoscopy. 2 small polyps removed. Pathology pending.’},{type:’sms’,direction:’out’,time:’Apr 23’,text:’Procedure complete. Rest today, soft foods, normal bowel function within 24-48h.’}],serviceEvent:{title:’Screening colonoscopy Apr 23 — 2 polyps removed, pathology back Apr 28’,scheduled:’Scheduled for Apr 30: 7-day post-procedure check-in’,date:’Apr 23’}},
+  {id:24,notifTitle:’Crohn\’s med titration: Eli S.’,contact:’Eli S.’,rel:’Patient’,type:’check-in’,summary:’3 months on Stelara for Crohn\’s flare: still needing prednisone? Labs? Symptoms?’,callDraft:’Check in with Eli 3 months into Stelara. Ask about symptoms, prednisone taper, labs.’,textDraft:’Hi Eli, this is Dr. Chen\’s office. 3-month check-in on Stelara. How are things? Symptoms calmer? Off the prednisone? Reply or call.’,due:’Today’,sendAs:’call’,earlierItems:[{type:’call’,direction:’in’,time:’Jan 12’,summary:’Severe Crohn\’s flare. Started prednisone 40mg taper + Stelara induction.’},{type:’call’,direction:’in’,time:’Feb 9’,summary:’1-month check-in. Improving. Prednisone at 20mg.’},{type:’sms’,direction:’in’,time:’Mar 14’,text:’Prednisone fully tapered today. Feeling well.’}],serviceEvent:{title:’Stelara induction Jan 12 — maintenance ongoing every 8 weeks’,scheduled:’Scheduled for Apr 28: 3-month treatment check’,date:’Jan 12’}},
+  {id:25,notifTitle:’Hepatology referral: Lila J.’,contact:’Lila J.’,rel:’Patient’,type:’follow-up’,summary:’Liver biopsy showed F3 fibrosis: follow up did hepatology consult book?’,callDraft:’Follow up with Lila — biopsy showed F3 (MASH). Referred to Dr. Greene at UT Hepatology. Confirm scheduled.’,textDraft:’Hi Lila, this is Dr. Chen\’s office. Just checking — did you schedule with Dr. Greene at UT Hepatology? Reply or call us if any trouble.’,due:’Today’,sendAs:’call’,earlierItems:[{type:’call’,direction:’in’,time:’Mar 22’,summary:’Elevated LFTs. FibroScan showed elevated stiffness. Biopsy recommended.’},{type:’call’,direction:’in’,time:’Apr 14’,summary:’Liver biopsy. Tolerated well. Pathology pending.’},{type:’call’,direction:’out’,time:’Apr 21’,summary:’AI follow-up with biopsy result. Pathology: F3 fibrosis with MASH. Referral sent.’}],serviceEvent:{title:’Hepatology referral to Dr. Greene (UT) sent Apr 21 after F3 biopsy’,scheduled:’Scheduled for Apr 28: 7-day post-referral follow-up’,date:’Apr 21’}},
+  {id:47,notifTitle:’Inquiry F/U: Marcus B.’,contact:’Marcus B.’,rel:’Prospect’,type:’follow-up’,summary:’Consult done, scope recommended, hasn\’t scheduled: attempt 2 of 3.’,callDraft:’Call Marcus — consult with Dr. Chen Apr 27, screening colonoscopy recommended. Address blockers: prep is one day, sedation, transport.’,textDraft:’Hi Marcus, this is Dr. Chen\’s office. Following up on yesterday\’s visit. Most folks tell us the prep is the hardest part. Ready to lock a date? I have May 8 or May 12.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Apr 27’,summary:’Consult with Dr. Chen. Family history of colon cancer. Screening colonoscopy recommended.’},{type:’sms’,direction:’out’,time:’Apr 27, 4:30p’,text:’Thanks for coming in. Ready to lock in your screening date?’}],serviceEvent:{title:’Consult Apr 27 — screening colonoscopy recommended, not scheduled’,scheduled:’Inquiry F/U attempt 2 of 3’,date:’Apr 27’}},
+];
+const GASTRO_MISSED_CALLS=[
+  {id:’m1’,contact:’Patricia M.’,rel:’Patient’,time:’Today, 10:45a’,summary:’Called about bowel prep questions — not sure if she should take her blood pressure medication tomorrow morning.’,type:’missed’},
+  {id:’m2’,contact:’Dr. Greene’,rel:’Pathologist’,time:’Today, 9:20a’,summary:’Called regarding Lila J.\’s biopsy — wants to discuss MASH grading with Dr. Chen.’,type:’missed’},
+  {id:’m3’,contact:’Eli S.’,rel:’Patient’,time:’Yesterday, 4:45p’,summary:’Left voicemail — experiencing mild joint pain, wondering if it\’s related to Stelara.’,type:’missed’},
+  {id:’m4’,contact:’Nurse Kim’,rel:’Nurse’,time:’Yesterday, 2:30p’,summary:’Called about Helen K.\’s post-procedure labs — mild anemia flagged on CBC.’,type:’missed’},
+];
+
+// ── SURGERY data ──
+const SURGERY_FILTER_LABELS=[
+  {id:’patient’,label:’Patients’,color:’#3b82f6’,hasSubtags:true},
+  {id:’surgeon’,label:’Surgeons’,color:’#a855f7’},
+  {id:’anesthesiologist’,label:’Anesthesiologists’,color:’#14b8a6’},
+  {id:’nurse’,label:’Nurses’,color:’#22c55e’},
+  {id:’admin_staff’,label:’Administrative Staff’,color:’#9ca3af’},
+  {id:’referring_phys’,label:’Referring Physicians’,color:’#6366f1’},
+  {id:’insurance’,label:’Insurance’,color:’#f97316’},
+];
+const SURGERY_FILTER_COUNTS={patient:30,surgeon:3,anesthesiologist:2,nurse:8,admin_staff:3,referring_phys:6,insurance:4};
+const SURGERY_SUBTAGS=[‘New Consult’,’Pre-Op’,’Post-Op’,’Recovery’,’Referral’,’Inactive’];
+const SURGERY_SUBTAG_COUNTS={‘New Consult’:4,’Pre-Op’:5,’Post-Op’:7,’Recovery’:6,’Referral’:4,’Inactive’:4};
+const SURGERY_MOCK_CONTACTS=[
+  {name:’Mark R.’,subtag:’Post-Op’},{name:’Tara H.’,subtag:’Pre-Op’},
+  {name:’Greg P.’,subtag:’Recovery’},{name:’Olivia D.’,subtag:’Referral’},
+  {name:’Charles W.’,subtag:’New Consult’},{name:’Tara H.’,subtag:’Pre-Op’},
+];
+const SURGERY_TODOS=[
+  {id:11,notifTitle:’Post-op safety check: Mark R.’,contact:’Mark R.’,rel:’Patient’,type:’check-in’,summary:’Post-op day 1 after total thyroidectomy: safety check on voice, swallowing, neck swelling, hypocalcemia.’,callDraft:’Check in on Mark post-op day 1 after total thyroidectomy. Ask about voice, swallowing, neck swelling, hypocalcemia symptoms. Confirm calcium and calcitriol compliance.’,textDraft:’Hi Mark, this is Dr. Richardson\’s office. We hope you\’re recovering well and would like to check in. Can you call us back on this number please?’,due:’Today’,sendAs:’call’,earlierItems:[{type:’call’,direction:’in’,time:’Jan 14’,summary:’Initial consult — 3.2cm left thyroid nodule, FNA biopsy Bethesda VI (papillary carcinoma). Total thyroidectomy recommended.’},{type:’call’,direction:’in’,time:’Feb 2’,summary:’Pre-op clinic. Risks reviewed. Surgery scheduled Mar 31.’},{type:’sms’,direction:’out’,time:’Mar 28’,text:’Reminder: surgery Monday Mar 31, 7am check-in at MUHC Glen. NPO after midnight.’},{type:’call’,direction:’in’,time:’Mar 31’,summary:’Surgery day. Total thyroidectomy — no complications, parathyroids preserved, RLNs intact. Discharged same day.’}],serviceEvent:{title:’Total thyroidectomy on Mar 31 with Dr. Richardson (MUHC Glen)’,scheduled:’Scheduled for Apr 1: post-op day 1 safety check’,date:’Mar 31’}},
+  {id:37,notifTitle:’72h pre-op: Tara H.’,contact:’Tara H.’,rel:’Patient’,type:’check-in’,summary:’72h before total thyroidectomy: NPO plan, anticoag held, labs in, transport confirmed.’,callDraft:’Confirm Tara for thyroidectomy Apr 30, 7am. Check: clopidogrel held since Apr 23, NPO after midnight Apr 29, labs in window, cardiac clearance, transport.’,textDraft:’Hi Tara, this is Dr. Richardson\’s office. 72-hour check before surgery Apr 30. Plavix held since Apr 23, NPO after midnight Tuesday, ride confirmed? Reply YES if all set.’,due:’Today’,sendAs:’call’,earlierItems:[{type:’call’,direction:’in’,time:’Feb 18’,summary:’Initial consult — 2.8cm right thyroid nodule, FNA showed papillary microcarcinoma.’},{type:’call’,direction:’in’,time:’Mar 28’,summary:’Pre-op clinic. Labs ordered. Plavix-hold instructions given.’},{type:’sms’,direction:’out’,time:’Apr 21’,text:’Reminder: stop Plavix on Apr 23 (7 days before surgery).’},{type:’call’,direction:’in’,time:’Apr 24’,summary:’Tara confirmed Plavix stopped. Asked about NPO timing.’}],serviceEvent:{title:’Total thyroidectomy Apr 30, 7am at MUHC Glen’,scheduled:’Scheduled for Apr 27: 72h pre-op confirmation’,date:’Apr 30’}},
+  {id:38,notifTitle:’6-wk post-op: Greg P.’,contact:’Greg P.’,rel:’Patient’,type:’check-in’,summary:’6 weeks post-laparoscopic cholecystectomy: scar healed, return to activity, any incisional pain?’,callDraft:’Check in with Greg 6 weeks after lap chole. Ask about incision healing, abdominal pain, return to work, GI changes.’,textDraft:’Hi Greg, this is Dr. Richardson\’s office. 6 weeks post-surgery — how are things? Scars healing? Back to normal activity? Any tummy issues? Reply or call.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Feb 28’,summary:’Initial consult — symptomatic gallstones. Lap chole recommended.’},{type:’call’,direction:’in’,time:’Mar 18’,summary:’Lap cholecystectomy completed. Discharged same day.’},{type:’call’,direction:’out’,time:’Mar 19’,summary:’AI post-op day 1 check. Mild incisional pain, no fever.’},{type:’call’,direction:’in’,time:’Apr 1’,summary:’2-week clinic visit. Wounds healing well. Cleared for light activity.’}],serviceEvent:{title:’Lap cholecystectomy Mar 18 with Dr. Richardson’,scheduled:’Scheduled for Apr 29: 6-week post-op check’,date:’Mar 18’}},
+  {id:39,notifTitle:’Lymphedema PT referral: Olivia D.’,contact:’Olivia D.’,rel:’Patient’,type:’follow-up’,summary:’Referred to lymphedema PT 1 week ago after mastectomy + ALND: follow up did initial visit happen?’,callDraft:’Follow up with Olivia — referred to Austin Lymphedema PT (Sara Brown) on Apr 21 after mastectomy + ALND. Confirm initial visit.’,textDraft:’Hi Olivia, this is Dr. Richardson\’s office. Quick check — were you able to start with Sara at Austin Lymphedema PT? Reply if any trouble.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Mar 14’,summary:’Initial consult — left breast cancer, lumpectomy + sentinel node positive. Mastectomy + ALND recommended.’},{type:’call’,direction:’in’,time:’Apr 7’,summary:’Mastectomy + ALND completed. 8 positive nodes.’},{type:’call’,direction:’in’,time:’Apr 21’,summary:’2-week post-op. Wounds healing. Lymphedema PT referral sent.’},{type:’sms’,direction:’out’,time:’Apr 21’,text:’Lymphedema PT referral sent to Sara Brown.’}],serviceEvent:{title:’Lymphedema PT referral to Sara Brown sent Apr 21’,scheduled:’Scheduled for Apr 28: 7-day post-referral follow-up’,date:’Apr 21’}},
+  {id:52,notifTitle:’Inquiry F/U: Charles W.’,contact:’Charles W.’,rel:’Prospect’,type:’follow-up’,summary:’Surgical consult Apr 26 (hernia repair), hasn\’t scheduled: attempt 2 of 3.’,callDraft:’Reach Charles — lap inguinal hernia repair recommended. Aetna covers 100% after deductible. Offer OR slots.’,textDraft:’Hi Charles, Dr. Richardson\’s office. Following up. Aetna covers the procedure 100% after deductible. I have OR slots May 12, 19, or 27. Want me to hold one?’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Apr 26’,summary:’Consult with Dr. Richardson. Symptomatic right inguinal hernia. Lap repair recommended. Aetna PPO.’},{type:’sms’,direction:’out’,time:’Apr 26, 5:30p’,text:’Thanks for coming in. We have OR slots over the next 4 weeks. Insurance ran clean.’}],serviceEvent:{title:’Surgical consult Apr 26 — lap hernia repair recommended, not scheduled’,scheduled:’Inquiry F/U attempt 2 of 3’,date:’Apr 26’}},
+  {id:55,notifTitle:’Pre-op labs reminder: Tara H.’,contact:’Tara H.’,rel:’Patient’,type:’check-in’,summary:’Pre-op labs (CBC, CMP, TSH) due today for Apr 30 thyroidectomy.’,callDraft:’Remind Tara to get her pre-op labs drawn today. CBC, CMP, TSH needed for Apr 30 surgery clearance.’,textDraft:’Hi Tara, this is Dr. Richardson\’s office. Reminder: your pre-op labs (blood draw) are due today for Wednesday\’s surgery. LabCorp on 5th St accepts walk-ins 7am-5pm. Reply if any issues.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Mar 28’,summary:’Pre-op clinic. Labs ordered: CBC, CMP, TSH. Must be drawn within 7 days of surgery.’},{type:’sms’,direction:’out’,time:’Apr 21’,text:’Reminder: stop Plavix on Apr 23. Pre-op labs due by Apr 28.’}],serviceEvent:{title:’Pre-op labs due Apr 28 for thyroidectomy Apr 30’,scheduled:’Scheduled for Apr 28: pre-op lab reminder’,date:’Apr 28’}},
+];
+const SURGERY_MISSED_CALLS=[
+  {id:’m1’,contact:’Mark R.’,rel:’Patient’,time:’Today, 10:30a’,summary:’Called about hoarseness — voice hasn\’t fully recovered since surgery.’,type:’missed’},
+  {id:’m2’,contact:’Dr. Tanaka’,rel:’Referring Physician’,time:’Today, 9:00a’,summary:’Called about Olivia D.\’s pathology report — wants to discuss adjuvant therapy plan.’,type:’missed’},
+  {id:’m3’,contact:’Tara H.’,rel:’Patient’,time:’Yesterday, 5:00p’,summary:’Left voicemail — nervous about surgery, wants to talk through risks one more time.’,type:’missed’},
+  {id:’m4’,contact:’Nurse Patel’,rel:’Nurse’,time:’Yesterday, 2:10p’,summary:’Called about Greg P.\’s wound photo — slight redness around incision site.’,type:’missed’},
+];
+
+// ── RESIDENTIAL (Real Estate) data ──
+const RESIDENTIAL_FILTER_LABELS=[
+  {id:’prospect’,label:’Prospects’,color:’#3b82f6’,hasSubtags:true},
+  {id:’buyer’,label:’Buyers’,color:’#a855f7’},
+  {id:’seller’,label:’Sellers’,color:’#14b8a6’},
+  {id:’lender’,label:’Lenders’,color:’#22c55e’},
+  {id:’title_officer’,label:’Title Officers’,color:’#9ca3af’},
+  {id:’inspector’,label:’Inspectors’,color:’#6366f1’},
+  {id:’agent’,label:’Agents’,color:’#f97316’},
+];
+const RESIDENTIAL_FILTER_COUNTS={prospect:15,buyer:12,seller:8,lender:4,title_officer:3,inspector:3,agent:6};
+const RESIDENTIAL_SUBTAGS=[‘New Lead’,’Active Buyer’,’Under Contract’,’Post-Close’,’Referral’,’Inactive’];
+const RESIDENTIAL_SUBTAG_COUNTS={‘New Lead’:5,’Active Buyer’:8,’Under Contract’:4,’Post-Close’:6,’Referral’:3,’Inactive’:4};
+const RESIDENTIAL_MOCK_CONTACTS=[
+  {name:’Jennifer L.’,subtag:’Post-Close’},{name:’Owen T.’,subtag:’Under Contract’},
+  {name:’Naomi W.’,subtag:’Post-Close’},{name:’Daniel B.’,subtag:’Post-Close’},
+  {name:’Sienna M.’,subtag:’New Lead’},{name:’Priscilla J.’,subtag:’Active Buyer’},
+];
+const RESIDENTIAL_TODOS=[
+  {id:12,notifTitle:’Homeiversary: Jennifer L.’,contact:’Jennifer L.’,rel:’Buyer’,type:’renewal’,summary:’1-year homeiversary: comps show ~14% appreciation — offer fresh equity update.’,callDraft:’Call Jennifer for her 1-year homeiversary at 412 Elm. Comps show ~14% appreciation. Offer equity analysis, ask for referrals.’,textDraft:’Hi Jennifer, James from Acme Realty. Happy 1-year at 412 Elm! Homes in your area are selling strong — happy to send a fresh equity update if useful. Reply GO.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Feb 18, 2025’,summary:’First call: 3BR in East Austin, budget up to $625k.’},{type:’sms’,direction:’out’,time:’Feb 22, 2025’,text:’Sending you 4 listings — 412 Elm is the standout.’},{type:’call’,direction:’in’,time:’Mar 14, 2025’,summary:’Walked 412 Elm. Loved the kitchen, offered $615k.’},{type:’sms’,direction:’out’,time:’Apr 28, 2025’,text:’Closing day! 412 Elm is officially yours.’}],serviceEvent:{title:’412 Elm closed Apr 28, 2025 — $615,000’,scheduled:’Scheduled for Apr 28: 12-month homeiversary equity check-in’,date:’Apr 28, 2025’}},
+  {id:40,notifTitle:’Pre-closing prep: Owen T.’,contact:’Owen T.’,rel:’Buyer’,type:’check-in’,summary:’48h before closing on 1245 Maple: certified funds wired, gov ID, walkthrough scheduled.’,callDraft:’Call Owen — 48h before closing on 1245 Maple. Checklist: cashier\’s check $42,318, gov ID, walkthrough Apr 29 4pm, utilities transferred.’,textDraft:’Hi Owen, James from Acme Realty. T-minus 48h to closing. Checklist: funds confirmed, driver\’s license + 2nd ID, walkthrough Apr 29 4pm, utilities transferred. Reply YES.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Mar 5’,summary:’First call — 4BR in South Austin, $700-800k. Pre-approved with Wells Fargo.’},{type:’call’,direction:’in’,time:’Mar 22’,summary:’Walked 1245 Maple. Offered $755k.’},{type:’sms’,direction:’out’,time:’Apr 8’,text:’Inspection done. Minor electrical to be credited. Closing on track.’},{type:’call’,direction:’in’,time:’Apr 21’,summary:’Owen asked about title insurance.’}],serviceEvent:{title:’Closing Apr 30, 10am at Stewart Title — 1245 Maple, $755,000’,scheduled:’Scheduled for Apr 28: 48h pre-closing buyer prep’,date:’Apr 30’}},
+  {id:41,notifTitle:’Move-in adoption: Naomi W.’,contact:’Naomi W.’,rel:’Buyer’,type:’check-in’,summary:’1 week after closing on 422 Cedar: moving in OK? Need contractor or utility referrals?’,callDraft:’Call Naomi 1 week after closing. Move-in OK? Any issues? Need contractor referrals?’,textDraft:’Hi Naomi, James from Acme Realty. Hope the move-in went smoothly! Anything popping up at 422 Cedar? Need contractor referrals? Reply or call.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Jan 12’,summary:’First call — starter home, $400-450k, East Austin.’},{type:’call’,direction:’in’,time:’Mar 1’,summary:’Walked 422 Cedar. Offered $432k.’},{type:’sms’,direction:’out’,time:’Apr 21’,text:’Closing day! 422 Cedar is yours. Keys at title.’},{type:’sms’,direction:’in’,time:’Apr 22’,text:’Thank you! Moving in this weekend.’}],serviceEvent:{title:’Closed on 422 Cedar Apr 21 — $432,000’,scheduled:’Scheduled for Apr 28: 1-week move-in check’,date:’Apr 21’}},
+  {id:42,notifTitle:’6-month check-in: Daniel B.’,contact:’Daniel B.’,rel:’Buyer’,type:’check-in’,summary:’6 months in at 89 Birch: how is the home? Kitchen reno happen? Referrals?’,callDraft:’Call Daniel 6 months after closing. Ask about the kitchen reno, any issues, referrals in his network.’,textDraft:’Hi Daniel, James from Acme Realty. 6 months in at 89 Birch! How\’s the kitchen reno going? Anything popping up? PS — anyone in your circle thinking of buying or selling?’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Sep 4, 2025’,summary:’First call — 3BR with renovation potential, $500-600k.’},{type:’call’,direction:’in’,time:’Oct 12, 2025’,summary:’Walked 89 Birch. Planning kitchen reno. Offered $545k.’},{type:’sms’,direction:’out’,time:’Oct 28, 2025’,text:’Closing day! 89 Birch is yours.’},{type:’sms’,direction:’out’,time:’Jan 28’,text:’Happy 3-month. Need contractor referrals for the kitchen?’}],serviceEvent:{title:’Closed on 89 Birch Oct 28, 2025 — $545,000’,scheduled:’Scheduled for Apr 28: 6-month relational check-in’,date:’Oct 28, 2025’}},
+  {id:43,notifTitle:’Lender referral: Sienna M.’,contact:’Sienna M.’,rel:’Prospect’,type:’follow-up’,summary:’Referred to Wells Fargo loan officer 1 week ago for pre-approval: did it move forward?’,callDraft:’Call Sienna — referred to Mike Chen (Wells Fargo) on Apr 21 for pre-approval. Confirm she connected.’,textDraft:’Hi Sienna, James from Acme Realty. Quick check — were you able to connect with Mike at Wells Fargo? Reply if anything stalled.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Apr 17’,summary:’First call — first-time buyer, $400-475k, North Austin. No pre-approval yet.’},{type:’sms’,direction:’out’,time:’Apr 21’,text:’Introducing you to Mike Chen at Wells Fargo for pre-approval.’}],serviceEvent:{title:’Lender intro to Mike Chen (Wells Fargo) sent Apr 21’,scheduled:’Scheduled for Apr 28: 7-day post-intro follow-up’,date:’Apr 21’}},
+  {id:53,notifTitle:’Inquiry F/U: Priscilla J.’,contact:’Priscilla J.’,rel:’Prospect’,type:’follow-up’,summary:’Showed 1245 Maple Apr 26, no offer yet: attempt 3 of 3. Two comps went under contract.’,callDraft:’Call Priscilla — toured 1245 Maple Apr 26, strong reaction but no offer. Two other homes went under contract this weekend.’,textDraft:’Hi Priscilla, James from Acme Realty. Quick heads up — the two other homes you liked just went under contract. 1245 Maple seller signaled willingness to negotiate. Want to draft an offer?’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Apr 22’,summary:’First call — 4BR in South Austin, $700-800k.’},{type:’call’,direction:’in’,time:’Apr 26’,summary:’Toured 1245 Maple. Loved kitchen + yard. Said she\’d think about it.’},{type:’sms’,direction:’out’,time:’Apr 26, 7:00p’,text:’Loved seeing your reaction to that kitchen. Let me know if you want to put in an offer.’},{type:’sms’,direction:’out’,time:’Apr 27, 10:00a’,text:’Quick FYI — 89 Pine had 3 offers Friday. 1245 Maple still wide open.’}],serviceEvent:{title:’Showed 1245 Maple Apr 26 — strong reaction, no offer’,scheduled:’Inquiry F/U attempt 3 of 3’,date:’Apr 26’}},
+];
+const RESIDENTIAL_MISSED_CALLS=[
+  {id:’m1’,contact:’Owen T.’,rel:’Buyer’,time:’Today, 11:00a’,summary:’Called about wire transfer instructions — bank is asking for confirmation of title company details.’,type:’missed’},
+  {id:’m2’,contact:’Mike Chen’,rel:’Lender’,time:’Today, 9:30a’,summary:’Called about Sienna M.\’s pre-approval docs — missing 2 months of bank statements.’,type:’missed’},
+  {id:’m3’,contact:’Naomi W.’,rel:’Buyer’,time:’Yesterday, 4:00p’,summary:’Left voicemail asking for electrician referral — found flickering lights in upstairs bathroom.’,type:’missed’},
+  {id:’m4’,contact:’Title Officer Reyes’,rel:’Title Officer’,time:’Yesterday, 2:30p’,summary:’Called about Owen T.\’s closing — survey shows minor encroachment, needs discussion.’,type:’missed’},
+];
+
+// ── EQUIPMENT RENTAL data ──
+const EQUIPMENT_RENTAL_FILTER_LABELS=[
+  {id:’prospect’,label:’Prospects’,color:’#3b82f6’,hasSubtags:true},
+  {id:’client’,label:’Clients’,color:’#a855f7’},
+  {id:’operator’,label:’Operators’,color:’#14b8a6’},
+  {id:’dispatcher’,label:’Dispatchers’,color:’#22c55e’},
+  {id:’sales_team’,label:’Sales Team’,color:’#9ca3af’},
+  {id:’vendor’,label:’Vendors’,color:’#6366f1’},
+  {id:’subcontractor’,label:’Subcontractors’,color:’#f97316’},
+];
+const EQUIPMENT_RENTAL_FILTER_COUNTS={prospect:10,client:18,operator:8,dispatcher:3,sales_team:4,vendor:5,subcontractor:6};
+const EQUIPMENT_RENTAL_SUBTAGS=[‘New Lead’,’Active Rental’,’Mid-Rental’,’Renewal Due’,’Referral’,’Inactive’];
+const EQUIPMENT_RENTAL_SUBTAG_COUNTS={‘New Lead’:4,’Active Rental’:7,’Mid-Rental’:5,’Renewal Due’:6,’Referral’:2,’Inactive’:3};
+const EQUIPMENT_RENTAL_MOCK_CONTACTS=[
+  {name:’Luis M.’,subtag:’Renewal Due’},{name:’Dave T.’,subtag:’Active Rental’},
+  {name:’Jorge V.’,subtag:’New Lead’},{name:’Frank C.’,subtag:’Mid-Rental’},
+  {name:’Hector V.’,subtag:’New Lead’},{name:’Luis M.’,subtag:’Renewal Due’},
+];
+const EQUIPMENT_RENTAL_TODOS=[
+  {id:3,notifTitle:’Rental renewal: Luis M.’,contact:’Luis M.’,rel:’Client’,type:’renewal’,summary:’Two scissor lifts rental ends in 2 days: confirm extension or schedule pickup.’,callDraft:’Check with Luis — 2 scissor lifts at 600 B St are up Friday. Extend or schedule pickup?’,textDraft:’Hi Luis, this is All Access Equipment. Your 2 scissor lifts at 600 B St are up for return Friday. Need to extend? Reply EXTEND or we\’ll schedule pickup.’,due:’Wed’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Feb 15’,summary:’Inquired about scissor lift availability for commercial project at 600 B St.’},{type:’sms’,direction:’out’,time:’Feb 16’,text:’Quote sent: 2x 19ft scissor lifts, $450/week each.’},{type:’call’,direction:’in’,time:’Feb 20’,summary:’Confirmed quote. Delivery March 3rd.’},{type:’sms’,direction:’out’,time:’Mar 2’,text:’Delivery confirmed for tomorrow 8am.’}],serviceEvent:{title:’2x scissor lifts rental started Mar 3, 30-day term’,scheduled:’Scheduled for Apr 2: renewal reminder’,date:’Mar 3’}},
+  {id:6,notifTitle:’Equipment check-in: Dave T.’,contact:’Dave T.’,rel:’Client’,type:’check-in’,summary:’40-ft boom delivered yesterday: check if setup went smoothly and operator has what they need.’,callDraft:’Check in with Dave — 40-ft boom delivered yesterday. Setup OK? Operator equipped?’,textDraft:’Hi Dave, John from All Access. Just checking in — is the boom set up and running OK on-site? Let us know if you need anything.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Mar 20’,summary:’First-time caller. Needs 40-ft boom for exterior painting Monday.’},{type:’sms’,direction:’out’,time:’Mar 21’,text:’Quote sent: 40-ft boom, $650/week. Delivery + harnesses included.’},{type:’call’,direction:’in’,time:’Mar 25’,summary:’Confirmed rental. Delivery 742 Pine St, 7am Monday.’},{type:’call’,direction:’in’,time:’Mar 28’,summary:’Asked about safety harness requirements.’}],serviceEvent:{title:’40-ft boom delivered on-site Mar 31’,scheduled:’Scheduled for Apr 1: day-1 equipment check-in’,date:’Mar 31’}},
+  {id:44,notifTitle:’Pre-delivery site prep: Jorge V.’,contact:’Jorge V.’,rel:’Client’,type:’check-in’,summary:’24h before mini excavator delivery: gate code, on-site contact, operator cert on file.’,callDraft:’Call Jorge — mini excavator delivery to 1500 Industrial tomorrow 7am. Confirm gate code, on-site contact, operator cert.’,textDraft:’Hi Jorge, John from All Access. Excavator delivery to 1500 Industrial 7am tomorrow. Need: gate code, where to drop on-site, operator cert still valid? Reply or call.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Apr 18’,summary:’Inquiry — mini excavator for utility trench at 1500 Industrial.’},{type:’sms’,direction:’out’,time:’Apr 21’,text:’Quote accepted. Mini excavator (Cat 305): $250/day, $750/wk. Delivery Apr 30, 7am.’},{type:’call’,direction:’in’,time:’Apr 25’,summary:’Jorge confirmed terms. Worker on site at 7am.’}],serviceEvent:{title:’Mini excavator delivery Apr 30, 7am at 1500 Industrial Blvd’,scheduled:’Scheduled for Apr 29: 24h pre-delivery site prep’,date:’Apr 30’}},
+  {id:45,notifTitle:’Mid-rental check: Frank C.’,contact:’Frank C.’,rel:’Client’,type:’check-in’,summary:’Day 14 of 30-day boom rental at 800 Commerce: equipment running OK? Need fuel/parts?’,callDraft:’Call Frank — halfway through 30-day boom rental. Running OK? Maintenance needs? Timeline still on track?’,textDraft:’Hi Frank, John from All Access. Halfway through your boom rental — how\’s it running? Any issues, fuel, or parts? Still on track for May 16 return? Reply or call.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Apr 12’,summary:’Inquiry — boom lift for facade work at 800 Commerce, 30-day rental.’},{type:’sms’,direction:’out’,time:’Apr 14’,text:’Quote: 40-ft boom $650/wk, $1,800/mo. Delivery Apr 16.’},{type:’call’,direction:’in’,time:’Apr 16’,summary:’Boom delivered to 800 Commerce. Setup OK.’},{type:’call’,direction:’out’,time:’Apr 17’,summary:’AI day-1 check. Setup confirmed, operator equipped.’}],serviceEvent:{title:’40-ft boom rental started Apr 16, 30-day term ends May 16’,scheduled:’Scheduled for Apr 28: mid-rental check (day 14)’,date:’Apr 16’}},
+  {id:54,notifTitle:’Inquiry F/U: Hector V.’,contact:’Hector V.’,rel:’Prospect’,type:’follow-up’,summary:’Quote sent for skid steer Apr 27, hasn\’t confirmed: attempt 2 of 3.’,callDraft:’Call Hector — quoted Bobcat S650 Apr 27. Offer to hold price 48h + 4 free operator hours if booked today.’,textDraft:’Hi Hector, John from All Access. Your Bobcat S650 quote ($1,400 for 2 wks) is good through tomorrow. Booking today gets 4 free operator hours. Reply YES.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Apr 27, 9:14a’,summary:’Inquiry — Bobcat skid steer for grading at 422 Commerce, 2-week rental.’},{type:’sms’,direction:’out’,time:’Apr 27, 10:30a’,text:’Quote: Bobcat S650, $700/week, $1,400 for 2 weeks. Delivery + bucket included.’}],serviceEvent:{title:’Quote sent Apr 27 for Bobcat S650 — not confirmed’,scheduled:’Inquiry F/U attempt 2 of 3’,date:’Apr 27’}},
+  {id:56,notifTitle:’Return scheduling: Luis M.’,contact:’Luis M.’,rel:’Client’,type:’check-in’,summary:’Scissor lifts return Friday: confirm pickup time window and site access for driver.’,callDraft:’Call Luis — if not extending, need to confirm Friday pickup window and site access for our driver at 600 B St.’,textDraft:’Hi Luis, John from All Access. If not extending the scissor lifts, need to lock Friday pickup time. Our driver needs 30-min window + site access. Morning or afternoon? Reply or call.’,due:’Today’,sendAs:’text’,earlierItems:[{type:’call’,direction:’in’,time:’Feb 20’,summary:’Confirmed scissor lift rental. Delivery March 3rd.’},{type:’sms’,direction:’out’,time:’Mar 2’,text:’Delivery confirmed tomorrow 8am.’}],serviceEvent:{title:’2x scissor lifts rental ends Friday — pickup TBD’,scheduled:’Scheduled for Apr 28: return scheduling if not extending’,date:’Apr 2’}},
+];
+const EQUIPMENT_RENTAL_MISSED_CALLS=[
+  {id:’m1’,contact:’Luis M.’,rel:’Client’,time:’Today, 10:15a’,summary:’Called about extending one lift but returning the other — wants partial extension pricing.’,type:’missed’},
+  {id:’m2’,contact:’Operator Martinez’,rel:’Operator’,time:’Today, 9:45a’,summary:’Called about hydraulic warning light on the boom at 800 Commerce — not sure if safe to operate.’,type:’missed’},
+  {id:’m3’,contact:’Dave T.’,rel:’Client’,time:’Yesterday, 4:30p’,summary:’Left voicemail asking about adding a harness and platform to the boom rental.’,type:’missed’},
+  {id:’m4’,contact:’Dispatcher Lewis’,rel:’Dispatcher’,time:’Yesterday, 2:15p’,summary:’Called about tomorrow\’s excavator delivery — driver needs updated gate code for 1500 Industrial.’,type:’missed’},
+];
+
+// ── Industry data lookup ──
+const INDUSTRY_DATA={
+  pharmacy:{todos:PHARMACY_TODOS,filterLabels:PHARMACY_FILTER_LABELS,filterCounts:PHARMACY_FILTER_COUNTS,subtags:PHARMACY_SUBTAGS,subtagCounts:PHARMACY_SUBTAG_COUNTS,mockContacts:PHARMACY_MOCK_CONTACTS,missedCalls:PHARMACY_MISSED_CALLS},
+  oncology:{todos:ONCOLOGY_TODOS,filterLabels:ONCOLOGY_FILTER_LABELS,filterCounts:ONCOLOGY_FILTER_COUNTS,subtags:ONCOLOGY_SUBTAGS,subtagCounts:ONCOLOGY_SUBTAG_COUNTS,mockContacts:ONCOLOGY_MOCK_CONTACTS,missedCalls:ONCOLOGY_MISSED_CALLS},
+  primary_care:{todos:PRIMARY_CARE_TODOS,filterLabels:PRIMARY_CARE_FILTER_LABELS,filterCounts:PRIMARY_CARE_FILTER_COUNTS,subtags:PRIMARY_CARE_SUBTAGS,subtagCounts:PRIMARY_CARE_SUBTAG_COUNTS,mockContacts:PRIMARY_CARE_MOCK_CONTACTS,missedCalls:PRIMARY_CARE_MISSED_CALLS},
+  dental:{todos:DENTAL_TODOS,filterLabels:DENTAL_FILTER_LABELS,filterCounts:DENTAL_FILTER_COUNTS,subtags:DENTAL_SUBTAGS,subtagCounts:DENTAL_SUBTAG_COUNTS,mockContacts:DENTAL_MOCK_CONTACTS,missedCalls:DENTAL_MISSED_CALLS},
+  mental_health:{todos:MENTAL_HEALTH_TODOS,filterLabels:MENTAL_HEALTH_FILTER_LABELS,filterCounts:MENTAL_HEALTH_FILTER_COUNTS,subtags:MENTAL_HEALTH_SUBTAGS,subtagCounts:MENTAL_HEALTH_SUBTAG_COUNTS,mockContacts:MENTAL_HEALTH_MOCK_CONTACTS,missedCalls:MENTAL_HEALTH_MISSED_CALLS},
+  gastroenterology:{todos:GASTRO_TODOS,filterLabels:GASTRO_FILTER_LABELS,filterCounts:GASTRO_FILTER_COUNTS,subtags:GASTRO_SUBTAGS,subtagCounts:GASTRO_SUBTAG_COUNTS,mockContacts:GASTRO_MOCK_CONTACTS,missedCalls:GASTRO_MISSED_CALLS},
+  surgery:{todos:SURGERY_TODOS,filterLabels:SURGERY_FILTER_LABELS,filterCounts:SURGERY_FILTER_COUNTS,subtags:SURGERY_SUBTAGS,subtagCounts:SURGERY_SUBTAG_COUNTS,mockContacts:SURGERY_MOCK_CONTACTS,missedCalls:SURGERY_MISSED_CALLS},
+  residential:{todos:RESIDENTIAL_TODOS,filterLabels:RESIDENTIAL_FILTER_LABELS,filterCounts:RESIDENTIAL_FILTER_COUNTS,subtags:RESIDENTIAL_SUBTAGS,subtagCounts:RESIDENTIAL_SUBTAG_COUNTS,mockContacts:RESIDENTIAL_MOCK_CONTACTS,missedCalls:RESIDENTIAL_MISSED_CALLS},
+  equipment_rental:{todos:EQUIPMENT_RENTAL_TODOS,filterLabels:EQUIPMENT_RENTAL_FILTER_LABELS,filterCounts:EQUIPMENT_RENTAL_FILTER_COUNTS,subtags:EQUIPMENT_RENTAL_SUBTAGS,subtagCounts:EQUIPMENT_RENTAL_SUBTAG_COUNTS,mockContacts:EQUIPMENT_RENTAL_MOCK_CONTACTS,missedCalls:EQUIPMENT_RENTAL_MISSED_CALLS},
+};
 
 // ── Tag management modal ──
 function TagPalette({value,onChange}){
@@ -388,14 +632,14 @@ function WebInboxScreen({tags,setTags,onManageTags,industry,setIndustry}){
   const[sidePanel,setSidePanel]=useState(null); // 'about','company','secretary' or null
 
   // Select data based on industry
-  const isOncology=industry==='oncology';
-  const currentTodos=isOncology?ONCOLOGY_TODOS:PHARMACY_TODOS;
-  const currentFilterLabels=isOncology?ONCOLOGY_FILTER_LABELS:PHARMACY_FILTER_LABELS;
-  const currentFilterCounts=isOncology?ONCOLOGY_FILTER_COUNTS:PHARMACY_FILTER_COUNTS;
-  const currentSubtags=isOncology?ONCOLOGY_SUBTAGS:PHARMACY_SUBTAGS;
-  const currentSubtagCounts=isOncology?ONCOLOGY_SUBTAG_COUNTS:PHARMACY_SUBTAG_COUNTS;
-  const currentMockContacts=isOncology?ONCOLOGY_MOCK_CONTACTS:PHARMACY_MOCK_CONTACTS;
-  const currentMissedCalls=isOncology?ONCOLOGY_MISSED_CALLS:PHARMACY_MISSED_CALLS;
+  const ind=INDUSTRY_DATA[industry]||INDUSTRY_DATA.pharmacy;
+  const currentTodos=ind.todos;
+  const currentFilterLabels=ind.filterLabels;
+  const currentFilterCounts=ind.filterCounts;
+  const currentSubtags=ind.subtags;
+  const currentSubtagCounts=ind.subtagCounts;
+  const currentMockContacts=ind.mockContacts;
+  const currentMissedCalls=ind.missedCalls;
 
   const industryTodos=currentTodos.slice().sort((a,b)=>{
     const ai=SCENARIO_TYPE_ORDER.indexOf(a.type||'other');
@@ -490,19 +734,13 @@ function WebInboxScreen({tags,setTags,onManageTags,industry,setIndustry}){
         <select className="industry-select" value={industry} onChange={e=>{const v=e.target.value;setIndustry(v);setOpenThread(null);setSidePanel(null);setFilter('todo');setSentIds([]);setActiveLabels([]);setActiveSubtags([])}}>
           <option value="pharmacy">Pharmacy</option>
           <option value="oncology">Oncology</option>
-          <option value="pharmacy">Primary Care</option>
-          <option value="pharmacy">Dermatology</option>
-          <option value="pharmacy">Gastroenterology</option>
-          <option value="pharmacy">Orthopedics</option>
-          <option value="pharmacy">Cardiology</option>
-          <option value="pharmacy">OB/GYN</option>
-          <option value="pharmacy">Urology</option>
-          <option value="pharmacy">ENT</option>
-          <option value="pharmacy">Mental Health</option>
-          <option value="pharmacy">Pain Management</option>
-          <option value="pharmacy">Dental</option>
-          <option value="pharmacy">Ophthalmology</option>
-          <option value="pharmacy">Podiatry</option>
+          <option value="primary_care">Primary Care</option>
+          <option value="dental">Dental</option>
+          <option value="mental_health">Mental Health</option>
+          <option value="gastroenterology">Gastroenterology</option>
+          <option value="surgery">Surgery</option>
+          <option value="residential">Residential Real Estate</option>
+          <option value="equipment_rental">Equipment Rental</option>
         </select>
 
         <nav className="web-sidebar-nav">
@@ -705,8 +943,7 @@ function WebInboxScreen({tags,setTags,onManageTags,industry,setIndustry}){
 // ── App (embed) ──
 function App(){
   const[industry,setIndustry]=useState('pharmacy');
-  const isOncologyApp=industry==='oncology';
-  const[tags,setTags]=useState(isOncologyApp?ONCOLOGY_FILTER_LABELS:PHARMACY_FILTER_LABELS);
+  const[tags,setTags]=useState((INDUSTRY_DATA[industry]||INDUSTRY_DATA.pharmacy).filterLabels);
   const[showTagsModal,setShowTagsModal]=useState(false);
 
   // Sync tags when industry changes
@@ -719,7 +956,7 @@ function App(){
   // Reset tags when industry changes
   const handleSetIndustry=(ind)=>{
     setIndustry(ind);
-    setTags(ind==='oncology'?ONCOLOGY_FILTER_LABELS:PHARMACY_FILTER_LABELS);
+    setTags((INDUSTRY_DATA[ind]||INDUSTRY_DATA.pharmacy).filterLabels);
   };
 
   return(
