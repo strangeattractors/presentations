@@ -86,8 +86,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .sol-header { display:grid; grid-template-columns:1fr auto; gap:24px; align-items:start; margin-bottom:8px; }
 .sol-illustration { width:180px; border-radius:16px; overflow:hidden; }
 .sol-illustration img { width:100%; display:block; border-radius:16px; }
-.sol-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:0; }
-.uc { background:#fff; border-radius:12px; padding:16px 18px; border:1px solid var(--rule); transition:box-shadow 0.25s; position:relative; }
+.sol-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-bottom:0; }
+.uc { background:#fff; border-radius:12px; padding:16px 18px; border:1px solid var(--rule); transition:box-shadow 0.25s; position:relative; min-width:0; }
 .uc:hover { box-shadow:0 6px 20px rgba(0,0,0,0.07); }
 .uc-head { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
 .uc-head .uc-icon { font-size:1.1rem; flex-shrink:0; }
