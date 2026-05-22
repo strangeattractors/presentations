@@ -157,7 +157,10 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 
 /* ── PRODUCT ── */
 #slide-product { background:var(--cream); }
-.prod-top { display:flex; flex-direction:column; align-items:flex-start; gap:4px; margin-bottom:0; }
+.prod-top { display:flex; align-items:center; justify-content:space-between; gap:24px; margin-bottom:0; }
+.prod-text { display:flex; flex-direction:column; gap:4px; }
+.prod-photo { width:260px; border-radius:16px; overflow:hidden; border:1px solid var(--rule); box-shadow:0 8px 24px rgba(0,0,0,0.08); flex-shrink:0; }
+.prod-photo img { width:100%; display:block; }
 .prod-photo { width:180px; border-radius:16px; overflow:hidden; border:1px solid var(--rule); box-shadow:0 8px 24px rgba(0,0,0,0.08); }
 .prod-photo img { width:100%; display:block; }
 .prod-controls { display:flex; justify-content:center; margin-bottom:4px; }
@@ -613,8 +616,11 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <section class="slide" id="slide-product">
   <div class="slide-inner">
     <div class="prod-top">
-      <div class="section-label">03 &mdash; The product</div>
-      <h2 class="section-title">Operational control<br><em>at your fingertips</em></h2>
+      <div class="prod-text">
+        <div class="section-label">03 &mdash; The product</div>
+        <h2 class="section-title">Operational control<br><em>at your fingertips</em></h2>
+      </div>
+      <div class="prod-photo"><img src="pharmacy_assets/bianca_pharmacy.png" alt="Pharmacist using YouSquared"></div>
     </div>
     <div class="prod-controls">
       <div class="view-toggle">
