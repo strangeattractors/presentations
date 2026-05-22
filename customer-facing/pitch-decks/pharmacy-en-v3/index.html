@@ -358,10 +358,10 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
           <img src="pharmacy_assets/img-000.png" alt="Pharmacy AI assistant" onerror="this.parentElement.innerHTML='<div style=&quot;padding:60px 20px;color:rgba(247,244,239,0.3);text-align:center;font-style:italic&quot;>Pharmacy illustration</div>'">
           <div class="caption">With YouSquared</div>
         </div>
-        <div class="hero-badges" style="display:flex;gap:12px;margin-top:16px;justify-content:center;">
-          <span style="font-family:'DM Mono',monospace;font-size:0.62rem;color:rgba(247,244,239,0.45);letter-spacing:0.08em;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:5px 10px;">HIPAA</span>
-          <span style="font-family:'DM Mono',monospace;font-size:0.62rem;color:rgba(247,244,239,0.45);letter-spacing:0.08em;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:5px 10px;">SOC 2</span>
-          <span style="font-family:'DM Mono',monospace;font-size:0.62rem;color:rgba(247,244,239,0.45);letter-spacing:0.08em;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:5px 10px;">PIPEDA</span>
+        <div class="hero-badges" style="display:flex;gap:16px;margin-top:16px;justify-content:center;align-items:center;">
+          <img src="pharmacy_assets/badge-hipaa.svg" alt="HIPAA Compliant" style="height:36px;opacity:0.85;">
+          <img src="pharmacy_assets/badge-soc2.svg" alt="SOC 2 Certified" style="height:36px;opacity:0.85;">
+          <img src="pharmacy_assets/badge-pipeda.svg" alt="PIPEDA" style="height:36px;opacity:0.85;">
         </div>
       </div>
     </div>
@@ -638,6 +638,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
       </div>
       <div class="prod-bottom" onclick="toggleProdPanel('hipaa')">
         <span style="font-family:'Playfair Display',Georgia,serif;font-size:1rem;font-weight:700;color:var(--accent);">HIPAA-compliant</span>
+        <img src="pharmacy_assets/badge-hipaa.svg" alt="HIPAA" style="height:24px;margin-left:8px;vertical-align:middle;">
         <svg style="width:16px;height:16px;margin-left:auto;transition:transform 0.3s;color:var(--muted);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
       </div>
     </div>
@@ -684,7 +685,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
     <div class="callfw-panel" id="hipaaPanel">
           <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
             <div style="background:#fff;border-radius:14px;padding:20px 16px;border:1px solid var(--rule);">
-              <div style="width:40px;height:40px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+              <img src="pharmacy_assets/badge-hipaa.svg" alt="HIPAA" style="height:40px;margin-bottom:14px;">
               <div style="font-family:'Playfair Display',Georgia,serif;font-weight:700;color:var(--ink);font-size:0.92rem;margin-bottom:10px;">HIPAA Compliant</div>
               <ul style="list-style:none;padding:0;margin:0;">
                 <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>End-to-end encryption</li>
@@ -694,7 +695,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
               </ul>
             </div>
             <div style="background:#fff;border-radius:14px;padding:20px 16px;border:1px solid var(--rule);">
-              <div style="width:40px;height:40px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+              <img src="pharmacy_assets/badge-soc2.svg" alt="SOC 2" style="height:40px;margin-bottom:14px;">
               <div style="font-family:'Playfair Display',Georgia,serif;font-weight:700;color:var(--ink);font-size:0.92rem;margin-bottom:10px;">SOC 2 Type II</div>
               <ul style="list-style:none;padding:0;margin:0;">
                 <li style="font-size:0.78rem;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Annual third-party audits</li>
