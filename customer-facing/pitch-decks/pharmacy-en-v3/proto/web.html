@@ -622,7 +622,7 @@ function SecretarySettingsPanel(){
 // ── Web Inbox Screen ──
 function WebInboxScreen({tags,setTags,onManageTags,industry,setIndustry}){
   const[filter,setFilter]=useState('todo');
-  const[openThread,setOpenThread]=useState(null);
+  const[openThread,setOpenThread]=useState(()=>{const d=INDUSTRY_DATA[industry]||INDUSTRY_DATA.pharmacy;return d.todos[0]||null;});
   const[activeLabels,setActiveLabels]=useState([]);
   const[activeSubtags,setActiveSubtags]=useState([]);
   const[expandedLabel,setExpandedLabel]=useState(null);
@@ -731,7 +731,7 @@ function WebInboxScreen({tags,setTags,onManageTags,industry,setIndustry}){
         </div>
 
         {/* Industry dropdown */}
-        <select className="industry-select" value={industry} onChange={e=>{const v=e.target.value;setIndustry(v);setOpenThread(null);setSidePanel(null);setFilter('todo');setSentIds([]);setActiveLabels([]);setActiveSubtags([])}}>
+        <select className="industry-select" value={industry} onChange={e=>{const v=e.target.value;setIndustry(v);const d=INDUSTRY_DATA[v]||INDUSTRY_DATA.pharmacy;setOpenThread(d.todos[0]||null);setSidePanel(null);setFilter('todo');setSentIds([]);setActiveLabels([]);setActiveSubtags([])}}>
           <option value="pharmacy">Pharmacy</option>
           <option value="oncology">Oncology</option>
           <option value="primary_care">Primary Care</option>
