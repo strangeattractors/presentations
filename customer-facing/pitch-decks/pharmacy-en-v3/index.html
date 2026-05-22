@@ -115,8 +115,9 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .uc-link:hover { color:var(--accent); }
 .uc-link.copied { color:var(--accent); }
 .uc audio { width:100%; height:32px; border-radius:6px; margin:10px 0; }
-.sms-preview { display:flex; flex-direction:column; justify-content:center; gap:2px; padding:4px 6px; background:#f0ece6; border-radius:8px; margin:10px 0 17px; height:32px; overflow:hidden; cursor:pointer; }
-.sms-preview .sms-b { max-width:85%; padding:3px 7px; border-radius:8px; font-size:0.55rem; line-height:1.25; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.sms-preview { display:flex; flex-direction:column; gap:3px; padding:6px 6px; background:#f0ece6; border-radius:8px; margin:10px 0 6px; overflow:hidden; cursor:pointer; }
+.uc.expanded .sms-preview { display:none; }
+.sms-preview .sms-b { max-width:85%; padding:4px 8px; border-radius:10px; font-size:0.6rem; line-height:1.35; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .sms-preview .sms-b.out { align-self:flex-end; background:var(--accent); color:#fff; border-bottom-right-radius:3px; }
 .sms-preview .sms-b.in { align-self:flex-start; background:#fff; color:var(--text); border:1px solid var(--rule); border-bottom-left-radius:3px; }
 .uc audio::-webkit-media-controls-enclosure { overflow:hidden; }
@@ -480,8 +481,9 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
         <p class="uc-with-desc">AI texts patients from outreach campaigns, qualifies leads &amp; books consults.</p>
         <p class="uc-without-desc"><strong>68%</strong> of eligible patients never start treatment when a new therapy becomes available</p>
         <div class="sms-preview" onclick="this.closest('.uc').classList.add('expanded')">
-          <div class="sms-b out">We&rsquo;re offering a GLP-1 program. Would you like to qualify?</div>
-          <div class="sms-b in">Yes! &mdash; booked with Dr. Amsel tomorrow 10am</div>
+          <div class="sms-b out">We&rsquo;re now offering a GLP-1 weight loss program. Would you like to qualify?</div>
+          <div class="sms-b in">I would like to see if I qualify.</div>
+          <div class="sms-b out">Great &mdash; I&rsquo;ve booked you with Dr. Amsel tomorrow at 10am.</div>
         </div>
         <div class="uc-actions">
           <button class="transcript-btn" onclick="event.stopPropagation();this.closest('.uc').classList.toggle('expanded')">&#128172; Text thread</button>
