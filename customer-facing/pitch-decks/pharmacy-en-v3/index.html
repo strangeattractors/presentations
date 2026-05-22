@@ -158,6 +158,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 /* ── PRODUCT ── */
 #slide-product { background:var(--cream); }
 .prod-top { display:flex; align-items:center; justify-content:space-between; gap:24px; margin-bottom:0; }
+#slide-product .section-label { margin-bottom:6px; font-size:0.78rem; }
+#slide-product .section-title { margin-bottom:4px; font-size:clamp(2rem,3.8vw,2.8rem); }
 .prod-text { display:flex; flex-direction:column; gap:4px; }
 .prod-photo { width:260px; border-radius:16px; overflow:hidden; border:1px solid var(--rule); box-shadow:0 8px 24px rgba(0,0,0,0.08); flex-shrink:0; }
 .prod-photo img { width:100%; display:block; }
@@ -165,7 +167,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .prod-photo img { width:100%; display:block; }
 .prod-controls { display:flex; justify-content:center; margin-bottom:4px; }
 .view-toggle { display:flex; gap:2px; background:var(--cream); border-radius:8px; padding:3px; border:1px solid var(--rule); }
-.view-btn { padding:6px 14px; border-radius:6px; border:none; background:none; font-family:'DM Sans',sans-serif; font-size:0.78rem; font-weight:500; color:var(--muted); cursor:pointer; transition:all 0.2s; }
+.view-btn { padding:6px 14px; border-radius:6px; border:none; background:none; font-family:'DM Sans',sans-serif; font-size:0.88rem; font-weight:500; color:var(--muted); cursor:pointer; transition:all 0.2s; }
 .view-btn.active { background:#fff; color:var(--ink); box-shadow:0 1px 3px rgba(0,0,0,0.1); font-weight:600; }
 .page-toggle { display:flex; gap:2px; background:var(--cream); border-radius:8px; padding:3px; border:1px solid var(--rule); }
 .filter-pills { display:flex; gap:6px; flex-wrap:wrap; }
@@ -173,14 +175,14 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .filter-pill.active { border-color:var(--accent); background:var(--accent-pale); color:var(--accent); font-weight:600; }
 .filter-pill .dot { width:8px; height:8px; border-radius:50%; border:2px solid var(--rule); }
 .filter-pill.active .dot { border-color:var(--accent); background:var(--accent); }
-.proto-frame { background:transparent; border-radius:16px; overflow:auto; height:634px; position:relative; }
-.proto-frame iframe { width:1200px; height:720px; border:none; transform:scale(0.88); transform-origin:top left; }
+.proto-frame { background:transparent; border-radius:16px; overflow:auto; height:634px; position:relative; display:flex; justify-content:center; }
+.proto-frame iframe { width:1200px; height:720px; border:none; transform:scale(0.88); transform-origin:top center; }
 .proto-frame .proto-placeholder { display:flex; align-items:center; justify-content:center; height:100%; color:var(--muted); font-size:0.9rem; }
-.proto-disclaimer { text-align:center; font-size:0.62rem; color:var(--muted); margin-top:8px; font-style:italic; letter-spacing:0.02em; }
+.proto-disclaimer { text-align:center; font-size:0.72rem; color:var(--muted); margin-top:8px; font-style:italic; letter-spacing:0.02em; }
 /* Bottom line */
 .prod-bottom { display:flex; align-items:center; gap:16px; margin-top:20px; padding:16px 20px; background:#fff; border-radius:12px; border:1px solid var(--rule); cursor:pointer; transition:box-shadow 0.2s; }
 .prod-bottom:hover { box-shadow:0 4px 12px rgba(0,0,0,0.06); }
-.prod-bottom .live-label { font-family:'Playfair Display',Georgia,serif; font-size:1rem; font-weight:700; color:var(--accent); }
+.prod-bottom .live-label { font-family:'Playfair Display',Georgia,serif; font-size:1.1rem; font-weight:700; color:var(--accent); }
 .prod-bottom .live-days { font-family:'DM Mono',monospace; font-size:0.78rem; color:var(--muted); }
 .callfw-panel { max-height:0; overflow:hidden; transition:max-height 0.5s ease,padding 0.3s; padding:0 20px; }
 .callfw-panel.open { max-height:500px; padding:20px; }
@@ -639,7 +641,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
         <svg style="width:16px;height:16px;margin-left:auto;transition:transform 0.3s;color:var(--muted);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
       </div>
       <div class="prod-bottom" onclick="toggleProdPanel('hipaa')">
-        <span style="font-family:'Playfair Display',Georgia,serif;font-size:1rem;font-weight:700;color:var(--accent);">HIPAA-compliant</span>
+        <span style="font-family:'Playfair Display',Georgia,serif;font-size:1.1rem;font-weight:700;color:var(--accent);">HIPAA-compliant</span>
         <img src="pharmacy_assets/badge-hipaa.svg" alt="HIPAA" style="height:24px;margin-left:8px;vertical-align:middle;">
         <svg style="width:16px;height:16px;margin-left:auto;transition:transform 0.3s;color:var(--muted);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
       </div>
