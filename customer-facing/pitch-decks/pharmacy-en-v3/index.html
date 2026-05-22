@@ -173,11 +173,12 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .filter-pill.active { border-color:var(--accent); background:var(--accent-pale); color:var(--accent); font-weight:600; }
 .filter-pill .dot { width:8px; height:8px; border-radius:50%; border:2px solid var(--rule); }
 .filter-pill.active .dot { border-color:var(--accent); background:var(--accent); }
-.proto-frame { background:transparent; border-radius:16px; overflow:hidden; height:520px; position:relative; }
-.proto-frame iframe { width:100%; height:100%; border:none; }
+.proto-frame { background:transparent; border-radius:16px; overflow:auto; height:562px; position:relative; }
+.proto-frame iframe { width:1200px; height:720px; border:none; transform:scale(0.78); transform-origin:top left; }
 .proto-frame .proto-placeholder { display:flex; align-items:center; justify-content:center; height:100%; color:var(--muted); font-size:0.9rem; }
+.proto-disclaimer { text-align:center; font-size:0.62rem; color:var(--muted); margin-top:8px; font-style:italic; letter-spacing:0.02em; }
 /* Bottom line */
-.prod-bottom { display:flex; align-items:center; gap:16px; margin-top:16px; padding:16px 20px; background:#fff; border-radius:12px; border:1px solid var(--rule); cursor:pointer; transition:box-shadow 0.2s; }
+.prod-bottom { display:flex; align-items:center; gap:16px; margin-top:20px; padding:16px 20px; background:#fff; border-radius:12px; border:1px solid var(--rule); cursor:pointer; transition:box-shadow 0.2s; }
 .prod-bottom:hover { box-shadow:0 4px 12px rgba(0,0,0,0.06); }
 .prod-bottom .live-label { font-family:'Playfair Display',Georgia,serif; font-size:1rem; font-weight:700; color:var(--accent); }
 .prod-bottom .live-days { font-family:'DM Mono',monospace; font-size:0.78rem; color:var(--muted); }
@@ -631,7 +632,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
     <div class="proto-frame" id="protoFrame">
       <iframe id="protoIframe" src="/prototypes/scheduled-outbound/decrypted/?embed=1&industry=pharmacy" title="YouSquared Prototype"></iframe>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
+    <div class="proto-disclaimer">All health data shown is illustrative, not of real patients.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
       <div class="prod-bottom" onclick="toggleProdPanel('setup')">
         <span class="live-label">Easy set-up</span>
         <svg style="width:16px;height:16px;margin-left:auto;transition:transform 0.3s;color:var(--muted);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
