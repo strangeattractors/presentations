@@ -94,9 +94,8 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .btn-primary{padding:0 20px;height:var(--btn-h);border-radius:var(--r-xxl);background:var(--accent);color:#fff;border:none;font-weight:600;cursor:pointer;font-family:inherit;font-size:16px;display:flex;align-items:center;justify-content:center;gap:6px}
 
 /* Industry switcher */
-.industry-switcher{display:flex;margin:0 12px 8px;background:#f0f0f0;border-radius:8px;padding:2px;gap:2px}
-.industry-switcher button{flex:1;padding:5px 0;font-size:12px;font-weight:500;border:none;border-radius:6px;cursor:pointer;font-family:inherit;transition:all .15s;background:transparent;color:#737373}
-.industry-switcher button.active{background:#fff;color:#171717;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.industry-select{display:block;width:calc(100% - 24px);margin:0 12px 8px;padding:6px 10px;font-size:12px;font-weight:500;font-family:inherit;border:1px solid #e5e5e5;border-radius:8px;background:#fff;color:#171717;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23737373' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+.industry-select:focus{outline:none;border-color:#FF8370}
 </style>
 </head>
 <body>
@@ -389,14 +388,14 @@ function WebInboxScreen({tags,setTags,onManageTags,industry,setIndustry}){
   const[sidePanel,setSidePanel]=useState(null); // 'about','company','secretary' or null
 
   // Select data based on industry
-  const isPharmacy=industry==='pharmacy';
-  const currentTodos=isPharmacy?PHARMACY_TODOS:ONCOLOGY_TODOS;
-  const currentFilterLabels=isPharmacy?PHARMACY_FILTER_LABELS:ONCOLOGY_FILTER_LABELS;
-  const currentFilterCounts=isPharmacy?PHARMACY_FILTER_COUNTS:ONCOLOGY_FILTER_COUNTS;
-  const currentSubtags=isPharmacy?PHARMACY_SUBTAGS:ONCOLOGY_SUBTAGS;
-  const currentSubtagCounts=isPharmacy?PHARMACY_SUBTAG_COUNTS:ONCOLOGY_SUBTAG_COUNTS;
-  const currentMockContacts=isPharmacy?PHARMACY_MOCK_CONTACTS:ONCOLOGY_MOCK_CONTACTS;
-  const currentMissedCalls=isPharmacy?PHARMACY_MISSED_CALLS:ONCOLOGY_MISSED_CALLS;
+  const isOncology=industry==='oncology';
+  const currentTodos=isOncology?ONCOLOGY_TODOS:PHARMACY_TODOS;
+  const currentFilterLabels=isOncology?ONCOLOGY_FILTER_LABELS:PHARMACY_FILTER_LABELS;
+  const currentFilterCounts=isOncology?ONCOLOGY_FILTER_COUNTS:PHARMACY_FILTER_COUNTS;
+  const currentSubtags=isOncology?ONCOLOGY_SUBTAGS:PHARMACY_SUBTAGS;
+  const currentSubtagCounts=isOncology?ONCOLOGY_SUBTAG_COUNTS:PHARMACY_SUBTAG_COUNTS;
+  const currentMockContacts=isOncology?ONCOLOGY_MOCK_CONTACTS:PHARMACY_MOCK_CONTACTS;
+  const currentMissedCalls=isOncology?ONCOLOGY_MISSED_CALLS:PHARMACY_MISSED_CALLS;
 
   const industryTodos=currentTodos.slice().sort((a,b)=>{
     const ai=SCENARIO_TYPE_ORDER.indexOf(a.type||'other');
@@ -487,11 +486,24 @@ function WebInboxScreen({tags,setTags,onManageTags,industry,setIndustry}){
           <span style={{display:'flex'}}>{I.chevronDown({s:12,c:'#a3a3a3'})}</span>
         </div>
 
-        {/* Industry switcher */}
-        <div className="industry-switcher">
-          <button className={industry==='pharmacy'?'active':''} onClick={()=>{setIndustry('pharmacy');setOpenThread(null);setSidePanel(null);setFilter('todo');setSentIds([]);setActiveLabels([]);setActiveSubtags([])}}>Pharmacy</button>
-          <button className={industry==='oncology'?'active':''} onClick={()=>{setIndustry('oncology');setOpenThread(null);setSidePanel(null);setFilter('todo');setSentIds([]);setActiveLabels([]);setActiveSubtags([])}}>Oncology</button>
-        </div>
+        {/* Industry dropdown */}
+        <select className="industry-select" value={industry} onChange={e=>{const v=e.target.value;setIndustry(v);setOpenThread(null);setSidePanel(null);setFilter('todo');setSentIds([]);setActiveLabels([]);setActiveSubtags([])}}>
+          <option value="pharmacy">Pharmacy</option>
+          <option value="oncology">Oncology</option>
+          <option value="pharmacy">Primary Care</option>
+          <option value="pharmacy">Dermatology</option>
+          <option value="pharmacy">Gastroenterology</option>
+          <option value="pharmacy">Orthopedics</option>
+          <option value="pharmacy">Cardiology</option>
+          <option value="pharmacy">OB/GYN</option>
+          <option value="pharmacy">Urology</option>
+          <option value="pharmacy">ENT</option>
+          <option value="pharmacy">Mental Health</option>
+          <option value="pharmacy">Pain Management</option>
+          <option value="pharmacy">Dental</option>
+          <option value="pharmacy">Ophthalmology</option>
+          <option value="pharmacy">Podiatry</option>
+        </select>
 
         <nav className="web-sidebar-nav">
           {tabs.map(tab=>(
@@ -693,8 +705,8 @@ function WebInboxScreen({tags,setTags,onManageTags,industry,setIndustry}){
 // ── App (embed) ──
 function App(){
   const[industry,setIndustry]=useState('pharmacy');
-  const isPharmacy=industry==='pharmacy';
-  const[tags,setTags]=useState(isPharmacy?PHARMACY_FILTER_LABELS:ONCOLOGY_FILTER_LABELS);
+  const isOncologyApp=industry==='oncology';
+  const[tags,setTags]=useState(isOncologyApp?ONCOLOGY_FILTER_LABELS:PHARMACY_FILTER_LABELS);
   const[showTagsModal,setShowTagsModal]=useState(false);
 
   // Sync tags when industry changes
@@ -707,7 +719,7 @@ function App(){
   // Reset tags when industry changes
   const handleSetIndustry=(ind)=>{
     setIndustry(ind);
-    setTags(ind==='pharmacy'?PHARMACY_FILTER_LABELS:ONCOLOGY_FILTER_LABELS);
+    setTags(ind==='oncology'?ONCOLOGY_FILTER_LABELS:PHARMACY_FILTER_LABELS);
   };
 
   return(
