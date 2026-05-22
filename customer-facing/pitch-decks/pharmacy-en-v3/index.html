@@ -481,7 +481,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
         <div class="uc-head"><span class="uc-icon">&#128203;</span><h3>Referrals</h3><button class="uc-link" onclick="event.stopPropagation();copyCallLink(this,'call-referrals')" title="Copy link to this call">&#128279; Share</button><span class="biz-num">+6%</span></div>
         <p class="uc-with-desc">AI texts patients from outreach campaigns, qualifies leads &amp; books consults.</p>
         <p class="uc-without-desc"><strong>68%</strong> of eligible patients never start treatment when a new therapy becomes available</p>
-        <div class="sms-preview" onclick="this.closest('.uc').classList.add('expanded')">
+        <div class="sms-preview" onclick="event.stopPropagation();this.closest('.uc').classList.toggle('expanded')">
           <div class="sms-b out">We&rsquo;re now offering a GLP-1 weight loss program. Would you like to qualify?</div>
           <div class="sms-b in">I would like to see if I qualify.</div>
         </div>
