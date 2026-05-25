@@ -55,6 +55,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .hero-stat-num { font-family:'Playfair Display',Georgia,serif; font-size:1.8rem; font-weight:700; color:#fff; display:block; margin-bottom:4px; }
 .hero-stat-label { font-size:0.7rem; color:rgba(247,244,239,0.45); letter-spacing:0.08em; text-transform:uppercase; }
 .hero-illustration { background:rgba(255,255,255,0.06); border-radius:20px; border:1px solid rgba(255,255,255,0.1); padding:14px 14px 8px; text-align:center; }
+.hero-illustration img { width:100%; border-radius:12px; display:block; }
 .hero-illustration .caption { font-size:0.65rem; color:rgba(247,244,239,0.35); margin-top:6px; font-family:'DM Mono',monospace; letter-spacing:0.06em; text-transform:uppercase; }
 
 /* PROBLEM */
@@ -307,11 +308,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
       </div>
       <div>
         <div class="hero-illustration">
-          <div style="padding:80px 20px;text-align:center;background:linear-gradient(145deg,rgba(42,107,79,0.15),rgba(200,150,62,0.1));border-radius:12px;">
-            <div style="font-size:3rem;margin-bottom:12px;">&#129658;</div>
-            <div style="font-family:'Playfair Display',Georgia,serif;font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:8px;">AI Care Coordinator</div>
-            <div style="font-size:0.78rem;color:rgba(247,244,239,0.5);line-height:1.5;">Post-visit follow-up &bull; Appointment reminders<br>Chronic care check-ins &bull; Referral coordination</div>
-          </div>
+          <img src="clinic_assets/img-000.png" alt="Clinic AI assistant" onerror="this.parentElement.innerHTML='<div style=&quot;padding:60px 20px;color:rgba(247,244,239,0.3);text-align:center;font-style:italic&quot;>Clinic illustration</div>'">
           <div class="caption">With YouSquared</div>
         </div>
         <div style="display:flex;gap:12px;margin-top:16px;justify-content:center;">
@@ -409,10 +406,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
         <p class="section-intro" style="margin-bottom:16px;">Follow-up, reminders, care coordination &amp; chronic care &mdash; 24/7.</p>
       </div>
       <div class="sol-illustration">
-        <div style="background:var(--accent-pale);border-radius:16px;padding:28px 16px;text-align:center;">
-          <div style="font-size:2rem;margin-bottom:6px;">&#129658;</div>
-          <div style="font-size:0.72rem;color:var(--accent);font-weight:600;">AI + Human<br>Care Team</div>
-        </div>
+        <img src="clinic_assets/img-000.png" alt="AI clinic" style="border-radius:16px;">
       </div>
     </div>
     <div class="sol-grid" id="solGrid">
