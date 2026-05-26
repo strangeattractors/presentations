@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Redirecting to yousquared.ai</title>
-  <meta http-equiv="refresh" content="3;url=https://yousquared.ai/presentations/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
@@ -27,12 +26,35 @@
     a { color: #333; text-decoration: underline; }
     a:hover { color: #000; }
   </style>
+  <script>
+    (function () {
+      var path = window.location.pathname;
+      // GitHub Pages project sites serve under /presentations/
+      // Strip the repo prefix so we get the content-relative path
+      if (path.indexOf('/presentations') === 0) {
+        path = path.substring('/presentations'.length);
+      }
+      // Ensure path starts with /
+      if (path.charAt(0) !== '/') path = '/' + path;
+      var target = 'https://yousquared.ai/presentations' + path + window.location.search + window.location.hash;
+
+      // Write the link into the page once DOM is ready
+      document.addEventListener('DOMContentLoaded', function () {
+        var link = document.getElementById('target-link');
+        link.href = target;
+        link.textContent = target.replace('https://', '');
+      });
+
+      // Auto-redirect after 3 seconds
+      setTimeout(function () { window.location.replace(target); }, 3000);
+    })();
+  </script>
 </head>
 <body>
   <div class="container">
-    <h1>This content has moved to yousquared.ai</h1>
+    <h1>This page has moved to yousquared.ai</h1>
     <p>Redirecting in 3 seconds&hellip;<br>
-    <a href="https://yousquared.ai/presentations/">yousquared.ai/presentations</a></p>
+    <a id="target-link" href="https://yousquared.ai/presentations/">yousquared.ai/presentations</a></p>
   </div>
 </body>
 </html>
