@@ -1,38 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Redirecting to yousquared.ai</title>
-  <meta http-equiv="refresh" content="3;url=https://yousquared.ai/presentations/">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #fff;
-      color: #333;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      text-align: center;
-      padding: 2rem;
-    }
-    .container { max-width: 480px; }
-    h1 { font-size: 1.25rem; font-weight: 500; margin-bottom: 0.75rem; }
-    p { font-size: 0.95rem; color: #666; line-height: 1.5; }
-    a { color: #333; text-decoration: underline; }
-    a:hover { color: #000; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YouSquared — Presentations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #2D2A26;
+    background: #FFFFFF;
+    line-height: 1.55;
+    font-size: 16px;
+  }
+  .hero {
+    background: linear-gradient(145deg, #2D2A26 0%, #433F3A 55%, #3A3632 100%);
+    color: #fff;
+    padding: 72px 48px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 85% 30%, rgba(224, 122, 95, 0.22), transparent 55%);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 820px; margin: 0 auto; position: relative; }
+  .hero-eyebrow {
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #E07A5F;
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-family: 'Lora', serif;
+    font-size: 3.2em;
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1.05;
+    margin-bottom: 14px;
+  }
+  .hero-sub {
+    font-size: 1.05em;
+    color: rgba(255, 255, 255, 0.72);
+    font-weight: 300;
+    letter-spacing: 0.2px;
+  }
+  main {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 56px 48px 96px;
+  }
+  section + section {
+    margin-top: 56px;
+    padding-top: 56px;
+    border-top: 1px solid #EDE8E3;
+  }
+  .section-label {
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #9E9893;
+    font-weight: 700;
+    margin-bottom: 32px;
+  }
+  .category { margin-bottom: 36px; }
+  .category:last-child { margin-bottom: 0; }
+  .category-head {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.18em;
+    font-weight: 600;
+    color: #2D2A26;
+    margin-bottom: 14px;
+    display: inline-block;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.15s ease;
+  }
+  .category-head:hover { border-bottom-color: #E07A5F; }
+  ul {
+    list-style: none;
+    padding-left: 20px;
+    border-left: 2px solid #F5F2EF;
+  }
+  li {
+    padding: 9px 0;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  li a.item {
+    color: #E07A5F;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1em;
+    transition: color 0.15s ease;
+  }
+  li a.item:hover { color: #D4523A; text-decoration: underline; text-underline-offset: 3px; }
+  .desc {
+    color: #6B6560;
+    font-size: 0.88em;
+    font-weight: 400;
+  }
+  .flat {
+    padding-left: 0;
+    border-left: none;
+  }
+  .flat li {
+    padding: 12px 0;
+    border-bottom: 1px solid #F5F2EF;
+  }
+  .flat li:last-child { border-bottom: none; }
+  .flat .children {
+    list-style: none;
+    padding: 8px 0 0 22px;
+    margin: 4px 0 0;
+    border-left: 2px solid #F5F2EF;
+  }
+  .flat .children li {
+    padding: 7px 0 7px 12px;
+    border-bottom: none;
+    font-size: 0.95em;
+  }
+  @media (max-width: 720px) {
+    .hero { padding: 56px 28px 48px; }
+    .hero h1 { font-size: 2.4em; }
+    main { padding: 40px 28px 72px; }
+    section + section { margin-top: 40px; padding-top: 40px; }
+  }
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>This content has moved to yousquared.ai</h1>
-    <p>Redirecting in 3 seconds&hellip;<br>
-    <a href="https://yousquared.ai/presentations/">yousquared.ai/presentations</a></p>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">YouSquared</div>
+    <h1>Presentations</h1>
+    <div class="hero-sub">Customer decks, QBRs, playbooks, and internal reports</div>
   </div>
+</div>
+
+<main>
+
+  <section>
+    <div class="section-label">Customer-Facing</div>
+
+    <div class="category">
+      <a href="customer-facing/pitch-decks/" class="category-head">Pitch Decks</a>
+      <ul>
+        <li><a class="item" href="customer-facing/pitch-decks/all-industries/">All Industries</a><span class="desc">AI Secretary for Service Businesses</span></li>
+        <li><a class="item" href="customer-facing/pitch-decks/equipment-rental/">Equipment Rental</a><span class="desc">AI Secretary for Equipment Rental Companies</span></li>
+        <li><a class="item" href="customer-facing/pitch-decks/oncology/">Oncology &amp; Geriatric Medicine</a></li>
+        <li><a class="item" href="customer-facing/pitch-decks/pharmacy/">Pharmacies (FR)</a></li>
+        <li><a class="item" href="customer-facing/pitch-decks/pharmacy-en-v3/">Pharmacies (EN)</a></li>
+        <li><a class="item" href="customer-facing/pitch-decks/clinic-en/">Clinics (EN)</a><span class="desc">Primary care &amp; family medicine</span></li>
+        <li><a class="item" href="customer-facing/pitch-decks/dental-en/">Dental (EN)</a></li>
+        <li><a class="item" href="customer-facing/pitch-decks/oncology-en/">Oncology (EN)</a></li>
+        <li><a class="item" href="customer-facing/pitch-decks/verizon-onetalk/">Verizon &times; One Talk</a><span class="desc">VAR seller enablement</span></li>
+      </ul>
+    </div>
+
+    <div class="category">
+      <a href="customer-facing/qbrs/" class="category-head">QBRs</a>
+      <ul>
+        <li><a class="item" href="customer-facing/qbrs/hair-shunnarah-2026-04/">Hair Shunnarah 🔒</a><span class="desc">2026-04</span></li>
+        <li><a class="item" href="customer-facing/qbrs/mount-sinai-2026-05/">Mount Sinai 🔒</a><span class="desc">2026-05</span></li>
+        <li><a class="item" href="customer-facing/qbrs/verizon-2026-05/">Verizon 🔒</a><span class="desc">2026-05</span></li>
+        <li><a class="item" href="customer-facing/qbrs/ahava-medical-2026-05/">Ahava Medical 🔒</a><span class="desc">2026-05</span></li>
+      </ul>
+    </div>
+
+    <div class="category">
+      <a href="customer-facing/white-glove-playbooks/" class="category-head">White Glove Playbooks</a>
+      <ul>
+        <li><a class="item" href="customer-facing/white-glove-playbooks/seller-playbook/">Proactive support seller playbook 🔒</a></li>
+      </ul>
+    </div>
+
+    <div class="category">
+      <span class="category-head">GTM Playbooks</span>
+      <ul>
+        <li><a class="item" href="/yousquared/gtm-playbooks/outbound-pharmacies/">Outbound Playbook — Pharmacies</a><span class="desc">61 contacts at 28 pharmacies</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Company Internal</div>
+    <ul class="flat">
+      <li><a class="item" href="company-internal/company-strategy/">YouSquared Company Strategy 🔒</a><span class="desc">vision, journey, alignment Q&amp;A</span></li>
+      <li><a class="item" href="company-internal/dev-velocity/">YouSquared Dev Velocity 🔒</a><span class="desc">PR merge rate &amp; review times</span></li>
+      <li>
+        <a class="item" href="company-internal/ltv-cac/">YouSquared LTV:CAC 🔒</a><span class="desc">monthly growth dashboard</span>
+        <ul class="children">
+          <li><a class="item" href="company-internal/subscriber-retention/">Subscriber Retention 🔒</a><span class="desc">KM curve, stabilized-core LTV</span></li>
+        </ul>
+      </li>
+      <li><a class="item" href="company-internal/roadmap/">YouSquared Roadmap 🔒</a><span class="desc">top priority features &amp; scope</span></li>
+      <li><a class="item" href="company-internal/who-gets-value/">YouSquared Who Gets Value 🔒</a><span class="desc">value report</span></li>
+    </ul>
+  </section>
+
+</main>
+
 </body>
 </html>
