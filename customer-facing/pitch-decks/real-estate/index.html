@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouSquared — AI Secretary for Real Estate</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #0e1117; --paper: #f7f4ef; --cream: #ede9e1;
+  --accent: #2a6b4f; --accent-light: #3d9970; --accent-pale: #d4ece3;
+  --gold: #c8963e; --gold-pale: #fdf3e3;
+  --text: #2c2c2c; --muted: #7a7a72; --rule: #d8d3ca;
+  --red: #c0392b;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--paper); color: var(--text); overflow-x: hidden; }
+
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 16px 48px; background: rgba(247,244,239,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--rule); }
+.nav-logo { display: flex; align-items: center; gap: 8px; }
+.nav-logo img { height: 26px; }
+.nav-dots { display: flex; gap: 8px; }
+.nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--rule); border: none; cursor: pointer; transition: background 0.2s, transform 0.2s; }
+.nav-dot.active { background: var(--accent); transform: scale(1.3); }
+
+.slide { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 100px 48px 90px; opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; position: relative; }
+.slide.visible { opacity: 1; transform: translateY(0); }
+.slide-inner { max-width: 1060px; width: 100%; }
+.section-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); max-width: 80px; }
+.section-title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.8rem,3.5vw,2.6rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 16px; color: var(--ink); }
+.section-title em { font-style: italic; color: var(--accent); }
+.section-intro { font-size: 1rem; color: var(--muted); line-height: 1.7; max-width: 580px; margin-bottom: 32px; }
+
+/* HERO */
+#slide-hero { background: var(--ink); color: var(--paper); overflow: hidden; }
+#slide-hero::before { content:''; position:absolute; top:-200px; right:-200px; width:600px; height:600px; border-radius:50%; background:radial-gradient(circle,rgba(42,107,79,0.3)0%,transparent 70%); pointer-events:none; }
+#slide-hero::after { content:''; position:absolute; bottom:-100px; left:-100px; width:400px; height:400px; border-radius:50%; background:radial-gradient(circle,rgba(200,150,62,0.15)0%,transparent 70%); pointer-events:none; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.hero-eyebrow { font-family:'DM Mono',monospace; font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent-light); margin-bottom:28px; }
+.hero-title { font-family:'Playfair Display',Georgia,serif; font-size:clamp(2.4rem,5vw,3.6rem); font-weight:700; line-height:1.12; color:#fff; margin-bottom:12px; letter-spacing:-0.02em; }
+.hero-title em { font-style:italic; color:var(--accent-light); }
+.hero-sub { font-size:1rem; color:rgba(247,244,239,0.65); margin-bottom:36px; font-weight:300; max-width:540px; line-height:1.65; }
+.hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(42,107,79,0.25); border:1px solid rgba(61,153,112,0.35); border-radius:20px; padding:8px 16px; font-size:0.8rem; color:var(--accent-light); margin-bottom:36px; }
+.dot-pulse { width:7px; height:7px; border-radius:50%; background:var(--accent-light); animation:pulse 1.8s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.85)} }
+.hero-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; border:1px solid rgba(255,255,255,0.1); border-radius:12px; overflow:hidden; }
+.hero-stat { background:rgba(255,255,255,0.04); padding:24px 20px; text-align:center; border-right:1px solid rgba(255,255,255,0.07); }
+.hero-stat:last-child { border-right:none; }
+.hero-stat-num { font-family:'Playfair Display',Georgia,serif; font-size:1.8rem; font-weight:700; color:#fff; display:block; margin-bottom:4px; }
+.hero-stat-label { font-size:0.7rem; color:rgba(247,244,239,0.45); letter-spacing:0.08em; text-transform:uppercase; }
+.hero-right { display:flex; flex-direction:column; gap:20px; }
+.hero-testimonial { background:rgba(255,255,255,0.06); border-radius:20px; border:1px solid rgba(255,255,255,0.1); padding:28px 24px; }
+.hero-testimonial .quote { font-family:'Playfair Display',Georgia,serif; font-size:1.1rem; line-height:1.5; color:rgba(247,244,239,0.85); font-style:italic; margin-bottom:12px; }
+.hero-testimonial .attr { font-size:0.75rem; color:rgba(247,244,239,0.45); }
+
+/* PROBLEM */
+#slide-problem { background: var(--paper); }
+.problem-top { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; margin-bottom: 28px; }
+.problem-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.pc { background:#fff; border-radius:12px; padding:16px 18px; border:1px solid var(--rule); cursor:pointer; transition:box-shadow 0.25s,transform 0.25s; }
+.pc:hover { box-shadow:0 6px 20px rgba(0,0,0,0.07); transform:translateY(-1px); }
+.pc-top { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+.pc-top .pc-icon { font-size:1.1rem; flex-shrink:0; }
+.pc-top .pc-name { font-family:'Playfair Display',Georgia,serif; font-size:0.88rem; font-weight:700; color:var(--ink); }
+.pc-top .pc-stat-num { font-family:'Playfair Display',Georgia,serif; font-size:1.1rem; font-weight:700; color:var(--gold); margin-left:auto; }
+.pc-bottom { display:flex; align-items:center; gap:8px; }
+.pc-bottom .pc-desc { font-size:0.76rem; color:var(--muted); line-height:1.4; flex:1; }
+.pc-bottom .pc-chevron { width:14px; height:14px; flex-shrink:0; color:var(--muted); transition:transform 0.3s,color 0.3s; }
+.pc.open .pc-chevron { transform:rotate(90deg); color:var(--accent); }
+.pc-source { font-size:0.6rem; color:#bbb; margin-top:4px; }
+.pc-source a { color:var(--accent); text-decoration:none; }
+.pc-review { max-height:0; overflow:hidden; transition:max-height 0.4s ease,margin 0.3s,padding 0.3s; background:var(--gold-pale); border-left:3px solid var(--gold); border-radius:0 8px 8px 0; padding:0 12px; margin-top:0; }
+.pc.open .pc-review { max-height:180px; padding:12px; margin-top:10px; }
+.pc-review .review-text { font-size:0.76rem; color:var(--text); line-height:1.5; font-style:italic; }
+.pc-review .review-attr { font-size:0.6rem; color:var(--muted); margin-top:4px; }
+
+/* SOLUTION */
+#slide-solution { background:linear-gradient(160deg,#f7f4ef 60%,#e8f3ed 100%); align-items:flex-start; padding-top:80px; padding-bottom:60px; }
+.sol-header { display:grid; grid-template-columns:1fr auto; gap:24px; align-items:start; margin-bottom:8px; }
+.sol-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-bottom:0; }
+.uc { background:#fff; border-radius:12px; padding:16px 18px; border:1px solid var(--rule); transition:box-shadow 0.25s; position:relative; min-width:0; cursor:pointer; }
+.uc:hover { box-shadow:0 6px 20px rgba(0,0,0,0.07); }
+.uc-head { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+.uc-head .uc-icon { font-size:1.1rem; flex-shrink:0; }
+.uc-head h3 { font-family:'Playfair Display',Georgia,serif; font-size:0.88rem; font-weight:700; color:var(--ink); }
+.uc-head .biz-num { font-family:'Playfair Display',Georgia,serif; font-size:0.95rem; font-weight:700; color:var(--accent); margin-left:auto; display:none; flex-shrink:0; }
+.sol-grid.bizmode .uc-head .biz-num { display:block; }
+.uc p { font-size:0.72rem; color:var(--muted); line-height:1.45; }
+.uc-expand { max-height:0; overflow:hidden; transition:max-height 0.5s ease,padding 0.3s; padding:0; }
+.uc.expanded .uc-expand { max-height:800px; padding-top:12px; }
+.uc audio { width:100%; height:32px; border-radius:6px; margin:10px 0; }
+.uc audio::-webkit-media-controls-panel { background:#f0ece6; }
+.transcript-btn { display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:6px; border:none; background:none; font-family:'DM Sans',sans-serif; font-size:0.65rem; font-weight:600; color:var(--muted); cursor:pointer; transition:all 0.2s; }
+.transcript-btn:hover { color:var(--accent); }
+.transcript-btn.active { color:var(--accent); }
+.call-transcript { display:none; flex-direction:column; gap:3px; max-height:200px; overflow-y:auto; padding:8px 6px; background:#f0ece6; border-radius:10px; margin-bottom:6px; scrollbar-width:thin; }
+.call-transcript.visible { display:flex; }
+.call-transcript::-webkit-scrollbar { width:4px; } .call-transcript::-webkit-scrollbar-thumb { background:var(--rule); border-radius:2px; }
+.ct-line { max-width:85%; padding:6px 10px; border-radius:12px; font-size:0.65rem; line-height:1.4; word-wrap:break-word; }
+.ct-line.ai { align-self:flex-end; background:var(--accent); color:#fff; border-bottom-right-radius:4px; }
+.ct-line.caller { align-self:flex-start; background:#fff; color:var(--text); border:1px solid var(--rule); border-bottom-left-radius:4px; }
+.uc-actions { display:flex; align-items:center; gap:8px; margin-top:2px; }
+.uc-link { display:inline-flex; align-items:center; gap:3px; padding:0; border:none; background:none; font-family:'DM Sans',sans-serif; font-size:0.6rem; font-weight:600; color:var(--muted); cursor:pointer; transition:color 0.2s; margin-left:auto; flex-shrink:0; }
+.uc-link:hover { color:var(--accent); }
+.uc-without-desc { display:none; }
+.uc-without-desc strong { font-family:'Playfair Display',Georgia,serif; font-size:1.05rem; color:var(--red); }
+.uc.without-mode .uc-with-desc { display:none; }
+.uc.without-mode .uc-without-desc { display:block; }
+.uc-without-content { display:none; background:rgba(192,57,43,0.06); border-left:3px solid var(--red); border-radius:0 8px 8px 0; padding:10px 12px; margin-top:8px; }
+.uc-without-content.visible { display:block; }
+.uc-without-content p { font-size:0.76rem; color:var(--text); line-height:1.5; }
+.toggle-row { display:flex; align-items:center; gap:8px; font-size:0.72rem; margin-left:auto; cursor:pointer; }
+.toggle-switch { position:relative; width:36px; height:20px; background:var(--accent); border-radius:10px; cursor:pointer; transition:background 0.2s; flex-shrink:0; }
+.toggle-switch.off { background:var(--red); }
+.toggle-switch::after { content:''; position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%; background:#fff; transition:left 0.2s; }
+.toggle-switch.off::after { left:18px; }
+.toggle-state { font-weight:600; }
+.toggle-state.with { color:var(--accent); }
+.toggle-state.without { color:var(--red); }
+.uc-wo-review { font-size:0.72rem; font-style:italic; color:var(--muted); line-height:1.45; }
+.uc-wo-attr { display:block; font-style:normal; font-size:0.63rem; margin-top:3px; }
+.biz-bottom { display:flex; align-items:center; gap:12px; cursor:pointer; background:var(--accent-pale); border:1px solid rgba(42,107,79,0.2); border-radius:10px; padding:14px 20px; margin-top:16px; transition:background 0.2s,box-shadow 0.2s; }
+.biz-bottom:hover { background:#c4e4d6; }
+.biz-bottom.pressed { background:var(--accent); box-shadow:inset 0 2px 6px rgba(0,0,0,0.2); }
+.biz-bottom .biz-title { font-family:'Playfair Display',Georgia,serif; font-size:0.95rem; font-weight:700; color:var(--accent); }
+.biz-bottom.pressed .biz-title { color:#fff; }
+
+/* PRODUCT */
+#slide-product { background:var(--cream); }
+.prod-top { display:flex; align-items:center; justify-content:space-between; gap:24px; margin-bottom:16px; }
+.prod-text { display:flex; flex-direction:column; gap:4px; }
+.prod-mockup { background:var(--ink); border-radius:20px; padding:20px; }
+.prod-mock-header { display:flex; align-items:center; gap:10px; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.1); }
+.prod-mock-header .pm-logo { font-family:'Playfair Display',Georgia,serif; font-size:0.9rem; font-weight:700; color:#fff; }
+.prod-mock-header .pm-logo span { color:var(--accent-light); }
+.prod-threads { display:flex; flex-direction:column; gap:8px; }
+.pt { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px 14px; display:flex; gap:12px; align-items:center; }
+.pt-avatar { width:32px; height:32px; border-radius:50%; background:rgba(42,107,79,0.3); display:flex; align-items:center; justify-content:center; font-size:0.7rem; color:var(--accent-light); flex-shrink:0; }
+.pt-name { font-size:0.78rem; font-weight:600; color:#fff; }
+.pt-preview { font-size:0.68rem; color:rgba(247,244,239,0.45); }
+.pt-time { font-size:0.6rem; color:rgba(247,244,239,0.3); margin-left:auto; white-space:nowrap; }
+.pt-badge { font-size:0.58rem; padding:2px 8px; border-radius:10px; font-weight:600; margin-left:8px; }
+.pt-badge.urgent { background:rgba(192,57,43,0.2); color:#e74c3c; }
+.pt-badge.scheduled { background:rgba(42,107,79,0.2); color:var(--accent-light); }
+.prod-features { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:20px; }
+.prod-feat { background:#fff; border-radius:12px; padding:18px; border:1px solid var(--rule); text-align:center; }
+.prod-feat .feat-icon { font-size:1.4rem; margin-bottom:8px; }
+.prod-feat h4 { font-family:'Playfair Display',Georgia,serif; font-size:0.88rem; font-weight:700; margin-bottom:4px; }
+.prod-feat p { font-size:0.72rem; color:var(--muted); line-height:1.45; }
+
+/* PRICING */
+#slide-pricing { background:var(--paper); }
+.pricing-body { max-height:0; overflow:hidden; opacity:0; transition:max-height 0.5s ease, opacity 0.4s ease; }
+.pricing-body.open { max-height:1200px; opacity:1; }
+.pricing-expand-hint { font-size:0.82rem; color:var(--muted); cursor:pointer; margin-top:8px; transition:opacity 0.3s; }
+.pricing-body.open ~ .pricing-expand-hint { opacity:0; pointer-events:none; }
+.org-toggle { display:flex; gap:4px; background:var(--cream); border-radius:10px; padding:4px; margin-bottom:28px; width:fit-content; }
+.org-btn { padding:8px 20px; border-radius:8px; border:none; background:none; font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:500; color:var(--muted); cursor:pointer; transition:all 0.2s; }
+.org-btn.active { background:#fff; color:var(--ink); box-shadow:0 1px 4px rgba(0,0,0,0.1); font-weight:600; }
+.calc-output { background:var(--accent-pale); border-radius:14px; padding:16px 24px; margin-bottom:16px; }
+.calc-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.calc-item .calc-num { font-family:'Playfair Display',Georgia,serif; font-size:1.4rem; font-weight:700; color:var(--accent); line-height:1; margin-bottom:4px; }
+.calc-item .calc-label { font-size:0.72rem; color:var(--muted); line-height:1.4; }
+.pricing-plans { display:grid; grid-template-columns:1fr 48px 1fr; gap:0; align-items:stretch; margin-bottom:24px; }
+.pricing-col { border-radius:20px; padding:22px 24px; }
+.plan-or { background:var(--cream); border:1px solid var(--rule); }
+.plan-rec { background:var(--ink); border:2px solid var(--accent); color:var(--paper); }
+.pricing-vs { display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',Georgia,serif; font-size:0.9rem; font-weight:700; color:var(--muted); }
+.plan-name-label { font-family:'Playfair Display',Georgia,serif; font-size:1.15rem; font-weight:700; margin-bottom:0; }
+.plan-rec .plan-name-label { color:#fff; }
+.plan-price-big { font-family:'Playfair Display',Georgia,serif; font-size:1.8rem; font-weight:700; line-height:1; }
+.plan-rec .plan-price-big { color:#fff; }
+.plan-price-unit { font-size:1rem; font-weight:400; color:var(--muted); }
+.plan-rec .plan-price-unit { color:rgba(247,244,239,0.5); }
+.plan-price-sub { font-size:0.72rem; color:var(--muted); margin-bottom:14px; }
+.plan-rec .plan-price-sub { color:rgba(247,244,239,0.4); }
+.plan-features { display:flex; flex-direction:column; gap:6px; }
+.plan-feat { display:flex; align-items:flex-start; gap:10px; font-size:0.85rem; line-height:1.45; }
+.plan-feat .icon { color:var(--accent-light); font-weight:700; flex-shrink:0; }
+.plan-rec .plan-feat { color:rgba(247,244,239,0.7); }
+
+/* WHO WE ARE */
+#slide-who { background:var(--cream); }
+.carousel-container { position:relative; overflow:hidden; margin-bottom:32px; }
+.carousel-track { display:flex; gap:24px; transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); }
+.carousel-track .team-card { flex:0 0 calc((100% - 48px)/3); }
+.team-card { background:#fff; border-radius:16px; padding:28px 22px; border:1px solid var(--rule); text-align:center; }
+.team-avatar { width:64px; height:64px; border-radius:50%; overflow:hidden; margin:0 auto 14px; background:var(--accent-pale); display:flex; align-items:center; justify-content:center; }
+.team-avatar img { width:100%; height:100%; object-fit:cover; }
+.team-avatar .initials { font-family:'Playfair Display',Georgia,serif; font-size:1.2rem; font-weight:700; color:var(--accent); }
+.team-name { font-family:'Playfair Display',Georgia,serif; font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:4px; }
+.team-role { font-size:0.72rem; color:var(--accent); font-weight:600; text-transform:uppercase; letter-spacing:0.07em; margin-bottom:10px; }
+.team-bio { font-size:0.8rem; color:var(--muted); line-height:1.55; }
+.carousel-arrow { position:absolute; top:50%; transform:translateY(-50%); z-index:5; width:36px; height:36px; border-radius:50%; border:1px solid var(--rule); background:#fff; color:var(--ink); font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.1); transition:opacity 0.2s,background 0.2s; }
+.carousel-arrow:hover { background:var(--accent-pale); }
+.carousel-arrow.left { left:-8px; }
+.carousel-arrow.right { right:-8px; }
+.carousel-arrow.hidden { opacity:0; pointer-events:none; }
+.trust-row { display:flex; align-items:center; justify-content:center; gap:24px; padding:20px 0; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); margin-bottom:28px; flex-wrap:wrap; }
+.trust-row img { height:26px; opacity:0.7; }
+.trust-row .divider { width:1px; height:24px; background:var(--rule); }
+.trust-row .stat-chip { font-family:'DM Mono',monospace; font-size:0.72rem; letter-spacing:0.06em; color:var(--accent); font-weight:600; }
+.carousel-track .customer-card { flex:0 0 calc((100% - 72px)/4); }
+.customer-card { background:#fff; border-radius:12px; padding:20px 16px; border:1px solid var(--rule); text-align:center; display:flex; flex-direction:column; align-items:center; gap:8px; }
+.customer-card .c-name { font-family:'Playfair Display',Georgia,serif; font-size:0.88rem; font-weight:700; color:var(--ink); }
+.customer-card .c-desc { font-size:0.75rem; color:var(--muted); line-height:1.45; }
+.customer-card .c-icon { font-size:1.8rem; }
+
+/* CTA */
+#slide-cta { background:var(--accent); color:#fff; }
+.cta-inner { text-align:center; }
+.cta-title { font-family:'Playfair Display',Georgia,serif; font-size:clamp(2rem,4vw,3.2rem); font-weight:700; color:#fff; margin-bottom:16px; letter-spacing:-0.02em; line-height:1.15; }
+.cta-title em { font-style:italic; color:rgba(255,255,255,0.75); }
+.cta-sub { font-size:1rem; color:rgba(255,255,255,0.7); margin-bottom:48px; line-height:1.65; }
+.cta-box { background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2); border-radius:16px; padding:36px 48px; display:inline-block; backdrop-filter:blur(8px); }
+.cta-contact { font-family:'Playfair Display',Georgia,serif; font-size:1.5rem; font-weight:700; color:#fff; margin-bottom:6px; }
+.cta-email { font-size:1rem; color:rgba(255,255,255,0.75); text-decoration:none; }
+.cta-email:hover { color:#fff; text-decoration:underline; }
+.cta-website { display:block; font-family:'DM Mono',monospace; font-size:0.8rem; color:rgba(255,255,255,0.55); margin-top:4px; }
+
+/* PROGRESS */
+.slide-progress { position:fixed; bottom:28px; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:99; }
+.progress-bar { width:32px; height:3px; border-radius:2px; background:var(--rule); overflow:hidden; cursor:pointer; }
+.progress-fill { height:100%; width:0%; background:var(--accent); border-radius:2px; transition:width 0.6s ease; }
+.progress-bar.active .progress-fill { width:100%; }
+.progress-bar.done .progress-fill { width:100%; background:var(--rule); }
+
+@media(max-width:768px){
+  nav{padding:14px 20px} .slide{padding:90px 24px 60px}
+  .hero-grid,.problem-top,.sol-header,.prod-top,.pricing-plans{grid-template-columns:1fr}
+  .problem-cards,.sol-grid{grid-template-columns:1fr 1fr}
+  .calc-grid{grid-template-columns:1fr 1fr}
+  .carousel-track .team-card,.carousel-track .customer-card{flex:0 0 calc(100% - 16px)}
+  .pricing-vs{display:none}
+  .prod-features{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo"><img src="assets/logo_yousquared.png" alt="YouSquared"></div>
+  <div class="nav-dots" id="navDots"></div>
+</nav>
+
+<!-- SLIDE 0: HERO -->
+<section class="slide" id="slide-hero">
+  <div class="slide-inner">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow">AI Secretary &mdash; Real Estate</div>
+        <h1 class="hero-title"><em>Every lead answered.</em><br>Every showing booked.</h1>
+        <p class="hero-sub">Your AI assistant answers every call, qualifies leads, schedules showings, and nurtures your sphere &mdash; so you never lose a deal to a missed call again.</p>
+        <div class="hero-badge"><span class="dot-pulse"></span> Available 24/7 &mdash; nights, weekends, open houses</div>
+        <div class="hero-stats">
+          <div class="hero-stat"><span class="hero-stat-num">78%</span><span class="hero-stat-label">Buyers pick the first agent to respond</span></div>
+          <div class="hero-stat"><span class="hero-stat-num">4.6&#9733;</span><span class="hero-stat-label">App Store iOS</span></div>
+          <div class="hero-stat"><span class="hero-stat-num">2M+</span><span class="hero-stat-label">Calls handled annualized</span></div>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-testimonial">
+          <div class="quote">&ldquo;It looks perfect for me and I&rsquo;ve been looking for a while, so I&rsquo;m excited to see it.&rdquo;</div>
+          <div class="attr">&mdash; Real caller to a Compass agent&rsquo;s AI assistant</div>
+          <audio controls controlslist="nodownload" preload="metadata" style="width:100%;height:32px;margin-top:12px;border-radius:6px;"><source src="assets/listing-booking-call-748952.m4a" type="audio/mp4"></audio>
+        </div>
+        <div style="display:flex;gap:16px;justify-content:center;align-items:center;">
+          <img src="assets/badge-soc2.svg" alt="SOC 2 Certified" style="height:36px;opacity:0.85;">
+          <span style="font-family:'DM Mono',monospace;font-size:0.65rem;color:rgba(247,244,239,0.4);letter-spacing:0.08em;text-transform:uppercase;">Enterprise-grade security</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 1: PROBLEM -->
+<section class="slide" id="slide-problem">
+  <div class="slide-inner">
+    <div class="problem-top">
+      <div>
+        <div class="section-label">01 &mdash; The problem</div>
+        <h2 class="section-title">Agents lose deals because<br><em>they can&rsquo;t answer the phone</em></h2>
+        <p class="section-intro" style="margin-bottom:0;">You&rsquo;re at a showing, in a negotiation, or it&rsquo;s 8 PM on a Tuesday. The phone rings. A hot buyer. Gone.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;">
+        <div style="background:var(--gold-pale);border-radius:16px;padding:28px 24px;text-align:center;">
+          <div style="font-family:'Playfair Display',Georgia,serif;font-size:2.2rem;font-weight:700;color:var(--gold);">$11,400</div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-top:4px;">Avg. commission per side, per deal</div>
+          <div style="font-size:0.6rem;color:#bbb;margin-top:4px;">Bankrate / NAR, 2025</div>
+        </div>
+      </div>
+    </div>
+    <div class="problem-cards">
+      <div class="pc" onclick="this.classList.toggle('open')">
+        <div class="pc-top"><span class="pc-icon">&#128222;</span><span class="pc-name">Missed Calls</span><span class="pc-stat-num">38%</span></div>
+        <div class="pc-bottom">
+          <span class="pc-desc">of inbound calls to agents go unanswered &mdash; 62% of those callers call a competitor</span>
+          <svg class="pc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="pc-source"><a href="https://www.housingwire.com/articles/missed-calls-cost-agents-deals/" target="_blank" rel="noopener">411 Locals / HousingWire, 2024</a></div>
+        <div class="pc-review"><div class="review-text">&ldquo;For every 10 buyer leads that call your office, 6 never reach a human &mdash; and 4 of those call the agent down the street.&rdquo;</div><div class="review-attr">&mdash; 411 Locals study</div></div>
+      </div>
+      <div class="pc" onclick="this.classList.toggle('open')">
+        <div class="pc-top"><span class="pc-icon">&#9889;</span><span class="pc-name">Speed to Lead</span><span class="pc-stat-num">21&times;</span></div>
+        <div class="pc-bottom">
+          <span class="pc-desc">higher conversion when you respond in under 5 minutes &mdash; avg. agent takes 15 hours</span>
+          <svg class="pc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="pc-source"><a href="https://www.ihomefinder.com/blog/uncategorized/speed-to-lead-real-estate/" target="_blank" rel="noopener">iHomeFinder / Lead Connect, 2024</a></div>
+        <div class="pc-review"><div class="review-text">&ldquo;The industry average response time is 15 hours. The winning window is 5 minutes. AI closes that gap to under 5 seconds.&rdquo;</div></div>
+      </div>
+      <div class="pc" onclick="this.classList.toggle('open')">
+        <div class="pc-top"><span class="pc-icon">&#127769;</span><span class="pc-name">After Hours</span><span class="pc-stat-num">62%</span></div>
+        <div class="pc-bottom">
+          <span class="pc-desc">of buyer inquiries come evenings &amp; weekends &mdash; exactly when you&rsquo;re at showings or off the clock</span>
+          <svg class="pc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="pc-source"><a href="https://agentzap.ai/blog/real-estate-lead-statistics" target="_blank" rel="noopener">AgentZap / Leasey.AI, 2024</a></div>
+        <div class="pc-review"><div class="review-text">&ldquo;Most leads call when you can&rsquo;t answer. An AI assistant never goes to a showing, never takes a weekend off.&rdquo;</div></div>
+      </div>
+      <div class="pc" onclick="this.classList.toggle('open')">
+        <div class="pc-top"><span class="pc-icon">&#128176;</span><span class="pc-name">First Responder</span><span class="pc-stat-num">78%</span></div>
+        <div class="pc-bottom">
+          <span class="pc-desc">of buyers work with the first agent who responds &mdash; not the best-rated one</span>
+          <svg class="pc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="pc-source"><a href="https://www.nar.realtor/research-and-statistics/quick-real-estate-statistics" target="_blank" rel="noopener">NAR Generational Trends, 2025</a></div>
+        <div class="pc-review"><div class="review-text">&ldquo;The listing doesn&rsquo;t go to the best agent. It goes to the fastest one.&rdquo;</div></div>
+      </div>
+      <div class="pc" onclick="this.classList.toggle('open')">
+        <div class="pc-top"><span class="pc-icon">&#128197;</span><span class="pc-name">Scheduling</span><span class="pc-stat-num">10h</span></div>
+        <div class="pc-bottom">
+          <span class="pc-desc">per week spent on admin &amp; scheduling &mdash; 520+ hours/year not selling</span>
+          <svg class="pc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="pc-source"><a href="https://www.vertuagent.com/blog/why-most-real-estate-agents-waste-10-hours-a-week-on-admin-tasks" target="_blank" rel="noopener">VertuAgent / HousingWire, 2024</a></div>
+        <div class="pc-review"><div class="review-text">&ldquo;An AI call handler gives you back a full workday every week to do what actually earns commission: showing homes and closing deals.&rdquo;</div></div>
+      </div>
+      <div class="pc" onclick="this.classList.toggle('open')">
+        <div class="pc-top"><span class="pc-icon">&#127874;</span><span class="pc-name">Homeiversary</span><span class="pc-stat-num">91%</span></div>
+        <div class="pc-bottom">
+          <span class="pc-desc">of agents never contact a client after closing &mdash; yet 41% of deals come from referrals &amp; repeat</span>
+          <svg class="pc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="pc-source"><a href="https://www.jvmlending.com/blog/only-12-clients-use-their-agent-again-how-to-stem-loss/" target="_blank" rel="noopener">JVM Lending / NAR, 2025</a></div>
+        <div class="pc-review"><div class="review-text">&ldquo;88% of clients say they&rsquo;d use their agent again &mdash; but only 12% actually do. The gap is post-closing neglect.&rdquo;</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 2: SOLUTION -->
+<section class="slide" id="slide-solution">
+  <div class="slide-inner">
+    <div class="sol-header">
+      <div>
+        <div class="section-label">02 &mdash; The solution</div>
+        <h2 class="section-title">Your AI handles calls<br>so you can <em>close deals</em></h2>
+        <p class="section-intro" style="margin-bottom:16px;">Every call answered. Every lead captured. Every showing booked. While you&rsquo;re face-to-face with clients.</p>
+      </div>
+    </div>
+    <div class="sol-grid" id="solGrid">
+      <div class="uc" id="call-listings" data-uplift="+30%">
+        <div class="uc-head"><span class="uc-icon">&#127968;</span><h3>Listing Inquiries</h3><button class="uc-link" onclick="event.stopPropagation();copyCallLink(this,'call-listings')" title="Copy link">&#128279; Share</button><span class="biz-num">+30%</span></div>
+        <p class="uc-with-desc">AI answers listing calls instantly, gives property details (beds, baths, price), and schedules viewings.</p>
+        <p class="uc-without-desc"><strong>38%</strong> of calls go unanswered &mdash; 62% of those callers call a competitor</p>
+        <audio controls controlslist="nodownload" preload="metadata"><source src="assets/listing-booking-call-748952.m4a" type="audio/mp4"></audio>
+        <div class="uc-actions">
+          <button class="transcript-btn" onclick="event.stopPropagation();toggleTranscript(this)">&#128172; Transcript</button>
+          <div class="toggle-row" onclick="event.stopPropagation();toggleWithWithout(this.querySelector('.toggle-switch'))">
+            <span class="toggle-state with">With YouSquared</span>
+            <div class="toggle-switch"></div>
+          </div>
+        </div>
+        <div class="uc-expand">
+          <div class="call-transcript">
+            <div class="ct-line ai">Hi, you&rsquo;ve reached Mark&rsquo;s office. This is Jake, how can I help you?</div>
+            <div class="ct-line caller">Hi, can I speak to Mark about viewing the Whipple Street property?</div>
+            <div class="ct-line ai">Yeah, absolutely. Mark&rsquo;s tied up right now and asked me to help. Who am I speaking with?</div>
+            <div class="ct-line caller">Leah Abixer.</div>
+            <div class="ct-line ai">Got it. And are you looking to rent it?</div>
+            <div class="ct-line caller">Yes.</div>
+            <div class="ct-line ai">That one is by appointment only, so I can take your info and have Mark reach out. What time were you hoping for?</div>
+            <div class="ct-line caller">Tomorrow morning, sometime between 11:00 AM and 1:00 PM.</div>
+            <div class="ct-line ai">Got it. Can I get your email too, in case he wants to send details?</div>
+            <div class="ct-line caller">It looks perfect for me and I&rsquo;ve been looking for a while, so I&rsquo;m excited to see it.</div>
+            <div class="ct-line ai">Aw, love that. I&rsquo;ll let Mark know you&rsquo;re really interested.</div>
+            <div class="ct-line caller">No, Jake, you&rsquo;re fantastic.</div>
+            <div class="ct-line ai">Thank you. I&rsquo;ll pass this along to Mark. Have a wonderful day.</div>
+          </div>
+          <div class="uc-without-content"><div class="uc-wo-review">&ldquo;I called about a listing I saw online. Nobody answered. I called the next agent in the search results and booked a showing that same evening. Closed on the house two weeks later.&rdquo;<span class="uc-wo-attr">&mdash; Typical buyer experience</span></div></div>
+        </div>
+      </div>
+      <div class="uc" id="call-showing" data-uplift="+20%">
+        <div class="uc-head"><span class="uc-icon">&#128197;</span><h3>Showing Scheduling</h3><button class="uc-link" onclick="event.stopPropagation();copyCallLink(this,'call-showing')" title="Copy link">&#128279; Share</button><span class="biz-num">+20%</span></div>
+        <p class="uc-with-desc">AI books viewings 24/7, collects contact info, confirms time preferences, and texts the details.</p>
+        <p class="uc-without-desc"><strong>10+ hrs</strong> per week wasted on phone tag for viewings and rescheduling</p>
+        <div class="uc-actions">
+          <button class="transcript-btn" onclick="event.stopPropagation();toggleTranscript(this)">&#128172; Transcript</button>
+          <div class="toggle-row" onclick="event.stopPropagation();toggleWithWithout(this.querySelector('.toggle-switch'))">
+            <span class="toggle-state with">With YouSquared</span>
+            <div class="toggle-switch"></div>
+          </div>
+        </div>
+        <div class="uc-expand">
+          <div class="call-transcript">
+            <div class="ct-line ai">Hi, this is Jake, Mark&rsquo;s assistant. Mark is unavailable right now. How can I help?</div>
+            <div class="ct-line caller">I want to come and see 10921 Whipple today.</div>
+            <div class="ct-line ai">Sure. Who am I speaking with?</div>
+            <div class="ct-line caller">Lynn Krown, K-R-O-W-N.</div>
+            <div class="ct-line ai">Got it. What time were you hoping to come by today?</div>
+            <div class="ct-line caller">At 1:30.</div>
+            <div class="ct-line ai">I&rsquo;ll pass this to Mark and let him know you&rsquo;d like to see 10921 Whipple today around 1:30. He can text or call you to confirm.</div>
+            <div class="ct-line caller">Thank you very much.</div>
+          </div>
+          <div class="uc-without-content"><div class="uc-wo-review">&ldquo;I tried calling the listing agent three times to book a showing. No answer, no callback. By the time they responded two days later, the house had three offers.&rdquo;<span class="uc-wo-attr">&mdash; Frustrated buyer</span></div></div>
+        </div>
+      </div>
+      <div class="uc" id="call-buyer" data-uplift="+15%">
+        <div class="uc-head"><span class="uc-icon">&#128176;</span><h3>Buyer Qualification</h3><button class="uc-link" onclick="event.stopPropagation();copyCallLink(this,'call-buyer')" title="Copy link">&#128279; Share</button><span class="biz-num">+15%</span></div>
+        <p class="uc-with-desc">AI pre-qualifies buyer leads &mdash; budget, timeline, pre-approval status &mdash; before they reach your desk.</p>
+        <p class="uc-without-desc"><strong>78%</strong> of buyers hire the first agent who responds</p>
+        <div class="uc-actions">
+          <button class="transcript-btn" onclick="event.stopPropagation();toggleTranscript(this)">&#128172; Transcript</button>
+          <div class="toggle-row" onclick="event.stopPropagation();toggleWithWithout(this.querySelector('.toggle-switch'))">
+            <span class="toggle-state with">With YouSquared</span>
+            <div class="toggle-switch"></div>
+          </div>
+        </div>
+        <div class="uc-expand">
+          <div class="call-transcript">
+            <div class="ct-line ai">Hi, Mark&rsquo;s office at Compass. This is Jake. How can I help?</div>
+            <div class="ct-line caller">I&rsquo;m looking for a 3-bedroom in the Valley under $900K.</div>
+            <div class="ct-line ai">Great. Are you pre-approved for a mortgage?</div>
+            <div class="ct-line caller">Yes, through Guild Mortgage.</div>
+            <div class="ct-line ai">Perfect. And what&rsquo;s your timeline for moving?</div>
+            <div class="ct-line caller">We need to be in by August for school.</div>
+            <div class="ct-line ai">Got it. I&rsquo;ll flag this as urgent for Mark &mdash; pre-approved buyer, 3-bed Valley under $900K, August timeline. He&rsquo;ll reach out today.</div>
+          </div>
+          <div class="uc-without-content"><div class="uc-wo-review">&ldquo;I spent 45 minutes on a call with someone who turned out to be &lsquo;just browsing&rsquo; with no timeline or pre-approval. That&rsquo;s time I could have spent with a serious buyer.&rdquo;<span class="uc-wo-attr">&mdash; RE agent frustration</span></div></div>
+        </div>
+      </div>
+      <div class="uc" id="call-seller" data-uplift="+25%">
+        <div class="uc-head"><span class="uc-icon">&#128204;</span><h3>Seller Lead Capture</h3><button class="uc-link" onclick="event.stopPropagation();copyCallLink(this,'call-seller')" title="Copy link">&#128279; Share</button><span class="biz-num">+25%</span></div>
+        <p class="uc-with-desc">When a homeowner calls about listing their property, AI captures the details and books a listing appointment.</p>
+        <p class="uc-without-desc"><strong>$11,400</strong> average commission per side &mdash; one missed seller lead per month = $137K/year lost</p>
+        <div class="uc-actions">
+          <button class="transcript-btn" onclick="event.stopPropagation();toggleTranscript(this)">&#128172; Transcript</button>
+          <div class="toggle-row" onclick="event.stopPropagation();toggleWithWithout(this.querySelector('.toggle-switch'))">
+            <span class="toggle-state with">With YouSquared</span>
+            <div class="toggle-switch"></div>
+          </div>
+        </div>
+        <div class="uc-expand">
+          <div class="call-transcript">
+            <div class="ct-line ai">Hi, this is Jake for Mark at Compass. How can I help?</div>
+            <div class="ct-line caller">I want to sell my 3-bedroom house. Will you hire me for 1% commission?</div>
+            <div class="ct-line ai">I&rsquo;d love to help connect you with Mark to discuss your listing. Can I get your name and the property address?</div>
+            <div class="ct-line caller">Sure. It&rsquo;s on Aldama Street.</div>
+            <div class="ct-line ai">And when would you be available for Mark to come take a look and discuss pricing strategy?</div>
+            <div class="ct-line caller">This week, any afternoon works.</div>
+            <div class="ct-line ai">I&rsquo;ll pass that along and Mark will reach out to confirm. Thank you.</div>
+          </div>
+          <div class="uc-without-content"><div class="uc-wo-review">&ldquo;I called three agents I found online about selling my house. Only one called me back &mdash; they got the listing.&rdquo;<span class="uc-wo-attr">&mdash; Home seller experience</span></div></div>
+        </div>
+      </div>
+      <div class="uc" id="call-homeiversary" data-uplift="+10%">
+        <div class="uc-head"><span class="uc-icon">&#127874;</span><h3>Homeiversary</h3><button class="uc-link" onclick="event.stopPropagation();copyCallLink(this,'call-homeiversary')" title="Copy link">&#128279; Share</button><span class="biz-num">+10%</span></div>
+        <p class="uc-with-desc">AI calls past clients on their home-purchase anniversary, checks in on their home, and asks for referrals.</p>
+        <p class="uc-without-desc"><strong>91%</strong> of agents never contact a client after closing</p>
+        <div class="uc-actions">
+          <button class="transcript-btn" onclick="event.stopPropagation();toggleTranscript(this)">&#128172; Transcript</button>
+          <div class="toggle-row" onclick="event.stopPropagation();toggleWithWithout(this.querySelector('.toggle-switch'))">
+            <span class="toggle-state with">With YouSquared</span>
+            <div class="toggle-switch"></div>
+          </div>
+        </div>
+        <div class="uc-expand">
+          <div class="call-transcript">
+            <div class="ct-line ai">Hi! This is Jake calling on behalf of Mark Groves at Compass. Happy one-year homeiversary! How are you enjoying the house?</div>
+            <div class="ct-line caller">Oh wow, that&rsquo;s so nice of you to call! We love it. The backyard is amazing.</div>
+            <div class="ct-line ai">That&rsquo;s wonderful to hear. Mark wanted me to check in and see if there&rsquo;s anything you need &mdash; a contractor referral, market update on your neighborhood, anything at all.</div>
+            <div class="ct-line caller">Actually, my sister is looking to buy in the area. Can Mark call her?</div>
+            <div class="ct-line ai">Absolutely! I&rsquo;ll pass that along right away. What&rsquo;s her name and number?</div>
+          </div>
+          <div class="uc-without-content"><div class="uc-wo-review">&ldquo;88% of clients would use their agent again &mdash; but only 12% actually do. The gap is caused by post-closing neglect. Nobody calls.&rdquo;<span class="uc-wo-attr">&mdash; JVM Lending / NAR, 2025</span></div></div>
+        </div>
+      </div>
+      <div class="uc" id="call-multilingual" data-uplift="+5%">
+        <div class="uc-head"><span class="uc-icon">&#127760;</span><h3>Multilingual</h3><button class="uc-link" onclick="event.stopPropagation();copyCallLink(this,'call-multilingual')" title="Copy link">&#128279; Share</button><span class="biz-num">+5%</span></div>
+        <p class="uc-with-desc">AI switches to Spanish, Mandarin, or 9 other languages instantly. Serve international buyers without a translator.</p>
+        <p class="uc-without-desc"><strong>15%</strong> of US homebuyers are non-native English speakers</p>
+        <div class="uc-actions">
+          <button class="transcript-btn" onclick="event.stopPropagation();toggleTranscript(this)">&#128172; Transcript</button>
+          <div class="toggle-row" onclick="event.stopPropagation();toggleWithWithout(this.querySelector('.toggle-switch'))">
+            <span class="toggle-state with">With YouSquared</span>
+            <div class="toggle-switch"></div>
+          </div>
+        </div>
+        <div class="uc-expand">
+          <div class="call-transcript">
+            <div class="ct-line ai">Hi, Mark&rsquo;s office. This is Jake. How can I help?</div>
+            <div class="ct-line caller">&iquest;Habla espa&ntilde;ol?</div>
+            <div class="ct-line ai">&iexcl;S&iacute;, claro! &iquest;En qu&eacute; puedo ayudarle?</div>
+            <div class="ct-line caller">Quiero ver el apartamento en Whipple Street.</div>
+            <div class="ct-line ai">Por supuesto. Le paso su informaci&oacute;n a Mark y &eacute;l se comunicar&aacute; con usted para confirmar la visita.</div>
+          </div>
+          <div class="uc-without-content"><div class="uc-wo-review">&ldquo;A Spanish-speaking family called about our listing. My assistant couldn&rsquo;t communicate with them and they hung up. I found out later they bought a similar house from a bilingual agent down the street.&rdquo;<span class="uc-wo-attr">&mdash; Agent in LA</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="biz-bottom" id="bizBottom" onclick="toggleBizCase()">
+      <span class="biz-title">Results: one extra deal per month pays for itself 100&times;</span>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3: PRODUCT -->
+<section class="slide" id="slide-product">
+  <div class="slide-inner">
+    <div class="prod-top">
+      <div class="prod-text">
+        <div class="section-label">03 &mdash; The product</div>
+        <h2 class="section-title">Every call, text &amp; lead<br><em>at your fingertips</em></h2>
+        <p class="section-intro" style="margin-bottom:0;">Real-time notifications. Full transcripts. Lead scoring. On your phone or desktop.</p>
+      </div>
+    </div>
+    <div class="prod-mockup">
+      <div class="prod-mock-header">
+        <span class="pm-logo">You<span>Squared</span></span>
+        <span style="font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--accent-light);letter-spacing:0.08em;text-transform:uppercase;margin-left:auto;">AI Secretary &middot; Real Estate</span>
+      </div>
+      <div class="prod-threads">
+        <div class="pt">
+          <div class="pt-avatar">LA</div>
+          <div><div class="pt-name">Leah A.</div><div class="pt-preview">Wants to tour 10921 Whipple St, tomorrow 11 AM &ndash; 1 PM</div></div>
+          <span class="pt-badge scheduled">&#128197; Showing</span>
+          <span class="pt-time">2 min ago</span>
+        </div>
+        <div class="pt">
+          <div class="pt-avatar">MS</div>
+          <div><div class="pt-name">Matt S.</div><div class="pt-preview">Tour request for Whipple St, Sunday 12:30 PM. Email: matthew.s***@gmail.com</div></div>
+          <span class="pt-badge scheduled">&#128197; Showing</span>
+          <span class="pt-time">28 min ago</span>
+        </div>
+        <div class="pt">
+          <div class="pt-avatar" style="background:rgba(200,150,62,0.3);color:var(--gold);">JK</div>
+          <div><div class="pt-name">Judy K.</div><div class="pt-preview">Needs advice on low cash offer on Crownridge property</div></div>
+          <span class="pt-badge urgent">&#9888; Urgent</span>
+          <span class="pt-time">1 hr ago</span>
+        </div>
+        <div class="pt">
+          <div class="pt-avatar">AG</div>
+          <div><div class="pt-name">Alejandra G.</div><div class="pt-preview">Tour request for Whipple St rental, 11 AM</div></div>
+          <span class="pt-badge scheduled">&#128197; Showing</span>
+          <span class="pt-time">3 hrs ago</span>
+        </div>
+        <div class="pt">
+          <div class="pt-avatar" style="background:rgba(200,150,62,0.3);color:var(--gold);">AN</div>
+          <div><div class="pt-name">Alexis N.</div><div class="pt-preview">Writing an offer. Call back ASAP.</div></div>
+          <span class="pt-badge urgent">&#9888; Urgent</span>
+          <span class="pt-time">4 hrs ago</span>
+        </div>
+      </div>
+    </div>
+    <div class="prod-features">
+      <div class="prod-feat">
+        <div class="feat-icon">&#128241;</div>
+        <h4>Instant Notifications</h4>
+        <p>Push alerts for every call with a summary, urgency level, and one-tap callback.</p>
+      </div>
+      <div class="prod-feat">
+        <div class="feat-icon">&#128200;</div>
+        <h4>Lead Intelligence</h4>
+        <p>AI scores every lead. Pre-approved buyers with tight timelines float to the top.</p>
+      </div>
+      <div class="prod-feat">
+        <div class="feat-icon">&#9889;</div>
+        <h4>Live in 5 Minutes</h4>
+        <p>Forward your line. No IT, no integration, no contracts. Try it today.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4: PRICING -->
+<section class="slide" id="slide-pricing">
+  <div class="slide-inner">
+    <div class="section-label">04 &mdash; Pricing</div>
+    <h2 class="section-title" style="cursor:pointer;" onclick="togglePricingBody()">No-brainer pricing:<br><em>less than one showing lunch</em></h2>
+    <div class="pricing-expand-hint" onclick="togglePricingBody()">&#9662; Click to explore pricing</div>
+    <div class="pricing-body" id="pricingBody">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap;">
+      <div class="org-toggle" style="margin-bottom:0;">
+        <button class="org-btn active" onclick="setOrg('solo',this)">Solo Agent</button>
+        <button class="org-btn" onclick="setOrg('team',this)">Team / Office</button>
+        <button class="org-btn" onclick="setOrg('brokerage',this)">Brokerage</button>
+      </div>
+    </div>
+    <div class="calc-output" style="padding:16px 24px;margin-bottom:16px;">
+      <div class="calc-grid">
+        <div class="calc-item"><div class="calc-num" id="calcCalls">500+</div><div class="calc-label">AI-handled calls / year</div></div>
+        <div class="calc-item"><div class="calc-num" id="calcLeads">120+</div><div class="calc-label">Leads captured that would have been missed</div></div>
+        <div class="calc-item"><div class="calc-num" id="calcShowings">200+</div><div class="calc-label">Showings auto-scheduled</div></div>
+        <div class="calc-item"><div class="calc-num" id="calcROI">100&times;</div><div class="calc-label">ROI &mdash; one extra closed deal covers 8+ years</div></div>
+      </div>
+    </div>
+    <div class="pricing-plans" style="margin-bottom:0;">
+      <div class="pricing-col plan-or" style="padding:22px 24px;">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;">
+          <div class="plan-name-label" style="margin-bottom:0;">Call Handling</div>
+          <div style="text-align:right;"><span class="plan-price-big" id="planOrPrice">$99<span class="plan-price-unit">/mo</span></span><div class="plan-price-sub" id="planOrSub">per agent</div></div>
+        </div>
+        <div class="plan-features" style="gap:6px;">
+          <div class="plan-feat"><span class="icon on">&#10003;</span> AI answers all inbound calls</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> Lead capture &amp; qualification</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> Showing scheduling</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> Multilingual (11+ languages)</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> Every call transcribed &amp; summarized</div>
+        </div>
+      </div>
+      <div class="pricing-vs">vs</div>
+      <div class="pricing-col plan-rec" style="padding:22px 24px;">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;">
+          <div class="plan-name-label" style="margin-bottom:0;color:#fff;">Full Suite (Recommended)</div>
+          <div style="text-align:right;"><span class="plan-price-big" style="color:#fff;" id="planE2ePrice">$199<span class="plan-price-unit" style="color:rgba(247,244,239,0.5);">/mo</span></span><div class="plan-price-sub" style="color:rgba(247,244,239,0.4);" id="planE2eSub">per agent</div></div>
+        </div>
+        <div class="plan-features" style="gap:6px;">
+          <div class="plan-feat"><span class="icon on">&#10003;</span> Everything in Call Handling</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> Outbound homeiversary campaigns</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> Sphere-of-influence nurturing</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> Buyer follow-up sequences</div>
+          <div class="plan-feat"><span class="icon on">&#10003;</span> CRM integration</div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5: WHO WE ARE -->
+<section class="slide" id="slide-who">
+  <div class="slide-inner">
+    <div class="section-label">05 &mdash; Who we are</div>
+    <h2 class="section-title">Built by <em>AI pioneers</em></h2>
+    <div class="carousel-container" id="peopleCarousel">
+      <div class="carousel-track" id="peopleTrack">
+        <div class="team-card"><div class="team-avatar"><img src="assets/headshot_ad.jpg" alt="Alexandre Dalyac"></div><div class="team-name">Alexandre Dalyac</div><div class="team-role">CEO &amp; Co-founder</div><div class="team-bio">Founded Tractable, AI unicorn valued at $1B+, serving Fortune 500.</div></div>
+        <div class="team-card"><div class="team-avatar"><img src="assets/headshot_adb.png" alt="Alexandre de Br&eacute;bisson"></div><div class="team-name">Alexandre de Br&eacute;bisson</div><div class="team-role">CTO &amp; Co-founder</div><div class="team-bio">PhD under Yoshua Bengio (Mila), co-founded Lyrebird &mdash; pioneered AI voice cloning.</div></div>
+        <div class="team-card"><div class="team-avatar"><img src="assets/team-joris.jpg" alt="Joris Abalea"></div><div class="team-name">Joris Abalea</div><div class="team-role">Mobile Lead</div><div class="team-bio">Former Staff Engineer at GitHub (Actions &amp; Copilot). Creator of Avocards, 1M+ downloads.</div></div>
+        <div class="team-card"><div class="team-avatar"><img src="assets/team-anthony.png" alt="Anthony Chansavang"></div><div class="team-name">Anthony Chansavang</div><div class="team-role">Engineer</div><div class="team-bio">Former Amazon Alexa engineer. Voice AI infrastructure.</div></div>
+        <div class="team-card"><div class="team-avatar"><img src="assets/team-tomohiro.png" alt="Tomohiro Takesako"></div><div class="team-name">Tomohiro Takesako, PhD</div><div class="team-role">Science</div><div class="team-bio">Kaggle Grandmaster (global #16). PhD in theoretical physics, University of Tokyo.</div></div>
+        <div class="team-card"><div class="team-avatar"><img src="assets/team-jake.jpg" alt="Jake Albert"></div><div class="team-name">Jake Albert</div><div class="team-role">Engineer</div><div class="team-bio">Web app and customer-facing platforms.</div></div>
+      </div>
+      <button class="carousel-arrow left hidden" onclick="slideCarousel('people',-1)">&larr;</button>
+      <button class="carousel-arrow right" onclick="slideCarousel('people',1)">&rarr;</button>
+    </div>
+    <div class="trust-row">
+      <img src="assets/logo_airstreet.png" alt="Air Street Capital" style="height:28px">
+      <div class="divider"></div>
+      <img src="assets/logo_zetta.png" alt="Zetta Venture Partners" style="height:24px">
+      <div class="divider"></div>
+      <img src="assets/logo_k5global.svg" alt="K5 Global" style="height:24px">
+      <div class="divider"></div>
+      <span class="stat-chip">2M+ calls handled</span>
+      <div class="divider"></div>
+      <span class="stat-chip">4.6&#9733; App Store</span>
+    </div>
+    <div style="text-align:center;margin-top:8px;">
+      <div class="section-label" style="justify-content:center;">Live with real estate agents</div>
+    </div>
+    <div class="carousel-container" id="customerCarousel">
+      <div class="carousel-track" id="customerTrack">
+        <div class="customer-card"><div class="c-icon">&#127968;</div><div class="c-name">Mark Groves</div><div class="c-desc">Compass &mdash; Los Angeles<br>Residential sales &amp; rentals</div></div>
+        <div class="customer-card"><div class="c-icon">&#127968;</div><div class="c-name">Ginger Orsi</div><div class="c-desc">Compass &mdash; Los Angeles<br>Residential agent</div></div>
+        <div class="customer-card"><div class="c-icon">&#127968;</div><div class="c-name">Michael Schaffer</div><div class="c-desc">Compass &mdash; Pasadena<br>Residential agent</div></div>
+        <div class="customer-card"><div class="c-icon">&#127968;</div><div class="c-name">Nikki Aguirre</div><div class="c-desc">Independent broker<br>San Bernardino County</div></div>
+        <div class="customer-card"><div class="c-icon">&#127974;</div><div class="c-name">Jamal Bey</div><div class="c-desc">Guild Mortgage<br>Mortgage origination</div></div>
+        <div class="customer-card"><img src="assets/logo_verizon.png" alt="Verizon" style="height:28px;"><div class="c-name">Verizon</div><div class="c-desc">AI Receptionist Distribution Partnership</div></div>
+      </div>
+      <button class="carousel-arrow left hidden" onclick="slideCarousel('customer',-1)">&larr;</button>
+      <button class="carousel-arrow right" onclick="slideCarousel('customer',1)">&rarr;</button>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 6: CTA -->
+<section class="slide" id="slide-cta">
+  <div class="slide-inner">
+    <div class="cta-inner">
+      <h2 class="cta-title">Ready to never<br><em>miss a lead again?</em></h2>
+      <p class="cta-sub">Forward your line today. Live in 5 minutes. No contracts.</p>
+      <div class="cta-box">
+        <div class="cta-contact">Alexandre Dalyac</div>
+        <a class="cta-email" href="mailto:ad@yousquared.ai">ad@yousquared.ai</a>
+        <span class="cta-website">yousquared.ai</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="slide-progress" id="slideProgress"></div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const navDots = document.getElementById('navDots');
+const progressEl = document.getElementById('slideProgress');
+const N = slides.length;
+for(let i=0;i<N;i++){
+  const dot=document.createElement('button');dot.className='nav-dot';
+  dot.onclick=()=>slides[i].scrollIntoView({behavior:'smooth'});navDots.appendChild(dot);
+  const bar=document.createElement('div');bar.className='progress-bar';
+  bar.innerHTML='<div class="progress-fill"></div>';
+  bar.onclick=()=>slides[i].scrollIntoView({behavior:'smooth'});progressEl.appendChild(bar);
+}
+const dots=navDots.querySelectorAll('.nav-dot');
+const bars=progressEl.querySelectorAll('.progress-bar');
+function updateActive(idx){
+  dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+  bars.forEach((b,i)=>{b.classList.toggle('active',i===idx);b.classList.toggle('done',i<idx);});
+}
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');updateActive(Array.from(slides).indexOf(e.target));}});
+},{threshold:0.35});
+slides.forEach(s=>io.observe(s));
+updateActive(0);
+
+const carouselState={people:0,customer:0};
+const carouselVis={people:3,customer:4};
+function slideCarousel(name,dir){
+  const track=document.getElementById(name+'Track');
+  const cards=track.children;const gap=24;const vis=carouselVis[name]||3;
+  const maxIdx=cards.length-vis;
+  carouselState[name]=Math.max(0,Math.min(maxIdx,carouselState[name]+dir));
+  const cw=cards[0].offsetWidth+gap;
+  track.style.transform='translateX(-'+(carouselState[name]*cw)+'px)';
+  const c=track.parentElement;
+  const la=c.querySelector('.carousel-arrow.left');
+  const ra=c.querySelector('.carousel-arrow.right');
+  if(la)la.classList.toggle('hidden',carouselState[name]===0);
+  if(ra)ra.classList.toggle('hidden',carouselState[name]>=maxIdx);
+}
+
+document.querySelectorAll('.uc').forEach(uc=>{uc.addEventListener('click',()=>uc.classList.toggle('expanded'));});
+function toggleTranscript(btn){
+  event.stopPropagation();
+  btn.classList.toggle('active');
+  const card=btn.closest('.uc');
+  card.classList.add('expanded');
+  const panel=card.querySelector('.call-transcript');
+  if(panel) panel.classList.toggle('visible');
+}
+function copyCallLink(btn,id){
+  const url=window.location.origin+window.location.pathname+'#'+id;
+  navigator.clipboard.writeText(url).then(()=>{
+    const orig=btn.innerHTML;btn.innerHTML='&#10003; Copied';btn.classList.add('copied');
+    setTimeout(()=>{btn.innerHTML=orig;btn.classList.remove('copied');},1800);
+  });
+}
+(function(){
+  const h=window.location.hash.replace('#','');
+  if(!h||!h.startsWith('call-'))return;
+  const el=document.getElementById(h);
+  if(!el)return;
+  setTimeout(()=>{
+    el.classList.add('expanded');
+    el.scrollIntoView({behavior:'smooth',block:'center'});
+    el.style.boxShadow='0 0 0 3px var(--accent-light)';
+    setTimeout(()=>{el.style.boxShadow='';},2500);
+  },600);
+})();
+function toggleWithWithout(sw){
+  sw.classList.toggle('off');
+  const uc=sw.closest('.uc');
+  const stateEl=uc.querySelector('.toggle-state');
+  const wc=uc.querySelector('.uc-without-content');
+  uc.classList.add('expanded');
+  if(sw.classList.contains('off')){
+    uc.classList.add('without-mode');
+    stateEl.textContent='Without YouSquared';stateEl.className='toggle-state without';
+    wc.classList.add('visible');
+  }else{
+    uc.classList.remove('without-mode');
+    stateEl.textContent='With YouSquared';stateEl.className='toggle-state with';
+    wc.classList.remove('visible');
+  }
+}
+let bizOn=false;
+function toggleBizCase(){
+  bizOn=!bizOn;
+  document.getElementById('bizBottom').classList.toggle('pressed',bizOn);
+  document.getElementById('solGrid').classList.toggle('bizmode',bizOn);
+}
+function togglePricingBody(){
+  document.getElementById('pricingBody').classList.toggle('open');
+}
+function setOrg(type,btn){
+  document.querySelectorAll('.org-toggle .org-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const c=document.getElementById('calcCalls');
+  const l=document.getElementById('calcLeads');
+  const s=document.getElementById('calcShowings');
+  const op=document.getElementById('planOrPrice');
+  const ep=document.getElementById('planE2ePrice');
+  const os=document.getElementById('planOrSub');
+  const es=document.getElementById('planE2eSub');
+  if(type==='solo'){
+    c.textContent='500+';l.textContent='120+';s.textContent='200+';
+    op.innerHTML='$99<span class="plan-price-unit">/mo</span>';os.textContent='per agent';
+    ep.innerHTML='$199<span class="plan-price-unit" style="color:rgba(247,244,239,0.5);">/mo</span>';es.textContent='per agent';
+  }else if(type==='team'){
+    c.textContent='3K+';l.textContent='600+';s.textContent='1.2K+';
+    op.innerHTML='$79<span class="plan-price-unit">/mo</span>';os.textContent='per agent (5+ seats)';
+    ep.innerHTML='$149<span class="plan-price-unit" style="color:rgba(247,244,239,0.5);">/mo</span>';es.textContent='per agent (5+ seats)';
+  }else{
+    c.textContent='25K+';l.textContent='5K+';s.textContent='10K+';
+    op.innerHTML='Custom';os.textContent='volume pricing';
+    ep.innerHTML='Custom';es.textContent='enterprise features';
+  }
+}
+</script>
+</body>
+</html>
