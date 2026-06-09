@@ -169,7 +169,7 @@
       </div>
     </div>
     <div class="hero-firm-name">
-      Nine agents. Day one.<br>Every call answered.
+      Sixteen agents. 600+ calls.<br>Every one answered.
       <span class="subtler">Your AI assistant handles buyer inquiries, qualifies leads, and books appointments &mdash; even when you can&rsquo;t pick up.</span>
     </div>
   </div>
@@ -185,8 +185,8 @@
 <!-- ============== 2. THE TEAM ============== -->
 <div class="page">
   <div class="eyebrow">Your Cohort</div>
-  <h2>Seven agents live. Three more joining.</h2>
-  <p class="lead" style="max-width:760px;">Your LA Compass group onboarded on June 8, 2026. Within hours, agents were configuring their AI &mdash; setting call-handling rules, qualifying leads, and booking appointments through their personal AI assistant.</p>
+  <h2>Eleven agents live. Five more joining.</h2>
+  <p class="lead" style="max-width:760px;">The Compass Hollywood team has been building on YouSquared since November 2025. Mark Groves leads the way with 405 calls handled. On June 8, a new wave of agents onboarded &mdash; and within hours they were configuring call-handling rules, qualifying leads, and booking appointments.</p>
 
   <table class="agent-table">
     <thead>
@@ -199,6 +199,20 @@
       </tr>
     </thead>
     <tbody>
+      <tr>
+        <td>Mark Groves</td>
+        <td class="highlight">405</td>
+        <td>&mdash;</td>
+        <td style="font-size:0.82em; font-family:monospace;">(213) 376-6561</td>
+        <td><span class="badge active">Pro</span></td>
+      </tr>
+      <tr>
+        <td>Ginger Orsi</td>
+        <td class="highlight">128</td>
+        <td>&mdash;</td>
+        <td style="font-size:0.82em; font-family:monospace;">(213) 377-6960</td>
+        <td><span class="badge active">Live</span></td>
+      </tr>
       <tr>
         <td>Justin Mitchell</td>
         <td class="highlight">21</td>
@@ -228,6 +242,13 @@
         <td><span class="badge active">Live</span></td>
       </tr>
       <tr>
+        <td>Michael Schaffer</td>
+        <td class="highlight">8</td>
+        <td>&mdash;</td>
+        <td>&mdash;</td>
+        <td><span class="badge active">Live</span></td>
+      </tr>
+      <tr>
         <td>Brittany Morrison</td>
         <td class="highlight">3</td>
         <td>4 min</td>
@@ -242,11 +263,32 @@
         <td><span class="badge active">Live</span></td>
       </tr>
       <tr>
+        <td>Emmanuel Xuereb</td>
+        <td class="highlight">2</td>
+        <td>&mdash;</td>
+        <td>&mdash;</td>
+        <td><span class="badge active">Live</span></td>
+      </tr>
+      <tr>
         <td>Tim Cahill</td>
         <td class="highlight">2</td>
         <td>6 min</td>
         <td style="font-size:0.82em; font-family:monospace;">(669) 280-5433</td>
         <td><span class="badge active">Live</span></td>
+      </tr>
+      <tr>
+        <td>Finn Egan</td>
+        <td>&mdash;</td>
+        <td>&mdash;</td>
+        <td>&mdash;</td>
+        <td><span class="badge pending">Pending</span></td>
+      </tr>
+      <tr>
+        <td>Jimmy A. Martinez</td>
+        <td>&mdash;</td>
+        <td>&mdash;</td>
+        <td>&mdash;</td>
+        <td><span class="badge pending">Pending</span></td>
       </tr>
       <tr>
         <td>Andrew Grimes</td>
@@ -275,18 +317,18 @@
   <div class="metrics-grid" style="margin-top:28px;">
     <div class="metric-card">
       <div class="metric-label">Total Conversations</div>
-      <div class="metric-value">62</div>
+      <div class="metric-value">605</div>
       <div class="metric-sub">Real calls handled by AI</div>
     </div>
     <div class="metric-card">
-      <div class="metric-label">Total talk time</div>
-      <div class="metric-value">152<span style="font-size:0.5em;font-weight:400;"> min</span></div>
-      <div class="metric-sub">2.5 hours of calls handled</div>
+      <div class="metric-label">Longest active</div>
+      <div class="metric-value">7<span style="font-size:0.5em;font-weight:400;"> mo</span></div>
+      <div class="metric-sub">Mark Groves &middot; since Nov 2025</div>
     </div>
     <div class="metric-card">
       <div class="metric-label">Agents live</div>
-      <div class="metric-value">7<span style="font-size:0.5em;font-weight:400;"> / 10</span></div>
-      <div class="metric-sub">3 finishing registration</div>
+      <div class="metric-value">11<span style="font-size:0.5em;font-weight:400;"> / 16</span></div>
+      <div class="metric-sub">5 finishing registration</div>
     </div>
     <div class="metric-card">
       <div class="metric-label">Plan</div>
@@ -400,7 +442,7 @@
     <div>
       <div class="panel-label">Conversations by agent</div>
       <div style="height:220px;"><canvas id="agentChart"></canvas></div>
-      <div class="panel-sub">Justin and Sergio are power users &mdash; already using their AI as a daily call handler. Others are ramping up.</div>
+      <div class="panel-sub">Mark Groves and Ginger Orsi are power users &mdash; 533 calls between them. The June cohort is ramping up fast.</div>
     </div>
   </div>
 
@@ -417,8 +459,8 @@
     <div class="road-item">
       <div class="road-phase">This week</div>
       <div class="road-body">
-        <div class="road-title">Complete onboarding for Andrew, James &amp; Kate</div>
-        <div class="road-sub">Three agents still need to finish registration and configure their AI. We&rsquo;ll reach out to help them get live.</div>
+        <div class="road-title">Complete onboarding for Finn, Jimmy, Andrew, James &amp; Kate</div>
+        <div class="road-sub">Five agents still need to finish registration and configure their AI. We&rsquo;ll reach out to help them get live.</div>
       </div>
     </div>
     <div class="road-item">
@@ -570,10 +612,10 @@ window.addEventListener('DOMContentLoaded', () => {
   new Chart(document.getElementById('agentChart'), {
     type: 'bar',
     data: {
-      labels: ['Justin','Sergio','Salvator','Gina','Brittany','Brad','Tim'],
+      labels: ['Mark','Ginger','Justin','Sergio','Salvator','Gina','Michael','Brittany','Brad','Emmanuel','Tim'],
       datasets: [{
-        data: [21,16,9,8,3,3,2],
-        backgroundColor: ['#1A1A1A','#3A3632','#6B6560','#9E9893','#C9A96E','#D4B87E','#E6DFD9'],
+        data: [405,128,21,16,9,8,8,3,3,2,2],
+        backgroundColor: ['#C9A96E','#D4B87E','#1A1A1A','#3A3632','#4A4742','#6B6560','#7B7670','#9E9893','#AEA9A3','#C9C3BE','#E6DFD9'],
         borderRadius: 4,
       }]
     },
